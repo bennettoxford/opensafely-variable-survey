@@ -1,7 +1,9 @@
 import os
 from collections.abc import Iterator, Mapping
+from traceback import format_exception
 from typing import Any, Optional
 
+import requests as rq
 import yaml
 from github import Auth, ContentFile, Github
 from github.GithubException import GithubException
@@ -13,37 +15,55 @@ from github.Repository import Repository
 REPOS_TO_EXCLUDE = ["interactive", "research-template"]
 
 
-def get_cohortextractor_study_definitions(
-    organisation: str = "opensafely",
-) -> Iterator[tuple[Repository, list[tuple[str, str]]]]:
-    organisation_client = _get_organisation_client(organisation)
+class RepoGetter:
+    def __init__(self, organisation: str = "opensafely") -> None:
+        self.organisation = organisation
+        self.exceptions: dict[str, Exception] = {}
+        self.organisation_client = _get_organisation_client(self.organisation)
 
-    for repository in organisation_client.get_repos():
-        if repository.name in REPOS_TO_EXCLUDE:
-            continue
-        actions = _get_cohortextractor_actions(repository=repository)
-        if not actions:
-            continue
+    def get_all_cohortextractor_study_definitions(
+        self,
+    ) -> Iterator[tuple[Repository, list[tuple[str, str]]]]:
+        for repository in self.organisation_client.get_repos():
+            if repository.name in REPOS_TO_EXCLUDE:
+                continue
+            try:
+                study_definitions = self.get_cohortextractor_study_definitions(
+                    repository=repository
+                )
+                if not study_definitions:
+                    continue
+                yield (repository, study_definitions)
+            except Exception as e:
+                self.exceptions[repository.name] = e
+
+    def get_cohortextractor_study_definitions(
+        self, repository: Repository | str
+    ) -> Optional[list[tuple[str, str]]]:
+        if isinstance(repository, str):
+            repository = self.organisation_client.get_repo(repository)
+        cohortextractor_actions = _get_cohortextractor_actions(repository=repository)
+        if not cohortextractor_actions:
+            return
         study_definitions_lists = [
             _get_study_definitions(repository=repository, action=action)
-            for action in actions
+            for action in cohortextractor_actions
         ]
         study_definitions = [
             study_definition
             for study_definition_list in study_definitions_lists
             for study_definition in study_definition_list
         ]
+        return [
+            (
+                study_definition.name,
+                study_definition.decoded_content.decode("utf-8"),
+            )
+            for study_definition in study_definitions
+        ]
 
-        yield (
-            repository,
-            [
-                (
-                    study_definition.name,
-                    study_definition.decoded_content.decode("utf-8"),
-                )
-                for study_definition in study_definitions
-            ],
-        )
+    def get_formatted_exceptions(self) -> dict[str, list[str]]:
+        return {repo: format_exception(e) for repo, e in self.exceptions.items()}
 
 
 def _get_cohortextractor_actions(repository: Repository) -> Optional[list[Any]]:
@@ -58,9 +78,8 @@ def _get_cohortextractor_actions(repository: Repository) -> Optional[list[Any]]:
     return [
         action
         for action in actions_section.values()
-        if "run" in action
-        and "cohortextractor" in action["run"]
-        and "cohortextractor-v2" not in action["run"]
+        if "run" in action and "cohortextractor:" in action["run"]
+        # and "cohortextractor-v2" not in action["run"]
     ]
 
 
@@ -127,7 +146,7 @@ def _get_study_definitions(
     return study_definitions
 
 
-def _get_project_config(repository: Repository):
+def _get_project_config(repository: Repository) -> Optional[Mapping]:
     try:
         project_file = repository.get_contents("project.yaml")
     except GithubException as exc:  # pragma: no cover - network errors in prod only
@@ -136,12 +155,12 @@ def _get_project_config(repository: Repository):
         raise
     if isinstance(project_file, list):
         project_file = project_file[0]
-    try:
+    if project_file.size / (1024**2) > 1:
+        # >1MB files have to be requested from the raw download
+        response = rq.get(project_file.download_url)
+        project_yaml = response.content.decode("utf-8")
+    else:
         project_yaml = project_file.decoded_content.decode("utf-8")
-    except Exception as exc:
-        raise Exception(
-            f"Error decoding project.yaml file for {repository.name}"
-        ) from exc
 
     try:
         return yaml.safe_load(project_yaml) or {}

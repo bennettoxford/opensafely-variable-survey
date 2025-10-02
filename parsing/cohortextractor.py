@@ -1,11 +1,24 @@
 import ast
+from traceback import format_exception
 from typing import Optional
 
 
-def get_study_variables(study_definition: str):
-    study_definition_call = _parse_study_definition(study_definition=study_definition)
-    if study_definition_call:
-        return _extract_variables(study_definition_call=study_definition_call)
+def get_study_variables(
+    study_definition: str,
+) -> tuple[list[tuple[str, str]], list[str]]:
+    try:
+        study_definition_call = _parse_study_definition(
+            study_definition=study_definition
+        )
+        if study_definition_call:
+            return (
+                _extract_variables(study_definition_call=study_definition_call),
+                [],
+            )
+        else:
+            return ([], [])
+    except Exception as e:
+        return ([], format_exception(e))
 
 
 def _parse_study_definition(study_definition: str) -> Optional[ast.Call]:
