@@ -45,6 +45,7 @@ class RepoGetter:
         cohortextractor_actions = _get_cohortextractor_actions(repository=repository)
         if not cohortextractor_actions:
             return
+        # one action can call multiple study definitions because *waves hands*
         study_definitions_lists = [
             _get_study_definitions(repository=repository, action=action)
             for action in cohortextractor_actions

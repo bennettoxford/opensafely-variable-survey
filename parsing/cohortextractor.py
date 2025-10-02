@@ -5,7 +5,7 @@ from typing import Optional
 
 def get_study_variables(
     study_definition: str,
-) -> tuple[list[tuple[str, str]], list[str]]:
+) -> tuple[list[tuple[str, str, int]], list[str]]:
     try:
         study_definition_call = _parse_study_definition(
             study_definition=study_definition
@@ -32,10 +32,10 @@ def _parse_study_definition(study_definition: str) -> Optional[ast.Call]:
             return stmt.value
 
 
-def _extract_variables(study_definition_call: ast.Call) -> list[tuple[str, str]]:
+def _extract_variables(study_definition_call: ast.Call) -> list[tuple[str, str, int]]:
     non_variable_args = ["default_expectations", "population"]
     return [
-        (kw.arg, ast.unparse(kw.value))
+        (kw.arg, ast.unparse(kw.value), kw.lineno)
         for kw in study_definition_call.keywords
         if kw.arg and kw.arg not in non_variable_args
     ]

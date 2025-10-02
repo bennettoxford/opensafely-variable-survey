@@ -29,13 +29,13 @@ def main():
             parsing_errors[repository.name] = study_errors
 
     with open("cohort_extractor_variables.json", "w") as f:
-        json.dump(results, f)
+        json.dump(results, f, indent=4)
 
     with open("repository_errors.json", "w") as f:
-        json.dump(rg.get_formatted_exceptions(), f)
+        json.dump(rg.get_formatted_exceptions(), f, indent=4)
 
     with open("parsing_errors.json", "w") as f:
-        json.dump(parsing_errors, f)
+        json.dump(parsing_errors, f, indent=4)
 
 
 if __name__ == "__main__":

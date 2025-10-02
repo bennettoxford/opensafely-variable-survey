@@ -1,1 +1,14 @@
-{}
+{
+    "Paxlovid_sotrovimab_molnupiravir_followup": {
+        "study_definition.py": [
+            "Traceback (most recent call last):\n",
+            "  File \"/home/jongmassey/bennettoxford/cohort-extractor-variable-survey/parsing/cohortextractor.py\", line 10, in get_study_variables\n    study_definition_call = _parse_study_definition(\n                            ^^^^^^^^^^^^^^^^^^^^^^^^\n",
+            "  File \"/home/jongmassey/bennettoxford/cohort-extractor-variable-survey/parsing/cohortextractor.py\", line 25, in _parse_study_definition\n    tree = ast.parse(study_definition)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^\n",
+            "  File \"/usr/lib/python3.12/ast.py\", line 52, in parse\n    return compile(source, filename, mode, flags,\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n",
+            "  File \"<unknown>\", line 2141\n",
+            "    between=[\"start_date + 60 days\",\"start_date + 240 days\"] ##\n",
+            "            ^^^^^^^^^^^^^^^^^^\n",
+            "SyntaxError: invalid syntax. Perhaps you forgot a comma?\n"
+        ]
+    }
+}
