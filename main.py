@@ -1,4 +1,7 @@
+import argparse
 import json
+import subprocess
+import sys
 
 from dotenv import load_dotenv
 
@@ -9,7 +12,7 @@ from parsing import get_study_variables
 load_dotenv()
 
 
-def main():
+def fetch():
     results = {}
     parsing_errors = {}
 
@@ -38,5 +41,34 @@ def main():
         json.dump(parsing_errors, f, indent=4)
 
 
+def _launch_notebook(notebook_path: str = "notebooks/names.py") -> None:
+    """Start marimo in edit mode for the given notebook."""
+
+    command = [sys.executable, "-m", "marimo", "edit", notebook_path]
+    subprocess.run(command, check=True)
+
+
 if __name__ == "__main__":
-    main()
+    parser = argparse.ArgumentParser(description="Cohort extractor variable utilities")
+    subparsers = parser.add_subparsers(dest="command")
+
+    subparsers.add_parser("fetch", help="Fetch cohort extractor variables and errors")
+
+    notebook_parser = subparsers.add_parser(
+        "notebook", help="Open the marimo notebook in edit mode"
+    )
+    notebook_parser.add_argument(
+        "--path",
+        default="notebooks/names.py",
+        help="Path to the marimo notebook to edit",
+    )
+
+    args = parser.parse_args()
+
+    if args.command in (None, "fetch"):
+        fetch()
+    elif args.command == "notebook":
+        _launch_notebook(args.path)
+    else:  # pragma: no cover - argparse restricts possibilities
+        parser.print_help()
+        sys.exit(1)
