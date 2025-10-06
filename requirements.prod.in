@@ -7,3 +7,4 @@ pyyaml
 dotenv
 marimo
 nltk
+scipy
