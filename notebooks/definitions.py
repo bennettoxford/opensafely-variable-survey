@@ -37,9 +37,13 @@ def _(json, pd):
 
 
 @app.cell
-def _(df, mo):
+def _(mo):
     mo.md(
-        f"Number of exact unique variable definitions: {df.variable_definition.str.lower().nunique()} / {len(df.index)}"
+        r"""
+    # Analysis of variation in cohort extractor variable definitions
+
+    ## Summary statistics
+    """
     )
     return
 
@@ -47,7 +51,15 @@ def _(df, mo):
 @app.cell
 def _(df, mo):
     mo.md(
-        f"Number of whitespace-removed unique variable definitions: {df.variable_definition.str.lower().str.replace(pat=r'\s+', repl='', regex=True).nunique()} / {len(df.index)}"
+        f"""Number of exact unique variable definitions: {df.variable_definition.str.lower().nunique()} / {len(df.index)}"""
+    )
+    return
+
+
+@app.cell
+def _(df, mo):
+    mo.md(
+        f"""Number of whitespace-removed unique variable definitions: {df.variable_definition.str.lower().str.replace(pat=r"\s+", repl="", regex=True).nunique()} / {len(df.index)}"""
     )
     return
 
@@ -74,9 +86,27 @@ def _(mo):
 
 @app.cell
 def _(df):
-    df[df.variable_name != "index_date"].groupby(
-        "variable_name"
-    ).variable_definition.nunique().sort_values(ascending=False)
+    df_most_definitions = (
+        df[df.variable_name != "index_date"]
+        .groupby("variable_name")
+        .variable_definition.nunique()
+        .rename("unique_definitions")
+        .sort_values(ascending=False)
+    )
+
+    df_most_definitions
+    return (df_most_definitions,)
+
+
+@app.cell
+def _(mo):
+    mo.md(
+        r"""
+    ## Individual definition analysis
+
+    ### Age:
+    """
+    )
     return
 
 
@@ -87,8 +117,50 @@ def _(df):
 
 
 @app.cell
-def _(df):
-    df[df.variable_name == "ethnicity"].variable_definition.value_counts()
+def _(mo):
+    mo.md(
+        r"""Per-variable expectations definitions (a feature of the cohort extractor API) are a source of spurious variation, let's remove them in the next tables."""
+    )
+    return
+
+
+@app.cell
+def _():
+    import ast
+
+    def remove_expectations(variable: str) -> str:
+        mod = ast.parse(variable)
+        for b in mod.body:
+            if not isinstance(b, ast.Expr):
+                continue
+            if isinstance(b.value, ast.Call):
+                for _i, kw in enumerate(b.value.keywords):
+                    if kw.arg == "return_expectations":
+                        mod.body[0].value.keywords.pop(_i)
+        return ast.unparse(mod)
+
+    return (remove_expectations,)
+
+
+@app.cell
+def _(df_most_definitions, mo):
+    var_ddl = mo.ui.dropdown(options=df_most_definitions.head(10).index)
+    var_ddl
+    return (var_ddl,)
+
+
+@app.cell
+def _(mo, var_ddl):
+    selected_var = var_ddl.value
+    mo.md(f"### {selected_var.title()}:")
+    return
+
+
+@app.cell
+def _(df, remove_expectations, var_ddl):
+    df[df.variable_name == var_ddl.selected_key].variable_definition.apply(
+        remove_expectations
+    ).value_counts()
     return
 
 

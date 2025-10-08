@@ -142,7 +142,7 @@ def _(df, jaro_winkler_similarity, product):
 @app.cell
 def _(chain, mo, similarities, stats):
     mo.md(
-        f"Anderson-Darling test for fit with normal distribution result was: '{stats.anderson(list(chain.from_iterable(similarities.values()))).fit_result.success}' therefore we can assume normally distributed."
+        f"""Anderson-Darling test for fit with normal distribution result was: '{stats.anderson(list(chain.from_iterable(similarities.values()))).fit_result.success}' therefore we can assume normally distributed."""
     )
     return
 
@@ -158,7 +158,6 @@ def _(chain, defaultdict, similarities, stats):
         for v in sim_v:
             zscores[sim_k].append(zscores_flat[zs_ix])
             zs_ix += 1
-
     return (zscores,)
 
 
@@ -179,7 +178,6 @@ def _(zscores):
                     found = True
             if not found:
                 clusters.append({i, j})
-
     return (clusters,)
 
 
