@@ -121,7 +121,7 @@ fix: devenv
 
 # Run the dev project
 run: devenv
-    echo "Not implemented yet"
+    python main.py
 
 
 

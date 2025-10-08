@@ -41,10 +41,12 @@ def fetch():
         json.dump(parsing_errors, f, indent=4)
 
 
-def _launch_notebook(notebook_path: str = "notebooks/names.py") -> None:
+def _launch_notebook(notebook_path: str | None) -> None:
     """Start marimo in edit mode for the given notebook."""
 
-    command = [sys.executable, "-m", "marimo", "edit", notebook_path]
+    command = [sys.executable, "-m", "marimo", "edit"] + (
+        [notebook_path] if notebook_path else []
+    )
     subprocess.run(command, check=True)
 
 
@@ -55,20 +57,19 @@ if __name__ == "__main__":
     subparsers.add_parser("fetch", help="Fetch cohort extractor variables and errors")
 
     notebook_parser = subparsers.add_parser(
-        "notebook", help="Open the marimo notebook in edit mode"
+        "notebook", help="Open the marimo in edit mode"
     )
     notebook_parser.add_argument(
         "--path",
-        default="notebooks/names.py",
         help="Path to the marimo notebook to edit",
     )
 
     args = parser.parse_args()
 
-    if args.command in (None, "fetch"):
-        fetch()
-    elif args.command == "notebook":
-        _launch_notebook(args.path)
-    else:  # pragma: no cover - argparse restricts possibilities
-        parser.print_help()
-        sys.exit(1)
+    if "command" in args:
+        if args.command == "fetch":
+            fetch()
+        elif args.command == "notebook":
+            _launch_notebook(args.path)
+    parser.print_help()
+    sys.exit(1)
