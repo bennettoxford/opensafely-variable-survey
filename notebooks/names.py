@@ -6,6 +6,18 @@ app = marimo.App(width="medium")
 
 
 @app.cell
+def _(mo):
+    mo.md(
+        r"""
+    # Analysing names of variables in cohort-extrtactor studies
+
+    ## Summary Statistics
+    """
+    )
+    return
+
+
+@app.cell
 def _():
     import json
     from itertools import chain, product
@@ -50,12 +62,6 @@ def _(variables):
 def _(flattened, pd):
     df = pd.DataFrame(flattened)
     return (df,)
-
-
-@app.cell
-def _(df):
-    df
-    return
 
 
 @app.cell
@@ -142,7 +148,11 @@ def _(df, jaro_winkler_similarity, product):
 @app.cell
 def _(chain, mo, similarities, stats):
     mo.md(
-        f"""Anderson-Darling test for fit with normal distribution result was: '{stats.anderson(list(chain.from_iterable(similarities.values()))).fit_result.success}' therefore we can assume normally distributed."""
+        f"""
+    Anderson-Darling test for fit with normal distribution result was: '{stats.anderson(list(chain.from_iterable(similarities.values()))).fit_result.success}' therefore we can assume normally distributed.
+
+    Therefore, let's cluster where similarity is > 2 s.d. above mean.
+    """
     )
     return
 
@@ -196,6 +206,34 @@ def _(clusters):
 @app.cell
 def _(jaro_winkler_similarity, unique_variable_names):
     jaro_winkler_similarity(*unique_variable_names[634:636])
+    return
+
+
+@app.cell
+def _(unique_variable_names):
+    unique_variable_names[634:636]
+    return
+
+
+@app.cell
+def _(mo):
+    mo.md(r"""## Prefix matching""")
+    return
+
+
+@app.cell
+def _(unique_variable_names):
+    prefix_matches = {
+        _u: [_v for _v in unique_variable_names if _v.startswith(_u) and _v != _u]
+        for _u in unique_variable_names
+        if any([_v for _v in unique_variable_names if _v.startswith(_u) and _v != _u])
+    }
+    return (prefix_matches,)
+
+
+@app.cell
+def _(prefix_matches):
+    prefix_matches
     return
 
 

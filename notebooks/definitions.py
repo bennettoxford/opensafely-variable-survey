@@ -152,7 +152,7 @@ def _(df_most_definitions, mo):
 @app.cell
 def _(mo, var_ddl):
     selected_var = var_ddl.value
-    mo.md(f"### {selected_var.title()}:")
+    mo.md(f"### {selected_var.title() if selected_var else 'No variable selected'}:")
     return
 
 
