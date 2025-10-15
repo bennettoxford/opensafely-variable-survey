@@ -1,0 +1,21 @@
+{
+  "studyend_date": "2022-04-01",
+  "pandemicstart_date": "2020-02-01",
+  "mid2018_date": "2018-08-01",
+  "mid2019_date": "2019-08-01",
+  "feasibilityend_date": "2019-12-31",
+  "landmark_date": "2019-12-31",
+  "studystart_date": "2022-04-01",
+  "ref_age_1": "2020-01-01",
+  "ref_age_2": "2020-01-01",
+  "ref_cev": "2020-01-01",
+  "ref_ar": "2020-01-01",
+  "pandemic_start": "2020-01-01",
+  "vax1_earliest": "2020-01-01",
+  "vax2_earliest": "2020-01-01",
+  "vax3_earliest": "2020-01-01",
+  "delta_date": "2020-01-01",
+  "omicron_date": "2020-01-01",
+  "all_eligible": "2020-01-01",
+  "lcd_date": "2020-01-01"
+}

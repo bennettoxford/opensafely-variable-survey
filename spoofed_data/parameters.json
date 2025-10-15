@@ -1,0 +1,9 @@
+{
+  "snapshot_date": {
+    "default": "20201207"
+  },
+  "start_date": {
+    "default": "20220101",
+    "opensafely/winter_pressures_inequalities": "2021-09-01"
+  }
+}
