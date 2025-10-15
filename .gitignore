@@ -5,3 +5,6 @@
 /htmlcov
 .env
 **/__marimo__
+
+.ehrql_repo_cache/
+ehrql_qm_dump.json

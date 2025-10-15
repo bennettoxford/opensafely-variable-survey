@@ -95,6 +95,9 @@ project:
 - `expr_hash` is a deterministic SHA-256 hash of the `ehrql` query-model node;
   `expr_hash_no_codes` removes code sets to normalise across codelist variants.
 
+The `ehrql_variables.json` file is currently manually copy/pasted into [this repository](https://github.com/bennettoxford/rsi-prototypes/)
+and made available via a tool deployed [here](https://dolphin-app-z2vdi.ondigitalocean.app/ehrql-variable-explorer).
+
 `ehrql_qm_dump.json` maps every `expr_hash_no_codes` to the corresponding query
 model string which might be useful for future debugging, but is massive and so
 not committed to git.

@@ -1238,16 +1238,6 @@ def parse_project_yaml(repo_root: pathlib.Path) -> list[str]:
                     )
                     sys.exit(1)
 
-                # for i, part in enumerate(parts):
-                #     if "generate-dataset" in part or "generate_dataset" in part:
-                #         if i + 1 < len(parts):
-                #             dataset_file = parts[i + 1]
-                #             # Clean up any additional args
-                #             dataset_file = dataset_file.split()[0].strip()
-                #             if dataset_file.endswith(".py"):
-                #                 dataset_files.add(dataset_file)
-                #                 break
-
         return list(dataset_files)
     except (GitHubError, yaml.YAMLError, KeyError) as _:
         return []
@@ -1367,19 +1357,6 @@ def collect(
                 verbose=verbose,
             )
         )
-        # Remove rows from files that had no captured datasets
-        # if excluded_files:
-        #     original_count = len(all_records)
-        #     all_records = [
-        #         r
-        #         for r in all_records
-        #         if r.dataset_file not in excluded_files or r.project_name != repo_name
-        #     ]
-        #     if not silent and len(all_records) < original_count:
-        #         print(
-        #             f"..Excluded {original_count - len(all_records)} rows from {len(excluded_files)} file(s) with no datasets",
-        #             file=sys.stderr,
-        #         )
 
     # Write JSON with structure project -> dataset_file -> list of [variable_name, expression, permalink, series_type]
     out_map: dict[str, dict[str, Any]] = {}
