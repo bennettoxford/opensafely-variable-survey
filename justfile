@@ -130,7 +130,9 @@ fix: devenv
 run: devenv
     python main.py
 
-
+# Run the ehrQL extractor script
+ehrql *args: devenv
+    python ehrql_extractor.py {{ args }}
 
 # Remove built assets and collected static files
 assets-clean:
