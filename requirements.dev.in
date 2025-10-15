@@ -5,8 +5,12 @@
 # pip-compile --generate-hashes --output-file=requirements.dev.txt requirements.dev.in
 
 coverage
+opensafely-ehrql @ git+https://github.com/opensafely-core/ehrql@main
 pip-tools
 pre-commit
+pyarrow>=10.0
 pytest
 pyyaml
 ruff
+pandas>=1.5
+numpy>=1.23

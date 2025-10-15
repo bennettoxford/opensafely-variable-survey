@@ -1,0 +1,23 @@
+{
+  "opensafely/disparities-comparison": ["infants_subgroup", "study_start_date", "study_end_date"],
+  "opensafely/open-pathology-sdr": ["--codelist", "codelists/opensafely-cholesterol-tests.csv"],
+  "opensafely/open-pathology": ["--test", "alt_mtx"],
+  "opensafely/digital-access-to-primary-care": [
+    "--start-date",
+    "2020-01-01",
+    "--end-date",
+    "2022-12-31"
+  ],
+  "opensafely/COMPARES-vaccines": [
+    "--studystart_date",
+    "2020-01-01",
+    "--studyend_date",
+    "2022-12-31"
+  ],
+  "opensafely/WinterPressuresDescriptive": ["--patient_measures", "--start_cohort", "2020-01-01"],
+  "opensafely/pincer-measures": ["--start-date", "2020-01-01", "--end-date", "2022-12-31"],
+  "opensafely/openprompt-cohort-profile": ["--window", "5", "--day", "0"],
+  "opensafely/openprompt-hrqol": ["--window", "5", "--day", "0"],
+  "opensafely/isaric-exploration": ["--admission_method", "B"],
+  "opensafely/airmid-data-development": ["--window", "5", "--day", "0"]
+}
