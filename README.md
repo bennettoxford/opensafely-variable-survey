@@ -129,6 +129,9 @@ files are regenerated from `csv_data.csv` automatically by the main script each 
 - [ ] Increase line-number coverage for variable assignments.
   - [ ] Sometimes the line number is for a different file, so the output should be the filename and line number.
   - [ ] Still some variables have no line number at all.
+- [ ] Improve the fuzzy matching:
+  - [ ] `where()` followed by `sort_by()` result in the same things, but the current variant analysis treats these as different things
+  - [ ] Multiple `where()` commands can be chained together. Two variables that only differ in the order of the `where()` statements currently show as different things
 
 ## Developer docs
 
