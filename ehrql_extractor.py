@@ -6,7 +6,6 @@ See README.md for usage.
 from __future__ import annotations
 
 import argparse
-import ast
 import base64
 import builtins
 import datetime
@@ -226,7 +225,7 @@ class VariableRecord:
     file_name: str
     variable_name: str
     series_type: str
-    line_no: int
+    line_no: int | tuple[str, int]
     qm_node: str
 
 
@@ -593,328 +592,100 @@ def spoof_args(verbose: bool = False) -> list:
     return []
 
 
-def extract_variable_line_numbers(file_path: pathlib.Path) -> dict[str, int]:
-    """Parse Python file with AST to extract line numbers for dataset variable assignments.
+# Import the refactored variable extraction functionality
+from parsing.ehrql_variable_extractor import extract_variable_line_numbers  # noqa: E402
 
-    Handles:
-    - dataset.variable_name = expression
-    - dataset.define(variable_name=expression)
-    - dataset.add_column(variable_name, expression)
-    - dataset = generate_dataset() (looks inside generate_dataset function if in same file or imported)
 
-    Returns dict mapping variable_name -> line_number
+def normalize_qm_node(qm_node: qm.Node) -> qm.Node:
+    """Normalize a QM node by reordering Filter and Sort operations.
+
+    Ensures Filters always come before Sorts, as they are semantically equivalent
+    but we want a canonical ordering for comparison purposes.
+
+    Recursively normalizes all nested nodes and applies transformations until
+    a fixed point is reached.
+
+    Filter(source=Sort(source=X, sort_by=Y), condition=Z)
+    becomes:
+    Sort(source=Filter(source=X, condition=Z), sort_by=Y)
+
+    Filter(Filter(Sort(X))) becomes Sort(Filter(Filter(X)))
     """
-    line_numbers = {}
-    line_number_regexes = []
 
-    try:
-        parent_dir = file_path.parent
-        with open(file_path, encoding="utf-8") as f:
-            source = f.read()
+    def normalize_once(node: qm.Node) -> qm.Node:
+        """Apply one pass of normalization, recursively normalizing children first."""
+        # First, recursively normalize all child nodes that are qm.Nodes
+        if hasattr(node, "__dataclass_fields__"):
+            # Build a dict of normalized field values
+            normalized_fields = {}
+            for field_name in node.__dataclass_fields__:
+                field_value = getattr(node, field_name)
+                if isinstance(field_value, qm.Node):
+                    # Recursively normalize this child node
+                    normalized_fields[field_name] = normalize_once(field_value)
+                else:
+                    # Keep non-Node fields as-is
+                    normalized_fields[field_name] = field_value
 
-        tree = ast.parse(source, filename=str(file_path))
+            # Create a new node with normalized children
+            node = node.__class__(**normalized_fields)
 
-        # Collect imports and function definitions
-        function_defs = {}  # Maps function name to the function node
-        imported_modules = {}  # Maps imported name to (module, original_name)
+        # Now check if this node itself needs transformation
+        # Check if this is a Filter with a Sort as its source
+        if (
+            node.__class__.__name__ == "Filter"
+            and hasattr(node, "source")
+            and hasattr(node, "condition")
+            and node.source.__class__.__name__ == "Sort"
+            and hasattr(node.source, "source")
+            and hasattr(node.source, "sort_by")
+        ):
+            # Swap: Filter(Sort(X)) -> Sort(Filter(X))
+            # Original: Filter(source=Sort(source=X, sort_by=Y), condition=Z)
+            # Result:   Sort(source=Filter(source=X, condition=Z), sort_by=Y)
 
-        for node in ast.walk(tree):
-            # Collect all function definitions in this file
-            if isinstance(node, ast.FunctionDef):
-                function_defs[node.name] = node
+            # Get the inner components
+            sort_node = node.source  # The Sort node
+            original_source = sort_node.source  # X - what Sort was sorting
+            sort_by = sort_node.sort_by  # Y - how to sort
+            condition = node.condition  # Z - the filter condition
 
-            # Track imports: from module import function
-            if isinstance(node, ast.ImportFrom):
-                module_name = node.module or ""
-                for alias in node.names:
-                    imported_name = alias.asname if alias.asname else alias.name
-                    imported_modules[imported_name] = (module_name, alias.name)
+            # Create new Filter with the original source
+            Filter = node.__class__
+            new_filter = Filter(source=original_source, condition=condition)
 
-            # Track imports: import module
-            elif isinstance(node, ast.Import):
-                for alias in node.names:
-                    imported_name = alias.asname if alias.asname else alias.name
-                    imported_modules[imported_name] = (alias.name, None)
+            # Create new Sort with the new Filter as source
+            Sort = sort_node.__class__
+            return Sort(source=new_filter, sort_by=sort_by)
 
-        # Find where dataset is assigned
-        for node in ast.walk(tree):
-            # Find: dataset = something()
-            if isinstance(node, ast.Assign):
-                for target in node.targets:
-                    if isinstance(target, ast.Name) and target.id == "dataset":
-                        # Check if it's assigned from a function call
-                        if isinstance(node.value, ast.Call):
-                            # Get the function name
-                            func_name = None
-                            if isinstance(node.value.func, ast.Name):
-                                func_name = node.value.func.id
+        return node
 
-                            if func_name == "create_dataset":
-                                continue
-                            # First, try to find the function in this file
-                            if func_name and func_name in function_defs:
-                                func_def = function_defs[func_name]
-                                # Look for dataset.var assignments inside this function
-                                for func_node in ast.walk(func_def):
-                                    if isinstance(func_node, ast.Assign):
-                                        for func_target in func_node.targets:
-                                            if isinstance(func_target, ast.Attribute):
-                                                if (
-                                                    isinstance(
-                                                        func_target.value, ast.Name
-                                                    )
-                                                    and func_target.value.id
-                                                    == "dataset"
-                                                ):
-                                                    var_name = func_target.attr
-                                                    line_numbers[var_name] = (
-                                                        func_node.lineno
-                                                    )
+    # Keep applying normalization until we reach a fixed point
+    # (i.e., no more changes occur)
+    max_iterations = 100  # Safety limit to prevent infinite loops
+    prev_node = None
+    current_node = qm_node
 
-                                    # Also handle dataset.define() inside the function
-                                    elif isinstance(func_node, ast.Call):
-                                        if isinstance(func_node.func, ast.Attribute):
-                                            if (
-                                                isinstance(
-                                                    func_node.func.value, ast.Name
-                                                )
-                                                and func_node.func.value.id == "dataset"
-                                            ):
-                                                # Handle dataset.define(variable_name=expression)
-                                                if func_node.func.attr == "define":
-                                                    print("DEFINE")
-                                                    sys.exit(0)
-                                                    for keyword in func_node.keywords:
-                                                        if keyword.arg:
-                                                            line_numbers[
-                                                                keyword.arg
-                                                            ] = func_node.lineno
-                                                # Handle dataset.add_column("variable_name", expression)
-                                                elif (
-                                                    func_node.func.attr == "add_column"
-                                                ):
-                                                    if (
-                                                        func_node.args
-                                                        and len(func_node.args) >= 1
-                                                    ):
-                                                        first_arg = func_node.args[0]
-                                                        # Extract string literal from first argument
-                                                        if isinstance(
-                                                            first_arg, ast.Constant
-                                                        ):
-                                                            var_name = first_arg.value
-                                                            if isinstance(
-                                                                var_name, str
-                                                            ):
-                                                                line_numbers[
-                                                                    var_name
-                                                                ] = func_node.lineno
+    for _ in range(max_iterations):
+        current_node = normalize_once(current_node)
+        # Check if we've reached a fixed point by comparing string representations
+        # (comparing objects directly won't work as they're new instances)
+        if prev_node is not None and str(current_node) == str(prev_node):
+            break
+        prev_node = current_node
 
-                            # Second, try to find the function in imported modules
-                            elif func_name and func_name in imported_modules:
-                                module_name, original_func_name = imported_modules[
-                                    func_name
-                                ]
-                                # Try to resolve the imported module relative to current file
-                                if module_name:
-                                    module_parts = module_name.split(".")
-                                    module_rel_path = pathlib.Path(*module_parts)
-                                    # Build candidate files walking up the directory tree so that
-                                    # imports like `from analysis.foo import bar` resolve when the
-                                    # current file already lives inside analysis/.
-                                    candidate_files: list[pathlib.Path] = []
-                                    for ancestor in [parent_dir, *parent_dir.parents]:
-                                        base = ancestor / module_rel_path
-                                        candidate_files.append(base.with_suffix(".py"))
-                                        candidate_files.append(base / "__init__.py")
-                                        if ancestor == ancestor.parent:
-                                            break
-                                    # Deduplicate while preserving order
-                                    seen_candidates = set()
-                                    ordered_candidates = []
-                                    for candidate in candidate_files:
-                                        candidate_str = str(candidate)
-                                        if candidate_str not in seen_candidates:
-                                            seen_candidates.add(candidate_str)
-                                            ordered_candidates.append(candidate)
-                                    for module_file in ordered_candidates:
-                                        if not module_file.exists():
-                                            continue
-                                        try:
-                                            with open(
-                                                module_file, encoding="utf-8"
-                                            ) as mf:
-                                                module_source = mf.read()
-                                            module_tree = ast.parse(
-                                                module_source, filename=str(module_file)
-                                            )
-
-                                            target_func_name = (
-                                                original_func_name or func_name
-                                            )
-                                            for module_node in ast.walk(module_tree):
-                                                if (
-                                                    isinstance(
-                                                        module_node, ast.FunctionDef
-                                                    )
-                                                    and module_node.name
-                                                    == target_func_name
-                                                ):
-                                                    for func_node in ast.walk(
-                                                        module_node
-                                                    ):
-                                                        if isinstance(
-                                                            func_node, ast.Assign
-                                                        ):
-                                                            for (
-                                                                func_target
-                                                            ) in func_node.targets:
-                                                                if isinstance(
-                                                                    func_target,
-                                                                    ast.Attribute,
-                                                                ):
-                                                                    if (
-                                                                        isinstance(
-                                                                            func_target.value,
-                                                                            ast.Name,
-                                                                        )
-                                                                        and func_target.value.id
-                                                                        == "dataset"
-                                                                    ):
-                                                                        var_name = func_target.attr
-                                                                        line_numbers[
-                                                                            var_name
-                                                                        ] = func_node.lineno
-
-                                                        elif isinstance(
-                                                            func_node, ast.Call
-                                                        ):
-                                                            if isinstance(
-                                                                func_node.func,
-                                                                ast.Attribute,
-                                                            ):
-                                                                if (
-                                                                    isinstance(
-                                                                        func_node.func.value,
-                                                                        ast.Name,
-                                                                    )
-                                                                    and func_node.func.value.id
-                                                                    == "dataset"
-                                                                ):
-                                                                    # Handle dataset.define(variable_name=expression)
-                                                                    if (
-                                                                        func_node.func.attr
-                                                                        == "define"
-                                                                    ):
-                                                                        print("DEFINE")
-                                                                        sys.exit(0)
-                                                                        for keyword in func_node.keywords:
-                                                                            if keyword.arg:
-                                                                                line_numbers[
-                                                                                    keyword.arg
-                                                                                ] = func_node.lineno
-                                                                    # Handle dataset.add_column("variable_name", expression)
-                                                                    elif (
-                                                                        func_node.func.attr
-                                                                        == "add_column"
-                                                                    ):
-                                                                        if (
-                                                                            func_node.args
-                                                                            and len(
-                                                                                func_node.args
-                                                                            )
-                                                                            >= 1
-                                                                        ):
-                                                                            first_arg = func_node.args[
-                                                                                0
-                                                                            ]
-                                                                            if isinstance(
-                                                                                first_arg,
-                                                                                ast.Constant,
-                                                                            ):
-                                                                                var_name = first_arg.value
-                                                                                if isinstance(
-                                                                                    var_name,
-                                                                                    str,
-                                                                                ):
-                                                                                    line_numbers[
-                                                                                        var_name
-                                                                                    ] = func_node.lineno
-                                                    break
-                                            break
-                                        except Exception:
-                                            continue
-
-        # Second pass: look for direct dataset assignments at module level
-        for node in ast.walk(tree):
-            # Handle: dataset.variable_name = expression
-            if isinstance(node, ast.Assign):
-                for target in node.targets:
-                    if isinstance(target, ast.Attribute):
-                        # Check if it's dataset.something
-                        if (
-                            isinstance(target.value, ast.Name)
-                            and target.value.id == "dataset"
-                        ):
-                            var_name = target.attr
-                            # Only override if we haven't seen this variable yet
-                            # (function definitions take precedence as they're where vars are actually defined)
-                            if var_name not in line_numbers:
-                                line_numbers[var_name] = node.lineno
-
-            # Handle: dataset.define(variable_name=expression, ...) and dataset.add_column()
-            elif isinstance(node, ast.Call):
-                if isinstance(node.func, ast.Attribute):
-                    if (
-                        isinstance(node.func.value, ast.Name)
-                        and node.func.value.id == "dataset"
-                    ):
-                        # Handle dataset.define(variable_name=expression)
-                        if node.func.attr == "define":
-                            print("DEFINE")
-                            sys.exit(0)
-                            # Extract keyword arguments
-                            for keyword in node.keywords:
-                                if keyword.arg and keyword.arg not in line_numbers:
-                                    line_numbers[keyword.arg] = node.lineno
-
-                        # Handle dataset.add_column("variable_name", expression)
-                        elif node.func.attr == "add_column":
-                            if node.args and len(node.args) >= 1:
-                                first_arg = node.args[0]
-                                # Extract string literal from first argument
-                                if isinstance(first_arg, ast.Constant):
-                                    var_name = first_arg.value
-                                    if (
-                                        isinstance(var_name, str)
-                                        and var_name not in line_numbers
-                                    ):
-                                        line_numbers[var_name] = node.lineno
-                                elif isinstance(first_arg, ast.JoinedStr):
-                                    # Handle f-strings by concatenating into a regex-like string
-                                    parts = []
-                                    for value in first_arg.values:
-                                        if isinstance(value, ast.Constant):
-                                            parts.append(str(value.value))
-                                        else:
-                                            parts.append(".+")
-                                    var_regex = "".join(parts)
-                                    if var_regex not in line_numbers:
-                                        line_number_regexes.append(
-                                            (var_regex, node.lineno)
-                                        )
-
-        return line_numbers, line_number_regexes
-
-    except Exception:
-        # If AST parsing fails, return empty dict
-        return {}, []
+    return current_node
 
 
-def compact_qm_node(qm_node: qm.Node) -> str:
+def compact_qm_node(qm_node: qm.Node, _normalized: bool = False) -> str:
     # Navigate all dataclass fields of each node recursively
     # When encountering a SelectTable, replace it entirely with the string from the table name
     try:
+        # First, normalize the node structure (e.g., reorder Filter/Sort)
+        # Only do this at the top level, not recursively
+        if not _normalized:
+            qm_node = normalize_qm_node(qm_node)
+
         if isinstance(qm_node, qm.SelectTable):
             return f"Table({qm_node.name})"
         elif isinstance(qm_node, qm.SelectPatientTable):
@@ -924,18 +695,20 @@ def compact_qm_node(qm_node: qm.Node) -> str:
             for field_name in list(qm_node.__dataclass_fields__):
                 field_value = getattr(qm_node, field_name)
                 if isinstance(field_value, qm.Node):
-                    fields[field_name] = compact_qm_node(field_value)
+                    fields[field_name] = compact_qm_node(field_value, _normalized=True)
                 elif field_name == "cases" and isinstance(field_value, dict):
                     fields[field_name] = ", ".join(
                         [
-                            f"if:{compact_qm_node(k) if isinstance(k, qm.Node) else k}->then:{v}"
+                            f"if:{compact_qm_node(k, _normalized=True) if isinstance(k, qm.Node) else k}->then:{v}"
                             for k, v in field_value.items()
                         ]
                     )
                 elif isinstance(field_value, list):
                     fields[field_name] = ", ".join(
                         [
-                            compact_qm_node(item) if isinstance(item, qm.Node) else item
+                            compact_qm_node(item, _normalized=True)
+                            if isinstance(item, qm.Node)
+                            else item
                             for item in field_value
                         ]
                     )
@@ -944,7 +717,17 @@ def compact_qm_node(qm_node: qm.Node) -> str:
                 elif isinstance(field_value, str):
                     fields[field_name] = field_value
                 elif isinstance(field_value, frozenset):
-                    fields[field_name] = field_value
+                    # Sort frozenset elements for consistent string representation
+                    # Frozensets don't guarantee iteration order, so we sort for stable hashing
+                    try:
+                        sorted_items = sorted(field_value)
+                        fields[field_name] = (
+                            f"frozenset({{{', '.join(repr(x) for x in sorted_items)}}})"
+                        )
+                    except TypeError:
+                        # If items aren't sortable (mixed types), fall back to sorted repr strings
+                        sorted_items = sorted(repr(x) for x in field_value)
+                        fields[field_name] = f"frozenset({{{', '.join(sorted_items)}}})"
                 elif isinstance(field_value, Enum):
                     fields[field_name] = field_value.name
                 elif isinstance(field_value, int):
@@ -987,13 +770,14 @@ def get_runtime_dataset_variables(
             continue
 
         abs_path = abs_path.resolve()
+        resolved_repo_root = repo_root.resolve()
 
         if verbose:
             print(f"..Collecting runtime variables for {abs_path}", file=sys.stderr)
 
         # Extract line numbers from AST before executing the module
         variable_line_numbers, variable_line_number_regexes = (
-            extract_variable_line_numbers(abs_path)
+            extract_variable_line_numbers(abs_path, resolved_repo_root)
         )
         if verbose and variable_line_numbers:
             print(
@@ -1055,9 +839,13 @@ def get_runtime_dataset_variables(
                             if hasattr(mod, "dataset"):
                                 for var_name, series in mod.dataset._variables.items():  # type: ignore[attr-defined]
                                     # Get line number from AST parsing
-                                    line_no = variable_line_numbers.get(var_name, -1)
+                                    line_no: int | tuple[str, int] = (
+                                        variable_line_numbers.get(var_name, -1)
+                                    )
 
-                                    if line_no < 0 and variable_line_number_regexes:
+                                    # Check if we need to try regex matching
+                                    # line_no is either -1 (not found), an int > 0, or a tuple
+                                    if line_no == -1 and variable_line_number_regexes:
                                         # Try to match variable name against regexes
                                         for (
                                             var_regex,
@@ -1078,11 +866,18 @@ def get_runtime_dataset_variables(
                                         )
                                     )
 
-                                    if verbose and line_no > 0:
-                                        print(
-                                            f"....Variable '{var_name}' defined at line {line_no}",
-                                            file=sys.stderr,
-                                        )
+                                    if verbose:
+                                        if isinstance(line_no, tuple):
+                                            file_path, line_num = line_no
+                                            print(
+                                                f"....Variable '{var_name}' defined at {file_path}:{line_num}",
+                                                file=sys.stderr,
+                                            )
+                                        elif line_no > 0:
+                                            print(
+                                                f"....Variable '{var_name}' defined at line {line_no}",
+                                                file=sys.stderr,
+                                            )
                                 del mod.dataset  # type: ignore[attr-defined]
                             else:
                                 if not silent:
@@ -1369,15 +1164,19 @@ def collect(
     for r in sorted(
         all_variables, key=lambda r: (r.project_name, r.file_name, r.variable_name)
     ):
-        # Remove any frozensets of codes or other things in case they only differ by this
+        # expr_hash: full expression with sorted frozensets (stable ordering)
+        # expr_hash_without_codes: frozensets replaced with placeholder for semantic comparison
         node_without_codes = re.sub(
             r"frozenset\(\{[^}]+\}\)", "<<FROZEN_SET>>", r.qm_node
         )
+        node_without_dates = re.sub(
+            r"datetime.date\([^)]+\)", "<<DATE>>", node_without_codes
+        )
         expr_hash = hashlib.sha256(r.qm_node.encode("utf-8")).hexdigest()[:16]
         expr_hash_without_codes = hashlib.sha256(
-            node_without_codes.encode("utf-8")
+            node_without_dates.encode("utf-8")
         ).hexdigest()[:16]
-        qm_out_map[expr_hash_without_codes] = node_without_codes
+        qm_out_map[expr_hash_without_codes] = node_without_dates
 
         proj = r.project_name
         out_map.setdefault(proj, {})
