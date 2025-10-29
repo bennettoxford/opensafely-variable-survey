@@ -605,11 +605,18 @@ def normalize_qm_node(qm_node: qm.Node) -> qm.Node:
     Recursively normalizes all nested nodes and applies transformations until
     a fixed point is reached.
 
-    Filter(source=Sort(source=X, sort_by=Y), condition=Z)
-    becomes:
-    Sort(source=Filter(source=X, condition=Z), sort_by=Y)
+    Transformations applied:
+    1. Filter with And condition:
+       Filter(source=X, condition=And(lhs=L, rhs=R))
+       becomes:
+       Filter(source=Filter(source=X, condition=L), condition=R)
 
-    Filter(Filter(Sort(X))) becomes Sort(Filter(Filter(X)))
+    2. Filter with Sort source:
+       Filter(source=Sort(source=X, sort_by=Y), condition=Z)
+       becomes:
+       Sort(source=Filter(source=X, condition=Z), sort_by=Y)
+
+    Example: Filter(Filter(Sort(X))) becomes Sort(Filter(Filter(X)))
     """
 
     def normalize_once(node: qm.Node) -> qm.Node:
@@ -631,6 +638,31 @@ def normalize_qm_node(qm_node: qm.Node) -> qm.Node:
             node = node.__class__(**normalized_fields)
 
         # Now check if this node itself needs transformation
+        # Check if this is a Filter with an And condition
+        if (
+            node.__class__.__name__ == "Filter"
+            and hasattr(node, "source")
+            and hasattr(node, "condition")
+            and node.condition.__class__.__name__ == "And"
+            and hasattr(node.condition, "lhs")
+            and hasattr(node.condition, "rhs")
+        ):
+            # Transform: Filter(source=X, condition=And(lhs=L, rhs=R))
+            # into: Filter(source=Filter(source=X, condition=L), condition=R)
+
+            # Get the components
+            original_source = node.source  # X - the original source
+            and_node = node.condition  # The And node
+            lhs_condition = and_node.lhs  # L - left-hand side of And
+            rhs_condition = and_node.rhs  # R - right-hand side of And
+
+            # Create new Filter with the original source and lhs condition
+            Filter = node.__class__
+            new_filter = Filter(source=original_source, condition=lhs_condition)
+
+            # Create outer Filter with the new Filter as source and rhs condition
+            return Filter(source=new_filter, condition=rhs_condition)
+
         # Check if this is a Filter with a Sort as its source
         if (
             node.__class__.__name__ == "Filter"
@@ -681,10 +713,27 @@ def compact_qm_node(qm_node: qm.Node, _normalized: bool = False) -> str:
     # Navigate all dataclass fields of each node recursively
     # When encountering a SelectTable, replace it entirely with the string from the table name
     try:
+        # Handle sets of nodes (e.g., Domain sets)
+        if isinstance(qm_node, set):
+            # Sort by string representation for consistent output
+            sorted_nodes = sorted(qm_node, key=lambda n: str(n))
+            return (
+                "{"
+                + ", ".join(
+                    compact_qm_node(node, _normalized=True) for node in sorted_nodes
+                )
+                + "}"
+            )
+
         # First, normalize the node structure (e.g., reorder Filter/Sort)
         # Only do this at the top level, not recursively
         if not _normalized:
-            qm_node = normalize_qm_node(qm_node)
+            try:
+                qm_node = normalize_qm_node(qm_node)
+            except Exception:
+                # If normalization fails (e.g., ehrql raises "Attempt to combine unrelated domains"),
+                # skip normalization and use the original node
+                pass
 
         if isinstance(qm_node, qm.SelectTable):
             return f"Table({qm_node.name})"
@@ -711,6 +760,21 @@ def compact_qm_node(qm_node: qm.Node, _normalized: bool = False) -> str:
                             else item
                             for item in field_value
                         ]
+                    )
+                elif isinstance(field_value, set):
+                    # Handle sets (e.g., Domain sets)
+                    sorted_items = sorted(field_value, key=lambda x: str(x))
+                    fields[field_name] = (
+                        "{"
+                        + ", ".join(
+                            [
+                                compact_qm_node(item, _normalized=True)
+                                if isinstance(item, qm.Node)
+                                else str(item)
+                                for item in sorted_items
+                            ]
+                        )
+                        + "}"
                     )
                 elif isinstance(field_value, datetime.date):
                     fields[field_name] = "{{DATE}}"
