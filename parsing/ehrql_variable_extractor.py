@@ -209,8 +209,14 @@ class DatasetOperationFinder:
         self,
         node: ast.AST,
         dataset_name: str = "dataset",
+        func_scope: ast.FunctionDef | None = None,
     ) -> tuple[list[tuple[str, int]], list[tuple[str, int]]]:
         """Find setattr(dataset, name, value) calls.
+
+        Args:
+            node: AST node to search
+            dataset_name: Name of the dataset variable
+            func_scope: Optional function definition to resolve variable assignments
 
         Returns:
             Tuple of (static_vars, dynamic_patterns)
@@ -248,7 +254,73 @@ class DatasetOperationFinder:
             if pattern:
                 dynamic_patterns.append((pattern, node.lineno))
 
+        # Handle Name node (variable reference) - try to resolve it
+        elif isinstance(name_arg, ast.Name) and func_scope is not None:
+            # Try to find if this variable was assigned from a .format() call
+            pattern = self._resolve_template_variable(name_arg.id, func_scope)
+            if pattern:
+                dynamic_patterns.append((pattern, node.lineno))
+
         return static_vars, dynamic_patterns
+
+    def _resolve_template_variable(
+        self, var_name: str, func_scope: ast.FunctionDef
+    ) -> str | None:
+        """Resolve a variable that might be assigned from a template.format() call.
+
+        Args:
+            var_name: Name of the variable to resolve
+            func_scope: Function definition containing the variable
+
+        Returns:
+            Regex pattern if the variable is assigned from a .format() call, else None
+        """
+        # Look for assignments like: variable_name = template.format(...)
+        for node in ast.walk(func_scope):
+            if not isinstance(node, ast.Assign):
+                continue
+
+            # Check if this assigns to our variable
+            assigns_to_var = False
+            for target in node.targets:
+                if isinstance(target, ast.Name) and target.id == var_name:
+                    assigns_to_var = True
+                    break
+
+            if not assigns_to_var:
+                continue
+
+            # Check if the value is a .format() call
+            if not isinstance(node.value, ast.Call):
+                continue
+
+            if not isinstance(node.value.func, ast.Attribute):
+                continue
+
+            if node.value.func.attr != "format":
+                continue
+
+            # The object being .format() called on should be a Name (parameter)
+            if not isinstance(node.value.func.value, ast.Name):
+                continue
+
+            # Extract the template parameter name
+            template_param = node.value.func.value.id
+
+            # Check if this parameter is in the function signature
+            param_names = [arg.arg for arg in func_scope.args.args]
+            if template_param not in param_names:
+                continue
+
+            # We found a pattern like: var = template_param.format(...)
+            # The template parameter holds a string with placeholders like "admission{n}_date_sus"
+            # We need to convert this to a regex pattern that matches the expected variables
+            # Since we don't know the actual template value at AST parse time, we mark it
+            # as a generic pattern. The actual template will be resolved from the call site
+            # in the calling code.
+            return "__TEMPLATE_FORMAT__"  # Marker for template.format() pattern
+
+        return None
 
     def find_subscript_assignments(
         self,
@@ -367,9 +439,9 @@ class FunctionAnalyzer:
             static_vars.extend(static)
             dynamic_patterns.extend(dynamic)
 
-            # Check for setattr calls
+            # Check for setattr calls - pass func_scope to resolve template variables
             static, dynamic = self.operation_finder.find_setattr_calls(
-                node, dataset_param_name
+                node, dataset_param_name, func_scope=func_def
             )
             static_vars.extend(static)
             dynamic_patterns.extend(dynamic)
@@ -1239,15 +1311,106 @@ class VariableExtractor:
                         # Return cross-file tuples with the helper file and line
                         rel_path = self.module_resolver.get_relative_path(module_file)
                         for pattern, helper_line in dynamic_patterns:
-                            line_number_regexes.append(
-                                (pattern, (rel_path, helper_line))
-                            )
+                            # Check if this is a template format pattern
+                            if pattern == "__TEMPLATE_FORMAT__":
+                                # Try to extract the template string from call arguments
+                                resolved_pattern = self._resolve_template_from_call(
+                                    node, call_node
+                                )
+                                if resolved_pattern:
+                                    line_number_regexes.append(
+                                        (resolved_pattern, (rel_path, helper_line))
+                                    )
+                            else:
+                                line_number_regexes.append(
+                                    (pattern, (rel_path, helper_line))
+                                )
 
                     return static_vars_from_call
             except Exception:
                 continue
 
         return static_vars_from_call
+
+    def _resolve_template_from_call(
+        self, func_def: ast.FunctionDef, call_node: ast.Call
+    ) -> str | None:
+        """Resolve a template string pattern from the call site.
+
+        Looks for a string argument passed to the function that contains format
+        placeholders like {n}, {i}, etc., and converts it to a regex pattern.
+
+        Args:
+            func_def: Function definition
+            call_node: Call node at the call site
+
+        Returns:
+            Regex pattern string, or None if not found
+        """
+        # Find which parameter receives the template string
+        # Look for .format() calls in the function to identify the parameter
+        template_param_name: str | None = None
+
+        for node in ast.walk(func_def):
+            if not isinstance(node, ast.Assign):
+                continue
+
+            # Look for pattern: var = param.format(...)
+            if not isinstance(node.value, ast.Call):
+                continue
+
+            if not isinstance(node.value.func, ast.Attribute):
+                continue
+
+            if node.value.func.attr != "format":
+                continue
+
+            if isinstance(node.value.func.value, ast.Name):
+                # This is the parameter that holds the template
+                candidate = node.value.func.value.id
+                param_names = [arg.arg for arg in func_def.args.args]
+                if candidate in param_names:
+                    template_param_name = candidate
+                    break
+
+        if not template_param_name:
+            return None
+
+        # Find the index of this parameter
+        param_index = None
+        for idx, param in enumerate(func_def.args.args):
+            if param.arg == template_param_name:
+                param_index = idx
+                break
+
+        if param_index is None or param_index >= len(call_node.args):
+            return None
+
+        # Extract the template string from the call arguments
+        template_arg = call_node.args[param_index]
+
+        if not (
+            isinstance(template_arg, ast.Constant)
+            and isinstance(template_arg.value, str)
+        ):
+            return None
+
+        template_string = template_arg.value
+
+        # Convert template string with placeholders like {n} to regex
+        # First, replace {anything} with a placeholder marker
+        import re as re_module
+
+        placeholder_marker = "___PLACEHOLDER___"
+        temp = re_module.sub(r"\{[^}]+\}", placeholder_marker, template_string)
+
+        # Escape the rest of the string for regex
+        escaped = re_module.escape(temp)
+
+        # Replace the placeholder marker with .*
+        pattern = escaped.replace(placeholder_marker, ".*")
+
+        return pattern
 
 
 def extract_variable_line_numbers(

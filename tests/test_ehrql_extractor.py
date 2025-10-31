@@ -1270,3 +1270,71 @@ class TestCompactQMNode:
         except Exception:
             # If there's an exception, at least verify it's caught gracefully
             pass
+
+
+class TestHelperWithTemplateParameter:
+    """Test Pass 4: Helper functions that receive a template string parameter and use it with .format()."""
+
+    def test_imported_helper_with_template_and_loop(self):
+        """Test imported helper function that receives a template string and uses it in a loop.
+
+        This tests the pattern seen in get_sequential_admissions_date where:
+        1. A helper function is called with a template string like "admission{n}_date_sus"
+        2. Inside the helper, there's a loop that uses .format(n=value) to create variable names
+        3. Variables are set via setattr(dataset, variable_name, ...)
+        """
+        helper_code = """
+def get_sequential_admissions_date(
+    dataset, variable_name_template, admissions_data, num_admissions, admission_method, sort_column=None):
+
+    if admission_method == "C":
+        column = "arrival_date"
+    else:
+        column = "admission_date"
+
+    sort_column = sort_column or column
+
+    for index in range(num_admissions):
+        next_admission = admissions_data.sort_by(admissions_data[sort_column]).first_for_patient()
+        admissions_data = admissions_data.where(
+            admissions_data[sort_column] > next_admission[sort_column]
+        )
+        variable_name = variable_name_template.format(n=index + 1)
+        setattr(dataset, variable_name, next_admission[column])
+"""
+        main_code = """
+from ehrql import Dataset
+from variables import get_sequential_admissions_date
+
+dataset = Dataset()
+
+# This is the pattern from dataset_definition_sus.py
+get_sequential_admissions_date(dataset, "admission{n}_date_sus", admissions_data_sus, 5, admission_method)
+"""
+        with tempfile.TemporaryDirectory() as tmpdir:
+            repo_root = pathlib.Path(tmpdir)
+            helper_path = repo_root / "variables.py"
+            helper_path.write_text(helper_code)
+            file_path = repo_root / "dataset_definition.py"
+            file_path.write_text(main_code)
+
+            line_numbers, regexes = extract_variable_line_numbers(file_path, repo_root)
+
+            # Should extract a regex pattern for the dynamic variables
+            assert len(regexes) >= 1
+            patterns = [r[0] for r in regexes]
+
+            # Should match variables like admission1_date_sus, admission2_date_sus, etc.
+            # The pattern should be something like "admission.*_date_sus"
+            assert any("admission" in p and "_date_sus" in p for p in patterns)
+
+            # The line number should point to the variables.py file where setattr is called
+            # Check if any regex has a cross-file reference
+            cross_file_patterns = [r for r in regexes if isinstance(r[1], tuple)]
+            assert len(cross_file_patterns) >= 1
+
+            # The file should be variables.py
+            filename, line = cross_file_patterns[0][1]
+            assert filename == "variables.py"
+            # Line should be around where setattr is called (line 17 in the helper code)
+            assert line > 0
