@@ -1,5 +1,5 @@
 {
-  "generated_at": "2025-10-29 16:17:21",
+  "generated_at": "2025-10-31 13:28:44",
   "projects": {
     "opensafely/ADHD-Pre-and-Post-Covid": {
       "sha": "deea8462d4e7ad69ed2bf3d89ee1b31c336056ea",
@@ -100,7 +100,7 @@
             "ami_date",
             "DatePatientSeries",
             608,
-            "318f15cc2cecf9d9",
+            "b31cb06fb21b66fb",
             "ef83e41263035b1e"
           ],
           [
@@ -149,7 +149,7 @@
             "anaphylaxis_date",
             "DatePatientSeries",
             742,
-            "a4c497bf66a22869",
+            "33a6e3a31ad224e4",
             "48ed1276c2d687c8"
           ],
           [
@@ -222,7 +222,7 @@
             "ate_date",
             "DatePatientSeries",
             630,
-            "c1a8f9a3f668c127",
+            "06a883bd5699e35f",
             "162df955ab6719c1"
           ],
           [
@@ -271,7 +271,7 @@
             "bells_palsy_date",
             "DatePatientSeries",
             582,
-            "0dc52d23eab5dd31",
+            "dfed07cf6d04fc5e",
             "3b4270bbdbbdab25"
           ],
           [
@@ -471,7 +471,7 @@
             "dvt_date",
             "DatePatientSeries",
             642,
-            "8491c61eee26ba19",
+            "263f400e0b9f0bfb",
             "52e145eb69258b35"
           ],
           [
@@ -527,7 +527,7 @@
             "ery_multi_date",
             "DatePatientSeries",
             729,
-            "ec52349f9bcc8395",
+            "f7c273ad7745d8c6",
             "dfaad0ab4983caf3"
           ],
           [
@@ -611,7 +611,7 @@
             "icvt_date",
             "DatePatientSeries",
             653,
-            "6842bce6fbb22cb4",
+            "276862c500f89041",
             "26f195ad5d16b076"
           ],
           [
@@ -694,7 +694,7 @@
             "menorrhagia_date",
             "DatePatientSeries",
             717,
-            "99a30f099ae2c784",
+            "eb5f3fd274d2c15e",
             "61f9fe347fe0985c"
           ],
           [
@@ -743,7 +743,7 @@
             "myocarditis_date",
             "DatePatientSeries",
             704,
-            "a8bb0006cbb0f339",
+            "ef3a3c1dedd5e610",
             "8404a80be5856070"
           ],
           [
@@ -806,7 +806,7 @@
             "pe_date",
             "DatePatientSeries",
             664,
-            "fd54781d05a70ee3",
+            "0e808822339d6ccb",
             "3712e5417cb41805"
           ],
           [
@@ -855,7 +855,7 @@
             "pericarditis_date",
             "DatePatientSeries",
             690,
-            "e2172bdff2c4dae2",
+            "82199bd86fd244dc",
             "21a148d77a6a50f9"
           ],
           [
@@ -963,7 +963,7 @@
             "sgb_date",
             "DatePatientSeries",
             570,
-            "33e670934e6c6937",
+            "58530a6cf9c94ded",
             "65885dedf12e688c"
           ],
           [
@@ -1029,7 +1029,7 @@
             "stroke_isch_date",
             "DatePatientSeries",
             619,
-            "601404797c59b4d4",
+            "0c1038a8b06ddba3",
             "2f810f9e8e90124a"
           ],
           [
@@ -1078,7 +1078,7 @@
             "ttp_date",
             "DatePatientSeries",
             596,
-            "54ea4bfde48b2f85",
+            "24fba9bebcf0d157",
             "4d9e0ffcf72d8bcd"
           ],
           [
@@ -1268,7 +1268,7 @@
             "vte_date",
             "DatePatientSeries",
             676,
-            "369acd7e3cc9bb53",
+            "9f652ea6f3c2cf46",
             "96cd745814eebf60"
           ],
           [
@@ -1576,22 +1576,22 @@
             "any_infection_or_disease_01",
             "BoolPatientSeries",
             127,
-            "0053947ab8cc7194",
-            "2d85abbafad5c62f"
+            "d3988759b4c9afd4",
+            "5634959fd101c99f"
           ],
           [
             "any_infection_or_disease_14",
             "BoolPatientSeries",
             176,
-            "315b979ec2d05661",
-            "9d6e53fd2be50a88"
+            "c31ad5136a5b481e",
+            "4ef466a7d000d4e6"
           ],
           [
             "any_infection_or_disease_ever",
             "BoolPatientSeries",
             216,
-            "061dcd8def852606",
-            "0b06afda9a775654"
+            "eef9a0909e4d15d3",
+            "c3dd9aa182acf06c"
           ],
           [
             "care_home_code",
@@ -1611,22 +1611,22 @@
             "covidadmitted_01",
             "BoolPatientSeries",
             119,
-            "5a9ffde2ec7df77a",
-            "8064b0a8f4128902"
+            "1bc14e0eff055b53",
+            "ec283a6d4f52d4e1"
           ],
           [
             "covidadmitted_14",
             "BoolPatientSeries",
             165,
-            "ef199e78a8fe86d4",
-            "4913a8d47fae5482"
+            "9f1e4b91f9aedc84",
+            "874d65c356962457"
           ],
           [
             "covidadmitted_ever",
             "BoolPatientSeries",
             208,
-            "57437a4ae3092e74",
-            "a0b991247623c74e"
+            "134dd9ca80d38129",
+            "4dcc98e68b0734a2"
           ],
           [
             "covidemergency_01",
@@ -1861,7 +1861,7 @@
               "analysis/dataset.py",
               151
             ],
-            "1e3a8da5abe6f20a",
+            "f73dd310212097bc",
             "dde82f0de0a4cca4"
           ],
           [
@@ -1871,7 +1871,7 @@
               "analysis/dataset.py",
               157
             ],
-            "dcd1670dc49b99d4",
+            "7bbd35f6f67a47b0",
             "dde82f0de0a4cca4"
           ],
           [
@@ -1881,7 +1881,7 @@
               "analysis/dataset.py",
               169
             ],
-            "8b996318901c5374",
+            "cb541185ce355f8d",
             "dde82f0de0a4cca4"
           ],
           [
@@ -1891,7 +1891,7 @@
               "analysis/dataset.py",
               163
             ],
-            "f6094df0c328f0fb",
+            "ff3967f356b7f88b",
             "0751f00b2f383603"
           ],
           [
@@ -1971,7 +1971,7 @@
               "analysis/dataset.py",
               136
             ],
-            "dfe81344e65f8a8b",
+            "5b7cbc23d9174341",
             "4a1d0ea1a3a7652c"
           ],
           [
@@ -2173,7 +2173,7 @@
               "analysis/dataset.py",
               151
             ],
-            "ed70274ba8da4a96",
+            "8a78e195e589c6f5",
             "dde82f0de0a4cca4"
           ],
           [
@@ -2183,7 +2183,7 @@
               "analysis/dataset.py",
               157
             ],
-            "07f6128f7daba90d",
+            "2b4a123860b7932f",
             "dde82f0de0a4cca4"
           ],
           [
@@ -2193,7 +2193,7 @@
               "analysis/dataset.py",
               169
             ],
-            "ba7f2f41960bd34a",
+            "1c06c3814d3b8510",
             "dde82f0de0a4cca4"
           ],
           [
@@ -2203,7 +2203,7 @@
               "analysis/dataset.py",
               163
             ],
-            "e89d7debfb5fcdc1",
+            "77b1150cec5aa9ff",
             "0751f00b2f383603"
           ],
           [
@@ -2283,7 +2283,7 @@
               "analysis/dataset.py",
               136
             ],
-            "14711859afeba530",
+            "f4cc3ae964eee970",
             "4a1d0ea1a3a7652c"
           ],
           [
@@ -2485,7 +2485,7 @@
               "analysis/dataset.py",
               151
             ],
-            "0f7781dc342471b0",
+            "d544726629e418f7",
             "dde82f0de0a4cca4"
           ],
           [
@@ -2495,7 +2495,7 @@
               "analysis/dataset.py",
               157
             ],
-            "51e4fe128e38e224",
+            "423331460047c89a",
             "dde82f0de0a4cca4"
           ],
           [
@@ -2505,7 +2505,7 @@
               "analysis/dataset.py",
               169
             ],
-            "9c1b52d274dba779",
+            "f84f1ee9f5af3f71",
             "dde82f0de0a4cca4"
           ],
           [
@@ -2515,7 +2515,7 @@
               "analysis/dataset.py",
               163
             ],
-            "1ddeb875f1c92667",
+            "5e277c85f4815374",
             "0751f00b2f383603"
           ],
           [
@@ -2595,7 +2595,7 @@
               "analysis/dataset.py",
               136
             ],
-            "1ebdb3be403b080a",
+            "2632c6e7d441f229",
             "4a1d0ea1a3a7652c"
           ],
           [
@@ -2797,7 +2797,7 @@
               "analysis/dataset.py",
               151
             ],
-            "bb3e92d7de09f9d7",
+            "2627f6ab9d9388e0",
             "dde82f0de0a4cca4"
           ],
           [
@@ -2807,7 +2807,7 @@
               "analysis/dataset.py",
               157
             ],
-            "2da20a792ee8ddb4",
+            "bc5b271f91417b9f",
             "dde82f0de0a4cca4"
           ],
           [
@@ -2817,7 +2817,7 @@
               "analysis/dataset.py",
               169
             ],
-            "041af1f33ca43151",
+            "6fa0f5c2f0f9d2eb",
             "dde82f0de0a4cca4"
           ],
           [
@@ -2827,7 +2827,7 @@
               "analysis/dataset.py",
               163
             ],
-            "3387b42f4a222bac",
+            "747efea939637d13",
             "0751f00b2f383603"
           ],
           [
@@ -2907,7 +2907,7 @@
               "analysis/dataset.py",
               136
             ],
-            "5ef3a87c0eace8e1",
+            "d3170933300d3836",
             "4a1d0ea1a3a7652c"
           ],
           [
@@ -3109,7 +3109,7 @@
               "analysis/dataset.py",
               151
             ],
-            "8370c612c5227ef8",
+            "c722b7b4ad53c5b9",
             "dde82f0de0a4cca4"
           ],
           [
@@ -3119,7 +3119,7 @@
               "analysis/dataset.py",
               157
             ],
-            "fed0822b5c76eaf0",
+            "4e0453d658dec4cb",
             "dde82f0de0a4cca4"
           ],
           [
@@ -3129,7 +3129,7 @@
               "analysis/dataset.py",
               169
             ],
-            "5eca0afd85e04502",
+            "06e1c6d87ecfc096",
             "dde82f0de0a4cca4"
           ],
           [
@@ -3139,7 +3139,7 @@
               "analysis/dataset.py",
               163
             ],
-            "15425706d142fca6",
+            "a7499181b9279ed5",
             "0751f00b2f383603"
           ],
           [
@@ -3219,7 +3219,7 @@
               "analysis/dataset.py",
               136
             ],
-            "5ce14e6bbc031b3c",
+            "98617fbeba3d0e61",
             "4a1d0ea1a3a7652c"
           ],
           [
@@ -5174,28 +5174,28 @@
             "asthma_alive_inc",
             "BoolPatientSeries",
             179,
-            "0a8ce008ba30a404",
+            "fe5be635e67f3edb",
             "4b4a5a5b5d9b1bd4"
           ],
           [
             "asthma_inc_date",
             "DatePatientSeries",
             165,
-            "ebbb8bdf6e2f0471",
+            "4714941f0e4bb457",
             "2f3f6fb6b0094fe1"
           ],
           [
             "asthma_pre_reg",
             "BoolPatientSeries",
             173,
-            "f2c4414167d2f5cf",
+            "4126e84b446d5a3f",
             "507364b34086067c"
           ],
           [
             "asthma_resolved",
             "BoolPatientSeries",
             193,
-            "b195c408e48a274a",
+            "dc3040de9876c947",
             "d7d4a6b96a0e8132"
           ],
           [
@@ -5209,28 +5209,28 @@
             "atopic_dermatitis_alive_inc",
             "BoolPatientSeries",
             179,
-            "2db41d3eea18bfc0",
+            "6317807eb2406132",
             "4b4a5a5b5d9b1bd4"
           ],
           [
             "atopic_dermatitis_inc_date",
             "DatePatientSeries",
             165,
-            "686864ff6a87ce08",
+            "6b5f4568d6c123a9",
             "2f3f6fb6b0094fe1"
           ],
           [
             "atopic_dermatitis_pre_reg",
             "BoolPatientSeries",
             173,
-            "ff6c19862f304786",
+            "c60b853763cc48c3",
             "507364b34086067c"
           ],
           [
             "atopic_dermatitis_resolved",
             "BoolPatientSeries",
             193,
-            "91c9cd8b31dbdff4",
+            "25e091ce8753746a",
             "f230063e282ad1d5"
           ],
           [
@@ -5244,28 +5244,28 @@
             "chd_alive_inc",
             "BoolPatientSeries",
             179,
-            "dde958b590ee8e0d",
+            "61730fb7e86c0f11",
             "4b4a5a5b5d9b1bd4"
           ],
           [
             "chd_inc_date",
             "DatePatientSeries",
             165,
-            "7f18f2a88162ae21",
+            "f881ebf5cde5d791",
             "2f3f6fb6b0094fe1"
           ],
           [
             "chd_pre_reg",
             "BoolPatientSeries",
             173,
-            "019e0cfc154b51f3",
+            "9a25458e14028375",
             "507364b34086067c"
           ],
           [
             "chd_resolved",
             "BoolPatientSeries",
             193,
-            "6923475309bbb8eb",
+            "ea33cbcf1873098f",
             "f230063e282ad1d5"
           ],
           [
@@ -5279,28 +5279,28 @@
             "ckd_alive_inc",
             "BoolPatientSeries",
             179,
-            "bd68d0c15064c96f",
+            "30d238043159abc3",
             "4b4a5a5b5d9b1bd4"
           ],
           [
             "ckd_inc_date",
             "DatePatientSeries",
             165,
-            "6a1ef925f881ea30",
+            "2f41dec7a8d35161",
             "2f3f6fb6b0094fe1"
           ],
           [
             "ckd_pre_reg",
             "BoolPatientSeries",
             173,
-            "96fd050e62abcdb4",
+            "2d93ab6a91590e20",
             "507364b34086067c"
           ],
           [
             "ckd_resolved",
             "BoolPatientSeries",
             193,
-            "18adcd546cc5124a",
+            "30f4ec5a2f792f37",
             "d7d4a6b96a0e8132"
           ],
           [
@@ -5314,28 +5314,28 @@
             "coeliac_alive_inc",
             "BoolPatientSeries",
             179,
-            "cacc5252cbc16fb8",
+            "f25a6af2160be60b",
             "4b4a5a5b5d9b1bd4"
           ],
           [
             "coeliac_inc_date",
             "DatePatientSeries",
             165,
-            "05e024875a73f78f",
+            "9d548c96fb4f979d",
             "2f3f6fb6b0094fe1"
           ],
           [
             "coeliac_pre_reg",
             "BoolPatientSeries",
             173,
-            "d657b29e50dd0fe2",
+            "38dec3a9965a3b8c",
             "507364b34086067c"
           ],
           [
             "coeliac_resolved",
             "BoolPatientSeries",
             193,
-            "deaf21caa0076ae0",
+            "61f07a806207bad9",
             "f230063e282ad1d5"
           ],
           [
@@ -5349,28 +5349,28 @@
             "copd_alive_inc",
             "BoolPatientSeries",
             179,
-            "9bb0891f6a70bbfb",
+            "6df2f5eab0290c3b",
             "4b4a5a5b5d9b1bd4"
           ],
           [
             "copd_inc_date",
             "DatePatientSeries",
             165,
-            "089293ac091b0100",
+            "8a7e97581fd83408",
             "2f3f6fb6b0094fe1"
           ],
           [
             "copd_pre_reg",
             "BoolPatientSeries",
             173,
-            "d5d7dd350bbb1bf9",
+            "fc5c255696af7fc4",
             "507364b34086067c"
           ],
           [
             "copd_resolved",
             "BoolPatientSeries",
             193,
-            "eb4a74fa2482823e",
+            "dec158c661cef0a3",
             "d7d4a6b96a0e8132"
           ],
           [
@@ -5384,28 +5384,28 @@
             "crohns_disease_alive_inc",
             "BoolPatientSeries",
             179,
-            "0424edd7db08440f",
+            "9e1ae7dbb8e632ef",
             "4b4a5a5b5d9b1bd4"
           ],
           [
             "crohns_disease_inc_date",
             "DatePatientSeries",
             165,
-            "bc86b3eaee387cc0",
+            "0c4a01137badf4f0",
             "2f3f6fb6b0094fe1"
           ],
           [
             "crohns_disease_pre_reg",
             "BoolPatientSeries",
             173,
-            "eaee6ec5642e4774",
+            "1e862319aa3bcee4",
             "507364b34086067c"
           ],
           [
             "crohns_disease_resolved",
             "BoolPatientSeries",
             193,
-            "ccd22d5aae25933f",
+            "41e1889169f05ccc",
             "f230063e282ad1d5"
           ],
           [
@@ -5426,28 +5426,28 @@
             "dementia_alive_inc",
             "BoolPatientSeries",
             179,
-            "6e19e191d7dd3ac7",
+            "f629b629384d296d",
             "4b4a5a5b5d9b1bd4"
           ],
           [
             "dementia_inc_date",
             "DatePatientSeries",
             165,
-            "34961c543816d5a4",
+            "413b9536a42e250f",
             "2f3f6fb6b0094fe1"
           ],
           [
             "dementia_pre_reg",
             "BoolPatientSeries",
             173,
-            "0d9593bfa5deed0d",
+            "71e7aca984a40586",
             "507364b34086067c"
           ],
           [
             "dementia_resolved",
             "BoolPatientSeries",
             193,
-            "76fc07e1e25e6c45",
+            "760004438c08bf57",
             "f230063e282ad1d5"
           ],
           [
@@ -5461,35 +5461,35 @@
             "depression_alive_inc",
             "BoolPatientSeries",
             179,
-            "a503b07e61b80351",
+            "8e8dfb2d043d0416",
             "4b4a5a5b5d9b1bd4"
           ],
           [
             "depression_broad_alive_inc",
             "BoolPatientSeries",
             179,
-            "fd24d05e02c014b0",
+            "2faad1a229704fb3",
             "4b4a5a5b5d9b1bd4"
           ],
           [
             "depression_broad_inc_date",
             "DatePatientSeries",
             165,
-            "d54f33e3b794992e",
+            "45d480fc37f2a086",
             "2f3f6fb6b0094fe1"
           ],
           [
             "depression_broad_pre_reg",
             "BoolPatientSeries",
             173,
-            "d0f76568ae8e7b43",
+            "b61c09dc309ba168",
             "507364b34086067c"
           ],
           [
             "depression_broad_resolved",
             "BoolPatientSeries",
             193,
-            "19a2ab6f2a67adb2",
+            "5ff13a2f1da764dd",
             "d7d4a6b96a0e8132"
           ],
           [
@@ -5503,21 +5503,21 @@
             "depression_inc_date",
             "DatePatientSeries",
             165,
-            "ac43065998eb391d",
+            "24f35e5fae4bbf86",
             "2f3f6fb6b0094fe1"
           ],
           [
             "depression_pre_reg",
             "BoolPatientSeries",
             173,
-            "0ac23862e76b5e1c",
+            "c6d0e6bf9a0b9554",
             "507364b34086067c"
           ],
           [
             "depression_resolved",
             "BoolPatientSeries",
             193,
-            "7b5cc56cc1d8495a",
+            "5299547bb0afed95",
             "d7d4a6b96a0e8132"
           ],
           [
@@ -5531,28 +5531,28 @@
             "dm_type2_alive_inc",
             "BoolPatientSeries",
             179,
-            "fe37651fe586e450",
+            "e7d3344bcff5b61b",
             "4b4a5a5b5d9b1bd4"
           ],
           [
             "dm_type2_inc_date",
             "DatePatientSeries",
             165,
-            "5f93008bdae43acb",
+            "ffb749e45295439f",
             "2f3f6fb6b0094fe1"
           ],
           [
             "dm_type2_pre_reg",
             "BoolPatientSeries",
             173,
-            "1a7b2833437cf20b",
+            "40e574a1933d2899",
             "507364b34086067c"
           ],
           [
             "dm_type2_resolved",
             "BoolPatientSeries",
             193,
-            "47b9ef6faa8c017e",
+            "975a8d2c98433f1e",
             "d7d4a6b96a0e8132"
           ],
           [
@@ -5566,28 +5566,28 @@
             "epilepsy_alive_inc",
             "BoolPatientSeries",
             179,
-            "3c6d4f9e7aff3f1c",
+            "2298a23bdd4d4ae7",
             "4b4a5a5b5d9b1bd4"
           ],
           [
             "epilepsy_inc_date",
             "DatePatientSeries",
             165,
-            "25d017e93fe68dcf",
+            "7989181d95c997e3",
             "2f3f6fb6b0094fe1"
           ],
           [
             "epilepsy_pre_reg",
             "BoolPatientSeries",
             173,
-            "819b12efb31d86dc",
+            "77762f056ebd3d1a",
             "507364b34086067c"
           ],
           [
             "epilepsy_resolved",
             "BoolPatientSeries",
             193,
-            "e758908b337a2235",
+            "baf5f50e264e0849",
             "d7d4a6b96a0e8132"
           ],
           [
@@ -5608,28 +5608,28 @@
             "heart_failure_alive_inc",
             "BoolPatientSeries",
             179,
-            "2d1af1fd3dfc57aa",
+            "623a8370f7efe191",
             "4b4a5a5b5d9b1bd4"
           ],
           [
             "heart_failure_inc_date",
             "DatePatientSeries",
             165,
-            "9a3d8cd1e66dc61d",
+            "12060a0ccbc560d7",
             "2f3f6fb6b0094fe1"
           ],
           [
             "heart_failure_pre_reg",
             "BoolPatientSeries",
             173,
-            "2471d3bf4f85ea47",
+            "6bd668f6f82bec4e",
             "507364b34086067c"
           ],
           [
             "heart_failure_resolved",
             "BoolPatientSeries",
             193,
-            "01e8eff24f1dd003",
+            "353a477cf32f23c1",
             "d7d4a6b96a0e8132"
           ],
           [
@@ -5650,28 +5650,28 @@
             "multiple_sclerosis_alive_inc",
             "BoolPatientSeries",
             179,
-            "a0651b3ee1f4b64e",
+            "5b5ce5cf63407213",
             "4b4a5a5b5d9b1bd4"
           ],
           [
             "multiple_sclerosis_inc_date",
             "DatePatientSeries",
             165,
-            "d7e17fe83a3911a2",
+            "ff3f0668532d8fa5",
             "2f3f6fb6b0094fe1"
           ],
           [
             "multiple_sclerosis_pre_reg",
             "BoolPatientSeries",
             173,
-            "bda2c23aba0fa593",
+            "e472cd10da810f1e",
             "507364b34086067c"
           ],
           [
             "multiple_sclerosis_resolved",
             "BoolPatientSeries",
             193,
-            "c63df51efb2e28e0",
+            "61f139b427245ff3",
             "f230063e282ad1d5"
           ],
           [
@@ -5685,28 +5685,28 @@
             "osteoporosis_alive_inc",
             "BoolPatientSeries",
             179,
-            "af00f3d762596cd9",
+            "9be9682beeb6f73b",
             "4b4a5a5b5d9b1bd4"
           ],
           [
             "osteoporosis_inc_date",
             "DatePatientSeries",
             165,
-            "09b464e8e6563094",
+            "8701700ede791d23",
             "2f3f6fb6b0094fe1"
           ],
           [
             "osteoporosis_pre_reg",
             "BoolPatientSeries",
             173,
-            "820d1481a6c05074",
+            "064e61c28354732e",
             "507364b34086067c"
           ],
           [
             "osteoporosis_resolved",
             "BoolPatientSeries",
             193,
-            "78b04b29ec23e585",
+            "c2485b9dddbe52c1",
             "d7d4a6b96a0e8132"
           ],
           [
@@ -5720,28 +5720,28 @@
             "pmr_alive_inc",
             "BoolPatientSeries",
             179,
-            "f17a3fd27dbb1dba",
+            "72b7a401e9b4b9b0",
             "4b4a5a5b5d9b1bd4"
           ],
           [
             "pmr_inc_date",
             "DatePatientSeries",
             165,
-            "eda668155ca91bd6",
+            "77d3313c5c87fb8f",
             "2f3f6fb6b0094fe1"
           ],
           [
             "pmr_pre_reg",
             "BoolPatientSeries",
             173,
-            "1409d965b3553631",
+            "3f9d3b8d0d2087f3",
             "507364b34086067c"
           ],
           [
             "pmr_resolved",
             "BoolPatientSeries",
             193,
-            "3c9670f1792e99e1",
+            "9ecb37e53926f0e4",
             "f230063e282ad1d5"
           ],
           [
@@ -5755,28 +5755,28 @@
             "psoriasis_alive_inc",
             "BoolPatientSeries",
             179,
-            "b087e12ae7f73ce0",
+            "5e920f2846383b32",
             "4b4a5a5b5d9b1bd4"
           ],
           [
             "psoriasis_inc_date",
             "DatePatientSeries",
             165,
-            "12ba291e007eb467",
+            "9a402c84aa2fbace",
             "2f3f6fb6b0094fe1"
           ],
           [
             "psoriasis_pre_reg",
             "BoolPatientSeries",
             173,
-            "50a6ea64b52ef1e7",
+            "c8ce30b5753d3b21",
             "507364b34086067c"
           ],
           [
             "psoriasis_resolved",
             "BoolPatientSeries",
             193,
-            "fd812b8ea5ed99c2",
+            "ef406fc9dc0e655b",
             "f230063e282ad1d5"
           ],
           [
@@ -5797,28 +5797,28 @@
             "rheumatoid_alive_inc",
             "BoolPatientSeries",
             179,
-            "f0b5d9eb89b9c5ab",
+            "bfe5993637f1b1a0",
             "4b4a5a5b5d9b1bd4"
           ],
           [
             "rheumatoid_inc_date",
             "DatePatientSeries",
             165,
-            "252eb1a944d18b15",
+            "dbb3e2b0ea6d2567",
             "2f3f6fb6b0094fe1"
           ],
           [
             "rheumatoid_pre_reg",
             "BoolPatientSeries",
             173,
-            "81b74683d74cf9e1",
+            "d456e3af7d5c62a8",
             "507364b34086067c"
           ],
           [
             "rheumatoid_resolved",
             "BoolPatientSeries",
             193,
-            "474a031dd6185229",
+            "51102b163a163ce4",
             "f230063e282ad1d5"
           ],
           [
@@ -5839,28 +5839,28 @@
             "stroke_alive_inc",
             "BoolPatientSeries",
             179,
-            "3152028d5f936a57",
+            "5789974e2c57c34f",
             "4b4a5a5b5d9b1bd4"
           ],
           [
             "stroke_inc_date",
             "DatePatientSeries",
             165,
-            "757521d4560f5e59",
+            "40bb7f83ebd6e185",
             "2f3f6fb6b0094fe1"
           ],
           [
             "stroke_pre_reg",
             "BoolPatientSeries",
             173,
-            "ad2a203d7016b545",
+            "24dcc4ddf8ad8e43",
             "507364b34086067c"
           ],
           [
             "stroke_resolved",
             "BoolPatientSeries",
             193,
-            "d96e8fef21f8ab3e",
+            "3743f2bfda3f7474",
             "f230063e282ad1d5"
           ],
           [
@@ -5874,28 +5874,28 @@
             "ulcerative_colitis_alive_inc",
             "BoolPatientSeries",
             179,
-            "eda0a6c8ce69dd87",
+            "94a0b17fa7d837a6",
             "4b4a5a5b5d9b1bd4"
           ],
           [
             "ulcerative_colitis_inc_date",
             "DatePatientSeries",
             165,
-            "8d7edd93f67a0eee",
+            "b9f2b1ff8d79c9bf",
             "2f3f6fb6b0094fe1"
           ],
           [
             "ulcerative_colitis_pre_reg",
             "BoolPatientSeries",
             173,
-            "7b3f511ffeb5df0e",
+            "845b46b80bc71c0d",
             "507364b34086067c"
           ],
           [
             "ulcerative_colitis_resolved",
             "BoolPatientSeries",
             193,
-            "f41b383399d404e9",
+            "606a31b728de6945",
             "f230063e282ad1d5"
           ],
           [
@@ -5918,35 +5918,35 @@
             "asthma_age",
             "IntPatientSeries",
             157,
-            "cb4a1d4675d8ee0c",
+            "899688db738c3cbc",
             "6d6ae27055e87a54"
           ],
           [
             "asthma_alive_inc",
             "BoolPatientSeries",
             163,
-            "0a8ce008ba30a404",
+            "fe5be635e67f3edb",
             "4b4a5a5b5d9b1bd4"
           ],
           [
             "asthma_inc_case",
             "BoolPatientSeries",
             145,
-            "f21d64d223bb91b7",
+            "af662f89005a1447",
             "6872550f8a08d8c2"
           ],
           [
             "asthma_inc_date",
             "DatePatientSeries",
             137,
-            "ebbb8bdf6e2f0471",
+            "4714941f0e4bb457",
             "2f3f6fb6b0094fe1"
           ],
           [
             "asthma_pre_reg",
             "BoolPatientSeries",
             151,
-            "f2c4414167d2f5cf",
+            "4126e84b446d5a3f",
             "507364b34086067c"
           ],
           [
@@ -5967,35 +5967,35 @@
             "atopic_dermatitis_age",
             "IntPatientSeries",
             157,
-            "d19548c57bf2a618",
+            "86da9f98badfe35f",
             "6d6ae27055e87a54"
           ],
           [
             "atopic_dermatitis_alive_inc",
             "BoolPatientSeries",
             163,
-            "2db41d3eea18bfc0",
+            "6317807eb2406132",
             "4b4a5a5b5d9b1bd4"
           ],
           [
             "atopic_dermatitis_inc_case",
             "BoolPatientSeries",
             145,
-            "f51a047c4b9728cf",
+            "e31a6e608fccba42",
             "6872550f8a08d8c2"
           ],
           [
             "atopic_dermatitis_inc_date",
             "DatePatientSeries",
             137,
-            "686864ff6a87ce08",
+            "6b5f4568d6c123a9",
             "2f3f6fb6b0094fe1"
           ],
           [
             "atopic_dermatitis_pre_reg",
             "BoolPatientSeries",
             151,
-            "ff6c19862f304786",
+            "c60b853763cc48c3",
             "507364b34086067c"
           ],
           [
@@ -6016,35 +6016,35 @@
             "chd_age",
             "IntPatientSeries",
             157,
-            "176d786c973d4fa9",
+            "7cce8236e6e0c97a",
             "6d6ae27055e87a54"
           ],
           [
             "chd_alive_inc",
             "BoolPatientSeries",
             163,
-            "dde958b590ee8e0d",
+            "61730fb7e86c0f11",
             "4b4a5a5b5d9b1bd4"
           ],
           [
             "chd_inc_case",
             "BoolPatientSeries",
             145,
-            "bd5159871313baba",
+            "9930380c70ab42ac",
             "6872550f8a08d8c2"
           ],
           [
             "chd_inc_date",
             "DatePatientSeries",
             137,
-            "7f18f2a88162ae21",
+            "f881ebf5cde5d791",
             "2f3f6fb6b0094fe1"
           ],
           [
             "chd_pre_reg",
             "BoolPatientSeries",
             151,
-            "019e0cfc154b51f3",
+            "9a25458e14028375",
             "507364b34086067c"
           ],
           [
@@ -6065,35 +6065,35 @@
             "ckd_age",
             "IntPatientSeries",
             157,
-            "640c8b9cad98628f",
+            "c12554d699215988",
             "6d6ae27055e87a54"
           ],
           [
             "ckd_alive_inc",
             "BoolPatientSeries",
             163,
-            "bd68d0c15064c96f",
+            "30d238043159abc3",
             "4b4a5a5b5d9b1bd4"
           ],
           [
             "ckd_inc_case",
             "BoolPatientSeries",
             145,
-            "00cbd1c2d7025365",
+            "dc4efcc3b5ab3e0b",
             "6872550f8a08d8c2"
           ],
           [
             "ckd_inc_date",
             "DatePatientSeries",
             137,
-            "6a1ef925f881ea30",
+            "2f41dec7a8d35161",
             "2f3f6fb6b0094fe1"
           ],
           [
             "ckd_pre_reg",
             "BoolPatientSeries",
             151,
-            "96fd050e62abcdb4",
+            "2d93ab6a91590e20",
             "507364b34086067c"
           ],
           [
@@ -6114,35 +6114,35 @@
             "coeliac_age",
             "IntPatientSeries",
             157,
-            "0db6971ffef1b6dc",
+            "3f507edf17b84090",
             "6d6ae27055e87a54"
           ],
           [
             "coeliac_alive_inc",
             "BoolPatientSeries",
             163,
-            "cacc5252cbc16fb8",
+            "f25a6af2160be60b",
             "4b4a5a5b5d9b1bd4"
           ],
           [
             "coeliac_inc_case",
             "BoolPatientSeries",
             145,
-            "f0c2b41bf6da13cb",
+            "cd2a6bde15f1dea9",
             "6872550f8a08d8c2"
           ],
           [
             "coeliac_inc_date",
             "DatePatientSeries",
             137,
-            "05e024875a73f78f",
+            "9d548c96fb4f979d",
             "2f3f6fb6b0094fe1"
           ],
           [
             "coeliac_pre_reg",
             "BoolPatientSeries",
             151,
-            "d657b29e50dd0fe2",
+            "38dec3a9965a3b8c",
             "507364b34086067c"
           ],
           [
@@ -6163,35 +6163,35 @@
             "copd_age",
             "IntPatientSeries",
             157,
-            "be23c0eb28323577",
+            "a942dacc2d5a5294",
             "6d6ae27055e87a54"
           ],
           [
             "copd_alive_inc",
             "BoolPatientSeries",
             163,
-            "9bb0891f6a70bbfb",
+            "6df2f5eab0290c3b",
             "4b4a5a5b5d9b1bd4"
           ],
           [
             "copd_inc_case",
             "BoolPatientSeries",
             145,
-            "ee31e3e2dd07d963",
+            "46000b4b7931cae7",
             "6872550f8a08d8c2"
           ],
           [
             "copd_inc_date",
             "DatePatientSeries",
             137,
-            "089293ac091b0100",
+            "8a7e97581fd83408",
             "2f3f6fb6b0094fe1"
           ],
           [
             "copd_pre_reg",
             "BoolPatientSeries",
             151,
-            "d5d7dd350bbb1bf9",
+            "fc5c255696af7fc4",
             "507364b34086067c"
           ],
           [
@@ -6212,35 +6212,35 @@
             "crohns_disease_age",
             "IntPatientSeries",
             157,
-            "e9ff2e0e93db2cd8",
+            "88fde6688583d76d",
             "6d6ae27055e87a54"
           ],
           [
             "crohns_disease_alive_inc",
             "BoolPatientSeries",
             163,
-            "0424edd7db08440f",
+            "9e1ae7dbb8e632ef",
             "4b4a5a5b5d9b1bd4"
           ],
           [
             "crohns_disease_inc_case",
             "BoolPatientSeries",
             145,
-            "d210022602f61f2a",
+            "259c2fb3d8a8378e",
             "6872550f8a08d8c2"
           ],
           [
             "crohns_disease_inc_date",
             "DatePatientSeries",
             137,
-            "bc86b3eaee387cc0",
+            "0c4a01137badf4f0",
             "2f3f6fb6b0094fe1"
           ],
           [
             "crohns_disease_pre_reg",
             "BoolPatientSeries",
             151,
-            "eaee6ec5642e4774",
+            "1e862319aa3bcee4",
             "507364b34086067c"
           ],
           [
@@ -6268,35 +6268,35 @@
             "dementia_age",
             "IntPatientSeries",
             157,
-            "5f0b8cd8ebfe3931",
+            "ad40cf034c81d9e3",
             "6d6ae27055e87a54"
           ],
           [
             "dementia_alive_inc",
             "BoolPatientSeries",
             163,
-            "6e19e191d7dd3ac7",
+            "f629b629384d296d",
             "4b4a5a5b5d9b1bd4"
           ],
           [
             "dementia_inc_case",
             "BoolPatientSeries",
             145,
-            "c6c718dd43c8cf2f",
+            "7974f0c371998061",
             "6872550f8a08d8c2"
           ],
           [
             "dementia_inc_date",
             "DatePatientSeries",
             137,
-            "34961c543816d5a4",
+            "413b9536a42e250f",
             "2f3f6fb6b0094fe1"
           ],
           [
             "dementia_pre_reg",
             "BoolPatientSeries",
             151,
-            "0d9593bfa5deed0d",
+            "71e7aca984a40586",
             "507364b34086067c"
           ],
           [
@@ -6317,35 +6317,35 @@
             "depression_age",
             "IntPatientSeries",
             157,
-            "23383df90c4ccd43",
+            "7f53814565bf51ee",
             "6d6ae27055e87a54"
           ],
           [
             "depression_alive_inc",
             "BoolPatientSeries",
             163,
-            "a503b07e61b80351",
+            "8e8dfb2d043d0416",
             "4b4a5a5b5d9b1bd4"
           ],
           [
             "depression_inc_case",
             "BoolPatientSeries",
             145,
-            "fbec5c72d06bb97e",
+            "9d10867d61f34324",
             "6872550f8a08d8c2"
           ],
           [
             "depression_inc_date",
             "DatePatientSeries",
             137,
-            "ac43065998eb391d",
+            "24f35e5fae4bbf86",
             "2f3f6fb6b0094fe1"
           ],
           [
             "depression_pre_reg",
             "BoolPatientSeries",
             151,
-            "0ac23862e76b5e1c",
+            "c6d0e6bf9a0b9554",
             "507364b34086067c"
           ],
           [
@@ -6366,35 +6366,35 @@
             "dm_type2_age",
             "IntPatientSeries",
             157,
-            "4a2b714249c4ad32",
+            "8fb29764607e5763",
             "6d6ae27055e87a54"
           ],
           [
             "dm_type2_alive_inc",
             "BoolPatientSeries",
             163,
-            "fe37651fe586e450",
+            "e7d3344bcff5b61b",
             "4b4a5a5b5d9b1bd4"
           ],
           [
             "dm_type2_inc_case",
             "BoolPatientSeries",
             145,
-            "f553659463382f52",
+            "e5710d9040ef8e4a",
             "6872550f8a08d8c2"
           ],
           [
             "dm_type2_inc_date",
             "DatePatientSeries",
             137,
-            "5f93008bdae43acb",
+            "ffb749e45295439f",
             "2f3f6fb6b0094fe1"
           ],
           [
             "dm_type2_pre_reg",
             "BoolPatientSeries",
             151,
-            "1a7b2833437cf20b",
+            "40e574a1933d2899",
             "507364b34086067c"
           ],
           [
@@ -6415,35 +6415,35 @@
             "epilepsy_age",
             "IntPatientSeries",
             157,
-            "67b8d24fa13f3a12",
+            "3d5088cea43e167b",
             "6d6ae27055e87a54"
           ],
           [
             "epilepsy_alive_inc",
             "BoolPatientSeries",
             163,
-            "3c6d4f9e7aff3f1c",
+            "2298a23bdd4d4ae7",
             "4b4a5a5b5d9b1bd4"
           ],
           [
             "epilepsy_inc_case",
             "BoolPatientSeries",
             145,
-            "37a22f53c3f9e44a",
+            "0e97782f88cf6299",
             "6872550f8a08d8c2"
           ],
           [
             "epilepsy_inc_date",
             "DatePatientSeries",
             137,
-            "25d017e93fe68dcf",
+            "7989181d95c997e3",
             "2f3f6fb6b0094fe1"
           ],
           [
             "epilepsy_pre_reg",
             "BoolPatientSeries",
             151,
-            "819b12efb31d86dc",
+            "77762f056ebd3d1a",
             "507364b34086067c"
           ],
           [
@@ -6471,35 +6471,35 @@
             "heart_failure_age",
             "IntPatientSeries",
             157,
-            "ec9c7112b2126daa",
+            "41089305b518274e",
             "6d6ae27055e87a54"
           ],
           [
             "heart_failure_alive_inc",
             "BoolPatientSeries",
             163,
-            "2d1af1fd3dfc57aa",
+            "623a8370f7efe191",
             "4b4a5a5b5d9b1bd4"
           ],
           [
             "heart_failure_inc_case",
             "BoolPatientSeries",
             145,
-            "4c84ac28f4836540",
+            "016f3999f2cb2e18",
             "6872550f8a08d8c2"
           ],
           [
             "heart_failure_inc_date",
             "DatePatientSeries",
             137,
-            "9a3d8cd1e66dc61d",
+            "12060a0ccbc560d7",
             "2f3f6fb6b0094fe1"
           ],
           [
             "heart_failure_pre_reg",
             "BoolPatientSeries",
             151,
-            "2471d3bf4f85ea47",
+            "6bd668f6f82bec4e",
             "507364b34086067c"
           ],
           [
@@ -6527,35 +6527,35 @@
             "multiple_sclerosis_age",
             "IntPatientSeries",
             157,
-            "867d156d09da97c9",
+            "cce33d0b7b3ca94f",
             "6d6ae27055e87a54"
           ],
           [
             "multiple_sclerosis_alive_inc",
             "BoolPatientSeries",
             163,
-            "a0651b3ee1f4b64e",
+            "5b5ce5cf63407213",
             "4b4a5a5b5d9b1bd4"
           ],
           [
             "multiple_sclerosis_inc_case",
             "BoolPatientSeries",
             145,
-            "7bbabcec0bc1e187",
+            "57f532ea892448ea",
             "6872550f8a08d8c2"
           ],
           [
             "multiple_sclerosis_inc_date",
             "DatePatientSeries",
             137,
-            "d7e17fe83a3911a2",
+            "ff3f0668532d8fa5",
             "2f3f6fb6b0094fe1"
           ],
           [
             "multiple_sclerosis_pre_reg",
             "BoolPatientSeries",
             151,
-            "bda2c23aba0fa593",
+            "e472cd10da810f1e",
             "507364b34086067c"
           ],
           [
@@ -6576,35 +6576,35 @@
             "osteoporosis_age",
             "IntPatientSeries",
             157,
-            "0e987d62fac204d3",
+            "b03455c21c4c300a",
             "6d6ae27055e87a54"
           ],
           [
             "osteoporosis_alive_inc",
             "BoolPatientSeries",
             163,
-            "af00f3d762596cd9",
+            "9be9682beeb6f73b",
             "4b4a5a5b5d9b1bd4"
           ],
           [
             "osteoporosis_inc_case",
             "BoolPatientSeries",
             145,
-            "8e8934842ce0de51",
+            "e22b03b191d9d3e2",
             "6872550f8a08d8c2"
           ],
           [
             "osteoporosis_inc_date",
             "DatePatientSeries",
             137,
-            "09b464e8e6563094",
+            "8701700ede791d23",
             "2f3f6fb6b0094fe1"
           ],
           [
             "osteoporosis_pre_reg",
             "BoolPatientSeries",
             151,
-            "820d1481a6c05074",
+            "064e61c28354732e",
             "507364b34086067c"
           ],
           [
@@ -6625,35 +6625,35 @@
             "pmr_age",
             "IntPatientSeries",
             157,
-            "6291d7a03f1726b1",
+            "ea830399df864f87",
             "6d6ae27055e87a54"
           ],
           [
             "pmr_alive_inc",
             "BoolPatientSeries",
             163,
-            "f17a3fd27dbb1dba",
+            "72b7a401e9b4b9b0",
             "4b4a5a5b5d9b1bd4"
           ],
           [
             "pmr_inc_case",
             "BoolPatientSeries",
             145,
-            "f8621dd54f343306",
+            "0f85886b630915ad",
             "6872550f8a08d8c2"
           ],
           [
             "pmr_inc_date",
             "DatePatientSeries",
             137,
-            "eda668155ca91bd6",
+            "77d3313c5c87fb8f",
             "2f3f6fb6b0094fe1"
           ],
           [
             "pmr_pre_reg",
             "BoolPatientSeries",
             151,
-            "1409d965b3553631",
+            "3f9d3b8d0d2087f3",
             "507364b34086067c"
           ],
           [
@@ -6674,35 +6674,35 @@
             "psoriasis_age",
             "IntPatientSeries",
             157,
-            "4b4fb6fdaf236d68",
+            "c3c5f9ef7272c386",
             "6d6ae27055e87a54"
           ],
           [
             "psoriasis_alive_inc",
             "BoolPatientSeries",
             163,
-            "b087e12ae7f73ce0",
+            "5e920f2846383b32",
             "4b4a5a5b5d9b1bd4"
           ],
           [
             "psoriasis_inc_case",
             "BoolPatientSeries",
             145,
-            "0791cd58b61f86aa",
+            "326f94c73b7b1328",
             "6872550f8a08d8c2"
           ],
           [
             "psoriasis_inc_date",
             "DatePatientSeries",
             137,
-            "12ba291e007eb467",
+            "9a402c84aa2fbace",
             "2f3f6fb6b0094fe1"
           ],
           [
             "psoriasis_pre_reg",
             "BoolPatientSeries",
             151,
-            "50a6ea64b52ef1e7",
+            "c8ce30b5753d3b21",
             "507364b34086067c"
           ],
           [
@@ -6723,35 +6723,35 @@
             "rheumatoid_age",
             "IntPatientSeries",
             157,
-            "0533eda49b1dd0df",
+            "12e951777d5b4455",
             "6d6ae27055e87a54"
           ],
           [
             "rheumatoid_alive_inc",
             "BoolPatientSeries",
             163,
-            "f0b5d9eb89b9c5ab",
+            "bfe5993637f1b1a0",
             "4b4a5a5b5d9b1bd4"
           ],
           [
             "rheumatoid_inc_case",
             "BoolPatientSeries",
             145,
-            "05a93ead6a8dba01",
+            "23640938f9c210ed",
             "6872550f8a08d8c2"
           ],
           [
             "rheumatoid_inc_date",
             "DatePatientSeries",
             137,
-            "252eb1a944d18b15",
+            "dbb3e2b0ea6d2567",
             "2f3f6fb6b0094fe1"
           ],
           [
             "rheumatoid_pre_reg",
             "BoolPatientSeries",
             151,
-            "81b74683d74cf9e1",
+            "d456e3af7d5c62a8",
             "507364b34086067c"
           ],
           [
@@ -6779,35 +6779,35 @@
             "stroke_age",
             "IntPatientSeries",
             157,
-            "4078c263b2053e10",
+            "c83adc696e758848",
             "6d6ae27055e87a54"
           ],
           [
             "stroke_alive_inc",
             "BoolPatientSeries",
             163,
-            "3152028d5f936a57",
+            "5789974e2c57c34f",
             "4b4a5a5b5d9b1bd4"
           ],
           [
             "stroke_inc_case",
             "BoolPatientSeries",
             145,
-            "79fc6af74e8c0140",
+            "22cd53c7c52ef958",
             "6872550f8a08d8c2"
           ],
           [
             "stroke_inc_date",
             "DatePatientSeries",
             137,
-            "757521d4560f5e59",
+            "40bb7f83ebd6e185",
             "2f3f6fb6b0094fe1"
           ],
           [
             "stroke_pre_reg",
             "BoolPatientSeries",
             151,
-            "ad2a203d7016b545",
+            "24dcc4ddf8ad8e43",
             "507364b34086067c"
           ],
           [
@@ -6828,35 +6828,35 @@
             "ulcerative_colitis_age",
             "IntPatientSeries",
             157,
-            "f205a4a947ed78bd",
+            "d656678f1915928a",
             "6d6ae27055e87a54"
           ],
           [
             "ulcerative_colitis_alive_inc",
             "BoolPatientSeries",
             163,
-            "eda0a6c8ce69dd87",
+            "94a0b17fa7d837a6",
             "4b4a5a5b5d9b1bd4"
           ],
           [
             "ulcerative_colitis_inc_case",
             "BoolPatientSeries",
             145,
-            "d0e0a4ce08fad8d2",
+            "635e89eab0cfb3c5",
             "6872550f8a08d8c2"
           ],
           [
             "ulcerative_colitis_inc_date",
             "DatePatientSeries",
             137,
-            "8d7edd93f67a0eee",
+            "b9f2b1ff8d79c9bf",
             "2f3f6fb6b0094fe1"
           ],
           [
             "ulcerative_colitis_pre_reg",
             "BoolPatientSeries",
             151,
-            "7b3f511ffeb5df0e",
+            "845b46b80bc71c0d",
             "507364b34086067c"
           ],
           [
@@ -7768,7 +7768,7 @@
             "anca_age",
             "IntPatientSeries",
             167,
-            "faac0d96a92c5bf2",
+            "d5861aee1f9dfb35",
             "6d6ae27055e87a54"
           ],
           [
@@ -7782,42 +7782,42 @@
             "anca_alive_inc",
             "BoolPatientSeries",
             173,
-            "490d231fb9682b9d",
+            "ab0d8c8c975bebea",
             "4b4a5a5b5d9b1bd4"
           ],
           [
             "anca_alive_inc_p",
             "BoolPatientSeries",
             197,
-            "ec9e0190ede1d1d8",
+            "c5a99cbbba6bae97",
             "a19bc68bd743d843"
           ],
           [
             "anca_inc_case",
             "BoolPatientSeries",
             155,
-            "1b9ab53663881631",
+            "161bd87e192e0718",
             "6872550f8a08d8c2"
           ],
           [
             "anca_inc_case_p",
             "BoolPatientSeries",
             179,
-            "37346749114f39b7",
+            "bf2523455ce988e7",
             "38d8b8bef0ee03fd"
           ],
           [
             "anca_inc_date",
             "DatePatientSeries",
             147,
-            "c8285920973f211a",
+            "bb1fb01bba32afa4",
             "2f3f6fb6b0094fe1"
           ],
           [
             "anca_pre_reg",
             "BoolPatientSeries",
             161,
-            "b158a2dc7531a754",
+            "29c3ddf955ab2aef",
             "94f9338bcd68f0ca"
           ],
           [
@@ -7859,7 +7859,7 @@
             "axialspa_age",
             "IntPatientSeries",
             167,
-            "9c2a2ed4c3f15e54",
+            "347457804ac54fa8",
             "6d6ae27055e87a54"
           ],
           [
@@ -7873,42 +7873,42 @@
             "axialspa_alive_inc",
             "BoolPatientSeries",
             173,
-            "454a3d6580a3a43f",
+            "dcb9ce57171f4c35",
             "4b4a5a5b5d9b1bd4"
           ],
           [
             "axialspa_alive_inc_p",
             "BoolPatientSeries",
             197,
-            "4719123013956974",
+            "4fae5cad4acac3c8",
             "a19bc68bd743d843"
           ],
           [
             "axialspa_inc_case",
             "BoolPatientSeries",
             155,
-            "42f750a008849d4c",
+            "df34ffb30a2c445c",
             "6872550f8a08d8c2"
           ],
           [
             "axialspa_inc_case_p",
             "BoolPatientSeries",
             179,
-            "7e9d235aa25caf78",
+            "feed3dfa1449a189",
             "38d8b8bef0ee03fd"
           ],
           [
             "axialspa_inc_date",
             "DatePatientSeries",
             147,
-            "ae9703dca7c786b5",
+            "0b7a1d5580ae17fa",
             "2f3f6fb6b0094fe1"
           ],
           [
             "axialspa_pre_reg",
             "BoolPatientSeries",
             161,
-            "d150ca6c6ac11db3",
+            "b44be96d1685237a",
             "94f9338bcd68f0ca"
           ],
           [
@@ -7950,14 +7950,14 @@
             "bmi_date",
             "DatePatientSeries",
             118,
-            "034ecc35432b5418",
+            "9066b223d2293ee1",
             "acf234e8570590ab"
           ],
           [
             "bmi_value",
             "FloatPatientSeries",
             117,
-            "26ff6fe6cf46d40f",
+            "28758e7b246e5eba",
             "4adf5aaa64149e23"
           ],
           [
@@ -7985,63 +7985,63 @@
             "chd_after_date",
             "DatePatientSeries",
             79,
-            "f17784084408811c",
+            "f3008f72eb35082c",
             "af1afc230cc86ec7"
           ],
           [
             "chd_before_date",
             "DatePatientSeries",
             55,
-            "0f81e2cdb5f87bd3",
+            "031389a52038d699",
             "9c64640ef3e3d408"
           ],
           [
             "ckd_after_date",
             "DatePatientSeries",
             87,
-            "ebdab6d9ba4780d3",
+            "5da65d971de64090",
             "af1afc230cc86ec7"
           ],
           [
             "ckd_before_date",
             "DatePatientSeries",
             63,
-            "7633df78e739e980",
+            "9c74cc05514011e4",
             "9c64640ef3e3d408"
           ],
           [
             "copd_after_date",
             "DatePatientSeries",
             82,
-            "a8c982427d488081",
+            "abbc4c9215539df3",
             "af1afc230cc86ec7"
           ],
           [
             "copd_before_date",
             "DatePatientSeries",
             58,
-            "9edf7e33693bb2cb",
+            "b05161368be55da6",
             "9c64640ef3e3d408"
           ],
           [
             "creatinine_date",
             "DatePatientSeries",
             104,
-            "b89e1a486f70e165",
+            "88f3cf0cfd9046c5",
             "b4ff5b5cf9205043"
           ],
           [
             "creatinine_value",
             "FloatPatientSeries",
             103,
-            "93ded3a20e05d132",
+            "d7179cb57ffb435a",
             "640d14fad3947f49"
           ],
           [
             "ctd_age",
             "IntPatientSeries",
             167,
-            "65d533ef66b3e503",
+            "396316904de20aa1",
             "6d6ae27055e87a54"
           ],
           [
@@ -8055,42 +8055,42 @@
             "ctd_alive_inc",
             "BoolPatientSeries",
             173,
-            "54a85dbd22836ece",
+            "aad7abaf619f63af",
             "4b4a5a5b5d9b1bd4"
           ],
           [
             "ctd_alive_inc_p",
             "BoolPatientSeries",
             197,
-            "6e5a837103814106",
+            "927a6881503a8f79",
             "a19bc68bd743d843"
           ],
           [
             "ctd_inc_case",
             "BoolPatientSeries",
             155,
-            "d0babe6cee881673",
+            "5ca069926c04fbd9",
             "6872550f8a08d8c2"
           ],
           [
             "ctd_inc_case_p",
             "BoolPatientSeries",
             179,
-            "b27377d55772318b",
+            "faf2d5190f73b772",
             "38d8b8bef0ee03fd"
           ],
           [
             "ctd_inc_date",
             "DatePatientSeries",
             147,
-            "8f58bd564db1a258",
+            "74aa72ad8668010d",
             "2f3f6fb6b0094fe1"
           ],
           [
             "ctd_pre_reg",
             "BoolPatientSeries",
             161,
-            "2693e6d3388a6184",
+            "695919755f7ee1d8",
             "94f9338bcd68f0ca"
           ],
           [
@@ -8132,14 +8132,14 @@
             "cva_after_date",
             "DatePatientSeries",
             83,
-            "08cae6916064e677",
+            "ad8fa3af4504ad2a",
             "af1afc230cc86ec7"
           ],
           [
             "cva_before_date",
             "DatePatientSeries",
             59,
-            "66ed9cd88cbce8db",
+            "cdd984d8d096bfb1",
             "9c64640ef3e3d408"
           ],
           [
@@ -8156,49 +8156,49 @@
             "dem_after_date",
             "DatePatientSeries",
             91,
-            "0d137070dca92839",
+            "383f231f5d9cdf5c",
             "af1afc230cc86ec7"
           ],
           [
             "dem_before_date",
             "DatePatientSeries",
             67,
-            "e230c7e6dc9fa575",
+            "df8406d0da5f031d",
             "9c64640ef3e3d408"
           ],
           [
             "depr_after_date",
             "DatePatientSeries",
             88,
-            "9e96dee9b1804232",
+            "1f0b703f49e289c7",
             "af1afc230cc86ec7"
           ],
           [
             "depr_before_date",
             "DatePatientSeries",
             64,
-            "c284419ba516ce93",
+            "e5617b7e20c973df",
             "9c64640ef3e3d408"
           ],
           [
             "dm_after_date",
             "DatePatientSeries",
             80,
-            "c22ecb445692a43e",
+            "9db8bd2101fc4714",
             "af1afc230cc86ec7"
           ],
           [
             "dm_before_date",
             "DatePatientSeries",
             56,
-            "92076df945a82991",
+            "2161df8c20936160",
             "9c64640ef3e3d408"
           ],
           [
             "eia_age",
             "IntPatientSeries",
             167,
-            "2b1b961179a2db3e",
+            "c56d93cec3add84d",
             "6d6ae27055e87a54"
           ],
           [
@@ -8212,42 +8212,42 @@
             "eia_alive_inc",
             "BoolPatientSeries",
             173,
-            "ef0988671129e5d9",
+            "9337f3cc8a29c235",
             "4b4a5a5b5d9b1bd4"
           ],
           [
             "eia_alive_inc_p",
             "BoolPatientSeries",
             197,
-            "ef17a61ead79c160",
+            "dfab65dd644a66ac",
             "a19bc68bd743d843"
           ],
           [
             "eia_inc_case",
             "BoolPatientSeries",
             155,
-            "cb56f64912a3f3cf",
+            "c509d028f318e996",
             "6872550f8a08d8c2"
           ],
           [
             "eia_inc_case_p",
             "BoolPatientSeries",
             179,
-            "dc2e3c9c6eef12c6",
+            "fc384dd06e57f919",
             "38d8b8bef0ee03fd"
           ],
           [
             "eia_inc_date",
             "DatePatientSeries",
             147,
-            "66a5a5d685c794d5",
+            "b955535299d83fc7",
             "2f3f6fb6b0094fe1"
           ],
           [
             "eia_pre_reg",
             "BoolPatientSeries",
             161,
-            "73689dbabc6920c9",
+            "4f8d6a4dfc403b13",
             "94f9338bcd68f0ca"
           ],
           [
@@ -8306,28 +8306,28 @@
             "ever_smoked",
             "BoolPatientSeries",
             132,
-            "a2e2058aa3bbada9",
+            "1094afea8c5d979e",
             "d7374ef54bf114aa"
           ],
           [
             "frac_after_date",
             "DatePatientSeries",
             90,
-            "943ab589b81c383d",
+            "f43db62da63bf32e",
             "af1afc230cc86ec7"
           ],
           [
             "frac_before_date",
             "DatePatientSeries",
             66,
-            "6a1e0d606c2830ee",
+            "b46e1c5a129d5eb8",
             "9c64640ef3e3d408"
           ],
           [
             "gca_age",
             "IntPatientSeries",
             167,
-            "7b7c22b7d3f53bdf",
+            "93299f3bdd0a8817",
             "6d6ae27055e87a54"
           ],
           [
@@ -8341,42 +8341,42 @@
             "gca_alive_inc",
             "BoolPatientSeries",
             173,
-            "ecd1c58bdeccf35a",
+            "c8b9aee86bccb237",
             "4b4a5a5b5d9b1bd4"
           ],
           [
             "gca_alive_inc_p",
             "BoolPatientSeries",
             197,
-            "1046245027b7197c",
+            "2ef9af085170fb03",
             "a19bc68bd743d843"
           ],
           [
             "gca_inc_case",
             "BoolPatientSeries",
             155,
-            "1b3b604e2d83e76f",
+            "8745ac29ee391166",
             "6872550f8a08d8c2"
           ],
           [
             "gca_inc_case_p",
             "BoolPatientSeries",
             179,
-            "1500486362e1ef0c",
+            "d083b7ab57385098",
             "38d8b8bef0ee03fd"
           ],
           [
             "gca_inc_date",
             "DatePatientSeries",
             147,
-            "ff10826a9853e09f",
+            "3942cdbd98734d87",
             "2f3f6fb6b0094fe1"
           ],
           [
             "gca_pre_reg",
             "BoolPatientSeries",
             161,
-            "db2e65516aeb7dc7",
+            "4821393ca0862f34",
             "94f9338bcd68f0ca"
           ],
           [
@@ -8418,14 +8418,14 @@
             "haem_ca_after_date",
             "DatePatientSeries",
             86,
-            "3a15b395adbb87a1",
+            "884947421ec2abca",
             "af1afc230cc86ec7"
           ],
           [
             "haem_ca_before_date",
             "DatePatientSeries",
             62,
-            "f1b89cf792342cd0",
+            "162d4ff65e1b67b1",
             "9c64640ef3e3d408"
           ],
           [
@@ -8453,14 +8453,14 @@
             "ild_after_date",
             "DatePatientSeries",
             81,
-            "6b75c922c470df6f",
+            "cf9d560d277b485a",
             "af1afc230cc86ec7"
           ],
           [
             "ild_before_date",
             "DatePatientSeries",
             57,
-            "63418eb041382d94",
+            "4cefaaa6532e2955",
             "9c64640ef3e3d408"
           ],
           [
@@ -8498,14 +8498,14 @@
             "lung_ca_after_date",
             "DatePatientSeries",
             84,
-            "8d301cafab8fb8af",
+            "82ce122c984b476d",
             "af1afc230cc86ec7"
           ],
           [
             "lung_ca_before_date",
             "DatePatientSeries",
             60,
-            "2ad78a7c766db7ca",
+            "7a525734945efe4c",
             "9c64640ef3e3d408"
           ],
           [
@@ -8540,7 +8540,7 @@
             "most_recent_smoking_code",
             "StrPatientSeries",
             121,
-            "c5af994a08aa4ede",
+            "d2fd15f6d3cf4db0",
             "d4b0772c0831f4ad"
           ],
           [
@@ -8561,7 +8561,7 @@
             "myositis_age",
             "IntPatientSeries",
             167,
-            "960ccef22c510d13",
+            "c6ef67409a069bda",
             "6d6ae27055e87a54"
           ],
           [
@@ -8575,42 +8575,42 @@
             "myositis_alive_inc",
             "BoolPatientSeries",
             173,
-            "05041159f611a77a",
+            "acabebc914aa3ec6",
             "4b4a5a5b5d9b1bd4"
           ],
           [
             "myositis_alive_inc_p",
             "BoolPatientSeries",
             197,
-            "56872b759fc23e53",
+            "890f27e543fabe75",
             "a19bc68bd743d843"
           ],
           [
             "myositis_inc_case",
             "BoolPatientSeries",
             155,
-            "256b55e251f9f58e",
+            "21a486d91dbf54e5",
             "6872550f8a08d8c2"
           ],
           [
             "myositis_inc_case_p",
             "BoolPatientSeries",
             179,
-            "f5d65355eb5eac08",
+            "268726ea74b1a914",
             "38d8b8bef0ee03fd"
           ],
           [
             "myositis_inc_date",
             "DatePatientSeries",
             147,
-            "88faa730f38aee3c",
+            "b4fe744f44c23d44",
             "2f3f6fb6b0094fe1"
           ],
           [
             "myositis_pre_reg",
             "BoolPatientSeries",
             161,
-            "6535bb2959f3df7b",
+            "a757541d953d82d7",
             "94f9338bcd68f0ca"
           ],
           [
@@ -8652,21 +8652,21 @@
             "osteop_after_date",
             "DatePatientSeries",
             89,
-            "f7c9ea28aabf1958",
+            "d4e50eed8b20393e",
             "af1afc230cc86ec7"
           ],
           [
             "osteop_before_date",
             "DatePatientSeries",
             65,
-            "c0fdda6c6f39e880",
+            "ec88deda1815146d",
             "9c64640ef3e3d408"
           ],
           [
             "psa_age",
             "IntPatientSeries",
             167,
-            "dde2db8f96d8cb19",
+            "18daeaec80011dc1",
             "6d6ae27055e87a54"
           ],
           [
@@ -8680,42 +8680,42 @@
             "psa_alive_inc",
             "BoolPatientSeries",
             173,
-            "11d097cfcfa5a721",
+            "1f458b7084f69319",
             "4b4a5a5b5d9b1bd4"
           ],
           [
             "psa_alive_inc_p",
             "BoolPatientSeries",
             197,
-            "ed6bff9c373bd939",
+            "db4559b35e3210f3",
             "a19bc68bd743d843"
           ],
           [
             "psa_inc_case",
             "BoolPatientSeries",
             155,
-            "49f5033d6f8e7c51",
+            "3dad9629bdc76bcb",
             "6872550f8a08d8c2"
           ],
           [
             "psa_inc_case_p",
             "BoolPatientSeries",
             179,
-            "bc528933f1244642",
+            "8d153e64efbd4f44",
             "38d8b8bef0ee03fd"
           ],
           [
             "psa_inc_date",
             "DatePatientSeries",
             147,
-            "00bf60240c965acc",
+            "21176f06970f9731",
             "2f3f6fb6b0094fe1"
           ],
           [
             "psa_pre_reg",
             "BoolPatientSeries",
             161,
-            "c3f4df6ff2c42c08",
+            "dff5ff47a6ade571",
             "94f9338bcd68f0ca"
           ],
           [
@@ -8757,28 +8757,28 @@
             "ref_12m_preappt_date",
             "DatePatientSeries",
             188,
-            "3bfbbf7934be2f5a",
+            "e9f016f0459149c3",
             "1de554b3a8a4fc3e"
           ],
           [
             "ref_6m_preappt_date",
             "DatePatientSeries",
             197,
-            "1b3bba5b4dd4fd28",
+            "0b78c9da9699f73b",
             "ffc693f64b6e25e2"
           ],
           [
             "reg_end_date",
             "DatePatientSeries",
             219,
-            "17c9be0b8a4885e1",
+            "43d70785aca651d3",
             "72779ff85f12ef4c"
           ],
           [
             "region",
             "StrPatientSeries",
             222,
-            "e21d0e60748ed2e5",
+            "f7e8627204113cc4",
             "a641876a018114b5"
           ],
           [
@@ -8806,49 +8806,49 @@
             "rheum_any_ref_date",
             "DatePatientSeries",
             185,
-            "1663857c8c3107d8",
+            "038328b343070e75",
             "80c7e050a8cbd73e"
           ],
           [
             "rheum_appt_any_date",
             "DatePatientSeries",
             170,
-            "c17b93766f8c7389",
+            "2f7287958757cf5d",
             "a648fdf56e229f66"
           ],
           [
             "rheum_appt_count",
             "IntPatientSeries",
             173,
-            "56b861433f79fa26",
+            "09ceb2cbe860bf13",
             "7f7a0a2c32112e36"
           ],
           [
             "rheum_appt_date",
             "DatePatientSeries",
             157,
-            "9bced0b33b718a53",
+            "55bc522c712a3aaa",
             "4cc1e03cc0205ea3"
           ],
           [
             "rheum_appt_medium",
             "StrPatientSeries",
             158,
-            "f1a12c2a77f50d7a",
+            "bd78a5d0c10aa700",
             "c6c7e39fcb246407"
           ],
           [
             "rheum_appt_ref_date",
             "DatePatientSeries",
             184,
-            "1d10a4a8c1682b22",
+            "c132634f02ea5253",
             "d9ea0de15ce05d53"
           ],
           [
             "rheumatoid_age",
             "IntPatientSeries",
             167,
-            "37e6f96633bf9e5c",
+            "eb0de699b8e0b5fe",
             "6d6ae27055e87a54"
           ],
           [
@@ -8862,42 +8862,42 @@
             "rheumatoid_alive_inc",
             "BoolPatientSeries",
             173,
-            "327c7bc324b51474",
+            "8546efba24d27c2d",
             "4b4a5a5b5d9b1bd4"
           ],
           [
             "rheumatoid_alive_inc_p",
             "BoolPatientSeries",
             197,
-            "0669a8890755638f",
+            "3cee602345ddb038",
             "a19bc68bd743d843"
           ],
           [
             "rheumatoid_inc_case",
             "BoolPatientSeries",
             155,
-            "a02c584ca5109448",
+            "c6989e04cf55c224",
             "6872550f8a08d8c2"
           ],
           [
             "rheumatoid_inc_case_p",
             "BoolPatientSeries",
             179,
-            "5fab20d694ceba89",
+            "b7dfdb12af4dde5e",
             "38d8b8bef0ee03fd"
           ],
           [
             "rheumatoid_inc_date",
             "DatePatientSeries",
             147,
-            "aa9b22a9bd6064cd",
+            "7cb778359face755",
             "2f3f6fb6b0094fe1"
           ],
           [
             "rheumatoid_pre_reg",
             "BoolPatientSeries",
             161,
-            "ebd0cdae405c8f83",
+            "ac3e72c535380b6a",
             "94f9338bcd68f0ca"
           ],
           [
@@ -8956,7 +8956,7 @@
             "sjogren_age",
             "IntPatientSeries",
             167,
-            "9ec3cfa5945c7d24",
+            "28e054b876dd93ea",
             "6d6ae27055e87a54"
           ],
           [
@@ -8970,42 +8970,42 @@
             "sjogren_alive_inc",
             "BoolPatientSeries",
             173,
-            "395f3fc47d240832",
+            "da7077d52b964a02",
             "4b4a5a5b5d9b1bd4"
           ],
           [
             "sjogren_alive_inc_p",
             "BoolPatientSeries",
             197,
-            "3db7a097f1e2ee15",
+            "5fd0b0ff179e8edb",
             "a19bc68bd743d843"
           ],
           [
             "sjogren_inc_case",
             "BoolPatientSeries",
             155,
-            "9ff6bb3359e40061",
+            "70de418089d1c2b0",
             "6872550f8a08d8c2"
           ],
           [
             "sjogren_inc_case_p",
             "BoolPatientSeries",
             179,
-            "07624cbb52ee2ae7",
+            "3009021b988be151",
             "38d8b8bef0ee03fd"
           ],
           [
             "sjogren_inc_date",
             "DatePatientSeries",
             147,
-            "5d428ffab4fd6ba0",
+            "67a0847cb30f587e",
             "2f3f6fb6b0094fe1"
           ],
           [
             "sjogren_pre_reg",
             "BoolPatientSeries",
             161,
-            "60c0fc6a2fa16e5f",
+            "bdd311d835b63ac3",
             "94f9338bcd68f0ca"
           ],
           [
@@ -9047,7 +9047,7 @@
             "sle_age",
             "IntPatientSeries",
             167,
-            "983555906fee4982",
+            "c9eccf28194e1716",
             "6d6ae27055e87a54"
           ],
           [
@@ -9061,42 +9061,42 @@
             "sle_alive_inc",
             "BoolPatientSeries",
             173,
-            "e5b2d6ca2b37a307",
+            "31b3b6779fae2c3c",
             "4b4a5a5b5d9b1bd4"
           ],
           [
             "sle_alive_inc_p",
             "BoolPatientSeries",
             197,
-            "c876e5db9b9aa2db",
+            "de453be43711eacc",
             "a19bc68bd743d843"
           ],
           [
             "sle_inc_case",
             "BoolPatientSeries",
             155,
-            "d0a9cdd4f06faf2b",
+            "5610788b0c9a59f1",
             "6872550f8a08d8c2"
           ],
           [
             "sle_inc_case_p",
             "BoolPatientSeries",
             179,
-            "55e5a1d21d880eee",
+            "dc18afd18d02cad0",
             "38d8b8bef0ee03fd"
           ],
           [
             "sle_inc_date",
             "DatePatientSeries",
             147,
-            "275d73b44e40dda9",
+            "12f861a93429590c",
             "2f3f6fb6b0094fe1"
           ],
           [
             "sle_pre_reg",
             "BoolPatientSeries",
             161,
-            "8441b7c1ac9308f4",
+            "cb65eb3cf23385de",
             "94f9338bcd68f0ca"
           ],
           [
@@ -9138,28 +9138,28 @@
             "smoking_status",
             "StrPatientSeries",
             138,
-            "0135936c55b804e2",
+            "00c97e6fd1406527",
             "276dd5b10e6fca11"
           ],
           [
             "solid_ca_after_date",
             "DatePatientSeries",
             85,
-            "0fc9512bb00d2139",
+            "bca9f606089dc330",
             "af1afc230cc86ec7"
           ],
           [
             "solid_ca_before_date",
             "DatePatientSeries",
             61,
-            "fcc62f3360b2e39a",
+            "f2c93c312e4a7af6",
             "9c64640ef3e3d408"
           ],
           [
             "ssc_age",
             "IntPatientSeries",
             167,
-            "4a6ad455283d3a83",
+            "673e71c5f49ef9ba",
             "6d6ae27055e87a54"
           ],
           [
@@ -9173,42 +9173,42 @@
             "ssc_alive_inc",
             "BoolPatientSeries",
             173,
-            "783b43adb815621f",
+            "8dc56df5e9bbac2d",
             "4b4a5a5b5d9b1bd4"
           ],
           [
             "ssc_alive_inc_p",
             "BoolPatientSeries",
             197,
-            "ae2bc89057a56c66",
+            "9bdc21097846e1ef",
             "a19bc68bd743d843"
           ],
           [
             "ssc_inc_case",
             "BoolPatientSeries",
             155,
-            "d72d8994245f1f81",
+            "f5cbf87906f7bd69",
             "6872550f8a08d8c2"
           ],
           [
             "ssc_inc_case_p",
             "BoolPatientSeries",
             179,
-            "5bf8fac33de84cd5",
+            "79e59f4dba016081",
             "38d8b8bef0ee03fd"
           ],
           [
             "ssc_inc_date",
             "DatePatientSeries",
             147,
-            "d2a127b578c4a793",
+            "d06be1f410119d60",
             "2f3f6fb6b0094fe1"
           ],
           [
             "ssc_pre_reg",
             "BoolPatientSeries",
             161,
-            "ab21dfbd0c583926",
+            "b03657763455b2b4",
             "94f9338bcd68f0ca"
           ],
           [
@@ -9257,42 +9257,42 @@
             "steroid_12m_count",
             "IntPatientSeries",
             287,
-            "ecf2989c6dc942a7",
+            "cbeecc23d3efe8ca",
             "34d1914b780cf1c4"
           ],
           [
             "steroid_12m_first_date",
             "DatePatientSeries",
             285,
-            "cf30d53ac14b1b37",
+            "5768bf1ad6a5a508",
             "25a307941e269679"
           ],
           [
             "steroid_12m_last_date",
             "DatePatientSeries",
             286,
-            "fe89b5c24978c30d",
+            "ad4cadf8c9b386d4",
             "d40874204dc12569"
           ],
           [
             "steroid_count",
             "IntPatientSeries",
             270,
-            "2ee237c656ef8b8b",
+            "6b97531507972559",
             "841947dee762bf5f"
           ],
           [
             "steroid_first_date",
             "DatePatientSeries",
             268,
-            "ac564a35d629ad63",
+            "28517e3a1a82192f",
             "d3c81c341227d1b8"
           ],
           [
             "steroid_last_date",
             "DatePatientSeries",
             269,
-            "c2ba4b682429ee81",
+            "e66fadc95a493f05",
             "d7f3fabef68d6b8c"
           ],
           [
@@ -9313,7 +9313,7 @@
             "undiffia_age",
             "IntPatientSeries",
             167,
-            "b37def30f5ed85f8",
+            "06c717f4d2e0eaa2",
             "a34fbd3ade703eaa"
           ],
           [
@@ -9327,42 +9327,42 @@
             "undiffia_alive_inc",
             "BoolPatientSeries",
             173,
-            "1aee0266051530e6",
+            "c959f45ee717f3a1",
             "eba01b651d5c2339"
           ],
           [
             "undiffia_alive_inc_p",
             "BoolPatientSeries",
             197,
-            "df00401f095f29fc",
+            "0d03bd08cc932794",
             "a19bc68bd743d843"
           ],
           [
             "undiffia_inc_case",
             "BoolPatientSeries",
             155,
-            "1579372540fc261f",
+            "d42fcfba4daee1d7",
             "4cf7e115972a15e5"
           ],
           [
             "undiffia_inc_case_p",
             "BoolPatientSeries",
             179,
-            "32597cb42de06854",
+            "cf20741c6a3f80e4",
             "38d8b8bef0ee03fd"
           ],
           [
             "undiffia_inc_date",
             "DatePatientSeries",
             147,
-            "d58dcd73ecb153cc",
+            "2052cde5abc0941c",
             "da89d172a8a2db33"
           ],
           [
             "undiffia_pre_reg",
             "BoolPatientSeries",
             161,
-            "9e82019642f402c6",
+            "f40efbae14132250",
             "b2f1bdc0bdd932a3"
           ],
           [
@@ -9404,7 +9404,7 @@
             "vasc_age",
             "IntPatientSeries",
             167,
-            "1b6284ac24b47632",
+            "79062f308fa0f90b",
             "6d6ae27055e87a54"
           ],
           [
@@ -9418,42 +9418,42 @@
             "vasc_alive_inc",
             "BoolPatientSeries",
             173,
-            "12903c1428da6f05",
+            "101890b2dd9bf9f8",
             "4b4a5a5b5d9b1bd4"
           ],
           [
             "vasc_alive_inc_p",
             "BoolPatientSeries",
             197,
-            "10976bb873548728",
+            "d3e571d61d700c92",
             "a19bc68bd743d843"
           ],
           [
             "vasc_inc_case",
             "BoolPatientSeries",
             155,
-            "4fafbdf9561df65f",
+            "092b3fb9434984fd",
             "6872550f8a08d8c2"
           ],
           [
             "vasc_inc_case_p",
             "BoolPatientSeries",
             179,
-            "62b7a63b9bbf253a",
+            "9159332256d5fbdc",
             "38d8b8bef0ee03fd"
           ],
           [
             "vasc_inc_date",
             "DatePatientSeries",
             147,
-            "bf0d3fd9406df952",
+            "f7ff8a4aea17855a",
             "2f3f6fb6b0094fe1"
           ],
           [
             "vasc_pre_reg",
             "BoolPatientSeries",
             161,
-            "70eda9d8fa07cb0b",
+            "0fd4eeb137e98475",
             "94f9338bcd68f0ca"
           ],
           [
@@ -9497,7 +9497,7 @@
             "anca_age",
             "IntPatientSeries",
             167,
-            "faac0d96a92c5bf2",
+            "d5861aee1f9dfb35",
             "6d6ae27055e87a54"
           ],
           [
@@ -9511,42 +9511,42 @@
             "anca_alive_inc",
             "BoolPatientSeries",
             173,
-            "490d231fb9682b9d",
+            "ab0d8c8c975bebea",
             "4b4a5a5b5d9b1bd4"
           ],
           [
             "anca_alive_inc_p",
             "BoolPatientSeries",
             197,
-            "ec9e0190ede1d1d8",
+            "c5a99cbbba6bae97",
             "a19bc68bd743d843"
           ],
           [
             "anca_inc_case",
             "BoolPatientSeries",
             155,
-            "1b9ab53663881631",
+            "161bd87e192e0718",
             "6872550f8a08d8c2"
           ],
           [
             "anca_inc_case_p",
             "BoolPatientSeries",
             179,
-            "37346749114f39b7",
+            "bf2523455ce988e7",
             "38d8b8bef0ee03fd"
           ],
           [
             "anca_inc_date",
             "DatePatientSeries",
             147,
-            "c8285920973f211a",
+            "bb1fb01bba32afa4",
             "2f3f6fb6b0094fe1"
           ],
           [
             "anca_pre_reg",
             "BoolPatientSeries",
             161,
-            "b158a2dc7531a754",
+            "29c3ddf955ab2aef",
             "94f9338bcd68f0ca"
           ],
           [
@@ -9588,7 +9588,7 @@
             "axialspa_age",
             "IntPatientSeries",
             167,
-            "9c2a2ed4c3f15e54",
+            "347457804ac54fa8",
             "6d6ae27055e87a54"
           ],
           [
@@ -9602,42 +9602,42 @@
             "axialspa_alive_inc",
             "BoolPatientSeries",
             173,
-            "454a3d6580a3a43f",
+            "dcb9ce57171f4c35",
             "4b4a5a5b5d9b1bd4"
           ],
           [
             "axialspa_alive_inc_p",
             "BoolPatientSeries",
             197,
-            "4719123013956974",
+            "4fae5cad4acac3c8",
             "a19bc68bd743d843"
           ],
           [
             "axialspa_inc_case",
             "BoolPatientSeries",
             155,
-            "42f750a008849d4c",
+            "df34ffb30a2c445c",
             "6872550f8a08d8c2"
           ],
           [
             "axialspa_inc_case_p",
             "BoolPatientSeries",
             179,
-            "7e9d235aa25caf78",
+            "feed3dfa1449a189",
             "38d8b8bef0ee03fd"
           ],
           [
             "axialspa_inc_date",
             "DatePatientSeries",
             147,
-            "ae9703dca7c786b5",
+            "0b7a1d5580ae17fa",
             "2f3f6fb6b0094fe1"
           ],
           [
             "axialspa_pre_reg",
             "BoolPatientSeries",
             161,
-            "d150ca6c6ac11db3",
+            "b44be96d1685237a",
             "94f9338bcd68f0ca"
           ],
           [
@@ -9679,7 +9679,7 @@
             "ctd_age",
             "IntPatientSeries",
             167,
-            "65d533ef66b3e503",
+            "396316904de20aa1",
             "6d6ae27055e87a54"
           ],
           [
@@ -9693,42 +9693,42 @@
             "ctd_alive_inc",
             "BoolPatientSeries",
             173,
-            "54a85dbd22836ece",
+            "aad7abaf619f63af",
             "4b4a5a5b5d9b1bd4"
           ],
           [
             "ctd_alive_inc_p",
             "BoolPatientSeries",
             197,
-            "6e5a837103814106",
+            "927a6881503a8f79",
             "a19bc68bd743d843"
           ],
           [
             "ctd_inc_case",
             "BoolPatientSeries",
             155,
-            "d0babe6cee881673",
+            "5ca069926c04fbd9",
             "6872550f8a08d8c2"
           ],
           [
             "ctd_inc_case_p",
             "BoolPatientSeries",
             179,
-            "b27377d55772318b",
+            "faf2d5190f73b772",
             "38d8b8bef0ee03fd"
           ],
           [
             "ctd_inc_date",
             "DatePatientSeries",
             147,
-            "8f58bd564db1a258",
+            "74aa72ad8668010d",
             "2f3f6fb6b0094fe1"
           ],
           [
             "ctd_pre_reg",
             "BoolPatientSeries",
             161,
-            "2693e6d3388a6184",
+            "695919755f7ee1d8",
             "94f9338bcd68f0ca"
           ],
           [
@@ -9777,7 +9777,7 @@
             "eia_age",
             "IntPatientSeries",
             167,
-            "2b1b961179a2db3e",
+            "c56d93cec3add84d",
             "6d6ae27055e87a54"
           ],
           [
@@ -9791,42 +9791,42 @@
             "eia_alive_inc",
             "BoolPatientSeries",
             173,
-            "ef0988671129e5d9",
+            "9337f3cc8a29c235",
             "4b4a5a5b5d9b1bd4"
           ],
           [
             "eia_alive_inc_p",
             "BoolPatientSeries",
             197,
-            "ef17a61ead79c160",
+            "dfab65dd644a66ac",
             "a19bc68bd743d843"
           ],
           [
             "eia_inc_case",
             "BoolPatientSeries",
             155,
-            "cb56f64912a3f3cf",
+            "c509d028f318e996",
             "6872550f8a08d8c2"
           ],
           [
             "eia_inc_case_p",
             "BoolPatientSeries",
             179,
-            "dc2e3c9c6eef12c6",
+            "fc384dd06e57f919",
             "38d8b8bef0ee03fd"
           ],
           [
             "eia_inc_date",
             "DatePatientSeries",
             147,
-            "66a5a5d685c794d5",
+            "b955535299d83fc7",
             "2f3f6fb6b0094fe1"
           ],
           [
             "eia_pre_reg",
             "BoolPatientSeries",
             161,
-            "73689dbabc6920c9",
+            "4f8d6a4dfc403b13",
             "94f9338bcd68f0ca"
           ],
           [
@@ -9875,7 +9875,7 @@
             "gca_age",
             "IntPatientSeries",
             167,
-            "7b7c22b7d3f53bdf",
+            "93299f3bdd0a8817",
             "6d6ae27055e87a54"
           ],
           [
@@ -9889,42 +9889,42 @@
             "gca_alive_inc",
             "BoolPatientSeries",
             173,
-            "ecd1c58bdeccf35a",
+            "c8b9aee86bccb237",
             "4b4a5a5b5d9b1bd4"
           ],
           [
             "gca_alive_inc_p",
             "BoolPatientSeries",
             197,
-            "1046245027b7197c",
+            "2ef9af085170fb03",
             "a19bc68bd743d843"
           ],
           [
             "gca_inc_case",
             "BoolPatientSeries",
             155,
-            "1b3b604e2d83e76f",
+            "8745ac29ee391166",
             "6872550f8a08d8c2"
           ],
           [
             "gca_inc_case_p",
             "BoolPatientSeries",
             179,
-            "1500486362e1ef0c",
+            "d083b7ab57385098",
             "38d8b8bef0ee03fd"
           ],
           [
             "gca_inc_date",
             "DatePatientSeries",
             147,
-            "ff10826a9853e09f",
+            "3942cdbd98734d87",
             "2f3f6fb6b0094fe1"
           ],
           [
             "gca_pre_reg",
             "BoolPatientSeries",
             161,
-            "db2e65516aeb7dc7",
+            "4821393ca0862f34",
             "94f9338bcd68f0ca"
           ],
           [
@@ -9973,7 +9973,7 @@
             "myositis_age",
             "IntPatientSeries",
             167,
-            "960ccef22c510d13",
+            "c6ef67409a069bda",
             "6d6ae27055e87a54"
           ],
           [
@@ -9987,42 +9987,42 @@
             "myositis_alive_inc",
             "BoolPatientSeries",
             173,
-            "05041159f611a77a",
+            "acabebc914aa3ec6",
             "4b4a5a5b5d9b1bd4"
           ],
           [
             "myositis_alive_inc_p",
             "BoolPatientSeries",
             197,
-            "56872b759fc23e53",
+            "890f27e543fabe75",
             "a19bc68bd743d843"
           ],
           [
             "myositis_inc_case",
             "BoolPatientSeries",
             155,
-            "256b55e251f9f58e",
+            "21a486d91dbf54e5",
             "6872550f8a08d8c2"
           ],
           [
             "myositis_inc_case_p",
             "BoolPatientSeries",
             179,
-            "f5d65355eb5eac08",
+            "268726ea74b1a914",
             "38d8b8bef0ee03fd"
           ],
           [
             "myositis_inc_date",
             "DatePatientSeries",
             147,
-            "88faa730f38aee3c",
+            "b4fe744f44c23d44",
             "2f3f6fb6b0094fe1"
           ],
           [
             "myositis_pre_reg",
             "BoolPatientSeries",
             161,
-            "6535bb2959f3df7b",
+            "a757541d953d82d7",
             "94f9338bcd68f0ca"
           ],
           [
@@ -10064,7 +10064,7 @@
             "psa_age",
             "IntPatientSeries",
             167,
-            "dde2db8f96d8cb19",
+            "18daeaec80011dc1",
             "6d6ae27055e87a54"
           ],
           [
@@ -10078,42 +10078,42 @@
             "psa_alive_inc",
             "BoolPatientSeries",
             173,
-            "11d097cfcfa5a721",
+            "1f458b7084f69319",
             "4b4a5a5b5d9b1bd4"
           ],
           [
             "psa_alive_inc_p",
             "BoolPatientSeries",
             197,
-            "ed6bff9c373bd939",
+            "db4559b35e3210f3",
             "a19bc68bd743d843"
           ],
           [
             "psa_inc_case",
             "BoolPatientSeries",
             155,
-            "49f5033d6f8e7c51",
+            "3dad9629bdc76bcb",
             "6872550f8a08d8c2"
           ],
           [
             "psa_inc_case_p",
             "BoolPatientSeries",
             179,
-            "bc528933f1244642",
+            "8d153e64efbd4f44",
             "38d8b8bef0ee03fd"
           ],
           [
             "psa_inc_date",
             "DatePatientSeries",
             147,
-            "00bf60240c965acc",
+            "21176f06970f9731",
             "2f3f6fb6b0094fe1"
           ],
           [
             "psa_pre_reg",
             "BoolPatientSeries",
             161,
-            "c3f4df6ff2c42c08",
+            "dff5ff47a6ade571",
             "94f9338bcd68f0ca"
           ],
           [
@@ -10155,7 +10155,7 @@
             "rheumatoid_age",
             "IntPatientSeries",
             167,
-            "37e6f96633bf9e5c",
+            "eb0de699b8e0b5fe",
             "6d6ae27055e87a54"
           ],
           [
@@ -10169,42 +10169,42 @@
             "rheumatoid_alive_inc",
             "BoolPatientSeries",
             173,
-            "327c7bc324b51474",
+            "8546efba24d27c2d",
             "4b4a5a5b5d9b1bd4"
           ],
           [
             "rheumatoid_alive_inc_p",
             "BoolPatientSeries",
             197,
-            "0669a8890755638f",
+            "3cee602345ddb038",
             "a19bc68bd743d843"
           ],
           [
             "rheumatoid_inc_case",
             "BoolPatientSeries",
             155,
-            "a02c584ca5109448",
+            "c6989e04cf55c224",
             "6872550f8a08d8c2"
           ],
           [
             "rheumatoid_inc_case_p",
             "BoolPatientSeries",
             179,
-            "5fab20d694ceba89",
+            "b7dfdb12af4dde5e",
             "38d8b8bef0ee03fd"
           ],
           [
             "rheumatoid_inc_date",
             "DatePatientSeries",
             147,
-            "aa9b22a9bd6064cd",
+            "7cb778359face755",
             "2f3f6fb6b0094fe1"
           ],
           [
             "rheumatoid_pre_reg",
             "BoolPatientSeries",
             161,
-            "ebd0cdae405c8f83",
+            "ac3e72c535380b6a",
             "94f9338bcd68f0ca"
           ],
           [
@@ -10253,7 +10253,7 @@
             "sjogren_age",
             "IntPatientSeries",
             167,
-            "9ec3cfa5945c7d24",
+            "28e054b876dd93ea",
             "6d6ae27055e87a54"
           ],
           [
@@ -10267,42 +10267,42 @@
             "sjogren_alive_inc",
             "BoolPatientSeries",
             173,
-            "395f3fc47d240832",
+            "da7077d52b964a02",
             "4b4a5a5b5d9b1bd4"
           ],
           [
             "sjogren_alive_inc_p",
             "BoolPatientSeries",
             197,
-            "3db7a097f1e2ee15",
+            "5fd0b0ff179e8edb",
             "a19bc68bd743d843"
           ],
           [
             "sjogren_inc_case",
             "BoolPatientSeries",
             155,
-            "9ff6bb3359e40061",
+            "70de418089d1c2b0",
             "6872550f8a08d8c2"
           ],
           [
             "sjogren_inc_case_p",
             "BoolPatientSeries",
             179,
-            "07624cbb52ee2ae7",
+            "3009021b988be151",
             "38d8b8bef0ee03fd"
           ],
           [
             "sjogren_inc_date",
             "DatePatientSeries",
             147,
-            "5d428ffab4fd6ba0",
+            "67a0847cb30f587e",
             "2f3f6fb6b0094fe1"
           ],
           [
             "sjogren_pre_reg",
             "BoolPatientSeries",
             161,
-            "60c0fc6a2fa16e5f",
+            "bdd311d835b63ac3",
             "94f9338bcd68f0ca"
           ],
           [
@@ -10344,7 +10344,7 @@
             "sle_age",
             "IntPatientSeries",
             167,
-            "983555906fee4982",
+            "c9eccf28194e1716",
             "6d6ae27055e87a54"
           ],
           [
@@ -10358,42 +10358,42 @@
             "sle_alive_inc",
             "BoolPatientSeries",
             173,
-            "e5b2d6ca2b37a307",
+            "31b3b6779fae2c3c",
             "4b4a5a5b5d9b1bd4"
           ],
           [
             "sle_alive_inc_p",
             "BoolPatientSeries",
             197,
-            "c876e5db9b9aa2db",
+            "de453be43711eacc",
             "a19bc68bd743d843"
           ],
           [
             "sle_inc_case",
             "BoolPatientSeries",
             155,
-            "d0a9cdd4f06faf2b",
+            "5610788b0c9a59f1",
             "6872550f8a08d8c2"
           ],
           [
             "sle_inc_case_p",
             "BoolPatientSeries",
             179,
-            "55e5a1d21d880eee",
+            "dc18afd18d02cad0",
             "38d8b8bef0ee03fd"
           ],
           [
             "sle_inc_date",
             "DatePatientSeries",
             147,
-            "275d73b44e40dda9",
+            "12f861a93429590c",
             "2f3f6fb6b0094fe1"
           ],
           [
             "sle_pre_reg",
             "BoolPatientSeries",
             161,
-            "8441b7c1ac9308f4",
+            "cb65eb3cf23385de",
             "94f9338bcd68f0ca"
           ],
           [
@@ -10435,7 +10435,7 @@
             "ssc_age",
             "IntPatientSeries",
             167,
-            "4a6ad455283d3a83",
+            "673e71c5f49ef9ba",
             "6d6ae27055e87a54"
           ],
           [
@@ -10449,42 +10449,42 @@
             "ssc_alive_inc",
             "BoolPatientSeries",
             173,
-            "783b43adb815621f",
+            "8dc56df5e9bbac2d",
             "4b4a5a5b5d9b1bd4"
           ],
           [
             "ssc_alive_inc_p",
             "BoolPatientSeries",
             197,
-            "ae2bc89057a56c66",
+            "9bdc21097846e1ef",
             "a19bc68bd743d843"
           ],
           [
             "ssc_inc_case",
             "BoolPatientSeries",
             155,
-            "d72d8994245f1f81",
+            "f5cbf87906f7bd69",
             "6872550f8a08d8c2"
           ],
           [
             "ssc_inc_case_p",
             "BoolPatientSeries",
             179,
-            "5bf8fac33de84cd5",
+            "79e59f4dba016081",
             "38d8b8bef0ee03fd"
           ],
           [
             "ssc_inc_date",
             "DatePatientSeries",
             147,
-            "d2a127b578c4a793",
+            "d06be1f410119d60",
             "2f3f6fb6b0094fe1"
           ],
           [
             "ssc_pre_reg",
             "BoolPatientSeries",
             161,
-            "ab21dfbd0c583926",
+            "b03657763455b2b4",
             "94f9338bcd68f0ca"
           ],
           [
@@ -10526,7 +10526,7 @@
             "undiffia_age",
             "IntPatientSeries",
             167,
-            "b37def30f5ed85f8",
+            "06c717f4d2e0eaa2",
             "a34fbd3ade703eaa"
           ],
           [
@@ -10540,42 +10540,42 @@
             "undiffia_alive_inc",
             "BoolPatientSeries",
             173,
-            "1aee0266051530e6",
+            "c959f45ee717f3a1",
             "eba01b651d5c2339"
           ],
           [
             "undiffia_alive_inc_p",
             "BoolPatientSeries",
             197,
-            "df00401f095f29fc",
+            "0d03bd08cc932794",
             "a19bc68bd743d843"
           ],
           [
             "undiffia_inc_case",
             "BoolPatientSeries",
             155,
-            "1579372540fc261f",
+            "d42fcfba4daee1d7",
             "4cf7e115972a15e5"
           ],
           [
             "undiffia_inc_case_p",
             "BoolPatientSeries",
             179,
-            "32597cb42de06854",
+            "cf20741c6a3f80e4",
             "38d8b8bef0ee03fd"
           ],
           [
             "undiffia_inc_date",
             "DatePatientSeries",
             147,
-            "d58dcd73ecb153cc",
+            "2052cde5abc0941c",
             "da89d172a8a2db33"
           ],
           [
             "undiffia_pre_reg",
             "BoolPatientSeries",
             161,
-            "9e82019642f402c6",
+            "f40efbae14132250",
             "b2f1bdc0bdd932a3"
           ],
           [
@@ -10617,7 +10617,7 @@
             "vasc_age",
             "IntPatientSeries",
             167,
-            "1b6284ac24b47632",
+            "79062f308fa0f90b",
             "6d6ae27055e87a54"
           ],
           [
@@ -10631,42 +10631,42 @@
             "vasc_alive_inc",
             "BoolPatientSeries",
             173,
-            "12903c1428da6f05",
+            "101890b2dd9bf9f8",
             "4b4a5a5b5d9b1bd4"
           ],
           [
             "vasc_alive_inc_p",
             "BoolPatientSeries",
             197,
-            "10976bb873548728",
+            "d3e571d61d700c92",
             "a19bc68bd743d843"
           ],
           [
             "vasc_inc_case",
             "BoolPatientSeries",
             155,
-            "4fafbdf9561df65f",
+            "092b3fb9434984fd",
             "6872550f8a08d8c2"
           ],
           [
             "vasc_inc_case_p",
             "BoolPatientSeries",
             179,
-            "62b7a63b9bbf253a",
+            "9159332256d5fbdc",
             "38d8b8bef0ee03fd"
           ],
           [
             "vasc_inc_date",
             "DatePatientSeries",
             147,
-            "bf0d3fd9406df952",
+            "f7ff8a4aea17855a",
             "2f3f6fb6b0094fe1"
           ],
           [
             "vasc_pre_reg",
             "BoolPatientSeries",
             161,
-            "70eda9d8fa07cb0b",
+            "0fd4eeb137e98475",
             "94f9338bcd68f0ca"
           ],
           [
@@ -10869,8 +10869,8 @@
             "days_in_critical_care",
             "IntPatientSeries",
             285,
-            "40291bc3d1ea5633",
-            "40291bc3d1ea5633"
+            "5dfe8f17330141c0",
+            "5dfe8f17330141c0"
           ],
           [
             "death_date",
@@ -11227,114 +11227,129 @@
           [
             "admission1_date_sus",
             "DatePatientSeries",
-            -1,
-            "5b34d0f74cfb221b",
-            "5b34d0f74cfb221b"
+            [
+              "analysis/variables.py",
+              170
+            ],
+            "44a97e699efc1d44",
+            "44a97e699efc1d44"
           ],
           [
             "admission2_date_sus",
             "DatePatientSeries",
-            -1,
-            "9f9f571ec94f0d8a",
-            "9f9f571ec94f0d8a"
+            [
+              "analysis/variables.py",
+              170
+            ],
+            "4e49c553d5b1b29d",
+            "4e49c553d5b1b29d"
           ],
           [
             "admission3_date_sus",
             "DatePatientSeries",
-            -1,
-            "a91a0583586ad30b",
-            "a91a0583586ad30b"
+            [
+              "analysis/variables.py",
+              170
+            ],
+            "ca05d7e0c13fd2ff",
+            "ca05d7e0c13fd2ff"
           ],
           [
             "admission4_date_sus",
             "DatePatientSeries",
-            -1,
-            "0dcae198d0c78cfe",
-            "0dcae198d0c78cfe"
+            [
+              "analysis/variables.py",
+              170
+            ],
+            "b9d9402c62a04c40",
+            "b9d9402c62a04c40"
           ],
           [
             "admission5_date_sus",
             "DatePatientSeries",
-            -1,
-            "ad4914c6880b0a8c",
-            "ad4914c6880b0a8c"
+            [
+              "analysis/variables.py",
+              170
+            ],
+            "552fc1a0ba8f0295",
+            "552fc1a0ba8f0295"
           ],
           [
             "age_sus",
             "IntPatientSeries",
             93,
-            "081eb96ae20b44eb",
-            "081eb96ae20b44eb"
+            "c12ad7c4f08706ad",
+            "c12ad7c4f08706ad"
           ],
           [
             "asthma_sus",
             "BoolPatientSeries",
             174,
-            "c15213bf23db5788",
-            "c85cc54bbaa7a481"
+            "b710f9bfe224f1da",
+            "16299f80e3af59c1"
           ],
           [
             "cancer_haemo_sus",
             "BoolPatientSeries",
             188,
-            "a77e113d704791c8",
-            "c85cc54bbaa7a481"
+            "1b00124f2d61fe82",
+            "16299f80e3af59c1"
           ],
           [
             "cancer_lung_sus",
             "BoolPatientSeries",
             186,
-            "9a222aef34c5a5a4",
-            "c85cc54bbaa7a481"
+            "f3c67f519beb1bdd",
+            "16299f80e3af59c1"
           ],
           [
             "cancer_other_sus",
             "BoolPatientSeries",
             187,
-            "545de35e66480b9d",
-            "c85cc54bbaa7a481"
+            "4e9bd778863eb010",
+            "16299f80e3af59c1"
           ],
           [
             "ccd_sus",
             "BoolPatientSeries",
             165,
-            "fa59b286a21a846f",
-            "c85cc54bbaa7a481"
+            "d0126a8b6ee9679d",
+            "16299f80e3af59c1"
           ],
           [
             "ckd_sus",
             "BoolPatientSeries",
             177,
-            "3a5ebaae0e7502b0",
-            "c85cc54bbaa7a481"
+            "2358499feb2e0178",
+            "16299f80e3af59c1"
           ],
           [
             "cld_sus",
             "BoolPatientSeries",
             180,
-            "da066b80f07743a8",
-            "c85cc54bbaa7a481"
+            "41ca1733a715d7fe",
+            "16299f80e3af59c1"
           ],
           [
             "copd_sus",
             "BoolPatientSeries",
             171,
-            "88459c696e3b62f2",
-            "c85cc54bbaa7a481"
+            "fe2d12d849a6db28",
+            "16299f80e3af59c1"
           ],
           [
             "covid19_vaccine_sus",
             "BoolPatientSeries",
             156,
-            "feddcd97df607678",
-            "feddcd97df607678"
+            "1c2462176dd6ba80",
+            "1c2462176dd6ba80"
           ],
           [
             "days_in_critical_care",
             "IntPatientSeries",
             235,
-            "461ea0342bd7e627",
-            "461ea0342bd7e627"
+            "a84163db8de6dc0e",
+            "a84163db8de6dc0e"
           ],
           [
             "death_date",
@@ -11347,8 +11362,8 @@
             "dementia_sus",
             "BoolPatientSeries",
             215,
-            "b747fc650c2ccaf4",
-            "c85cc54bbaa7a481"
+            "9f5f3fa0b7945d60",
+            "16299f80e3af59c1"
           ],
           [
             "dereg_date_sus",
@@ -11361,43 +11376,43 @@
             "diabetes_sus",
             "BoolPatientSeries",
             207,
-            "dab17c872efbb1e4",
-            "c85cc54bbaa7a481"
+            "8fee342a038634ef",
+            "16299f80e3af59c1"
           ],
           [
             "diabetes_t1_sus",
             "BoolPatientSeries",
             208,
-            "5692b083d8e5e40c",
-            "c85cc54bbaa7a481"
+            "fa2345358587bbd8",
+            "16299f80e3af59c1"
           ],
           [
             "diabetes_t2_sus",
             "BoolPatientSeries",
             209,
-            "c00bd19e26ee61e9",
-            "c85cc54bbaa7a481"
+            "791b08a7ef3d4ccb",
+            "16299f80e3af59c1"
           ],
           [
             "discharge_date",
             "DatePatientSeries",
             246,
-            "fb0d9fb1d97e14fd",
-            "fb0d9fb1d97e14fd"
+            "b55bfb5461f1868e",
+            "b55bfb5461f1868e"
           ],
           [
             "ethnicity_sus",
             "StrPatientSeries",
             106,
-            "f3e723311c1719bf",
-            "f51d1bb8d3ea1722"
+            "675a68dc647bfd02",
+            "d4ab947f85a2faea"
           ],
           [
             "first_admission_date_sus",
             "DatePatientSeries",
             77,
-            "b63b3a7c1ea23339",
-            "b63b3a7c1ea23339"
+            "049ec7a3089f14fe",
+            "049ec7a3089f14fe"
           ],
           [
             "has_died",
@@ -11410,22 +11425,22 @@
             "hiv_sus",
             "BoolPatientSeries",
             191,
-            "dd19fd74433943ce",
-            "c85cc54bbaa7a481"
+            "d6938e401556658a",
+            "16299f80e3af59c1"
           ],
           [
             "hypertension_sus",
             "BoolPatientSeries",
             168,
-            "a9d99778c7a7a803",
-            "c85cc54bbaa7a481"
+            "9d8502f6f78f0f3c",
+            "16299f80e3af59c1"
           ],
           [
             "imd_sus",
             "StrPatientSeries",
             119,
-            "84d354f7c793cbed",
-            "84d354f7c793cbed"
+            "d6553fed9f1d2810",
+            "d6553fed9f1d2810"
           ],
           [
             "in_hospital_death",
@@ -11438,29 +11453,29 @@
             "last_positive_test_date_sus",
             "DatePatientSeries",
             148,
-            "966194bb7d014e9d",
-            "966194bb7d014e9d"
+            "85c543ee82dff575",
+            "85c543ee82dff575"
           ],
           [
             "n_admissions",
             "IntPatientSeries",
             231,
-            "b3322b3b7d827235",
-            "b3322b3b7d827235"
+            "cf4b92bd4fc3ee30",
+            "cf4b92bd4fc3ee30"
           ],
           [
             "neuro_sus",
             "BoolPatientSeries",
             183,
-            "4d1fc58bd05c2856",
-            "c85cc54bbaa7a481"
+            "0760450b130ad46f",
+            "16299f80e3af59c1"
           ],
           [
             "obesity_sus",
             "FloatPatientSeries",
             194,
-            "d71ee80a535d7e0d",
-            "8e688fb867473a1c"
+            "3f32735783c119c6",
+            "ad815407bd69ebdb"
           ],
           [
             "ons_death_date",
@@ -11473,29 +11488,29 @@
             "prior_dereg_date_sus",
             "DatePatientSeries",
             85,
-            "cacecebe5a484559",
-            "cacecebe5a484559"
+            "e758db3d407c751f",
+            "e758db3d407c751f"
           ],
           [
             "probable_covid_date_sus",
             "DatePatientSeries",
             140,
-            "aea6f689d9c395ee",
-            "e33d8b0b50560315"
+            "d160454fe8a6afce",
+            "a842a06b2622cfe6"
           ],
           [
             "region_sus",
             "StrPatientSeries",
             129,
-            "ade4418155b91f00",
-            "ade4418155b91f00"
+            "59f2c1de337bb20d",
+            "59f2c1de337bb20d"
           ],
           [
             "registered_sus",
             "BoolPatientSeries",
             90,
-            "5ba96688d1fc19d4",
-            "5ba96688d1fc19d4"
+            "5f745a4cbe115659",
+            "5f745a4cbe115659"
           ],
           [
             "sex_sus",
@@ -11508,15 +11523,15 @@
             "smoking_sus",
             "BoolPatientSeries",
             221,
-            "27c58f2a81e80e4e",
-            "8137c10aa585643a"
+            "8abef824498d84d1",
+            "51152161a10e18c6"
           ],
           [
             "suspected_covid_date_sus",
             "DatePatientSeries",
             132,
-            "34f6209c980412df",
-            "e33d8b0b50560315"
+            "a019360c7f545ec5",
+            "a842a06b2622cfe6"
           ]
         ]
       }
@@ -11532,7 +11547,7 @@
               "analysis/dataset_definition.py",
               106
             ],
-            "6ee5c3484eae9bb5",
+            "aa692a80f98a40d8",
             "72580077e00e3ac3"
           ],
           [
@@ -11542,7 +11557,7 @@
               "analysis/dataset_definition.py",
               82
             ],
-            "88c12cdab28c08b8",
+            "3bcffd15b621c561",
             "68b8d3ed7363d5a6"
           ],
           [
@@ -11552,7 +11567,7 @@
               "analysis/dataset_definition.py",
               112
             ],
-            "b37e986f7b5a02d8",
+            "070d539149117067",
             "6a811a8b23963181"
           ],
           [
@@ -11562,7 +11577,7 @@
               "analysis/dataset_definition.py",
               107
             ],
-            "7f95d73fffcd3015",
+            "7a9562934a98b865",
             "72580077e00e3ac3"
           ],
           [
@@ -11572,7 +11587,7 @@
               "analysis/dataset_definition.py",
               85
             ],
-            "c391507ea897482a",
+            "456cdc017a6cfe80",
             "68b8d3ed7363d5a6"
           ],
           [
@@ -11582,7 +11597,7 @@
               "analysis/dataset_definition.py",
               90
             ],
-            "536447ab89ef522e",
+            "7d99874c3eb64699",
             "e587de8e5a0dff33"
           ],
           [
@@ -11606,7 +11621,7 @@
               "analysis/dataset_definition.py",
               113
             ],
-            "866608e7bf43bf50",
+            "9accf519c6b0a766",
             "edbadc4304845a7a"
           ],
           [
@@ -11616,7 +11631,7 @@
               "analysis/dataset_definition.py",
               108
             ],
-            "ed6ab94ed90fcd41",
+            "bd1387527c680603",
             "72580077e00e3ac3"
           ],
           [
@@ -11626,7 +11641,7 @@
               "analysis/dataset_definition.py",
               86
             ],
-            "382bb77d60e0dab9",
+            "cce8b76d0ed84656",
             "68b8d3ed7363d5a6"
           ],
           [
@@ -11636,7 +11651,7 @@
               "analysis/dataset_definition.py",
               91
             ],
-            "e261bbd60facd8cf",
+            "a1302b1c1ad2fa5f",
             "b7df714e032a710d"
           ],
           [
@@ -11646,7 +11661,7 @@
               "analysis/dataset_definition.py",
               133
             ],
-            "bb24f96d375d4c73",
+            "50efb44eb4867f69",
             "8271b4995a3bbf3c"
           ],
           [
@@ -11656,7 +11671,7 @@
               "analysis/dataset_definition.py",
               155
             ],
-            "7cdead1962a8d46e",
+            "4b4e133430f9f724",
             "5626819e2bf4dc0b"
           ],
           [
@@ -11666,7 +11681,7 @@
               "analysis/dataset_definition.py",
               139
             ],
-            "4d559e4c61370020",
+            "2239cbe1d26e6748",
             "46a5c8ccb7f7a3d1"
           ],
           [
@@ -11676,7 +11691,7 @@
               "analysis/dataset_definition.py",
               161
             ],
-            "1b31f431b8590bf0",
+            "023b037d1a40b67d",
             "8e445ef327604ae2"
           ],
           [
@@ -11686,7 +11701,7 @@
               "analysis/dataset_definition.py",
               134
             ],
-            "bc61caf57d2406dc",
+            "8987cfbe80cd6dc8",
             "8271b4995a3bbf3c"
           ],
           [
@@ -11696,7 +11711,7 @@
               "analysis/dataset_definition.py",
               156
             ],
-            "71ef8201df420b96",
+            "3c8340c075716de6",
             "5626819e2bf4dc0b"
           ],
           [
@@ -11706,7 +11721,7 @@
               "analysis/dataset_definition.py",
               140
             ],
-            "613cc4976057df7e",
+            "31885bb84ddf91b7",
             "d02f2814748bd0bb"
           ],
           [
@@ -11716,7 +11731,7 @@
               "analysis/dataset_definition.py",
               162
             ],
-            "0668d3b1f95ce130",
+            "966fb88f6474ced3",
             "09d720a2e8ca3979"
           ],
           [
@@ -11726,7 +11741,7 @@
               "analysis/dataset_definition.py",
               135
             ],
-            "48d343ecc44f8a61",
+            "85bb9bffd241d57a",
             "8271b4995a3bbf3c"
           ],
           [
@@ -11736,7 +11751,7 @@
               "analysis/dataset_definition.py",
               157
             ],
-            "7a21c7a34f77d9df",
+            "27af5ad82de36b43",
             "5626819e2bf4dc0b"
           ],
           [
@@ -11746,7 +11761,7 @@
               "analysis/dataset_definition.py",
               130
             ],
-            "894f25ff9c0fa46e",
+            "c42086896147a72d",
             "8271b4995a3bbf3c"
           ],
           [
@@ -11756,7 +11771,7 @@
               "analysis/dataset_definition.py",
               152
             ],
-            "1ba2f5b8a4b81419",
+            "2704807c4763370a",
             "5626819e2bf4dc0b"
           ],
           [
@@ -11766,7 +11781,7 @@
               "analysis/dataset_definition.py",
               129
             ],
-            "72d55f10d0f1144f",
+            "da44502a37fc9c4f",
             "8271b4995a3bbf3c"
           ],
           [
@@ -11776,7 +11791,7 @@
               "analysis/dataset_definition.py",
               151
             ],
-            "8ed5e37708c5f2a7",
+            "f9e7e56f75f41daa",
             "5626819e2bf4dc0b"
           ],
           [
@@ -11786,7 +11801,7 @@
               "analysis/dataset_definition.py",
               146
             ],
-            "0596d01b7ed58adf",
+            "8e55ff4be9815449",
             "fe5ee08b0da7f284"
           ],
           [
@@ -11796,7 +11811,7 @@
               "analysis/dataset_definition.py",
               168
             ],
-            "fbf5d82be6e475cd",
+            "023cc85c54ab1eb1",
             "6d6d34f0032d0ee8"
           ],
           [
@@ -11806,7 +11821,7 @@
               "analysis/dataset_definition.py",
               145
             ],
-            "47a51e0918362686",
+            "176e0ee7fec491c5",
             "20c915df4e01cdd4"
           ],
           [
@@ -11816,7 +11831,7 @@
               "analysis/dataset_definition.py",
               167
             ],
-            "da876f13ed5daab8",
+            "a9ecc1b88d635f1e",
             "b0d61458c90cdad0"
           ],
           [
@@ -11826,7 +11841,7 @@
               "analysis/dataset_definition.py",
               137
             ],
-            "b84fb713a950e079",
+            "acb7eac7dbe4f74a",
             "46a5c8ccb7f7a3d1"
           ],
           [
@@ -11836,7 +11851,7 @@
               "analysis/dataset_definition.py",
               159
             ],
-            "e8c6b38ca87e8259",
+            "99fcaac8823de6ca",
             "8e445ef327604ae2"
           ],
           [
@@ -11846,7 +11861,7 @@
               "analysis/dataset_definition.py",
               142
             ],
-            "9f438376913b8350",
+            "b9d857a6deefd6f6",
             "ba088e988ed25c14"
           ],
           [
@@ -11856,7 +11871,7 @@
               "analysis/dataset_definition.py",
               164
             ],
-            "79b71b909255038d",
+            "b1b6192ea93bc335",
             "017dc1faad2e6699"
           ],
           [
@@ -11866,7 +11881,7 @@
               "analysis/dataset_definition.py",
               131
             ],
-            "af4045e134ee6107",
+            "e49e7e98294eb18e",
             "8271b4995a3bbf3c"
           ],
           [
@@ -11876,7 +11891,7 @@
               "analysis/dataset_definition.py",
               153
             ],
-            "4fb929e274c926b9",
+            "e04b5878c55d58d2",
             "5626819e2bf4dc0b"
           ],
           [
@@ -11886,7 +11901,7 @@
               "analysis/dataset_definition.py",
               143
             ],
-            "d0dd705b297a17dd",
+            "c88f3ddf734a4d77",
             "ba088e988ed25c14"
           ],
           [
@@ -11896,7 +11911,7 @@
               "analysis/dataset_definition.py",
               165
             ],
-            "a461a144d18e8be5",
+            "ac90cdd48d918b9f",
             "017dc1faad2e6699"
           ],
           [
@@ -11906,7 +11921,7 @@
               "analysis/dataset_definition.py",
               138
             ],
-            "2dd579f9121d4fba",
+            "cb2e886a67e25e73",
             "46a5c8ccb7f7a3d1"
           ],
           [
@@ -11916,7 +11931,7 @@
               "analysis/dataset_definition.py",
               160
             ],
-            "66ebc9c687f16de7",
+            "9a9e199e9e374e7d",
             "8e445ef327604ae2"
           ],
           [
@@ -11926,7 +11941,7 @@
               "analysis/dataset_definition.py",
               141
             ],
-            "3406c04b5a3c149d",
+            "5890d82d0640bc90",
             "30fe1ac169d99018"
           ],
           [
@@ -11936,7 +11951,7 @@
               "analysis/dataset_definition.py",
               163
             ],
-            "e23c997b52472af1",
+            "5dd6fd1d2e1dcc93",
             "382537d85bf65ce1"
           ],
           [
@@ -11946,7 +11961,7 @@
               "analysis/dataset_definition.py",
               132
             ],
-            "e24b9838c9bf935f",
+            "d4c2b55ed62dae71",
             "8271b4995a3bbf3c"
           ],
           [
@@ -11956,7 +11971,7 @@
               "analysis/dataset_definition.py",
               154
             ],
-            "a1ef5ee97a1f4517",
+            "ec97fe283b5d4102",
             "5626819e2bf4dc0b"
           ],
           [
@@ -11966,7 +11981,7 @@
               "analysis/dataset_definition.py",
               103
             ],
-            "4563a5d723b8456d",
+            "0d9670a05b2b1c2e",
             "72580077e00e3ac3"
           ],
           [
@@ -11976,7 +11991,7 @@
               "analysis/dataset_definition.py",
               81
             ],
-            "37147b2e07f04753",
+            "d8e22167412e2af8",
             "68b8d3ed7363d5a6"
           ],
           [
@@ -12027,7 +12042,7 @@
               "analysis/dataset_definition.py",
               32
             ],
-            "6ecd7f5e9d41edc2",
+            "75dfe02b3a066a3a",
             "d2d1e30362e73709"
           ],
           [
@@ -12037,7 +12052,7 @@
               "analysis/dataset_definition.py",
               182
             ],
-            "31f45e5915f49578",
+            "a79dc732817ac431",
             "e4ce2b2390f62d27"
           ],
           [
@@ -12047,7 +12062,7 @@
               "analysis/dataset_definition.py",
               253
             ],
-            "b6d5c16bf97d0307",
+            "9781a15545a2ca7b",
             "693a78fde8a66036"
           ],
           [
@@ -12057,7 +12072,7 @@
               "analysis/dataset_definition.py",
               231
             ],
-            "a3ca4dc9c562ec70",
+            "fc13413bc3f98843",
             "e5a07bee85b0e1c3"
           ],
           [
@@ -12067,7 +12082,7 @@
               "analysis/dataset_definition.py",
               188
             ],
-            "f6fadc04c26858e4",
+            "f9bb79db1710e09e",
             "8b2b1345c926721e"
           ],
           [
@@ -12077,7 +12092,7 @@
               "analysis/dataset_definition.py",
               259
             ],
-            "7f1a965780a819b7",
+            "eb3bd4d99e81643d",
             "454dd88f806a4ac6"
           ],
           [
@@ -12087,7 +12102,7 @@
               "analysis/dataset_definition.py",
               237
             ],
-            "13ab69cd13c6dd9e",
+            "8ef8161716fc2a92",
             "c7b6e0d92a75e844"
           ],
           [
@@ -12097,7 +12112,7 @@
               "analysis/dataset_definition.py",
               183
             ],
-            "bea1cc70b3316662",
+            "94ccd9dda19facf8",
             "e4ce2b2390f62d27"
           ],
           [
@@ -12107,7 +12122,7 @@
               "analysis/dataset_definition.py",
               254
             ],
-            "5dc234d399327aea",
+            "d3a6473a51648798",
             "693a78fde8a66036"
           ],
           [
@@ -12117,7 +12132,7 @@
               "analysis/dataset_definition.py",
               232
             ],
-            "b8afdc0837eb7f15",
+            "954357e3f5b723d7",
             "e5a07bee85b0e1c3"
           ],
           [
@@ -12127,7 +12142,7 @@
               "analysis/dataset_definition.py",
               189
             ],
-            "5d5ca50bbd6b451b",
+            "996f1c7ea4329881",
             "ee48d3391e796eaa"
           ],
           [
@@ -12137,7 +12152,7 @@
               "analysis/dataset_definition.py",
               260
             ],
-            "4d8821ff9bf17196",
+            "c084554a93a159fc",
             "75b6c61c1339369f"
           ],
           [
@@ -12147,7 +12162,7 @@
               "analysis/dataset_definition.py",
               238
             ],
-            "333072c17f5b9485",
+            "9c9d4ef3b150f15e",
             "aee7a60e7b6192ea"
           ],
           [
@@ -12157,7 +12172,7 @@
               "analysis/dataset_definition.py",
               184
             ],
-            "7777aa9d12342933",
+            "8344c344ea4fb9f3",
             "e4ce2b2390f62d27"
           ],
           [
@@ -12167,7 +12182,7 @@
               "analysis/dataset_definition.py",
               255
             ],
-            "2ecb087e94f4b4a4",
+            "5987bbfcedefc044",
             "693a78fde8a66036"
           ],
           [
@@ -12177,7 +12192,7 @@
               "analysis/dataset_definition.py",
               233
             ],
-            "27bc87a51705e42f",
+            "27d7a6f06d989598",
             "e5a07bee85b0e1c3"
           ],
           [
@@ -12187,7 +12202,7 @@
               "analysis/dataset_definition.py",
               179
             ],
-            "4eb412b3973ae89a",
+            "987f3d889dec3dae",
             "e4ce2b2390f62d27"
           ],
           [
@@ -12197,7 +12212,7 @@
               "analysis/dataset_definition.py",
               250
             ],
-            "9538add0b41ea995",
+            "8892e3add355c3bd",
             "693a78fde8a66036"
           ],
           [
@@ -12207,7 +12222,7 @@
               "analysis/dataset_definition.py",
               228
             ],
-            "215b2b36f51e7ea4",
+            "8231c4996b6ea6ea",
             "e5a07bee85b0e1c3"
           ],
           [
@@ -12217,7 +12232,7 @@
               "analysis/dataset_definition.py",
               178
             ],
-            "aed91a96cf73bfbd",
+            "e3af89a7c478d7dc",
             "e4ce2b2390f62d27"
           ],
           [
@@ -12227,7 +12242,7 @@
               "analysis/dataset_definition.py",
               249
             ],
-            "7c15260c962b7af3",
+            "c91424baa5ff1a87",
             "693a78fde8a66036"
           ],
           [
@@ -12237,7 +12252,7 @@
               "analysis/dataset_definition.py",
               227
             ],
-            "892c632ad5883744",
+            "1877f283126d6d5f",
             "e5a07bee85b0e1c3"
           ],
           [
@@ -12247,7 +12262,7 @@
               "analysis/dataset_definition.py",
               195
             ],
-            "92c3de2acabcd8bd",
+            "6800234e3593a4da",
             "51a416697d852a45"
           ],
           [
@@ -12257,7 +12272,7 @@
               "analysis/dataset_definition.py",
               266
             ],
-            "ec6124f310f8045e",
+            "1979b3ccae5b7127",
             "32860854df5656e1"
           ],
           [
@@ -12267,7 +12282,7 @@
               "analysis/dataset_definition.py",
               244
             ],
-            "65a64c3621719a78",
+            "c8eaa45379cf1608",
             "4ab85c67ac47e3da"
           ],
           [
@@ -12277,7 +12292,7 @@
               "analysis/dataset_definition.py",
               194
             ],
-            "0b52619b761b0543",
+            "db4d50f6e09a6dc9",
             "2896fb9d9bcd237f"
           ],
           [
@@ -12287,7 +12302,7 @@
               "analysis/dataset_definition.py",
               265
             ],
-            "d761ea1de8937d7f",
+            "8b480547d3c896e8",
             "85fe914c1fd704c9"
           ],
           [
@@ -12297,7 +12312,7 @@
               "analysis/dataset_definition.py",
               243
             ],
-            "14bf90d188b20f9f",
+            "d0c2a7258cf1781b",
             "d9b27b84d0cdca4d"
           ],
           [
@@ -12307,7 +12322,7 @@
               "analysis/dataset_definition.py",
               186
             ],
-            "d9103a2a3c331cd7",
+            "98ab79a4228a9a7f",
             "8b2b1345c926721e"
           ],
           [
@@ -12317,7 +12332,7 @@
               "analysis/dataset_definition.py",
               257
             ],
-            "7cb5bd6d8bbd493e",
+            "33f108090d1207c4",
             "454dd88f806a4ac6"
           ],
           [
@@ -12327,7 +12342,7 @@
               "analysis/dataset_definition.py",
               235
             ],
-            "487291499f211393",
+            "8e79da95fc01d031",
             "c7b6e0d92a75e844"
           ],
           [
@@ -12337,7 +12352,7 @@
               "analysis/dataset_definition.py",
               191
             ],
-            "00d36f789869bb4b",
+            "fcdf20ae1ca55b51",
             "735c99e13b90256e"
           ],
           [
@@ -12347,7 +12362,7 @@
               "analysis/dataset_definition.py",
               262
             ],
-            "00b930549a8889d0",
+            "bc20f4949305c37f",
             "72d14f604f333e31"
           ],
           [
@@ -12357,7 +12372,7 @@
               "analysis/dataset_definition.py",
               240
             ],
-            "d4b9daed03a4425b",
+            "679a3758dcfdc132",
             "430f471f70aa1fb0"
           ],
           [
@@ -12367,7 +12382,7 @@
               "analysis/dataset_definition.py",
               180
             ],
-            "e79e56947571def8",
+            "5da6902b51952cbc",
             "e4ce2b2390f62d27"
           ],
           [
@@ -12377,7 +12392,7 @@
               "analysis/dataset_definition.py",
               251
             ],
-            "7f169f6125e4202c",
+            "3a6a8c313c0082b2",
             "693a78fde8a66036"
           ],
           [
@@ -12387,7 +12402,7 @@
               "analysis/dataset_definition.py",
               229
             ],
-            "e62a3f1d316f7a1f",
+            "e060d13e08cd1660",
             "e5a07bee85b0e1c3"
           ],
           [
@@ -12397,7 +12412,7 @@
               "analysis/dataset_definition.py",
               192
             ],
-            "eb52891d88014888",
+            "c47d1f8eed563bc6",
             "735c99e13b90256e"
           ],
           [
@@ -12407,7 +12422,7 @@
               "analysis/dataset_definition.py",
               263
             ],
-            "90d463a2a043e0a9",
+            "3fa634af8fa682d1",
             "72d14f604f333e31"
           ],
           [
@@ -12417,7 +12432,7 @@
               "analysis/dataset_definition.py",
               241
             ],
-            "1dd2dc59e67181b9",
+            "6630b2d649e3d299",
             "430f471f70aa1fb0"
           ],
           [
@@ -12427,7 +12442,7 @@
               "analysis/dataset_definition.py",
               187
             ],
-            "f12c3861b98e4bb3",
+            "397229d251bc1470",
             "8b2b1345c926721e"
           ],
           [
@@ -12437,7 +12452,7 @@
               "analysis/dataset_definition.py",
               258
             ],
-            "5af462730d57c851",
+            "7301166d20649508",
             "454dd88f806a4ac6"
           ],
           [
@@ -12447,7 +12462,7 @@
               "analysis/dataset_definition.py",
               236
             ],
-            "322632a7ea1e0489",
+            "baf50925cd780920",
             "c7b6e0d92a75e844"
           ],
           [
@@ -12457,7 +12472,7 @@
               "analysis/dataset_definition.py",
               190
             ],
-            "71be909eb1d7dec1",
+            "aa65bd82d2cda22f",
             "189b6d80661373be"
           ],
           [
@@ -12467,7 +12482,7 @@
               "analysis/dataset_definition.py",
               261
             ],
-            "39cf4fcaecd3adc2",
+            "35080dd873f09c43",
             "e94a8dbd293b36e4"
           ],
           [
@@ -12477,7 +12492,7 @@
               "analysis/dataset_definition.py",
               239
             ],
-            "10ff6b4af8bdeda5",
+            "2369c62b4c7803fd",
             "b68d6d274e6e5bbe"
           ],
           [
@@ -12487,7 +12502,7 @@
               "analysis/dataset_definition.py",
               181
             ],
-            "fefccaf52b4ef5f8",
+            "9b230710f0f22052",
             "e4ce2b2390f62d27"
           ],
           [
@@ -12497,7 +12512,7 @@
               "analysis/dataset_definition.py",
               252
             ],
-            "c7ee416deb9d5a73",
+            "bd6773680224517c",
             "693a78fde8a66036"
           ],
           [
@@ -12507,14 +12522,14 @@
               "analysis/dataset_definition.py",
               230
             ],
-            "ba0ed2ad1dc251e2",
+            "4500d60022abd557",
             "e5a07bee85b0e1c3"
           ],
           [
             "follow_up_years",
             "IntPatientSeries",
             26,
-            "b2db20cf94905920",
+            "6f4ae9ec39902f27",
             "9ed7c0fac598dab3"
           ],
           [
@@ -12524,7 +12539,7 @@
               "analysis/dataset_definition.py",
               102
             ],
-            "55b7511dd3babb79",
+            "98fce26dfbdcd127",
             "72580077e00e3ac3"
           ],
           [
@@ -12534,7 +12549,7 @@
               "analysis/dataset_definition.py",
               80
             ],
-            "3e913cfc033046e0",
+            "b85ed1a012953401",
             "68b8d3ed7363d5a6"
           ],
           [
@@ -12551,7 +12566,7 @@
               "analysis/dataset_definition.py",
               97
             ],
-            "8938da9eb7423fd6",
+            "2fed2e12188f3d17",
             "61d5d3dd1cb7a196"
           ],
           [
@@ -12561,7 +12576,7 @@
               "analysis/dataset_definition.py",
               119
             ],
-            "8bf4e1870ae5bb17",
+            "2e90bd83ebf99c88",
             "49d8d1d51bacc138"
           ],
           [
@@ -12571,7 +12586,7 @@
               "analysis/dataset_definition.py",
               273
             ],
-            "bed6e84052773efb",
+            "be91b55288ee1a2a",
             "b85df0bb0448da1c"
           ],
           [
@@ -12581,7 +12596,7 @@
               "analysis/dataset_definition.py",
               280
             ],
-            "f7ecd190aa1fb49e",
+            "401935185c8ade39",
             "66141063b3f4d4c9"
           ],
           [
@@ -12591,7 +12606,7 @@
               "analysis/dataset_definition.py",
               96
             ],
-            "704a2bab3ea5bcc2",
+            "54eabfd805ec9db1",
             "2489da03feb375a4"
           ],
           [
@@ -12601,91 +12616,91 @@
               "analysis/dataset_definition.py",
               118
             ],
-            "39594675961dbe9f",
+            "70a85d0e70666c32",
             "fe83975b7e5dd026"
           ],
           [
             "num_abdomass",
             "IntPatientSeries",
             102,
-            "5ca05f325d14eec8",
+            "a52ae867ed12cd92",
             "1c9e605aca977fc3"
           ],
           [
             "num_abdopain",
             "IntPatientSeries",
             103,
-            "9364df6cd84355c7",
+            "2bb1dc06ac60fad7",
             "1c9e605aca977fc3"
           ],
           [
             "num_abdopain_50",
             "IntPatientSeries",
             107,
-            "6745b32fb642e23a",
+            "f3aaa1046132c7e7",
             "77941be39a20acc4"
           ],
           [
             "num_anaemia",
             "IntPatientSeries",
             104,
-            "526c0ffaf08bb791",
+            "d20c84dd9dbfe254",
             "1c9e605aca977fc3"
           ],
           [
             "num_anaemia_60",
             "IntPatientSeries",
             108,
-            "520b799433204265",
+            "0958a536016547cf",
             "1931178e4997702c"
           ],
           [
             "num_cibh",
             "IntPatientSeries",
             99,
-            "0e35ee6703aba927",
+            "6053cc2e488fae23",
             "1c9e605aca977fc3"
           ],
           [
             "num_ida",
             "IntPatientSeries",
             98,
-            "f3ec14a0a0ddcced",
+            "542c4eeec82dce5b",
             "1c9e605aca977fc3"
           ],
           [
             "num_lowerGI_any_symp",
             "IntPatientSeries",
             110,
-            "dabbe73e359201c5",
+            "fa867f6f553a3ef8",
             "1c9e605aca977fc3"
           ],
           [
             "num_prbleed",
             "IntPatientSeries",
             100,
-            "3d78c71679815df8",
+            "bc21c0d613be85ae",
             "1c9e605aca977fc3"
           ],
           [
             "num_prbleed_50",
             "IntPatientSeries",
             105,
-            "aac66d88ea308b71",
+            "fc7a58fa94c50bd4",
             "77941be39a20acc4"
           ],
           [
             "num_wl",
             "IntPatientSeries",
             101,
-            "7b53d95b7a7b4b05",
+            "67756b2cf1a14345",
             "1c9e605aca977fc3"
           ],
           [
             "num_wl_50",
             "IntPatientSeries",
             106,
-            "04e5126b34b666dc",
+            "683a04a259dd7644",
             "77941be39a20acc4"
           ],
           [
@@ -12699,7 +12714,7 @@
             "period_exit",
             "DatePatientSeries",
             24,
-            "b0d63605cd87ee05",
+            "4de428c6310e8188",
             "ff925b6cef90d199"
           ],
           [
@@ -12709,7 +12724,7 @@
               "analysis/dataset_definition.py",
               110
             ],
-            "ab1f20f563b9e16d",
+            "bb55cbc06091e7fa",
             "6a811a8b23963181"
           ],
           [
@@ -12719,7 +12734,7 @@
               "analysis/dataset_definition.py",
               115
             ],
-            "17f04f24f67a74a2",
+            "fd4b3e8967341c41",
             "14171ef38fd9d1a8"
           ],
           [
@@ -12729,7 +12744,7 @@
               "analysis/dataset_definition.py",
               93
             ],
-            "31b33ccbe804e99d",
+            "fb3b51aad0fb8f96",
             "8593afc1966bf74f"
           ],
           [
@@ -12739,7 +12754,7 @@
               "analysis/dataset_definition.py",
               104
             ],
-            "d2c773cb091f4d0c",
+            "8ac70b4baac5911b",
             "72580077e00e3ac3"
           ],
           [
@@ -12749,7 +12764,7 @@
               "analysis/dataset_definition.py",
               83
             ],
-            "03e506813814f9c3",
+            "e911a2859e1ff06d",
             "68b8d3ed7363d5a6"
           ],
           [
@@ -12759,7 +12774,7 @@
               "analysis/dataset_definition.py",
               88
             ],
-            "612a529f9ec63a53",
+            "390ff9a61cf7b674",
             "e587de8e5a0dff33"
           ],
           [
@@ -12769,7 +12784,7 @@
               "analysis/dataset_definition.py",
               116
             ],
-            "a516e74c152bbe90",
+            "927711b2e6a16cf6",
             "14171ef38fd9d1a8"
           ],
           [
@@ -12779,7 +12794,7 @@
               "analysis/dataset_definition.py",
               94
             ],
-            "545c3ad9b8f3b42f",
+            "9560e7b0df4cffff",
             "8593afc1966bf74f"
           ],
           [
@@ -12803,7 +12818,7 @@
               "analysis/dataset_definition.py",
               111
             ],
-            "e30e1fd27dbd3b4b",
+            "d6d1f4d662cc373e",
             "6a811a8b23963181"
           ],
           [
@@ -12813,7 +12828,7 @@
               "analysis/dataset_definition.py",
               114
             ],
-            "eaa4dad5ce223dc0",
+            "097ad8e753c7ff69",
             "d5a3d05bb3cbf34d"
           ],
           [
@@ -12823,7 +12838,7 @@
               "analysis/dataset_definition.py",
               92
             ],
-            "832fbb3f1b13259a",
+            "fea599d99e03296b",
             "4a0b04a7809e72d2"
           ],
           [
@@ -12833,7 +12848,7 @@
               "analysis/dataset_definition.py",
               105
             ],
-            "02705c09c7bbe234",
+            "b084e5ceb4f2cceb",
             "72580077e00e3ac3"
           ],
           [
@@ -12843,7 +12858,7 @@
               "analysis/dataset_definition.py",
               84
             ],
-            "3536adf788278731",
+            "abaee8c38a3eac82",
             "68b8d3ed7363d5a6"
           ],
           [
@@ -12853,7 +12868,7 @@
               "analysis/dataset_definition.py",
               89
             ],
-            "b66de009f1d9f072",
+            "aaf00460f98f1245",
             "e587de8e5a0dff33"
           ]
         ],
@@ -12865,7 +12880,7 @@
               "analysis/dataset_definition_fit.py",
               105
             ],
-            "695169e3ae460b97",
+            "d8522c47adc8b0ae",
             "cfae79fa1a773509"
           ],
           [
@@ -12875,7 +12890,7 @@
               "analysis/dataset_definition_fit.py",
               126
             ],
-            "73236ab0e8a8c2b3",
+            "76af885fc25c44af",
             "7c1b195ba9423dae"
           ],
           [
@@ -12885,7 +12900,7 @@
               "analysis/dataset_definition_fit.py",
               110
             ],
-            "a4859a333c3b836f",
+            "aaf604dcc2de3c1d",
             "9dc0f6883837bb27"
           ],
           [
@@ -12895,7 +12910,7 @@
               "analysis/dataset_definition_fit.py",
               132
             ],
-            "527cf62a7454ee22",
+            "48e7e6ad7b919dd6",
             "171722c956336a6a"
           ],
           [
@@ -12905,7 +12920,7 @@
               "analysis/dataset_definition_fit.py",
               106
             ],
-            "acf0468ae47d51b5",
+            "a55c086da654101f",
             "cfae79fa1a773509"
           ],
           [
@@ -12915,7 +12930,7 @@
               "analysis/dataset_definition_fit.py",
               127
             ],
-            "d658461460704d3e",
+            "8596a96ff8428046",
             "7c1b195ba9423dae"
           ],
           [
@@ -12939,7 +12954,7 @@
               "analysis/dataset_definition_fit.py",
               111
             ],
-            "bb114f7b3fe24d1e",
+            "655ef91b442db114",
             "a5d91893dfcf2895"
           ],
           [
@@ -12949,7 +12964,7 @@
               "analysis/dataset_definition_fit.py",
               133
             ],
-            "f9f910ea21c146d9",
+            "8f2615a073f734fc",
             "776d67ce5863b34e"
           ],
           [
@@ -12959,7 +12974,7 @@
               "analysis/dataset_definition_fit.py",
               107
             ],
-            "c743c4bcf47d05f9",
+            "f2f5d87f8aff86d7",
             "cfae79fa1a773509"
           ],
           [
@@ -12969,7 +12984,7 @@
               "analysis/dataset_definition_fit.py",
               128
             ],
-            "32307f187db6067e",
+            "3585a02965ee2421",
             "7c1b195ba9423dae"
           ],
           [
@@ -12979,7 +12994,7 @@
               "analysis/dataset_definition_fit.py",
               148
             ],
-            "415a4e2b930f018c",
+            "2eaa73241916ebeb",
             "667b4e24e98a744b"
           ],
           [
@@ -12989,7 +13004,7 @@
               "analysis/dataset_definition_fit.py",
               102
             ],
-            "bcfc44b3b471cd77",
+            "845b98913d43fbbf",
             "cfae79fa1a773509"
           ],
           [
@@ -12999,7 +13014,7 @@
               "analysis/dataset_definition_fit.py",
               123
             ],
-            "db8f38d13784cfe6",
+            "b626c885172b8140",
             "7c1b195ba9423dae"
           ],
           [
@@ -13050,7 +13065,7 @@
               "analysis/dataset_definition_fit.py",
               32
             ],
-            "6ecd7f5e9d41edc2",
+            "75dfe02b3a066a3a",
             "d2d1e30362e73709"
           ],
           [
@@ -13060,7 +13075,7 @@
               "analysis/dataset_definition_fit.py",
               146
             ],
-            "93424fd695a08801",
+            "db8b9cf1c19c066c",
             "f68c37736b24f7ea"
           ],
           [
@@ -13070,7 +13085,7 @@
               "analysis/dataset_definition_fit.py",
               52
             ],
-            "da4bb1cc0abe4c19",
+            "6fff77786c2fd819",
             "46de74007745d162"
           ],
           [
@@ -13080,7 +13095,7 @@
               "analysis/dataset_definition_fit.py",
               53
             ],
-            "67dae0ae460efa37",
+            "029620ee6e9446eb",
             "e8ee6066ea2cd1d5"
           ],
           [
@@ -13090,7 +13105,7 @@
               "analysis/dataset_definition_fit.py",
               85
             ],
-            "b4cf0c3b94ada866",
+            "7d91782f7568a363",
             "cbbd80671aa0ab3f"
           ],
           [
@@ -13100,7 +13115,7 @@
               "analysis/dataset_definition_fit.py",
               87
             ],
-            "05165b019b7c5fd1",
+            "1400b3278b0e4307",
             "dfb85bad941c01c9"
           ],
           [
@@ -13117,14 +13132,14 @@
               "analysis/dataset_definition_fit.py",
               155
             ],
-            "b4b42805207dd549",
+            "19188ec1c3a40e2a",
             "efd4bbf8a595003a"
           ],
           [
             "follow_up_years",
             "IntPatientSeries",
             27,
-            "b2db20cf94905920",
+            "6f4ae9ec39902f27",
             "9ed7c0fac598dab3"
           ],
           [
@@ -13134,7 +13149,7 @@
               "analysis/dataset_definition_fit.py",
               101
             ],
-            "1566ef33d2af46a1",
+            "acd5ba597d004f12",
             "cfae79fa1a773509"
           ],
           [
@@ -13144,7 +13159,7 @@
               "analysis/dataset_definition_fit.py",
               122
             ],
-            "c375e6f15135e8c8",
+            "36374f12b272c3d3",
             "7c1b195ba9423dae"
           ],
           [
@@ -13161,7 +13176,7 @@
               "analysis/dataset_definition_fit.py",
               139
             ],
-            "182d24ff16a3e426",
+            "0458838f02f99b60",
             "d4f3e42b69d20300"
           ],
           [
@@ -13171,7 +13186,7 @@
               "analysis/dataset_definition_fit.py",
               117
             ],
-            "f515f4f81807d4b5",
+            "5f5a3fa702d24ee3",
             "515853a593aa9572"
           ],
           [
@@ -13181,7 +13196,7 @@
               "analysis/dataset_definition_fit.py",
               138
             ],
-            "be7acafc132f2983",
+            "637500ab4e874477",
             "8699c979835fe108"
           ],
           [
@@ -13191,14 +13206,14 @@
               "analysis/dataset_definition_fit.py",
               116
             ],
-            "5758ba574b98f492",
+            "6abba9e8665ac808",
             "eec7964b0138a44f"
           ],
           [
             "num_fit",
             "IntPatientSeries",
             87,
-            "cd0c11749d0f04b7",
+            "5f52788217cca582",
             "727e479b6b1e061c"
           ],
           [
@@ -13212,7 +13227,7 @@
             "period_exit",
             "DatePatientSeries",
             25,
-            "b0d63605cd87ee05",
+            "4de428c6310e8188",
             "ff925b6cef90d199"
           ],
           [
@@ -13222,7 +13237,7 @@
               "analysis/dataset_definition_fit.py",
               108
             ],
-            "d198efdf68eff00d",
+            "0fbd9fb1696ca7ad",
             "9dc0f6883837bb27"
           ],
           [
@@ -13232,7 +13247,7 @@
               "analysis/dataset_definition_fit.py",
               130
             ],
-            "44b0da4149260517",
+            "4dc247b396d400b6",
             "171722c956336a6a"
           ],
           [
@@ -13242,7 +13257,7 @@
               "analysis/dataset_definition_fit.py",
               113
             ],
-            "76a1499b0e5ab840",
+            "fe7c7e5344cda929",
             "e5dd0813fa412aae"
           ],
           [
@@ -13252,7 +13267,7 @@
               "analysis/dataset_definition_fit.py",
               135
             ],
-            "97a43dd527a0dd54",
+            "5517181658ed0ad0",
             "4d251361e30bdd44"
           ],
           [
@@ -13262,7 +13277,7 @@
               "analysis/dataset_definition_fit.py",
               103
             ],
-            "93ecb524f3d58b1e",
+            "114a2becf7658706",
             "cfae79fa1a773509"
           ],
           [
@@ -13272,7 +13287,7 @@
               "analysis/dataset_definition_fit.py",
               124
             ],
-            "ff861fae511f9727",
+            "f3f59de37dccba56",
             "7c1b195ba9423dae"
           ],
           [
@@ -13282,7 +13297,7 @@
               "analysis/dataset_definition_fit.py",
               114
             ],
-            "8390f16ae9c12436",
+            "f7ca7879e03f9dac",
             "e5dd0813fa412aae"
           ],
           [
@@ -13292,7 +13307,7 @@
               "analysis/dataset_definition_fit.py",
               136
             ],
-            "4d3a33222d47dd4b",
+            "1a2aad3d2bb5d797",
             "4d251361e30bdd44"
           ],
           [
@@ -13316,7 +13331,7 @@
               "analysis/dataset_definition_fit.py",
               109
             ],
-            "f6b16eff721628fa",
+            "1d33a49ee66df604",
             "9dc0f6883837bb27"
           ],
           [
@@ -13326,7 +13341,7 @@
               "analysis/dataset_definition_fit.py",
               131
             ],
-            "8da9fa1c6323bf54",
+            "19be41dfa938c8e5",
             "171722c956336a6a"
           ],
           [
@@ -13336,7 +13351,7 @@
               "analysis/dataset_definition_fit.py",
               112
             ],
-            "2fbfdf7ed27791ef",
+            "cba546b58a18ce2c",
             "2239c4a7f2d62bc4"
           ],
           [
@@ -13346,7 +13361,7 @@
               "analysis/dataset_definition_fit.py",
               134
             ],
-            "dd45b9d5ddb7578d",
+            "0a42291c79ab3976",
             "05e863f93b745f58"
           ],
           [
@@ -13356,7 +13371,7 @@
               "analysis/dataset_definition_fit.py",
               104
             ],
-            "a828fe8e3c358c00",
+            "cde2122d82967da3",
             "cfae79fa1a773509"
           ],
           [
@@ -13366,7 +13381,7 @@
               "analysis/dataset_definition_fit.py",
               125
             ],
-            "c601e6f5184c61c1",
+            "c6d035cc1dd23e51",
             "7c1b195ba9423dae"
           ]
         ],
@@ -13487,7 +13502,7 @@
             "elig_date_t2dm",
             "DatePatientSeries",
             92,
-            "b7fb50b5b55556e6",
+            "0f018be374bfee75",
             "a83ad47e21cfd28f"
           ],
           [
@@ -13536,21 +13551,21 @@
             "tmp_elig_date_diabetes_medication",
             "DatePatientSeries",
             148,
-            "bc93c31847bff08b",
+            "1329ee723dc4f3d9",
             "73147ca5760ff487"
           ],
           [
             "tmp_elig_date_first_diabetes_diag",
             "DatePatientSeries",
             151,
-            "628f5f12cffd19ca",
+            "2524119d621d9282",
             "2b2a00b1822cc587"
           ],
           [
             "tmp_elig_date_gestationaldm",
             "DatePatientSeries",
             110,
-            "f3a95a0f14b8ff20",
+            "b585fc24681893ec",
             "a26874e77d91d6e7"
           ],
           [
@@ -13592,7 +13607,7 @@
             "tmp_elig_date_t1dm",
             "DatePatientSeries",
             80,
-            "cd2d043dc5917de8",
+            "800e708fdc5ab0ff",
             "db6966bc826abcb2"
           ],
           [
@@ -13622,21 +13637,21 @@
             "cov_date_all_stroke",
             "DatePatientSeries",
             100,
-            "9c64d866d064b169",
+            "2ae702dc02842115",
             "993e312e1990b8ad"
           ],
           [
             "cov_date_ami",
             "DatePatientSeries",
             95,
-            "ecde9a7e4970ee86",
+            "3f1aaa22a47440ec",
             "acf1bc51e39f0a41"
           ],
           [
             "cov_date_angina",
             "DatePatientSeries",
             124,
-            "f14f0d4a67139b3d",
+            "2b8b8372fa88933c",
             "e4504628e5a15421"
           ],
           [
@@ -13699,7 +13714,7 @@
             "cov_date_cancer",
             "DatePatientSeries",
             136,
-            "3b532aa6a477998b",
+            "ac9c2e63a085aeac",
             "0772d964c9cb1183"
           ],
           [
@@ -13762,35 +13777,35 @@
             "cov_date_chronic_kidney_disease",
             "DatePatientSeries",
             166,
-            "74267e1b5d2e5fbe",
+            "ec2bb7243cd40d68",
             "6ec169c86ca915ae"
           ],
           [
             "cov_date_copd",
             "DatePatientSeries",
             154,
-            "3b71deb5e0df9e01",
+            "6b8faff0c902eb28",
             "c32c03d752de1fba"
           ],
           [
             "cov_date_dementia",
             "DatePatientSeries",
             130,
-            "5ccbc58f2e448fe6",
+            "df44158fa0684c63",
             "b57dee6b59dc443b"
           ],
           [
             "cov_date_depression",
             "DatePatientSeries",
             148,
-            "6838487db362772c",
+            "01d541dee9dc4513",
             "0938de9ab0ba4bec"
           ],
           [
             "cov_date_diabetescomp",
             "DatePatientSeries",
             183,
-            "1d62232f5e94b4a4",
+            "7205b0ca1a1ee29b",
             "41613a70c4455830"
           ],
           [
@@ -13909,35 +13924,35 @@
             "cov_date_hf",
             "DatePatientSeries",
             118,
-            "346392aff6425f30",
+            "53a73d57efb98d57",
             "c65cc21b06bc6cff"
           ],
           [
             "cov_date_hypertension",
             "DatePatientSeries",
             142,
-            "34c74b5b87a977ac",
+            "0704e49ce925fac9",
             "abd1881927b272e5"
           ],
           [
             "cov_date_liver_disease",
             "DatePatientSeries",
             160,
-            "83305a1a20c1feee",
+            "66f47dff54bb914d",
             "b701d93ea9caf5df"
           ],
           [
             "cov_date_other_arterial_embolism",
             "DatePatientSeries",
             106,
-            "a5b4adf0decd9e2a",
+            "7bd27b5e5001f226",
             "71c83bc5e3eaffac"
           ],
           [
             "cov_date_pcos",
             "DatePatientSeries",
             172,
-            "4e69f5bc332c5feb",
+            "55bbbdf2acb8ee53",
             "ff1da31167a346cf"
           ],
           [
@@ -13951,7 +13966,7 @@
             "cov_date_vte",
             "DatePatientSeries",
             112,
-            "28c409762b477953",
+            "7502e8b6678d079b",
             "35bee445298f2c86"
           ],
           [
@@ -14394,7 +14409,7 @@
             "cov_num_consrate",
             "IntPatientSeries",
             320,
-            "a8f0cb21e4236f92",
+            "b8a32d7a9dc874b6",
             "9368c61697eeef16"
           ],
           [
@@ -14450,7 +14465,7 @@
             "elig_date_ckd_45_first",
             "DatePatientSeries",
             200,
-            "bbd32249e381ea68",
+            "92399563a9b1b17d",
             "508cb329ebee70f0"
           ],
           [
@@ -14478,7 +14493,7 @@
             "elig_date_liver_cirrhosis_first",
             "DatePatientSeries",
             206,
-            "83c10f73f79be5a6",
+            "ef77fbba7511c439",
             "cdcd2def3d5a231e"
           ],
           [
@@ -14646,7 +14661,7 @@
             "out_date_covid",
             "DatePatientSeries",
             496,
-            "1bb6d96dde28b9c3",
+            "d1c6a32a647a553a",
             "e4d9cd87b869ab8a"
           ],
           [
@@ -14674,7 +14689,7 @@
             "out_date_covid_hosp",
             "DatePatientSeries",
             474,
-            "34baafec395d923e",
+            "667d50b479aef55c",
             "79106b4e31fb6e48"
           ],
           [
@@ -14702,14 +14717,14 @@
             "out_date_longcovid_virfat",
             "DatePatientSeries",
             505,
-            "a90feeb080ed7a23",
+            "80a7402872cdd2b7",
             "15d1739aa8bf5924"
           ],
           [
             "out_date_severecovid",
             "DatePatientSeries",
             482,
-            "8bf1cff90d66f910",
+            "557666661f675393",
             "13de37aa0390b666"
           ],
           [
@@ -14991,8 +15006,8 @@
             "all_covid_hosp",
             "IntPatientSeries",
             101,
-            "a85c19e2981a1705",
-            "455acbdc64cda494"
+            "ce5cd18a781eeb6c",
+            "2ff2cb81f9215fd5"
           ],
           [
             "all_test_positive",
@@ -15046,35 +15061,50 @@
           [
             "covid_vacc_1_adm",
             "DatePatientSeries",
-            -1,
+            [
+              "analysis/variable_lib.py",
+              117
+            ],
             "e31b7dc2b3aa625f",
             "a08177b17c96a6f0"
           ],
           [
             "covid_vacc_2_adm",
             "DatePatientSeries",
-            -1,
+            [
+              "analysis/variable_lib.py",
+              117
+            ],
             "ec2d1e5f0f86e0ac",
             "35283573483b515c"
           ],
           [
             "covid_vacc_3_adm",
             "DatePatientSeries",
-            -1,
+            [
+              "analysis/variable_lib.py",
+              117
+            ],
             "ace1cf6256ff3495",
             "7828c9c9e06bce8a"
           ],
           [
             "covid_vacc_4_adm",
             "DatePatientSeries",
-            -1,
+            [
+              "analysis/variable_lib.py",
+              117
+            ],
             "a96fb00fc36f3d66",
             "710bcddb7112f54a"
           ],
           [
             "covid_vacc_5_adm",
             "DatePatientSeries",
-            -1,
+            [
+              "analysis/variable_lib.py",
+              117
+            ],
             "993892f129981ab7",
             "2fc611b029a4e2e7"
           ],
@@ -15103,29 +15133,29 @@
             "first_covid_critical",
             "BoolPatientSeries",
             110,
-            "3df0398e866b927e",
-            "8f5274612e1d88f1"
+            "5b9f87a48778ebac",
+            "7e1ed40d2a4c18bc"
           ],
           [
             "first_covid_discharge",
             "DatePatientSeries",
             109,
-            "7c0c878f4061bad4",
-            "b02541eb9d62e041"
+            "136c9e7bb3a136af",
+            "2faf55aa6554aee4"
           ],
           [
             "first_covid_hosp",
             "DatePatientSeries",
             108,
-            "6cebff8b659e6e9e",
-            "13f69d8986386362"
+            "8ea0e0936bdd85e6",
+            "06c6d1ad52fd7700"
           ],
           [
             "first_covid_hosp_primary_dx",
             "BoolPatientSeries",
             111,
-            "8e6071fc36f5f3c4",
-            "e9488296793a7e2f"
+            "1dab18655b74d84d",
+            "67f735999f66b384"
           ],
           [
             "first_lc",
@@ -16768,8 +16798,8 @@
             "all_covid_hosp",
             "IntPatientSeries",
             101,
-            "d6f0bd06dfeabfdf",
-            "455acbdc64cda494"
+            "a279e8a36fb84f80",
+            "2ff2cb81f9215fd5"
           ],
           [
             "all_test_positive",
@@ -16823,35 +16853,50 @@
           [
             "covid_vacc_1_adm",
             "DatePatientSeries",
-            -1,
+            [
+              "analysis/variable_lib.py",
+              117
+            ],
             "e31b7dc2b3aa625f",
             "a08177b17c96a6f0"
           ],
           [
             "covid_vacc_2_adm",
             "DatePatientSeries",
-            -1,
+            [
+              "analysis/variable_lib.py",
+              117
+            ],
             "ec2d1e5f0f86e0ac",
             "35283573483b515c"
           ],
           [
             "covid_vacc_3_adm",
             "DatePatientSeries",
-            -1,
+            [
+              "analysis/variable_lib.py",
+              117
+            ],
             "ace1cf6256ff3495",
             "7828c9c9e06bce8a"
           ],
           [
             "covid_vacc_4_adm",
             "DatePatientSeries",
-            -1,
+            [
+              "analysis/variable_lib.py",
+              117
+            ],
             "a96fb00fc36f3d66",
             "710bcddb7112f54a"
           ],
           [
             "covid_vacc_5_adm",
             "DatePatientSeries",
-            -1,
+            [
+              "analysis/variable_lib.py",
+              117
+            ],
             "993892f129981ab7",
             "2fc611b029a4e2e7"
           ],
@@ -16880,29 +16925,29 @@
             "first_covid_critical",
             "BoolPatientSeries",
             110,
-            "79bbee7b4bc08eb9",
-            "8f5274612e1d88f1"
+            "d3b72ff185310dbf",
+            "7e1ed40d2a4c18bc"
           ],
           [
             "first_covid_discharge",
             "DatePatientSeries",
             109,
-            "124c08295bdbb616",
-            "b02541eb9d62e041"
+            "b3264c074cdbf8e4",
+            "2faf55aa6554aee4"
           ],
           [
             "first_covid_hosp",
             "DatePatientSeries",
             108,
-            "c6332ff4a177aa50",
-            "13f69d8986386362"
+            "5d739ae432908693",
+            "06c6d1ad52fd7700"
           ],
           [
             "first_covid_hosp_primary_dx",
             "BoolPatientSeries",
             111,
-            "1628af4450f61664",
-            "e9488296793a7e2f"
+            "6787e161f652e7a9",
+            "67f735999f66b384"
           ],
           [
             "first_lc",
@@ -22635,42 +22680,60 @@
           [
             "covid_vacc_1_vacc_tab",
             "DatePatientSeries",
-            -1,
+            [
+              "analysis/variables.py",
+              150
+            ],
             "1bff8e3e6633e476",
             "1bff8e3e6633e476"
           ],
           [
             "covid_vacc_2_vacc_tab",
             "DatePatientSeries",
-            -1,
+            [
+              "analysis/variables.py",
+              150
+            ],
             "4c86e89dffa72730",
             "4c86e89dffa72730"
           ],
           [
             "covid_vacc_3_vacc_tab",
             "DatePatientSeries",
-            -1,
+            [
+              "analysis/variables.py",
+              150
+            ],
             "834fda22c870274a",
             "834fda22c870274a"
           ],
           [
             "covid_vacc_4_vacc_tab",
             "DatePatientSeries",
-            -1,
+            [
+              "analysis/variables.py",
+              150
+            ],
             "8a399c6867593adc",
             "8a399c6867593adc"
           ],
           [
             "covid_vacc_5_vacc_tab",
             "DatePatientSeries",
-            -1,
+            [
+              "analysis/variables.py",
+              150
+            ],
             "e4515ba5ec29778f",
             "e4515ba5ec29778f"
           ],
           [
             "covid_vacc_6_vacc_tab",
             "DatePatientSeries",
-            -1,
+            [
+              "analysis/variables.py",
+              150
+            ],
             "541e2894476ec623",
             "541e2894476ec623"
           ],
@@ -23475,8 +23538,8 @@
             "previous_covid_hosp",
             "BoolPatientSeries",
             99,
-            "32fb719d0425aef3",
-            "32fb719d0425aef3"
+            "6c7a53320147bb63",
+            "6c7a53320147bb63"
           ],
           [
             "reg_and_visit_gp_1y",
@@ -25523,42 +25586,60 @@
           [
             "covid_vacc_1_vacc_tab",
             "DatePatientSeries",
-            -1,
+            [
+              "analysis/variables.py",
+              150
+            ],
             "5fc2ae34a4b34a71",
             "5fc2ae34a4b34a71"
           ],
           [
             "covid_vacc_2_vacc_tab",
             "DatePatientSeries",
-            -1,
+            [
+              "analysis/variables.py",
+              150
+            ],
             "958e60501bd3ee49",
             "958e60501bd3ee49"
           ],
           [
             "covid_vacc_3_vacc_tab",
             "DatePatientSeries",
-            -1,
+            [
+              "analysis/variables.py",
+              150
+            ],
             "6e4836fafc51d9a5",
             "6e4836fafc51d9a5"
           ],
           [
             "covid_vacc_4_vacc_tab",
             "DatePatientSeries",
-            -1,
+            [
+              "analysis/variables.py",
+              150
+            ],
             "49bc40aeb52a2db5",
             "49bc40aeb52a2db5"
           ],
           [
             "covid_vacc_5_vacc_tab",
             "DatePatientSeries",
-            -1,
+            [
+              "analysis/variables.py",
+              150
+            ],
             "0b643bbaf7d33eb7",
             "0b643bbaf7d33eb7"
           ],
           [
             "covid_vacc_6_vacc_tab",
             "DatePatientSeries",
-            -1,
+            [
+              "analysis/variables.py",
+              150
+            ],
             "a33409e22540a60d",
             "a33409e22540a60d"
           ],
@@ -26356,8 +26437,8 @@
             "previous_covid_hosp",
             "BoolPatientSeries",
             95,
-            "0fe30e71fd86fa98",
-            "0fe30e71fd86fa98"
+            "b7f9c0147051444d",
+            "b7f9c0147051444d"
           ],
           [
             "reg_and_visit_gp_1y",
@@ -26444,7 +26525,7 @@
             "long_covid_dx_date",
             "DatePatientSeries",
             38,
-            "544d38adf655792a",
+            "58a96e613456d231",
             "0eea11c91cc55a82"
           ],
           [
@@ -26502,7 +26583,7 @@
             "index_date",
             "DatePatientSeries",
             32,
-            "544d38adf655792a",
+            "58a96e613456d231",
             "0eea11c91cc55a82"
           ],
           [
@@ -26516,7 +26597,7 @@
             "long_covid_dx_date",
             "DatePatientSeries",
             31,
-            "544d38adf655792a",
+            "58a96e613456d231",
             "0eea11c91cc55a82"
           ],
           [
@@ -26813,7 +26894,7 @@
             "ethnicity",
             "StrPatientSeries",
             49,
-            "4e863a189adc86e1",
+            "858067400882e61f",
             "f3771b71ee3b3ec6"
           ],
           [
@@ -31286,83 +31367,111 @@
       }
     },
     "opensafely/polypharmacy-deprescribing-dementia": {
-      "sha": "cf81988102c329396a6015c4a6050f158c0f795b",
+      "sha": "dc5efd43546a43ea58eb9abf0fbd02798228bae5",
       "files": {
         "analysis/dataset_definition/dataset_definition.py": [
           [
             "cov_bin_carehome",
             "BoolPatientSeries",
-            94,
+            111,
             "53ceecf9f753e32c",
             "53ceecf9f753e32c"
           ],
           [
+            "cov_bin_dem_alz",
+            "BoolPatientSeries",
+            85,
+            "d46e4858b39aba9b",
+            "3a5729308856fa25"
+          ],
+          [
+            "cov_bin_dem_other",
+            "BoolPatientSeries",
+            97,
+            "1254705c4dad4a4d",
+            "3a5729308856fa25"
+          ],
+          [
+            "cov_bin_dem_vasc",
+            "BoolPatientSeries",
+            91,
+            "4ccef8a2046790f2",
+            "3a5729308856fa25"
+          ],
+          [
             "cov_cat_ethnicity",
             "StrPatientSeries",
-            61,
+            59,
             "bcebdfbaa48e30f8",
             "bcebdfbaa48e30f8"
           ],
           [
             "cov_cat_imd",
             "StrPatientSeries",
-            63,
+            62,
             "9361ba03c4e99a52",
             "9361ba03c4e99a52"
           ],
           [
             "cov_cat_region",
             "StrPatientSeries",
-            75,
+            74,
             "3a3e8994fc5d850b",
             "3a3e8994fc5d850b"
           ],
           [
             "cov_cat_sex",
             "StrPatientSeries",
-            60,
+            58,
             "a0751b8b98a9ec41",
             "a0751b8b98a9ec41"
           ],
           [
-            "cov_dat_chd_diag",
+            "cov_dat_chd",
             "DatePatientSeries",
-            86,
+            103,
             "224d2fc878e99843",
             "9f4a1626e14ea75d"
           ],
           [
-            "cov_dat_dem_diag",
+            "cov_dat_dem",
             "DatePatientSeries",
-            78,
+            77,
             "b88635c5a5dd56e7",
             "9f4a1626e14ea75d"
           ],
           [
             "cov_num_age",
             "IntPatientSeries",
-            59,
+            57,
             "515d5d26c6826fc5",
             "515d5d26c6826fc5"
           ],
           [
+            "exp_date_med_rev",
+            "DatePatientSeries",
+            122,
+            "38d2f2cf6243ba19",
+            "e31387e3f6b175a2"
+          ],
+          [
             "inex_bin_6m_reg",
             "BoolPatientSeries",
-            40,
+            38,
             "1fb4429e878d607c",
             "1fb4429e878d607c"
           ],
           [
             "inex_bin_alive",
             "BoolPatientSeries",
-            33,
+            31,
             "976ab6fb1bd505e9",
             "976ab6fb1bd505e9"
           ],
           [
             "inex_bin_antihyp",
             "BoolPatientSeries",
-            27,
+            25,
             "0bd215caa3cdb775",
             "f6004cc8d63a40ed"
           ],
@@ -31370,48 +31479,48 @@
             "inex_bin_has_dem",
             "BoolPatientSeries",
             19,
-            "523edc82d088f488",
-            "4a4578a5ad3cb6f4"
+            "a2a57cd0cea7d305",
+            "3a5729308856fa25"
           ],
           [
             "inex_bin_known_imd",
             "BoolPatientSeries",
-            47,
+            45,
             "4129ed9ca5a9e8e2",
             "4129ed9ca5a9e8e2"
           ],
           [
             "inex_bin_known_region",
             "BoolPatientSeries",
-            49,
+            47,
             "c9de74ed3b78a38c",
             "c9de74ed3b78a38c"
           ],
           [
             "inex_bin_known_sex",
             "BoolPatientSeries",
-            45,
+            43,
             "14e64913cd882735",
             "14e64913cd882735"
           ],
           [
             "inex_bin_over_64",
             "BoolPatientSeries",
-            37,
+            35,
             "cba1aa58ee44cadb",
             "cba1aa58ee44cadb"
           ],
           [
             "qa_num_birth_year",
             "IntPatientSeries",
-            54,
+            52,
             "f7bf105b7c2eae41",
             "f7bf105b7c2eae41"
           ],
           [
             "qa_num_death_year",
             "IntPatientSeries",
-            55,
+            53,
             "d627400609c6d38f",
             "d627400609c6d38f"
           ]
@@ -31489,7 +31598,7 @@
             "end_prevax_exposure",
             "DatePatientSeries",
             69,
-            "5afb39ec2ca818e0",
+            "84dea85be3680f7f",
             "6c51912142015e06"
           ],
           [
@@ -31503,14 +31612,14 @@
             "end_unvax_exposure",
             "DatePatientSeries",
             127,
-            "815908219ac654bb",
+            "a2f5be6ef21956d0",
             "14325b8ab44f27e1"
           ],
           [
             "end_unvax_outcome",
             "DatePatientSeries",
             135,
-            "f2e82a828c8ea284",
+            "443b20d63ad7b932",
             "58d48b202365f8f6"
           ],
           [
@@ -31545,7 +31654,7 @@
             "index_unvax",
             "DatePatientSeries",
             114,
-            "73755356a8033a5d",
+            "c79955582298ac14",
             "1c9cd99a7ca43e65"
           ],
           [
@@ -32029,7 +32138,7 @@
               "analysis/dataset_definition/variables_cohorts.py",
               104
             ],
-            "31625eede547726f",
+            "fa8d95cf185778ac",
             "d6c674b4f2d2fd2f"
           ],
           [
@@ -32066,7 +32175,7 @@
               "analysis/dataset_definition/variables_cohorts.py",
               154
             ],
-            "a6e19931bc585d0f",
+            "91fee3f5ba2392f0",
             "1341ecbe27e8a87d"
           ],
           [
@@ -32076,7 +32185,7 @@
               "analysis/dataset_definition/variables_cohorts.py",
               176
             ],
-            "b8dbee0bf7adf98c",
+            "79a30674d7af9f22",
             "21075231e6034cdd"
           ],
           [
@@ -32146,7 +32255,7 @@
               "analysis/dataset_definition/variables_cohorts.py",
               502
             ],
-            "103abe2411c7a33e",
+            "1b562c14c8073dfb",
             "550e28a2aa7ed323"
           ],
           [
@@ -32423,7 +32532,7 @@
             "end_prevax_exposure",
             "DatePatientSeries",
             58,
-            "de94c974b8241a23",
+            "6d7f9d1d3be0b0d7",
             "57b7b229787daed8"
           ],
           [
@@ -32479,7 +32588,7 @@
             "index_unvax",
             "DatePatientSeries",
             89,
-            "73755356a8033a5d",
+            "c79955582298ac14",
             "1c9cd99a7ca43e65"
           ],
           [
@@ -32859,7 +32968,7 @@
               "analysis/dataset_definition/variables_cohorts.py",
               325
             ],
-            "88b626acc96bee3b",
+            "1af9ed2afbbc33ed",
             "a7eec6776e7d9e2b"
           ],
           [
@@ -32883,7 +32992,7 @@
               "analysis/dataset_definition/variables_cohorts.py",
               149
             ],
-            "31625eede547726f",
+            "fa8d95cf185778ac",
             "d6c674b4f2d2fd2f"
           ],
           [
@@ -32930,7 +33039,7 @@
               "analysis/dataset_definition/variables_cohorts.py",
               202
             ],
-            "ae6ee52b3733ff98",
+            "b86b18762a98e558",
             "bca7213d5c991bbc"
           ],
           [
@@ -32940,7 +33049,7 @@
               "analysis/dataset_definition/variables_cohorts.py",
               225
             ],
-            "b25284e472c9e7bf",
+            "bb8fba763f130507",
             "390d50591d9b31a0"
           ],
           [
@@ -32950,7 +33059,7 @@
               "analysis/dataset_definition/variables_cohorts.py",
               248
             ],
-            "7ed9fa51a821fdd3",
+            "94d88932e8393efe",
             "b264669b9d04e15c"
           ],
           [
@@ -33030,7 +33139,7 @@
               "analysis/dataset_definition/variables_cohorts.py",
               519
             ],
-            "103abe2411c7a33e",
+            "1b562c14c8073dfb",
             "550e28a2aa7ed323"
           ],
           [
@@ -33472,7 +33581,7 @@
               "analysis/dataset_definition/variables_cohorts.py",
               325
             ],
-            "88b626acc96bee3b",
+            "1af9ed2afbbc33ed",
             "a7eec6776e7d9e2b"
           ],
           [
@@ -33496,7 +33605,7 @@
               "analysis/dataset_definition/variables_cohorts.py",
               149
             ],
-            "80b7a1ca01099cdd",
+            "10ad9c18d70d13b5",
             "1f27f4f2a6aee373"
           ],
           [
@@ -33543,7 +33652,7 @@
               "analysis/dataset_definition/variables_cohorts.py",
               202
             ],
-            "28b2611db49f2910",
+            "826f166e80486e33",
             "bf9ea703926cef55"
           ],
           [
@@ -33553,7 +33662,7 @@
               "analysis/dataset_definition/variables_cohorts.py",
               225
             ],
-            "7833d83ab46ac827",
+            "669117145eab4eab",
             "4235366894460edd"
           ],
           [
@@ -33563,7 +33672,7 @@
               "analysis/dataset_definition/variables_cohorts.py",
               248
             ],
-            "a51d490ae2ea52fc",
+            "674ac9b4bff15de2",
             "c86dcb8a4fbe914d"
           ],
           [
@@ -33643,7 +33752,7 @@
               "analysis/dataset_definition/variables_cohorts.py",
               519
             ],
-            "f748e32bb3fd1f27",
+            "546a6d0263763855",
             "2ad04faa3d5134a9"
           ],
           [
@@ -34085,7 +34194,7 @@
               "analysis/dataset_definition/variables_cohorts.py",
               325
             ],
-            "88b626acc96bee3b",
+            "1af9ed2afbbc33ed",
             "a7eec6776e7d9e2b"
           ],
           [
@@ -34109,7 +34218,7 @@
               "analysis/dataset_definition/variables_cohorts.py",
               149
             ],
-            "0d8b991813242a1e",
+            "79156a97f6354315",
             "1c71864857af6c97"
           ],
           [
@@ -34156,7 +34265,7 @@
               "analysis/dataset_definition/variables_cohorts.py",
               202
             ],
-            "04964f6ba0095597",
+            "6b459b65d31faac5",
             "50d431bc17606bac"
           ],
           [
@@ -34166,7 +34275,7 @@
               "analysis/dataset_definition/variables_cohorts.py",
               225
             ],
-            "00546769b8411616",
+            "bfb3372e1cc6416d",
             "cd064538675be905"
           ],
           [
@@ -34176,7 +34285,7 @@
               "analysis/dataset_definition/variables_cohorts.py",
               248
             ],
-            "31f3d84304452ee1",
+            "3ba579d8d18ce7f3",
             "eedd90c3c9e4bb76"
           ],
           [
@@ -34256,7 +34365,7 @@
               "analysis/dataset_definition/variables_cohorts.py",
               519
             ],
-            "6a97054134d8db52",
+            "1c7b23a8d64d2633",
             "421f93b1b01cc67e"
           ],
           [
@@ -34500,7 +34609,7 @@
             "addison",
             "DatePatientSeries",
             -1,
-            "e0e8ebdcae4cbce0",
+            "7154ab32ca3192ad",
             "e3e60b1ccabe9c3a"
           ],
           [
@@ -34521,7 +34630,7 @@
             "anca",
             "DatePatientSeries",
             -1,
-            "a090c2ab068924c2",
+            "e41d9dd3efde9e28",
             "e3e60b1ccabe9c3a"
           ],
           [
@@ -34549,7 +34658,7 @@
             "apla_anaem",
             "DatePatientSeries",
             484,
-            "f0d6af554301bf08",
+            "5a1c41e7fd05f0cd",
             "e419bfc6d8e7444c"
           ],
           [
@@ -34563,7 +34672,7 @@
             "auto_haem_anaem",
             "DatePatientSeries",
             -1,
-            "280d4d9ead791172",
+            "d18818914913a69e",
             "e3e60b1ccabe9c3a"
           ],
           [
@@ -34577,7 +34686,7 @@
             "axial_arth",
             "DatePatientSeries",
             -1,
-            "9e4928bfa330adc1",
+            "1de371d317d244b3",
             "e3e60b1ccabe9c3a"
           ],
           [
@@ -34605,7 +34714,7 @@
             "celiac",
             "DatePatientSeries",
             -1,
-            "6efafba815884742",
+            "5aa7e62087940e98",
             "e3e60b1ccabe9c3a"
           ],
           [
@@ -34626,7 +34735,7 @@
             "cis",
             "DatePatientSeries",
             -1,
-            "5f3e5eb7321c9fce",
+            "5a9087c037efb167",
             "e3e60b1ccabe9c3a"
           ],
           [
@@ -34640,7 +34749,7 @@
             "composite_ai_outcome",
             "DatePatientSeries",
             524,
-            "4dd09bce5819069a",
+            "2ca180b329d286d6",
             "f46b1aeecb49c296"
           ],
           [
@@ -34668,7 +34777,7 @@
             "covid19_date",
             "DatePatientSeries",
             259,
-            "d7374d6a9845aba0",
+            "9532f935da6217bb",
             "883638b051536dab"
           ],
           [
@@ -34815,7 +34924,7 @@
             "crohn",
             "DatePatientSeries",
             -1,
-            "f195577195234b21",
+            "04171bc1a6b4aa80",
             "883638b051536dab"
           ],
           [
@@ -34885,7 +34994,7 @@
             "gca",
             "DatePatientSeries",
             -1,
-            "c7b566dd39455063",
+            "f0c94978703c7e0a",
             "e3e60b1ccabe9c3a"
           ],
           [
@@ -34899,7 +35008,7 @@
             "grave",
             "DatePatientSeries",
             -1,
-            "a9eef986726b806f",
+            "11335831e5c1559e",
             "e3e60b1ccabe9c3a"
           ],
           [
@@ -34913,7 +35022,7 @@
             "grp1_outcome",
             "DatePatientSeries",
             341,
-            "cedf73472a805bb6",
+            "12ca8867506ba5bf",
             "59452f83403afc78"
           ],
           [
@@ -34927,7 +35036,7 @@
             "grp2_outcome",
             "DatePatientSeries",
             368,
-            "7554da37d3283334",
+            "963de8ff27ea0597",
             "ef26ba4389ba2636"
           ],
           [
@@ -34941,7 +35050,7 @@
             "grp3_outcome",
             "DatePatientSeries",
             383,
-            "de91ba4cbb514a9b",
+            "901f20323b0db460",
             "6c100b1f44cae360"
           ],
           [
@@ -34955,7 +35064,7 @@
             "grp4_outcome",
             "DatePatientSeries",
             417,
-            "ef1e347f908f502c",
+            "8bb4ee1ab1d9a229",
             "274d56ea544a4cb3"
           ],
           [
@@ -34969,7 +35078,7 @@
             "grp5_outcome",
             "DatePatientSeries",
             435,
-            "8ecdb422075347ca",
+            "b47e6830ec6842b8",
             "a8bb2e4184201d62"
           ],
           [
@@ -34983,7 +35092,7 @@
             "grp6_outcome",
             "DatePatientSeries",
             454,
-            "1df3474f00b7100d",
+            "9060f27e6959e096",
             "029ad4bd091ee10f"
           ],
           [
@@ -34997,7 +35106,7 @@
             "grp7_outcome",
             "DatePatientSeries",
             492,
-            "c3ad40153531b487",
+            "8e18b9a9f5f6ba42",
             "897de0f5827892a1"
           ],
           [
@@ -35011,7 +35120,7 @@
             "grp8_outcome",
             "DatePatientSeries",
             517,
-            "a8a5829435b04564",
+            "9b12661d5d047f0e",
             "c07e07cb6c0b1971"
           ],
           [
@@ -35025,7 +35134,7 @@
             "gui_bar",
             "DatePatientSeries",
             -1,
-            "1f0d5a53a6682dbe",
+            "c979f1f2fb8cee0c",
             "883638b051536dab"
           ],
           [
@@ -35039,7 +35148,7 @@
             "hashimoto",
             "DatePatientSeries",
             -1,
-            "b5f8e96f4271370a",
+            "43254bb6dd3af7c7",
             "e3e60b1ccabe9c3a"
           ],
           [
@@ -35060,7 +35169,7 @@
             "hydra_supp",
             "DatePatientSeries",
             -1,
-            "07c3050ffe978761",
+            "85a9a5323c9687bb",
             "883638b051536dab"
           ],
           [
@@ -35088,7 +35197,7 @@
             "ibd",
             "DatePatientSeries",
             412,
-            "9c13037a253ac924",
+            "92d7167231f909f5",
             "e419bfc6d8e7444c"
           ],
           [
@@ -35102,7 +35211,7 @@
             "iga_vasc",
             "DatePatientSeries",
             -1,
-            "700951695b9e910c",
+            "2a10aeb58614141f",
             "e3e60b1ccabe9c3a"
           ],
           [
@@ -35130,7 +35239,7 @@
             "immu_thromb",
             "DatePatientSeries",
             -1,
-            "855dd5da7a02c614",
+            "9bbc8bea6d601c62",
             "e3e60b1ccabe9c3a"
           ],
           [
@@ -35144,7 +35253,7 @@
             "infl_myos",
             "DatePatientSeries",
             -1,
-            "6feb78321b36620f",
+            "6849836900ba49b8",
             "e3e60b1ccabe9c3a"
           ],
           [
@@ -35165,7 +35274,7 @@
             "long_myel",
             "DatePatientSeries",
             -1,
-            "2a7760b4c4e326c4",
+            "e746182edcc55631",
             "e3e60b1ccabe9c3a"
           ],
           [
@@ -35179,7 +35288,7 @@
             "mctd",
             "DatePatientSeries",
             -1,
-            "541b23c2e5954609",
+            "f00d6355bf0f6c35",
             "e3e60b1ccabe9c3a"
           ],
           [
@@ -35200,14 +35309,14 @@
             "multi_scler",
             "DatePatientSeries",
             -1,
-            "3aff18bd82bd7f4e",
+            "ebda81e58ba5fc94",
             "883638b051536dab"
           ],
           [
             "myas_grav",
             "DatePatientSeries",
             -1,
-            "f44d9fc584547588",
+            "aa7a4bdd322f7e0c",
             "e3e60b1ccabe9c3a"
           ],
           [
@@ -35228,7 +35337,7 @@
             "pern_anaem",
             "DatePatientSeries",
             -1,
-            "91daa91a4637e201",
+            "4c2ac219f6faf019",
             "e3e60b1ccabe9c3a"
           ],
           [
@@ -35249,14 +35358,14 @@
             "poly_rheu",
             "DatePatientSeries",
             -1,
-            "41760e4825f92aca",
+            "65fd4dbc89456c6c",
             "e3e60b1ccabe9c3a"
           ],
           [
             "psor_arth",
             "DatePatientSeries",
             -1,
-            "441609280df5a7c1",
+            "373ac11392fb8d58",
             "e3e60b1ccabe9c3a"
           ],
           [
@@ -35270,7 +35379,7 @@
             "psoriasis",
             "DatePatientSeries",
             -1,
-            "c350054e1de59a0e",
+            "dadca984c91f6399",
             "883638b051536dab"
           ],
           [
@@ -35291,7 +35400,7 @@
             "rheu_arth",
             "DatePatientSeries",
             -1,
-            "9556f78cb211346c",
+            "3b18ba43ce610955",
             "e3e60b1ccabe9c3a"
           ],
           [
@@ -35312,7 +35421,7 @@
             "sjogren",
             "DatePatientSeries",
             -1,
-            "16a5f31e12d17139",
+            "19061c8dbb25233b",
             "e3e60b1ccabe9c3a"
           ],
           [
@@ -35326,7 +35435,7 @@
             "sle",
             "DatePatientSeries",
             -1,
-            "f3fe2adebace1ba2",
+            "a8017021e7679914",
             "883638b051536dab"
           ],
           [
@@ -35354,14 +35463,14 @@
             "sys_scler",
             "DatePatientSeries",
             -1,
-            "8c4f6c2aa556fcd8",
+            "c534370536898de7",
             "e3e60b1ccabe9c3a"
           ],
           [
             "ulc_col",
             "DatePatientSeries",
             -1,
-            "78f5f28e5f37b631",
+            "a4289ffa917267bb",
             "883638b051536dab"
           ],
           [
@@ -35508,8 +35617,8 @@
             "ccare_covid_first_af_treat_alldiag_date",
             "DatePatientSeries",
             997,
-            "2c25ea02106e18e2",
-            "d9367c942b82f537"
+            "56f06689c9240991",
+            "fc6ee4050e6ae79d"
           ],
           [
             "covid_death_60d_12m",
@@ -35599,8 +35708,8 @@
             "dialysis",
             "IntPatientSeries",
             615,
-            "52ecb2efcd6558aa",
-            "432cf2e77eb7c106"
+            "8c14e222eb90429f",
+            "03f2ca4f33d688ee"
           ],
           [
             "dialysis_ctv3",
@@ -35620,8 +35729,8 @@
             "dialysis_procedure",
             "DatePatientSeries",
             611,
-            "a27a3f68f7caeac9",
-            "8fa7becf9fef7c15"
+            "3a73382ae409c920",
+            "33ff67a6eaf981b6"
           ],
           [
             "dob",
@@ -35809,8 +35918,8 @@
             "had_dialysis",
             "BoolPatientSeries",
             614,
-            "23e5ebadd04df639",
-            "3821c403157fcc09"
+            "41aeaf90a5eaa402",
+            "5f637969bbfb1eb9"
           ],
           [
             "had_first_covid_treat",
@@ -35823,15 +35932,15 @@
             "had_haema_disease",
             "BoolPatientSeries",
             831,
-            "8c8758463a08d1a3",
-            "00c2592e625f0759"
+            "8887910093cf753e",
+            "9596889078f9f1d0"
           ],
           [
             "had_haema_disease_ever",
             "BoolPatientSeries",
             836,
-            "0c29e58da405c93e",
-            "55b0404fcc62a876"
+            "3501dd22e8a6b5e9",
+            "0ab9db54790eb179"
           ],
           [
             "had_housebound",
@@ -35886,8 +35995,8 @@
             "had_kidney_transplant",
             "BoolPatientSeries",
             627,
-            "0565ee9c8d37b879",
-            "461fb14a5ceb24d5"
+            "5ce06dc54e89abca",
+            "451416436e2351e4"
           ],
           [
             "had_learning_disability",
@@ -35942,43 +36051,43 @@
             "had_solid_organ_transplant",
             "BoolPatientSeries",
             743,
-            "d72a3621e3a78854",
-            "b41a3a296c21df96"
+            "04285ab1eb0e756b",
+            "aca72179516abd73"
           ],
           [
             "had_solid_organ_transplant_new",
             "BoolPatientSeries",
             749,
-            "08c0aa0e545a7dee",
-            "b41a3a296c21df96"
+            "0691048e51aba2fa",
+            "aca72179516abd73"
           ],
           [
             "haema_disease",
             "IntPatientSeries",
             832,
-            "99c2d6ac23683662",
-            "dea39ebe019842e3"
+            "4f9daab2ba47c4a1",
+            "76160c9b114d6320"
           ],
           [
             "haema_disease_ever",
             "IntPatientSeries",
             837,
-            "9599f998f16e5143",
-            "9be8eed0192059df"
+            "a064525874f5e3d4",
+            "27bdc8656f88e695"
           ],
           [
             "haematological_disease_nhsd",
             "DatePatientSeries",
             813,
-            "93fadcdbc0c696e2",
-            "39ebf2b4a036f9bd"
+            "a077e85a576742ab",
+            "e8664408b02203f0"
           ],
           [
             "haematological_disease_nhsd_ever",
             "DatePatientSeries",
             822,
-            "cc8da1471526e413",
-            "f82493b5cd669a89"
+            "8b3635052a543c09",
+            "76ed0d528bbd8ee7"
           ],
           [
             "haematological_malignancies_icd10",
@@ -36026,15 +36135,15 @@
             "haematopoietic_stem_cell_opcs4",
             "DatePatientSeries",
             776,
-            "23a3ca1b73d178e5",
-            "cabb66faaf665eaf"
+            "d775fb91abd6f42b",
+            "fb1cb0c4c3ea4be5"
           ],
           [
             "haematopoietic_stem_cell_opcs4_ever",
             "DatePatientSeries",
             801,
-            "6cff5363ceab310e",
-            "ba9c7b1fca4a597e"
+            "e1abf90ecca52457",
+            "c72ef1400e2d61b8"
           ],
           [
             "haematopoietic_stem_cell_snomed",
@@ -36054,29 +36163,29 @@
             "highrisk_codelist",
             "IntPatientSeries",
             909,
-            "de261ddf8fb5f61d",
-            "5f05f119ce4b36f4"
+            "1c2f371459858fb6",
+            "ac2f7e398c7533a8"
           ],
           [
             "highrisk_codelist_ever",
             "IntPatientSeries",
             915,
-            "acc8c530e095617f",
-            "b662b9ab0f4e4b52"
+            "d8adc0e8f9a7e05e",
+            "788930b39bc47336"
           ],
           [
             "hosp_60daf_treat_alldiag_date",
             "DatePatientSeries",
             992,
-            "fee313bb0b6b0dac",
-            "af150bd79e835ef3"
+            "69153d0d254cfe73",
+            "b25675b2e9aea43b"
           ],
           [
             "hosp_af_treat_alldiag_date",
             "DatePatientSeries",
             987,
-            "1d17d19ccfa1b360",
-            "eebb1195b5a51186"
+            "eb4f8dfd5d8fb65b",
+            "2fb8158674c6748a"
           ],
           [
             "hosp_allcause60d12m_classfic",
@@ -36348,15 +36457,15 @@
             "is_codelist_highrisk",
             "IntPatientSeries",
             906,
-            "76a26942a98d6681",
-            "6cc49d98424bd8fc"
+            "72f648697105e8d1",
+            "55d63ed03109a8c0"
           ],
           [
             "is_codelist_highrisk_ever",
             "IntPatientSeries",
             912,
-            "3f698daf166ec2fa",
-            "4bf2471a68f36381"
+            "b4223430d7843113",
+            "26537942bd65860a"
           ],
           [
             "is_molnu_pt12m_censored",
@@ -36411,8 +36520,8 @@
             "kidney_transplant",
             "IntPatientSeries",
             629,
-            "bd48d3ce70dc9bbb",
-            "1a84da922d557a9d"
+            "2dc73ef9d26f83dc",
+            "cee1171515da398d"
           ],
           [
             "kidney_transplant_ctv3",
@@ -36432,8 +36541,8 @@
             "kidney_transplant_procedure",
             "DatePatientSeries",
             624,
-            "28c6649afbdcb67f",
-            "3afea08d2b88e5b2"
+            "250c8014fc2ec827",
+            "288afa30a193ef6a"
           ],
           [
             "latest_ethnicity_code",
@@ -36677,36 +36786,36 @@
             "solid_organ_transplant",
             "IntPatientSeries",
             745,
-            "abfb960d1f0d0db7",
-            "a5ea4310e00ed9c7"
+            "baab43c3e8a89faa",
+            "b9d055540367807c"
           ],
           [
             "solid_organ_transplant_new",
             "IntPatientSeries",
             751,
-            "31d9e55244a4125f",
-            "a5ea4310e00ed9c7"
+            "7e05872082ff79f4",
+            "b9d055540367807c"
           ],
           [
             "solid_organ_transplant_nhsd",
             "DatePatientSeries",
             731,
-            "da8def6abb99a560",
-            "7c73b0488b624e5d"
+            "5b5d1c06b5aedeb0",
+            "3dc1ef2f11e80099"
           ],
           [
             "solid_organ_transplant_nhsd_new",
             "DatePatientSeries",
             737,
-            "42fa70cbee453756",
-            "7c73b0488b624e5d"
+            "07f703d460021705",
+            "3dc1ef2f11e80099"
           ],
           [
             "solid_organ_transplant_nhsd_opcs4",
             "DatePatientSeries",
             642,
-            "bf5f841d416891e3",
-            "b7bddd68a557e7b4"
+            "2aa4354a9ec33630",
+            "74e7328df2058be1"
           ],
           [
             "solid_organ_transplant_nhsd_snomed",
@@ -36838,15 +36947,15 @@
             "transplant_all_y_codes_opcs4",
             "DatePatientSeries",
             643,
-            "a51204282922466b",
-            "98497230591d846d"
+            "8e20ad1b4f3e8a4a",
+            "cb65db44d7817ab5"
           ],
           [
             "transplant_all_y_codes_opcs4_count",
             "IntPatientSeries",
             647,
-            "92fecc1f97e5e7a1",
-            "896db575e3614afd"
+            "3fafd9deab7a8697",
+            "f877667c324b2d7f"
           ],
           [
             "transplant_conjunctiva_opcs4",
@@ -36887,15 +36996,15 @@
             "transplant_ileum_1_Y_codes_opcs4",
             "DatePatientSeries",
             676,
-            "a36ed550593c9aaa",
-            "e5f0056080cb3950"
+            "2591f71cd36bf93b",
+            "7a4f80dff7b7e148"
           ],
           [
             "transplant_ileum_1_Y_codes_opcs4_count",
             "IntPatientSeries",
             677,
-            "fe5d74489c1da11b",
-            "4845ab230e772a75"
+            "bf25f58b2ef07dbb",
+            "389e48f090f9ad43"
           ],
           [
             "transplant_ileum_1_opcs4",
@@ -36908,8 +37017,8 @@
             "transplant_ileum_1_opcs4_2",
             "DatePatientSeries",
             724,
-            "aa40f570f8b3f8b7",
-            "e8b4bf4b9fe22af3"
+            "0380a6a2b5f6fe04",
+            "717d040dc90a55b9"
           ],
           [
             "transplant_ileum_1_opcs4_count",
@@ -36964,8 +37073,8 @@
             "transplant_stomach_opcs4_2",
             "DatePatientSeries",
             721,
-            "27df699ae9c56c35",
-            "bd2b2af4fe072649"
+            "8607b4ad230cc020",
+            "bb94beb6aeebeb95"
           ],
           [
             "transplant_stomach_opcs4_count",
@@ -36985,15 +37094,15 @@
             "transplant_thymus_opcs4_2",
             "DatePatientSeries",
             714,
-            "8c7d87dbfc58d070",
-            "37ab789fbec7c6a6"
+            "6b698f29b02e8456",
+            "894a867f17ec217a"
           ],
           [
             "transplant_thymus_opcs4_a",
             "BoolPatientSeries",
             657,
-            "880d273ef777cbdc",
-            "97412df3d1cf0374"
+            "42af7eb2eb3cac65",
+            "061aa7fe8fc557f3"
           ],
           [
             "transplant_thymus_opcs4_count",
@@ -37881,7 +37990,7 @@
             "ckd_stage_5_nhsd",
             "DatePatientSeries",
             285,
-            "0f3bff2be904f9df",
+            "a768f862cbfc7455",
             "c4de56b251bff495"
           ],
           [
@@ -37965,7 +38074,7 @@
             "haematological_disease_nhsd_ever",
             "DatePatientSeries",
             162,
-            "381a652f71731a2f",
+            "1bb755bfa472ff30",
             "1f3da7dd657f6bfb"
           ],
           [
@@ -38014,7 +38123,7 @@
             "liver_disease_nhsd",
             "DatePatientSeries",
             326,
-            "83ba909c3b813365",
+            "737bc8f29092fa43",
             "4edc9e809c1d9ea0"
           ],
           [
@@ -38112,7 +38221,7 @@
             "solid_organ_transplant_nhsd_new",
             "DatePatientSeries",
             270,
-            "3f15a94ca5f12f84",
+            "b94818f8165253fd",
             "ff197384121cda39"
           ],
           [
