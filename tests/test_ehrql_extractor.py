@@ -1426,3 +1426,69 @@ get_sequential_admissions_date(dataset, "admission{n}_date_sus", admissions_data
             assert filename == "variables.py"
             # Line should be around where setattr is called (line 17 in the helper code)
             assert line > 0
+
+
+class TestDictSetAttrLoop:
+    """Test extraction of variables from a dict that's imported and used in a setattr loop."""
+
+    def test_dict_setattr_loop(self):
+        """Test variables created from an imported dict used in a setattr loop.
+
+        Pattern from post-covid-renal:
+        - variables_dates.py defines variables and creates a dict with them
+        - dataset_definition_dates.py imports the dict and loops: setattr(dataset, key, value)
+        - We want line numbers pointing to where each variable was defined in variables_dates.py
+        """
+        helper_code = """
+from ehrql import Dataset
+
+# Define some variables
+death_date = patients.date_of_death
+vax_date_1 = vaccinations.where(vaccinations.target_disease.contains("COVID")).first_for_patient().date
+vax_date_2 = vaccinations.where(vaccinations.target_disease.contains("COVID")).sort_by(vaccinations.date).first_for_patient().date
+
+# Create a dictionary of variables
+prelim_date_variables = dict(
+    cens_date_death = death_date,
+    vax_date_covid_1 = vax_date_1,
+    vax_date_covid_2 = vax_date_2,
+)
+"""
+        main_code = """
+from ehrql import create_dataset
+from variables_dates import prelim_date_variables
+
+dataset = create_dataset()
+
+# Loop over the imported dict and setattr
+for var_name, var_value in prelim_date_variables.items():
+    setattr(dataset, var_name, var_value)
+"""
+        with tempfile.TemporaryDirectory() as tmpdir:
+            repo_root = pathlib.Path(tmpdir)
+            helper_path = repo_root / "variables_dates.py"
+            helper_path.write_text(helper_code)
+            file_path = repo_root / "dataset_definition.py"
+            file_path.write_text(main_code)
+
+            line_numbers, regexes = extract_variable_line_numbers(file_path, repo_root)
+
+            # Should extract static variable names from the dict keys
+            assert "cens_date_death" in line_numbers
+            assert "vax_date_covid_1" in line_numbers
+            assert "vax_date_covid_2" in line_numbers
+
+            # The line numbers should point to where the variables are defined in variables_dates.py
+            # death_date is defined at line 5, used in dict at line 11
+            # We want line 5 (where death_date is defined)
+            filename, line = line_numbers["cens_date_death"]
+            assert filename == "variables_dates.py"
+            assert line == 5  # death_date definition line
+
+            filename, line = line_numbers["vax_date_covid_1"]
+            assert filename == "variables_dates.py"
+            assert line == 6  # vax_date_1 definition line
+
+            filename, line = line_numbers["vax_date_covid_2"]
+            assert filename == "variables_dates.py"
+            assert line == 7  # vax_date_2 definition line

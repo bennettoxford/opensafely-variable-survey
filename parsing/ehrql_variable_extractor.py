@@ -590,7 +590,9 @@ class VariableExtractor:
         self._extract_module_level(tree, line_numbers, line_number_regexes)
 
         # Pass 3: Loop-based dynamic variables
-        self._extract_from_loops(tree, import_collector, line_number_regexes)
+        self._extract_from_loops(
+            tree, import_collector, line_numbers, line_number_regexes
+        )
 
         # Pass 4: Non-loop helper function calls
         self._extract_from_helpers(
@@ -1007,21 +1009,32 @@ class VariableExtractor:
         self,
         tree: ast.AST,
         import_collector: ImportCollector,
+        line_numbers: dict[str, int | tuple[str, int]],
         line_number_regexes: list[tuple[str, int | tuple[str, int]]],
     ) -> None:
         """Extract dynamic variables from loops."""
         for node in ast.iter_child_nodes(tree):
             if isinstance(node, (ast.For, ast.While)):
-                self._process_loop(node, import_collector, line_number_regexes)
+                self._process_loop(
+                    node, import_collector, line_numbers, line_number_regexes
+                )
 
     def _process_loop(
         self,
         loop_node: ast.For | ast.While,
         import_collector: ImportCollector,
+        line_numbers: dict[str, int | tuple[str, int]],
         line_number_regexes: list[tuple[str, int | tuple[str, int]]],
     ) -> None:
         """Process a single loop node to find dynamic variables."""
         loop_line = loop_node.lineno
+
+        # Check if this is a dict.items() loop pattern
+        if self._extract_from_dict_items_loop(
+            loop_node, import_collector, line_numbers
+        ):
+            # Successfully extracted from dict.items() pattern, nothing more to do
+            return
 
         for child in ast.walk(loop_node):
             # Direct dataset operations in loop
@@ -1042,6 +1055,144 @@ class VariableExtractor:
                 self._process_loop_function_call(
                     child, import_collector, loop_line, line_number_regexes
                 )
+
+    def _extract_from_dict_items_loop(
+        self,
+        loop_node: ast.For | ast.While,
+        import_collector: ImportCollector,
+        line_numbers: dict[str, int | tuple[str, int]],
+    ) -> bool:
+        """Extract variables from a dict.items() loop pattern.
+
+        Pattern:
+            for var_name, var_value in imported_dict.items():
+                setattr(dataset, var_name, var_value)
+
+        Returns True if this pattern was detected and processed.
+        """
+        # Only handle For loops
+        if not isinstance(loop_node, ast.For):
+            return False
+
+        # Check if iterating over a .items() call
+        if not (
+            isinstance(loop_node.iter, ast.Call)
+            and isinstance(loop_node.iter.func, ast.Attribute)
+            and loop_node.iter.func.attr == "items"
+        ):
+            return False
+
+        # Get the dict name
+        if not isinstance(loop_node.iter.func.value, ast.Name):
+            return False
+
+        dict_name = loop_node.iter.func.value.id
+
+        # Check if the dict is imported
+        if dict_name not in import_collector.imported_modules:
+            return False
+
+        module_name, original_name = import_collector.imported_modules[dict_name]
+        target_dict_name = original_name or dict_name
+
+        # Find the setattr call in the loop body
+        setattr_node = None
+        for node in ast.walk(loop_node):
+            if (
+                isinstance(node, ast.Call)
+                and isinstance(node.func, ast.Name)
+                and node.func.id == "setattr"
+            ):
+                setattr_node = node
+                break
+
+        if not setattr_node or len(setattr_node.args) < 3:
+            return False
+
+        # Now we need to find the dict definition in the imported module
+        # and extract the variable names and their definition line numbers
+        module_candidates = self.module_resolver.find_module_file(module_name)
+        module_path = None
+        for candidate in module_candidates:
+            if candidate.exists():
+                module_path = candidate
+                break
+
+        if not module_path:
+            return False
+
+        try:
+            with open(module_path) as f:
+                module_source = f.read()
+            module_tree = ast.parse(module_source)
+        except (OSError, SyntaxError):
+            return False
+
+        # Find the dict assignment in the module
+        dict_definition = self._find_dict_definition(module_tree, target_dict_name)
+        if not dict_definition:
+            return False
+
+        # Extract variable definitions from the dict
+        rel_path = str(pathlib.Path(module_path).relative_to(self.repo_root))
+        for key, value_node in dict_definition.items():
+            # key is the variable name (e.g., "cens_date_death")
+            # value_node is the AST node for the value (e.g., Name("death_date"))
+
+            # If the value is a Name node, find where that variable was defined
+            if isinstance(value_node, ast.Name):
+                var_def_line = self._find_variable_definition_line(
+                    module_tree, value_node.id
+                )
+                if var_def_line:
+                    line_numbers[key] = (rel_path, var_def_line)
+
+        return True
+
+    def _find_dict_definition(
+        self, tree: ast.AST, dict_name: str
+    ) -> dict[str, ast.AST] | None:
+        """Find a dict definition and return its keys and values.
+
+        Looks for patterns like:
+            my_dict = dict(key1=value1, key2=value2)
+        """
+        for node in ast.walk(tree):
+            if (
+                isinstance(node, ast.Assign)
+                and len(node.targets) == 1
+                and isinstance(node.targets[0], ast.Name)
+                and node.targets[0].id == dict_name
+            ):
+                # Check if RHS is a dict() call
+                if (
+                    isinstance(node.value, ast.Call)
+                    and isinstance(node.value.func, ast.Name)
+                    and node.value.func.id == "dict"
+                ):
+                    # Extract keyword arguments as dict entries
+                    result = {}
+                    for keyword in node.value.keywords:
+                        if keyword.arg:  # keyword.arg is the key name
+                            result[keyword.arg] = keyword.value
+                    return result
+
+        return None
+
+    def _find_variable_definition_line(
+        self, tree: ast.AST, var_name: str
+    ) -> int | None:
+        """Find the line number where a variable is defined."""
+        for node in ast.walk(tree):
+            if (
+                isinstance(node, ast.Assign)
+                and len(node.targets) == 1
+                and isinstance(node.targets[0], ast.Name)
+                and node.targets[0].id == var_name
+            ):
+                return node.lineno
+
+        return None
 
     def _process_loop_function_call(
         self,
