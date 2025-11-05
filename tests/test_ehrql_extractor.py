@@ -1272,6 +1272,94 @@ class TestCompactQMNode:
             pass
 
 
+class TestClassMethodVariables:
+    """Test extraction of variables created by class methods that call helper functions."""
+
+    def test_class_method_calling_setattr_helper(self):
+        """Test class with method that calls _update_dataset which uses setattr.
+
+        This tests the pattern seen in CoPrescribingVariableGenerator where:
+        1. A class has an __init__ that stores the dataset
+        2. A method calls a helper method (_update_dataset) with variable names
+        3. The helper uses setattr(self.dataset, variable_name, value)
+        """
+        utils_code = """
+class CoPrescribingVariableGenerator:
+    def __init__(self, dataset, codelist_names):
+        self.dataset = dataset
+        self.codelist_name_1, self.codelist_name_2 = codelist_names
+
+    def _update_dataset(self, dataset, variable, variable_name):
+        setattr(dataset, variable_name, variable)
+        return self.dataset
+
+    def generate_co_prescribing_variable(self):
+        # Create some variables using _update_dataset
+        self._update_dataset(
+            self.dataset, "value1", self.codelist_name_1
+        )
+        self._update_dataset(
+            self.dataset, "value2", self.codelist_name_2
+        )
+
+        # Create variables with constructed names
+        for month in range(1, 4):
+            self._update_dataset(
+                self.dataset, f"value_{month}", f"{self.codelist_name_1}_{month}"
+            )
+            self._update_dataset(
+                self.dataset, f"earliest_{month}", f"{self.codelist_name_1}_earliest_{month}"
+            )
+            self._update_dataset(
+                self.dataset, f"within_28_{month}",
+                f"{self.codelist_name_1}_{self.codelist_name_2}_within_28_days_1_earliest_2_earliest_{month}"
+            )
+
+        return "result"
+"""
+        main_code = """
+from ehrql import Dataset
+from utils import CoPrescribingVariableGenerator
+
+dataset = Dataset()
+
+cp_f = CoPrescribingVariableGenerator(
+    dataset,
+    ("aspirin", "antiplatelet_excluding_aspirin"),
+)
+
+dataset.co_prescribed_result = cp_f.generate_co_prescribing_variable()
+"""
+        with tempfile.TemporaryDirectory() as tmpdir:
+            repo_root = pathlib.Path(tmpdir)
+            utils_path = repo_root / "utils.py"
+            utils_path.write_text(utils_code)
+            file_path = repo_root / "measure_definition.py"
+            file_path.write_text(main_code)
+
+            line_numbers, regexes = extract_variable_line_numbers(file_path, repo_root)
+
+            # Should extract the static variables created by _update_dataset
+            # These are the direct calls with codelist_name_1 and codelist_name_2
+            assert "aspirin" in line_numbers or len(regexes) > 0
+            assert "antiplatelet_excluding_aspirin" in line_numbers or len(regexes) > 0
+
+            # Should also extract patterns for the dynamic variables
+            # These have month numbers in them
+            # Should match patterns like aspirin_1, aspirin_2, aspirin_3
+            # and aspirin_earliest_1, etc.
+            # and aspirin_antiplatelet_excluding_aspirin_within_28_days_1_earliest_2_earliest_1
+            assert len(regexes) >= 3, (
+                f"Expected at least 3 dynamic patterns, got {len(regexes)}"
+            )
+
+            # Check that patterns are from utils.py
+            cross_file_patterns = [r for r in regexes if isinstance(r[1], tuple)]
+            if cross_file_patterns:
+                filename, _ = cross_file_patterns[0][1]
+                assert filename == "utils.py"
+
+
 class TestHelperWithTemplateParameter:
     """Test Pass 4: Helper functions that receive a template string parameter and use it with .format()."""
 

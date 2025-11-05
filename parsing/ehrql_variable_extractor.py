@@ -493,14 +493,18 @@ class ImportCollector:
 
     def __init__(self):
         self.function_defs: dict[str, ast.FunctionDef] = {}
+        self.class_defs: dict[str, ast.ClassDef] = {}
         self.imported_modules: dict[str, tuple[str, str | None]] = {}
         self.star_imports: list[str] = []
 
     def collect(self, tree: ast.AST) -> None:
-        """Walk AST and collect all imports and function definitions."""
+        """Walk AST and collect all imports, function definitions, and class definitions."""
         for node in ast.walk(tree):
             if isinstance(node, ast.FunctionDef):
                 self.function_defs[node.name] = node
+
+            elif isinstance(node, ast.ClassDef):
+                self.class_defs[node.name] = node
 
             elif isinstance(node, ast.ImportFrom):
                 module_name = node.module or ""
@@ -1162,6 +1166,33 @@ class VariableExtractor:
         line_number_regexes: list[tuple[str, int | tuple[str, int]]],
     ) -> None:
         """Extract from non-loop helper function calls."""
+        # First pass: collect instance variables and their classes
+        instance_classes: dict[
+            str, tuple[str, str]
+        ] = {}  # instance_name -> (module_name, class_name)
+
+        for node in ast.walk(tree):
+            if isinstance(node, ast.Assign):
+                # Look for: instance = ClassName(...)
+                for target in node.targets:
+                    if isinstance(target, ast.Name) and isinstance(
+                        node.value, ast.Call
+                    ):
+                        instance_name = target.id
+
+                        if isinstance(node.value.func, ast.Name):
+                            class_name = node.value.func.id
+                            # Check if this is an imported class
+                            if class_name in import_collector.imported_modules:
+                                module_name, original_name = (
+                                    import_collector.imported_modules[class_name]
+                                )
+                                actual_class_name = original_name or class_name
+                                instance_classes[instance_name] = (
+                                    module_name,
+                                    actual_class_name,
+                                )
+
         for node in ast.iter_child_nodes(tree):
             # Skip loops
             if isinstance(node, (ast.For, ast.While)):
@@ -1201,18 +1232,30 @@ class VariableExtractor:
                         for var_name, line in static_vars:
                             line_numbers[var_name] = line
 
-                # Module.function() call
+                # Module.function() call OR instance.method() call
                 elif isinstance(child.func, ast.Attribute) and isinstance(
                     child.func.value, ast.Name
                 ):
-                    mod_alias = child.func.value.id
-                    func_name = child.func.attr
+                    obj_name = child.func.value.id
+                    method_or_func_name = child.func.attr
 
-                    if mod_alias in import_collector.imported_modules:
-                        module_name, _ = import_collector.imported_modules[mod_alias]
+                    # Check if this is an instance method call
+                    if obj_name in instance_classes:
+                        module_name, class_name = instance_classes[obj_name]
+                        self._extract_from_class_method(
+                            module_name,
+                            class_name,
+                            method_or_func_name,
+                            child,
+                            line_numbers,
+                            line_number_regexes,
+                        )
+                    # Otherwise, check if it's a module.function() call
+                    elif obj_name in import_collector.imported_modules:
+                        module_name, _ = import_collector.imported_modules[obj_name]
                         static_vars = self._extract_from_imported_standalone_helper(
                             module_name,
-                            func_name,
+                            method_or_func_name,
                             child,
                             call_line,
                             line_number_regexes,
@@ -1331,6 +1374,234 @@ class VariableExtractor:
                 continue
 
         return static_vars_from_call
+
+    def _extract_from_class_method(
+        self,
+        module_name: str,
+        class_name: str,
+        method_name: str,
+        call_node: ast.Call,
+        line_numbers: dict[str, int | tuple[str, int]],
+        line_number_regexes: list[tuple[str, int | tuple[str, int]]],
+    ) -> None:
+        """Extract variables from a class method that modifies the dataset.
+
+        Args:
+            module_name: Name of the module containing the class
+            class_name: Name of the class
+            method_name: Name of the method being called
+            call_node: The call node
+            line_numbers: Dict to update with static variable line numbers
+            line_number_regexes: List to update with dynamic patterns
+        """
+        for module_file in self.module_resolver.find_module_file(module_name):
+            if not module_file.exists():
+                continue
+
+            try:
+                with open(module_file, encoding="utf-8") as f:
+                    module_source = f.read()
+                module_tree = ast.parse(module_source, filename=str(module_file))
+
+                # Find the class definition
+                class_def: ast.ClassDef | None = None
+                for node in ast.walk(module_tree):
+                    if isinstance(node, ast.ClassDef) and node.name == class_name:
+                        class_def = node
+                        break
+
+                if not class_def:
+                    return
+
+                # Find the method in the class
+                method_def: ast.FunctionDef | None = None
+                for item in class_def.body:
+                    if isinstance(item, ast.FunctionDef) and item.name == method_name:
+                        method_def = item
+                        break
+
+                if not method_def:
+                    return
+
+                # Extract variables from this method and any methods it calls
+                self._extract_from_class_method_recursive(
+                    class_def,
+                    method_def,
+                    module_file,
+                    call_node,
+                    line_numbers,
+                    line_number_regexes,
+                )
+
+                return
+            except Exception:
+                continue
+
+    def _extract_from_class_method_recursive(
+        self,
+        class_def: ast.ClassDef,
+        method_def: ast.FunctionDef,
+        module_file: pathlib.Path,
+        call_node: ast.Call,
+        line_numbers: dict[str, int | tuple[str, int]],
+        line_number_regexes: list[tuple[str, int | tuple[str, int]]],
+        visited_methods: set[str] | None = None,
+    ) -> None:
+        """Recursively extract variables from a class method and methods it calls.
+
+        This handles patterns like:
+        - method calls _helper(self.dataset, variable_name, ...)
+        - _helper uses setattr(dataset, variable_name, ...)
+        - method calls another_method which calls _helper
+        """
+        if visited_methods is None:
+            visited_methods = set()
+
+        # Avoid infinite recursion
+        if method_def.name in visited_methods:
+            return
+        visited_methods.add(method_def.name)
+
+        rel_path = self.module_resolver.get_relative_path(module_file)
+
+        # Look for calls to other methods within this method
+        for node in ast.walk(method_def):
+            if not isinstance(node, ast.Call):
+                continue
+
+            # Check if this is a call to another method: self.method_name(...)
+            if isinstance(node.func, ast.Attribute) and isinstance(
+                node.func.value, ast.Name
+            ):
+                if node.func.value.id == "self":
+                    helper_method_name = node.func.attr
+
+                    # Find this helper method in the class
+                    for item in class_def.body:
+                        if (
+                            isinstance(item, ast.FunctionDef)
+                            and item.name == helper_method_name
+                        ):
+                            # Extract variables from the helper method
+                            # Check if it uses setattr
+                            self._extract_setattr_from_method(
+                                item,
+                                node,
+                                call_node,
+                                rel_path,
+                                line_numbers,
+                                line_number_regexes,
+                            )
+
+                            # Recursively process this method too
+                            self._extract_from_class_method_recursive(
+                                class_def,
+                                item,
+                                module_file,
+                                call_node,
+                                line_numbers,
+                                line_number_regexes,
+                                visited_methods,
+                            )
+
+    def _extract_setattr_from_method(
+        self,
+        method_def: ast.FunctionDef,
+        method_call_node: ast.Call,
+        original_call_node: ast.Call,
+        rel_path: str,
+        line_numbers: dict[str, int | tuple[str, int]],
+        line_number_regexes: list[tuple[str, int | tuple[str, int]]],
+    ) -> None:
+        """Extract variables from a method that uses setattr.
+
+        Args:
+            method_def: The helper method definition (e.g., _update_dataset)
+            method_call_node: The call to this method (e.g., self._update_dataset(...))
+            original_call_node: The original method call on the instance
+            rel_path: Relative path to the source file
+            line_numbers: Dict to update
+            line_number_regexes: List to update
+        """
+        # Look for setattr calls in the method
+        for node in ast.walk(method_def):
+            if not isinstance(node, ast.Call):
+                continue
+
+            if not (isinstance(node.func, ast.Name) and node.func.id == "setattr"):
+                continue
+
+            if len(node.args) < 3:
+                continue
+
+            # The third argument is the variable name
+            var_name_arg = node.args[1]
+
+            # Check if it's a simple parameter reference
+            if isinstance(var_name_arg, ast.Name):
+                # Find which parameter this is
+                param_name = var_name_arg.id
+                param_index: int | None = None
+                for idx, param in enumerate(method_def.args.args):
+                    if param.arg == param_name:
+                        param_index = idx
+                        break
+
+                if param_index is not None:
+                    # Adjust for self parameter: method definitions have self as args[0],
+                    # but method calls don't include self in the arguments
+                    # So parameter index 0 (self) maps to no argument,
+                    # parameter index 1 maps to method_call_node.args[0], etc.
+                    call_arg_index = param_index - 1
+
+                    if call_arg_index >= 0 and call_arg_index < len(
+                        method_call_node.args
+                    ):
+                        # Get the actual argument from the method call
+                        actual_arg = method_call_node.args[call_arg_index]
+
+                        # Use the line number of the method call, not the setattr line
+                        # This is clearer because it shows where the developer called
+                        # the helper method, not the generic setattr implementation
+                        call_line = method_call_node.lineno
+
+                        # Check if it's a constant string
+                        if isinstance(actual_arg, ast.Constant) and isinstance(
+                            actual_arg.value, str
+                        ):
+                            # Static variable name
+                            line_numbers[actual_arg.value] = (rel_path, call_line)
+
+                        # Check if it's an f-string
+                        elif isinstance(actual_arg, ast.JoinedStr):
+                            pattern = self.name_extractor.extract_from_fstring(
+                                actual_arg
+                            )
+                            # Need to resolve any self.attribute references
+                            resolved_pattern = (
+                                self._resolve_instance_attributes_in_pattern(
+                                    pattern, actual_arg, original_call_node
+                                )
+                            )
+                            line_number_regexes.append(
+                                (resolved_pattern, (rel_path, call_line))
+                            )
+
+    def _resolve_instance_attributes_in_pattern(
+        self,
+        pattern: str,
+        fstring_node: ast.JoinedStr,
+        call_node: ast.Call,
+    ) -> str:
+        """Resolve instance attributes in an f-string pattern.
+
+        For example, f"{self.codelist_name_1}_{month}" where self.codelist_name_1
+        is set from constructor arguments.
+        """
+        # For now, return the pattern as-is
+        # A full implementation would track instance attributes through __init__
+        # and resolve them from the constructor call arguments
+        return pattern
 
     def _resolve_template_from_call(
         self, func_def: ast.FunctionDef, call_node: ast.Call
