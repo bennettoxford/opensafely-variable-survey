@@ -192,6 +192,11 @@ class DatasetOperationFinder:
         if isinstance(first_arg, ast.Constant) and isinstance(first_arg.value, str):
             static_vars.append((first_arg.value, node.lineno))
 
+        # Handle Name node (parameter that needs to be resolved from call site)
+        elif isinstance(first_arg, ast.Name):
+            # Return the parameter name so it can be resolved later
+            static_vars.append((first_arg.id, node.lineno))
+
         # Handle f-string
         elif isinstance(first_arg, ast.JoinedStr):
             pattern = self.name_extractor.extract_from_fstring(first_arg)
@@ -990,20 +995,31 @@ class VariableExtractor:
         line_numbers: dict[str, int | tuple[str, int]],
         line_number_regexes: list[tuple[str, int | tuple[str, int]]],
     ) -> None:
-        """Extract direct module-level dataset operations."""
-        for node in ast.walk(tree):
-            # Attribute assignments
-            for var_name, line in self.operation_finder.find_variable_assignments(node):
-                if var_name not in line_numbers:
-                    line_numbers[var_name] = line
+        """Extract direct module-level dataset operations.
 
-            # add_column calls
-            static, dynamic = self.operation_finder.find_add_column_calls(node)
-            for var_name, line in static:
-                if var_name not in line_numbers:
-                    line_numbers[var_name] = line
-            for pattern, line in dynamic:
-                line_number_regexes.append((pattern, line))
+        Only processes nodes at module level, not inside function definitions.
+        """
+        for node in ast.iter_child_nodes(tree):
+            # Skip function definitions - they're handled separately
+            if isinstance(node, ast.FunctionDef):
+                continue
+
+            # Walk children of this node
+            for child in ast.walk(node):
+                # Attribute assignments
+                for var_name, line in self.operation_finder.find_variable_assignments(
+                    child
+                ):
+                    if var_name not in line_numbers:
+                        line_numbers[var_name] = line
+
+                # add_column calls
+                static, dynamic = self.operation_finder.find_add_column_calls(child)
+                for var_name, line in static:
+                    if var_name not in line_numbers:
+                        line_numbers[var_name] = line
+                for pattern, line in dynamic:
+                    line_number_regexes.append((pattern, line))
 
     def _extract_from_loops(
         self,
@@ -1363,7 +1379,11 @@ class VariableExtractor:
                     if func_name in import_collector.function_defs:
                         func_def = import_collector.function_defs[func_name]
                         self._extract_from_standalone_helper(
-                            func_def, child, call_line, line_number_regexes
+                            func_def,
+                            child,
+                            call_line,
+                            line_numbers,
+                            line_number_regexes,
                         )
 
                     # Imported function
@@ -1420,6 +1440,7 @@ class VariableExtractor:
         func_def: ast.FunctionDef,
         call_node: ast.Call,
         call_line: int,
+        line_numbers: dict[str, int | tuple[str, int]],
         line_number_regexes: list[tuple[str, int | tuple[str, int]]],
     ) -> None:
         """Extract from helper function called outside a loop.
@@ -1427,17 +1448,71 @@ class VariableExtractor:
         Returns the line numbers from inside the helper function, not the call line.
         """
         ds_idx = self.function_analyzer.find_dataset_param_index(func_def, call_node)
-        if ds_idx is None or ds_idx >= len(func_def.args.args):
-            return
 
-        dataset_param_name = func_def.args.args[ds_idx].arg
-        _, dynamic_patterns = self.function_analyzer.extract_from_function(
+        # If dataset is a parameter, use the parameter name
+        # Otherwise, assume it's a global variable named "dataset"
+        if ds_idx is not None and ds_idx < len(func_def.args.args):
+            dataset_param_name = func_def.args.args[ds_idx].arg
+        else:
+            dataset_param_name = "dataset"
+
+        static_vars, dynamic_patterns = self.function_analyzer.extract_from_function(
             func_def, dataset_param_name
         )
+
+        # For static variables that are parameters, resolve them from call arguments
+        # e.g., if function has dataset.add_column(column_name, ...) and column_name
+        # is a parameter, get the actual string from the call site
+        for var_name, helper_line in static_vars:
+            # Try to resolve the parameter to an actual argument value
+            actual_var_name = self._resolve_param_to_arg(func_def, call_node, var_name)
+
+            # If we resolved it, use the resolved name
+            # If we couldn't resolve it (not a parameter), use the original name
+            final_var_name = actual_var_name if actual_var_name else var_name
+
+            if final_var_name not in line_numbers:
+                line_numbers[final_var_name] = helper_line
 
         # Use the actual line from inside the helper, not the call line
         for pattern, helper_line in dynamic_patterns:
             line_number_regexes.append((pattern, helper_line))
+
+    def _resolve_param_to_arg(
+        self, func_def: ast.FunctionDef, call_node: ast.Call, param_name: str
+    ) -> str | None:
+        """Resolve a parameter name to the actual argument value from the call site.
+
+        Args:
+            func_def: The function definition
+            call_node: The call to the function
+            param_name: The parameter name to resolve
+
+        Returns:
+            The string value of the argument if it's a constant string, None otherwise
+        """
+        # Find the parameter index
+        param_names = [arg.arg for arg in func_def.args.args]
+        if param_name not in param_names:
+            return None
+
+        param_index = param_names.index(param_name)
+
+        # Get the corresponding argument from the call
+        if param_index < len(call_node.args):
+            arg = call_node.args[param_index]
+            if isinstance(arg, ast.Constant) and isinstance(arg.value, str):
+                return arg.value
+
+        # Check keyword arguments
+        for keyword in call_node.keywords:
+            if keyword.arg == param_name:
+                if isinstance(keyword.value, ast.Constant) and isinstance(
+                    keyword.value.value, str
+                ):
+                    return keyword.value.value
+
+        return None
 
     def _extract_from_imported_standalone_helper(
         self,

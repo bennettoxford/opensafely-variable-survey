@@ -1492,3 +1492,54 @@ for var_name, var_value in prelim_date_variables.items():
             filename, line = line_numbers["vax_date_covid_2"]
             assert filename == "variables_dates.py"
             assert line == 7  # vax_date_2 definition line
+
+
+class TestLocalFunctionWithAddColumn:
+    """Test extraction from local functions that call dataset.add_column."""
+
+    def test_local_function_add_column(self):
+        """Test variables created by a local function that uses dataset.add_column.
+
+        Pattern from post-covid-vax-autoimmune:
+        - A function is defined locally that calls dataset.add_column(column_name, value)
+        - The function is called multiple times with different variable names
+        - We want line numbers pointing to the dataset.add_column line in the function
+        """
+        main_code = """
+from ehrql import create_dataset
+
+dataset = create_dataset()
+
+def add_outcome_date(column_name, snomed_code, icd_code):
+    primary_date = clinical_events.where(
+        clinical_events.snomedct_code.is_in(snomed_code)
+    ).sort_by(clinical_events.date).first_for_patient().date
+
+    secondary_date = apcs.where(
+        apcs.primary_diagnosis.is_in(icd_code)
+    ).sort_by(apcs.admission_date).first_for_patient().admission_date
+
+    dataset.add_column(column_name, minimum_of(primary_date, secondary_date))
+
+# Call the function to create variables
+add_outcome_date("rheu_arth", ra_code_snomed, ra_code_icd)
+add_outcome_date("psor_arth", psoa_code_snomed, psoa_code_icd)
+add_outcome_date("axial_arth", axial_code_snomed, axial_code_icd)
+"""
+        with tempfile.TemporaryDirectory() as tmpdir:
+            repo_root = pathlib.Path(tmpdir)
+            file_path = repo_root / "dataset_definition.py"
+            file_path.write_text(main_code)
+
+            line_numbers, regexes = extract_variable_line_numbers(file_path, repo_root)
+
+            # Should extract the variable names from the function calls
+            assert "rheu_arth" in line_numbers
+            assert "psor_arth" in line_numbers
+            assert "axial_arth" in line_numbers
+
+            # All should point to the dataset.add_column line in the function (line 15)
+            # Since the function is in the same file, line_numbers will just be integers
+            assert line_numbers["rheu_arth"] == 15  # dataset.add_column line
+            assert line_numbers["psor_arth"] == 15  # dataset.add_column line
+            assert line_numbers["axial_arth"] == 15  # dataset.add_column line
