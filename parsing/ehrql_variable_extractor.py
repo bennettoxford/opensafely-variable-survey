@@ -32,6 +32,18 @@ class DynamicVariablePattern:
     line_number: int
 
 
+@dataclass
+class CodelistCall:
+    """Represents a call to codelist_from_csv()."""
+
+    args: tuple[
+        str | None, ...
+    ]  # Positional arguments (first is usually the file path)
+    kwargs: dict[
+        str, str | None
+    ]  # Keyword arguments like system, column, category_column
+
+
 class ModuleResolver:
     """Resolves imported module names to file paths."""
 
@@ -125,6 +137,81 @@ class DynamicNameExtractor:
 
         extract_parts(binop_node)
         return "".join(parts)
+
+
+class CodelistCallFinder:
+    """Finds codelist_from_csv() calls in AST nodes."""
+
+    @staticmethod
+    def extract_codelist_calls(tree: ast.AST) -> dict[str, list[CodelistCall]]:
+        """Extract all codelist_from_csv calls, organized by variable name.
+
+        Args:
+            tree: AST tree to search
+
+        Returns:
+            Dict mapping variable_name -> list of CodelistCall objects
+        """
+        codelist_calls: dict[str, list[CodelistCall]] = {}
+
+        for node in ast.walk(tree):
+            if not isinstance(node, ast.Assign):
+                continue
+
+            # Get the variable name from the assignment target
+            var_name: str | None = None
+            if len(node.targets) == 1:
+                target = node.targets[0]
+                if isinstance(target, ast.Name):
+                    var_name = target.id
+
+            if not var_name:
+                continue
+
+            # Check if the RHS is a call to codelist_from_csv
+            if not isinstance(node.value, ast.Call):
+                continue
+
+            func = node.value.func
+            is_codelist_call = False
+
+            # Check for direct call: codelist_from_csv(...)
+            if isinstance(func, ast.Name) and func.id == "codelist_from_csv":
+                is_codelist_call = True
+            # Check for module.codelist_from_csv(...)
+            elif isinstance(func, ast.Attribute) and func.attr == "codelist_from_csv":
+                is_codelist_call = True
+
+            if not is_codelist_call:
+                continue
+
+            # Extract positional arguments
+            args_list: list[str | None] = []
+            for arg in node.value.args:
+                if isinstance(arg, ast.Constant):
+                    args_list.append(str(arg.value))
+                else:
+                    args_list.append(None)  # Non-constant argument
+
+            # Extract keyword arguments
+            kwargs_dict: dict[str, str | None] = {}
+            for keyword in node.value.keywords:
+                if keyword.arg:
+                    if isinstance(keyword.value, ast.Constant):
+                        kwargs_dict[keyword.arg] = str(keyword.value.value)
+                    else:
+                        kwargs_dict[keyword.arg] = None  # Non-constant value
+
+            codelist_call = CodelistCall(
+                args=tuple(args_list),
+                kwargs=kwargs_dict,
+            )
+
+            if var_name not in codelist_calls:
+                codelist_calls[var_name] = []
+            codelist_calls[var_name].append(codelist_call)
+
+        return codelist_calls
 
 
 class DatasetOperationFinder:
@@ -547,6 +634,460 @@ class ImportCollector:
                     continue
 
 
+class CodelistTracer:
+    """Traces codelist_from_csv calls through variable and function calls."""
+
+    def __init__(self, module_resolver: ModuleResolver):
+        self.module_resolver = module_resolver
+        self._visited_vars: set[tuple[str, str]] = set()  # (file_path, var_name)
+        self._codelist_cache: dict[tuple[str, str], list[CodelistCall]] = {}
+
+    def trace_expression_for_codelists(
+        self,
+        expr: ast.AST,
+        tree: ast.AST,
+        import_collector: ImportCollector,
+        file_path: pathlib.Path,
+    ) -> list[CodelistCall]:
+        """Trace an expression comprehensively to find all codelist_from_csv calls.
+
+        This is the main entry point for tracing a dataset variable's expression.
+
+        Args:
+            expr: The expression AST node (RHS of variable assignment)
+            tree: The full AST tree of the file
+            import_collector: Import information
+            file_path: Path to the file being analyzed
+
+        Returns:
+            List of all CodelistCall objects found in the expression's call tree
+        """
+        self._visited_vars.clear()
+        return self._trace_expression(expr, tree, import_collector, file_path)
+
+    def _trace_expression(
+        self,
+        expr: ast.AST,
+        tree: ast.AST,
+        import_collector: ImportCollector,
+        file_path: pathlib.Path,
+        depth: int = 0,
+    ) -> list[CodelistCall]:
+        """Recursively trace an expression to find all codelist_from_csv calls.
+
+        Args:
+            expr: Expression to trace
+            tree: AST tree of current file
+            import_collector: Import information
+            file_path: Current file path
+            depth: Recursion depth (for debugging/limits)
+
+        Returns:
+            List of CodelistCall objects
+        """
+        if depth > 50:  # Prevent infinite recursion
+            return []
+
+        codelist_calls: list[CodelistCall] = []
+
+        # Walk through all nodes in the expression
+        for node in ast.walk(expr):
+            # Direct codelist_from_csv call
+            if isinstance(node, ast.Call):
+                calls = self._check_for_codelist_call(node)
+                codelist_calls.extend(calls)
+
+            # Name reference - could be a variable holding a codelist
+            if isinstance(node, ast.Name):
+                calls = self._trace_name(
+                    node.id, tree, import_collector, file_path, depth
+                )
+                codelist_calls.extend(calls)
+
+            # Attribute access - could be accessing codelist from class/module
+            if isinstance(node, ast.Attribute):
+                calls = self._trace_attribute(
+                    node, tree, import_collector, file_path, depth
+                )
+                codelist_calls.extend(calls)
+
+        return codelist_calls
+
+    def _check_for_codelist_call(self, call_node: ast.Call) -> list[CodelistCall]:
+        """Check if a Call node is a codelist_from_csv call and extract it.
+
+        Args:
+            call_node: AST Call node to check
+
+        Returns:
+            List with single CodelistCall if this is a codelist_from_csv call, else empty list
+        """
+        func = call_node.func
+        is_codelist_call = False
+
+        # Check for direct call: codelist_from_csv(...)
+        if isinstance(func, ast.Name) and func.id == "codelist_from_csv":
+            is_codelist_call = True
+        # Check for module.codelist_from_csv(...)
+        elif isinstance(func, ast.Attribute) and func.attr == "codelist_from_csv":
+            is_codelist_call = True
+
+        if not is_codelist_call:
+            return []
+
+        # Extract arguments
+        args_list: list[str | None] = []
+        for arg in call_node.args:
+            if isinstance(arg, ast.Constant):
+                args_list.append(str(arg.value))
+            else:
+                args_list.append(None)
+
+        # Extract keyword arguments
+        kwargs_dict: dict[str, str | None] = {}
+        for keyword in call_node.keywords:
+            if keyword.arg:
+                if isinstance(keyword.value, ast.Constant):
+                    kwargs_dict[keyword.arg] = str(keyword.value.value)
+                else:
+                    kwargs_dict[keyword.arg] = None
+
+        return [CodelistCall(args=tuple(args_list), kwargs=kwargs_dict)]
+
+    def _trace_name(
+        self,
+        name: str,
+        tree: ast.AST,
+        import_collector: ImportCollector,
+        file_path: pathlib.Path,
+        depth: int,
+    ) -> list[CodelistCall]:
+        """Trace a Name reference to find codelists.
+
+        Args:
+            name: Variable name to trace
+            tree: AST tree of current file
+            import_collector: Import information
+            file_path: Current file path
+            depth: Recursion depth
+
+        Returns:
+            List of CodelistCall objects
+        """
+        # Check cache
+        cache_key = (str(file_path), name)
+        if cache_key in self._codelist_cache:
+            return self._codelist_cache[cache_key]
+
+        # Prevent cycles
+        if cache_key in self._visited_vars:
+            return []
+        self._visited_vars.add(cache_key)
+
+        codelist_calls: list[CodelistCall] = []
+
+        # Check if this is an imported name
+        if name in import_collector.imported_modules:
+            module_name, original_name = import_collector.imported_modules[name]
+            target_name = original_name or name
+            calls = self._trace_imported_name(
+                module_name, target_name, import_collector, depth
+            )
+            codelist_calls.extend(calls)
+        else:
+            # Look for local variable definition
+            calls = self._find_local_definition(
+                name, tree, import_collector, file_path, depth
+            )
+            codelist_calls.extend(calls)
+
+        # Cache result
+        self._codelist_cache[cache_key] = codelist_calls
+        return codelist_calls
+
+    def _trace_attribute(
+        self,
+        attr_node: ast.Attribute,
+        tree: ast.AST,
+        import_collector: ImportCollector,
+        file_path: pathlib.Path,
+        depth: int,
+    ) -> list[CodelistCall]:
+        """Trace an Attribute access to find codelists.
+
+        Handles patterns like:
+        - Codelists.DIABETES.codes
+        - module.codelist_var
+        - obj.attribute
+
+        Args:
+            attr_node: AST Attribute node
+            tree: AST tree of current file
+            import_collector: Import information
+            file_path: Current file path
+            depth: Recursion depth
+
+        Returns:
+            List of CodelistCall objects
+        """
+        codelist_calls: list[CodelistCall] = []
+
+        # Get the object being accessed
+        if isinstance(attr_node.value, ast.Name):
+            obj_name = attr_node.value.id
+            attr_name = attr_node.attr
+
+            # Check if obj_name is an imported class/module
+            if obj_name in import_collector.imported_modules:
+                module_name, original_name = import_collector.imported_modules[obj_name]
+                target_class = original_name or obj_name
+
+                # Trace through the imported module to find the attribute
+                calls = self._trace_class_attribute(
+                    module_name, target_class, attr_name, import_collector, depth
+                )
+                codelist_calls.extend(calls)
+            else:
+                # Check if it's a local class
+                calls = self._trace_local_class_attribute(
+                    obj_name, attr_name, tree, import_collector, file_path, depth
+                )
+                codelist_calls.extend(calls)
+
+        # Handle nested attributes like obj.attr1.attr2
+        elif isinstance(attr_node.value, ast.Attribute):
+            calls = self._trace_attribute(
+                attr_node.value, tree, import_collector, file_path, depth
+            )
+            codelist_calls.extend(calls)
+
+        return codelist_calls
+
+    def _find_local_definition(
+        self,
+        var_name: str,
+        tree: ast.AST,
+        import_collector: ImportCollector,
+        file_path: pathlib.Path,
+        depth: int,
+    ) -> list[CodelistCall]:
+        """Find and trace a local variable definition.
+
+        Args:
+            var_name: Variable name to find
+            tree: AST tree to search
+            import_collector: Import information
+            file_path: Current file path
+            depth: Recursion depth
+
+        Returns:
+            List of CodelistCall objects
+        """
+        codelist_calls: list[CodelistCall] = []
+
+        for node in ast.walk(tree):
+            if not isinstance(node, ast.Assign):
+                continue
+
+            # Check if this assigns to our variable
+            for target in node.targets:
+                if isinstance(target, ast.Name) and target.id == var_name:
+                    # Recursively trace the RHS
+                    calls = self._trace_expression(
+                        node.value, tree, import_collector, file_path, depth + 1
+                    )
+                    codelist_calls.extend(calls)
+
+        return codelist_calls
+
+    def _trace_imported_name(
+        self,
+        module_name: str,
+        target_name: str,
+        import_collector: ImportCollector,
+        depth: int,
+    ) -> list[CodelistCall]:
+        """Trace an imported name to find codelists in the source module.
+
+        Args:
+            module_name: Module to search
+            target_name: Name of the variable/function in that module
+            import_collector: Import information
+            depth: Recursion depth
+
+        Returns:
+            List of CodelistCall objects
+        """
+        for module_file in self.module_resolver.find_module_file(module_name):
+            if not module_file.exists():
+                continue
+
+            try:
+                with open(module_file, encoding="utf-8") as f:
+                    module_source = f.read()
+                module_tree = ast.parse(module_source, filename=str(module_file))
+
+                # Create import collector for this module
+                module_import_collector = ImportCollector()
+                module_import_collector.collect(module_tree)
+                module_import_collector.resolve_star_imports(self.module_resolver)
+
+                # Find the definition in this module
+                return self._find_local_definition(
+                    target_name,
+                    module_tree,
+                    module_import_collector,
+                    module_file,
+                    depth + 1,
+                )
+            except Exception:
+                continue
+
+        return []
+
+    def _trace_class_attribute(
+        self,
+        module_name: str,
+        class_name: str,
+        attr_name: str,
+        import_collector: ImportCollector,
+        depth: int,
+    ) -> list[CodelistCall]:
+        """Trace a class attribute to find codelists.
+
+        Handles patterns like: Codelists.DIABETES where Codelists is a class.
+
+        Args:
+            module_name: Module containing the class
+            class_name: Name of the class
+            attr_name: Attribute name to find
+            import_collector: Import information
+            depth: Recursion depth
+
+        Returns:
+            List of CodelistCall objects
+        """
+        for module_file in self.module_resolver.find_module_file(module_name):
+            if not module_file.exists():
+                continue
+
+            try:
+                with open(module_file, encoding="utf-8") as f:
+                    module_source = f.read()
+                module_tree = ast.parse(module_source, filename=str(module_file))
+
+                # Create import collector for this module
+                module_import_collector = ImportCollector()
+                module_import_collector.collect(module_tree)
+                module_import_collector.resolve_star_imports(self.module_resolver)
+
+                # Find the class definition
+                for node in ast.walk(module_tree):
+                    if isinstance(node, ast.ClassDef) and node.name == class_name:
+                        # Look for the attribute in the class
+                        return self._find_class_attribute_definition(
+                            node,
+                            attr_name,
+                            module_tree,
+                            module_import_collector,
+                            module_file,
+                            depth,
+                        )
+
+            except Exception:
+                continue
+
+        return []
+
+    def _find_class_attribute_definition(
+        self,
+        class_node: ast.ClassDef,
+        attr_name: str,
+        tree: ast.AST,
+        import_collector: ImportCollector,
+        file_path: pathlib.Path,
+        depth: int,
+    ) -> list[CodelistCall]:
+        """Find an attribute definition within a class.
+
+        Args:
+            class_node: AST ClassDef node
+            attr_name: Attribute name to find
+            tree: Full AST tree
+            import_collector: Import information
+            file_path: Current file path
+            depth: Recursion depth
+
+        Returns:
+            List of CodelistCall objects
+        """
+        codelist_calls: list[CodelistCall] = []
+
+        # Check if this is an Enum class
+        is_enum = False
+        for base in class_node.bases:
+            if isinstance(base, ast.Name) and base.id == "Enum":
+                is_enum = True
+                break
+
+        if is_enum:
+            # For Enum classes, look for codelist_from_csv calls in __init__
+            # The pattern is: self.codes = codelist_from_csv(...)
+            for node in class_node.body:
+                if isinstance(node, ast.FunctionDef) and node.name == "__init__":
+                    # Find all codelist_from_csv calls in __init__
+                    for init_node in ast.walk(node):
+                        if isinstance(init_node, ast.Call):
+                            calls = self._check_for_codelist_call(init_node)
+                            codelist_calls.extend(calls)
+                    # Don't need to check further if we found calls in __init__
+                    if codelist_calls:
+                        return codelist_calls
+
+        # Check class-level assignments (for non-Enum classes)
+        for node in class_node.body:
+            if isinstance(node, ast.Assign):
+                for target in node.targets:
+                    if isinstance(target, ast.Name) and target.id == attr_name:
+                        calls = self._trace_expression(
+                            node.value, tree, import_collector, file_path, depth + 1
+                        )
+                        codelist_calls.extend(calls)
+
+        return codelist_calls
+
+    def _trace_local_class_attribute(
+        self,
+        class_name: str,
+        attr_name: str,
+        tree: ast.AST,
+        import_collector: ImportCollector,
+        file_path: pathlib.Path,
+        depth: int,
+    ) -> list[CodelistCall]:
+        """Trace an attribute of a locally-defined class.
+
+        Args:
+            class_name: Name of the local class
+            attr_name: Attribute name to find
+            tree: AST tree
+            import_collector: Import information
+            file_path: Current file path
+            depth: Recursion depth
+
+        Returns:
+            List of CodelistCall objects
+        """
+        # Find the class definition in the local tree
+        for node in ast.walk(tree):
+            if isinstance(node, ast.ClassDef) and node.name == class_name:
+                return self._find_class_attribute_definition(
+                    node, attr_name, tree, import_collector, file_path, depth
+                )
+
+        return []
+
+
 class VariableExtractor:
     """Main class for extracting variable definitions from ehrQL files."""
 
@@ -557,6 +1098,7 @@ class VariableExtractor:
         self.name_extractor = DynamicNameExtractor()
         self.operation_finder = DatasetOperationFinder(self.name_extractor)
         self.function_analyzer = FunctionAnalyzer(self.operation_finder)
+        self.codelist_tracer = CodelistTracer(self.module_resolver)
 
     def extract(
         self,
@@ -1909,6 +2451,296 @@ class VariableExtractor:
 
         return pattern
 
+    def extract_codelist_calls(
+        self,
+    ) -> dict[str, list[tuple[str | None, ...]]]:
+        """Extract codelist_from_csv calls for each variable using comprehensive AST tracing.
+
+        Returns:
+            Dict mapping variable_name -> list of parameter tuples.
+            Each tuple contains (arg1, arg2, ..., kwarg1_name=kwarg1_val, kwarg2_name=kwarg2_val, ...)
+            All variables are included, even those with no codelist calls (empty list).
+        """
+        try:
+            with open(self.file_path, encoding="utf-8") as f:
+                source = f.read()
+            tree = ast.parse(source, filename=str(self.file_path))
+        except Exception:
+            return {}
+
+        # Collect imports
+        import_collector = ImportCollector()
+        import_collector.collect(tree)
+        import_collector.resolve_star_imports(self.module_resolver)
+
+        # Result dictionary - will contain all variables
+        variable_codelists: dict[str, list[tuple[str | None, ...]]] = {}
+
+        # Find all dataset variable definitions and trace their expressions
+        # Pass 1: Direct attribute assignments (dataset.var = expr)
+        for node in ast.walk(tree):
+            if isinstance(node, ast.Assign):
+                for target in node.targets:
+                    # dataset.var_name = expression
+                    if isinstance(target, ast.Attribute):
+                        if (
+                            isinstance(target.value, ast.Name)
+                            and target.value.id == "dataset"
+                        ):
+                            var_name = target.attr
+                            # Trace the expression comprehensively
+                            codelist_calls = (
+                                self.codelist_tracer.trace_expression_for_codelists(
+                                    node.value, tree, import_collector, self.file_path
+                                )
+                            )
+                            # Convert to tuples
+                            codelists = [
+                                self._codelist_call_to_tuple(call)
+                                for call in codelist_calls
+                            ]
+                            variable_codelists[var_name] = codelists
+
+        # Pass 2: dataset.add_column() calls
+        for node in ast.walk(tree):
+            if isinstance(node, ast.Call):
+                if isinstance(node.func, ast.Attribute):
+                    if (
+                        isinstance(node.func.value, ast.Name)
+                        and node.func.value.id == "dataset"
+                        and node.func.attr == "add_column"
+                    ):
+                        if len(node.args) >= 2:
+                            # First arg is variable name, second is expression
+                            first_arg = node.args[0]
+                            if isinstance(first_arg, ast.Constant) and isinstance(
+                                first_arg.value, str
+                            ):
+                                var_name = first_arg.value
+                                # Trace the expression comprehensively
+                                codelist_calls = (
+                                    self.codelist_tracer.trace_expression_for_codelists(
+                                        node.args[1],
+                                        tree,
+                                        import_collector,
+                                        self.file_path,
+                                    )
+                                )
+                                # Convert to tuples
+                                codelists = [
+                                    self._codelist_call_to_tuple(call)
+                                    for call in codelist_calls
+                                ]
+                                variable_codelists[var_name] = codelists
+
+        # Pass 3: Check for variables defined in helper functions
+        # This handles patterns like: dataset = create_dataset()
+        for node in ast.walk(tree):
+            if isinstance(node, ast.Assign):
+                for target in node.targets:
+                    if isinstance(target, ast.Name) and target.id == "dataset":
+                        # Check if RHS is a function call
+                        if isinstance(node.value, ast.Call):
+                            if isinstance(node.value.func, ast.Name):
+                                func_name = node.value.func.id
+                                # Try to find variables defined in this function
+                                if func_name in import_collector.function_defs:
+                                    func_def = import_collector.function_defs[func_name]
+                                    vars_from_func = (
+                                        self._extract_codelists_from_function(
+                                            func_def, tree, import_collector
+                                        )
+                                    )
+                                    # Merge with existing
+                                    for var, calls in vars_from_func.items():
+                                        if var not in variable_codelists:
+                                            variable_codelists[var] = calls
+
+        return variable_codelists
+
+    def _extract_codelists_from_function(
+        self,
+        func_def: ast.FunctionDef,
+        tree: ast.AST,
+        import_collector: ImportCollector,
+    ) -> dict[str, list[tuple[str | None, ...]]]:
+        """Extract codelist calls from variables defined within a function.
+
+        Args:
+            func_def: Function definition node
+            tree: Full AST tree
+            import_collector: Import information
+
+        Returns:
+            Dict mapping variable names to codelist parameter tuples
+        """
+        variable_codelists: dict[str, list[tuple[str | None, ...]]] = {}
+
+        # Look for dataset.var = expr patterns inside the function
+        for node in ast.walk(func_def):
+            if isinstance(node, ast.Assign):
+                for target in node.targets:
+                    if isinstance(target, ast.Attribute):
+                        if isinstance(target.value, ast.Name):
+                            # Could be dataset.var or any parameter name
+                            var_name = target.attr
+                            codelist_calls = (
+                                self.codelist_tracer.trace_expression_for_codelists(
+                                    node.value, tree, import_collector, self.file_path
+                                )
+                            )
+                            codelists = [
+                                self._codelist_call_to_tuple(call)
+                                for call in codelist_calls
+                            ]
+                            variable_codelists[var_name] = codelists
+
+            # Also check for add_column calls
+            elif isinstance(node, ast.Call):
+                if isinstance(node.func, ast.Attribute):
+                    if node.func.attr == "add_column":
+                        if len(node.args) >= 2:
+                            first_arg = node.args[0]
+                            if isinstance(first_arg, ast.Constant) and isinstance(
+                                first_arg.value, str
+                            ):
+                                var_name = first_arg.value
+                                codelist_calls = (
+                                    self.codelist_tracer.trace_expression_for_codelists(
+                                        node.args[1],
+                                        tree,
+                                        import_collector,
+                                        self.file_path,
+                                    )
+                                )
+                                codelists = [
+                                    self._codelist_call_to_tuple(call)
+                                    for call in codelist_calls
+                                ]
+                                variable_codelists[var_name] = codelists
+
+        return variable_codelists
+
+    def _extract_imported_codelists(
+        self, import_collector: ImportCollector
+    ) -> dict[str, list[CodelistCall]]:
+        """Extract codelist definitions from imported modules.
+
+        Args:
+            import_collector: Import information
+
+        Returns:
+            Dict mapping codelist variable name -> list of CodelistCall objects
+        """
+        imported_codelists: dict[str, list[CodelistCall]] = {}
+
+        # Check each imported module
+        for imported_name, (
+            module_name,
+            original_name,
+        ) in import_collector.imported_modules.items():
+            # Find the module file
+            for module_file in self.module_resolver.find_module_file(module_name):
+                if not module_file.exists():
+                    continue
+
+                try:
+                    with open(module_file, encoding="utf-8") as f:
+                        module_source = f.read()
+                    module_tree = ast.parse(module_source, filename=str(module_file))
+
+                    # Extract codelist calls from this module
+                    module_codelists = CodelistCallFinder.extract_codelist_calls(
+                        module_tree
+                    )
+
+                    # Map the imported names to local names
+                    target_name = original_name or imported_name
+                    if target_name in module_codelists:
+                        imported_codelists[imported_name] = module_codelists[
+                            target_name
+                        ]
+
+                    break
+                except Exception:
+                    continue
+
+        # Handle star imports
+        for star_module in import_collector.star_imports:
+            for module_file in self.module_resolver.find_module_file(star_module):
+                if not module_file.exists():
+                    continue
+
+                try:
+                    with open(module_file, encoding="utf-8") as f:
+                        module_source = f.read()
+                    module_tree = ast.parse(module_source, filename=str(module_file))
+
+                    # Extract all codelist calls from this module
+                    module_codelists = CodelistCallFinder.extract_codelist_calls(
+                        module_tree
+                    )
+
+                    # Add all codelists from this module
+                    for name, calls in module_codelists.items():
+                        if name not in imported_codelists:
+                            imported_codelists[name] = calls
+
+                    break
+                except Exception:
+                    continue
+
+        return imported_codelists
+
+    def _find_codelists_in_expression(
+        self,
+        expr: ast.AST,
+        codelist_assignments: dict[str, list[CodelistCall]],
+    ) -> list[tuple[str | None, ...]]:
+        """Find codelist references in an expression.
+
+        Args:
+            expr: Expression AST node
+            codelist_assignments: Mapping of codelist variable names to their calls
+
+        Returns:
+            List of parameter tuples for each codelist call found
+        """
+        codelists: list[tuple[str | None, ...]] = []
+
+        # Walk the expression tree
+        for node in ast.walk(expr):
+            # Look for Name nodes that reference codelist variables
+            if isinstance(node, ast.Name):
+                if node.id in codelist_assignments:
+                    # Found a reference to a codelist variable
+                    for codelist_call in codelist_assignments[node.id]:
+                        # Convert CodelistCall to a flat tuple
+                        param_tuple = self._codelist_call_to_tuple(codelist_call)
+                        codelists.append(param_tuple)
+
+        return codelists
+
+    def _codelist_call_to_tuple(self, call: CodelistCall) -> tuple[str | None, ...]:
+        """Convert a CodelistCall to a flat tuple of parameters.
+
+        Args:
+            call: CodelistCall object
+
+        Returns:
+            Tuple containing all positional args followed by formatted kwargs
+        """
+        result: list[str | None] = list(call.args)
+
+        # Add keyword arguments as "key=value" strings
+        for key, value in sorted(call.kwargs.items()):
+            if value is not None:
+                result.append(f"{key}={value}")
+            else:
+                result.append(f"{key}=<dynamic>")
+
+        return tuple(result)
+
 
 def extract_variable_line_numbers(
     file_path: pathlib.Path, repo_root: pathlib.Path
@@ -1930,3 +2762,21 @@ def extract_variable_line_numbers(
     """
     extractor = VariableExtractor(file_path, repo_root)
     return extractor.extract()
+
+
+def extract_variable_codelists(
+    file_path: pathlib.Path, repo_root: pathlib.Path
+) -> dict[str, list[tuple[str | None, ...]]]:
+    """Extract codelist_from_csv calls for each variable in an ehrQL dataset file.
+
+    Args:
+        file_path: Absolute path to the dataset definition file
+        repo_root: Absolute path to the repository root
+
+    Returns:
+        Dict mapping variable_name -> list of parameter tuples.
+        Each tuple contains the parameters passed to codelist_from_csv:
+        (filepath, "column=value", "system=value", etc.)
+    """
+    extractor = VariableExtractor(file_path, repo_root)
+    return extractor.extract_codelist_calls()
