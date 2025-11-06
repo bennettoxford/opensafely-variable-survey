@@ -1072,12 +1072,15 @@ def compact_qm_node(qm_node: qm.Node, _normalized: bool = False) -> str:
                     # Compute key strings once and cache them to avoid redundant computation
                     key_strs = []
                     for k, v in field_value.items():
-                        k_str = (
-                            compact_qm_node(k, _normalized=True)
-                            if isinstance(k, qm.Node)
-                            else str(k)
-                        )
-                        key_strs.append((k_str, v))
+                        if isinstance(k, qm.Node):
+                            k_str = compact_qm_node(k, _normalized=True)
+                        else:
+                            k_str = str(k)
+                        if isinstance(v, qm.Node):
+                            v_str = compact_qm_node(v, _normalized=True)
+                        else:
+                            v_str = _stringify_value(v)
+                        key_strs.append((k_str, v_str))
 
                     # Sort by the pre-computed key strings
                     key_strs.sort(key=lambda x: x[0])
@@ -1158,8 +1161,8 @@ def compact_qm_node(qm_node: qm.Node, _normalized: bool = False) -> str:
             result = f"{qm_node.__class__.__name__}({', '.join(field_strs)})"
             # Post-process to ensure ALL frozensets in the result are sorted deterministically
             # Only do this at the top level to avoid repeated regex operations
-            if not _normalized:
-                result = _sort_frozensets_in_string(result)
+            # if not _normalized:
+            #     result = _sort_frozensets_in_string(result)
             return result
     except Exception as e:
         print(f"Error compacting QM node: {e}")
