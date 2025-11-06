@@ -830,23 +830,24 @@ def normalize_qm_node(qm_node: qm.Node) -> qm.Node:
     Example: Filter(Filter(Sort(X))) becomes Sort(Filter(Filter(X)))
     """
 
-    def normalize_once(node: qm.Node) -> qm.Node:
-        """Apply one pass of normalization, recursively normalizing children first."""
-        # First, recursively normalize all child nodes that are qm.Nodes
+    def normalize_once(node: qm.Node) -> tuple[qm.Node, bool]:
+        """Apply one pass, return (node, changed)."""
+        changed = False
+
         if hasattr(node, "__dataclass_fields__"):
-            # Build a dict of normalized field values
             normalized_fields = {}
             for field_name in node.__dataclass_fields__:
                 field_value = getattr(node, field_name)
                 if isinstance(field_value, qm.Node):
-                    # Recursively normalize this child node
-                    normalized_fields[field_name] = normalize_once(field_value)
+                    normalized_value, child_changed = normalize_once(field_value)
+                    normalized_fields[field_name] = normalized_value
+                    changed = changed or child_changed
                 else:
-                    # Keep non-Node fields as-is
                     normalized_fields[field_name] = field_value
 
-            # Create a new node with normalized children
-            node = node.__class__(**normalized_fields)
+            # Only create new node if something changed
+            if changed:
+                node = node.__class__(**normalized_fields)
 
         # Now check if this node itself needs transformation
         # Check if this is a Filter with an And condition
@@ -872,7 +873,7 @@ def normalize_qm_node(qm_node: qm.Node) -> qm.Node:
             new_filter = Filter(source=original_source, condition=lhs_condition)
 
             # Create outer Filter with the new Filter as source and rhs condition
-            return Filter(source=new_filter, condition=rhs_condition)
+            return Filter(source=new_filter, condition=rhs_condition), True
 
         # Check if this is a Filter with a Sort as its source
         if (
@@ -899,23 +900,25 @@ def normalize_qm_node(qm_node: qm.Node) -> qm.Node:
 
             # Create new Sort with the new Filter as source
             Sort = sort_node.__class__
-            return Sort(source=new_filter, sort_by=sort_by)
+            return Sort(source=new_filter, sort_by=sort_by), True
 
-        return node
+        return node, changed
 
     # Keep applying normalization until we reach a fixed point
     # (i.e., no more changes occur)
     max_iterations = 100  # Safety limit to prevent infinite loops
-    prev_node = None
+    # prev_node = None
     current_node = qm_node
 
     for _ in range(max_iterations):
-        current_node = normalize_once(current_node)
+        current_node, is_changed = normalize_once(current_node)
         # Check if we've reached a fixed point by comparing string representations
         # (comparing objects directly won't work as they're new instances)
-        if prev_node is not None and str(current_node) == str(prev_node):
+        # if prev_node is not None and str(current_node) == str(prev_node):
+        #     break
+        if not is_changed:
             break
-        prev_node = current_node
+        # prev_node = current_node
 
     return current_node
 
@@ -1344,8 +1347,8 @@ def get_runtime_dataset_variables(
                         sys.argv = [str(abs_path)] + spoofed_args
                         #
                         try:
-                            # Suppress output from print statements in dataset definitions when silent
-                            if silent:
+                            # Suppress output from print statements in dataset definitions unless verbose mode
+                            if not verbose:
                                 with suppress_output():
                                     spec.loader.exec_module(mod)  # type: ignore
                             else:
@@ -1552,6 +1555,7 @@ def collect(
     repos: list[str] | None,
     silent: bool = False,
     verbose: bool = False,
+    include_full_qm_node_dump: bool = False,
 ) -> None:
     cache_dir = pathlib.Path(".ehrql_repo_cache")
     cache_dir.mkdir(exist_ok=True)
@@ -1798,8 +1802,9 @@ def collect(
             node_without_codes_or_dates.encode("utf-8")
         ).hexdigest()[:16]
         qm_out_map[expr_hash_without_codes] = node_without_codes_or_dates
-        # Also capture the full compacted node for debugging/diffing (use compacted version for determinism)
-        full_qm_out_map[expr_hash] = r.qm_node
+        if include_full_qm_node_dump:
+            # Also capture the full compacted node for debugging/diffing (use compacted version for determinism)
+            full_qm_out_map[expr_hash] = r.qm_node
 
         proj = r.project_name
         out_map.setdefault(proj, {})
@@ -1826,9 +1831,10 @@ def collect(
         json.dump(json_data, f, indent=2, ensure_ascii=False)
     with open("ehrql_qm_dump.json", "w", encoding="utf-8") as f:
         json.dump(qm_out_map, f, indent=2, ensure_ascii=False)
-    # Write full (non-normalized) node dump keyed by full hash to aid debugging
-    with open("ehrql_qm_full_dump.json", "w", encoding="utf-8") as f:
-        json.dump(full_qm_out_map, f, indent=2, ensure_ascii=False)
+    if include_full_qm_node_dump:
+        # Write full (non-normalized) node dump keyed by full hash to aid debugging
+        with open("ehrql_qm_full_dump.json", "w", encoding="utf-8") as f:
+            json.dump(full_qm_out_map, f, indent=2, ensure_ascii=False)
 
     # Write codelist data in similar structure
     codelist_out_map: dict[str, dict[str, Any]] = {}
@@ -1902,6 +1908,11 @@ def parse_args(argv: list[str]) -> argparse.Namespace:
         action="store_true",
         help="Verbose progress output to stderr",
     )
+    p.add_argument(
+        "--include-full-qm-node-dump",
+        action="store_true",
+        help="Include full (non-normalized) node dump in output. This is many GB and only useful for debugging.",
+    )
     # args ends with an optional space separated list of repo names (e.g. "opensafely/pincer-measures opensafely/isaric-exploration")
     p.add_argument(
         "repos",
@@ -1924,6 +1935,7 @@ def main(argv: list[str] | None = None) -> int:
             repos=args.repos,
             silent=args.silent,
             verbose=args.verbose,
+            include_full_qm_node_dump=args.include_full_qm_node_dump,
         )
     except GitHubError as e:
         print(f"Error: {e}", file=sys.stderr)
