@@ -6,11 +6,6 @@ See README.md for usage.
 from __future__ import annotations
 
 import argparse
-
-# ----------------------
-# Repo-wide codelist scan helpers (AST + codelists.json)
-# ----------------------
-import ast
 import base64
 import builtins
 import datetime
@@ -67,182 +62,6 @@ def _matches_and(node: Any) -> bool:
     if _AND_NODE is not None and isinstance(node, _AND_NODE):
         return True
     return getattr(node.__class__, "__name__", "") == "And"
-
-
-def _find_codelists_json(repo_root: pathlib.Path) -> pathlib.Path | None:
-    """Search for a file named codelists.json anywhere in repo_root.
-
-    Returns the first match found, preferring files at the repo root.
-    """
-    candidate = repo_root / "codelists.json"
-    if candidate.exists():
-        return candidate
-    # Fallback: search anywhere in the repo (exclude hidden folders)
-    for path in repo_root.rglob("codelists.json"):
-        if any(part.startswith(".") for part in path.parts):
-            continue
-        return path
-    return None
-
-
-def _parse_codelists_json(
-    path: pathlib.Path,
-) -> tuple[dict[str, Any] | None, list[str]]:
-    """Parse codelists.json and return (files_map, warnings)."""
-    warnings: list[str] = []
-    try:
-        data = json.loads(path.read_text(encoding="utf-8"))
-    except Exception as e:  # pragma: no cover
-        return None, [f"Failed to parse {path}: {e}"]
-
-    if not isinstance(data, dict):
-        warnings.append(
-            f"Top-level structure in {path.name} is {type(data).__name__}, expected object"
-        )
-        return None, warnings
-
-    files_map = data.get("files")
-    if files_map is None:
-        warnings.append(f"{path.name} missing required 'files' property")
-    elif not isinstance(files_map, dict):
-        warnings.append(
-            f"'files' property in {path.name} is {type(files_map).__name__}, expected object"
-        )
-        files_map = None
-
-    extra_keys = [k for k in data.keys() if k != "files"]
-    if extra_keys:
-        warnings.append(
-            f"Unexpected top-level keys in {path.name}: {', '.join(sorted(extra_keys))}"
-        )
-
-    return files_map, warnings
-
-
-class _CodelistFromCsvVisitor(ast.NodeVisitor):
-    """AST visitor that collects calls to codelist_from_csv and their arguments."""
-
-    def __init__(self) -> None:
-        self.calls: list[dict[str, Any]] = []
-
-    def visit_Call(self, node: ast.Call):  # noqa: N802 (ast API)
-        func_name = None
-        if isinstance(node.func, ast.Name):
-            func_name = node.func.id
-        elif isinstance(node.func, ast.Attribute):
-            func_name = node.func.attr
-        if func_name == "codelist_from_csv":
-            first_arg, args_repr, kwargs_repr = _extract_call_arguments(node)
-            self.calls.append(
-                {
-                    "lineno": getattr(node, "lineno", None),
-                    "first_arg": first_arg,
-                    "args": args_repr,
-                    "kwargs": kwargs_repr,
-                }
-            )
-        self.generic_visit(node)
-
-
-def _literal_string(node: ast.AST) -> str | None:
-    """Return a best-effort literal string value from an AST node, else None."""
-    if isinstance(node, ast.Constant) and isinstance(node.value, str):
-        return node.value
-    if isinstance(node, ast.JoinedStr):
-        parts: list[str] = []
-        for v in node.values:
-            if isinstance(v, ast.Constant) and isinstance(v.value, str):
-                parts.append(v.value)
-            else:
-                return None
-        return "".join(parts)
-    if isinstance(node, ast.Call) and isinstance(node.func, ast.Attribute):
-        if node.func.attr == "join":  # os.path.join('codelists', 'file.csv')
-            joined: list[str] = []
-            for a in node.args:
-                s = _literal_string(a)
-                if s is None:
-                    return None
-                joined.append(s)
-            return "/".join(joined)
-    return None
-
-
-def _extract_call_arguments(
-    node: ast.Call,
-) -> tuple[str | None, list[str], dict[str, str]]:
-    """Extract first positional argument (if literal) and stringified args/kwargs."""
-    first_arg: str | None = None
-    if node.args:
-        first_arg = _literal_string(node.args[0])
-
-    def arg_to_str(a: ast.AST) -> str:
-        s = _literal_string(a)
-        if s is not None:
-            return s
-        try:
-            return ast.unparse(a)
-        except Exception:
-            return type(a).__name__
-
-    args_repr = [arg_to_str(a) for a in node.args]
-    kwargs_repr: dict[str, str] = {}
-    for kw in node.keywords or []:
-        kwargs_repr[kw.arg or ""] = arg_to_str(kw.value)
-    return first_arg, args_repr, kwargs_repr
-
-
-def _normalize_codelist_key(s: str | None) -> str | None:
-    if not s:
-        return None
-    try:
-        return pathlib.Path(s).name
-    except Exception:
-        return s
-
-
-def _scan_repo_for_codelist_calls(
-    repo_root: pathlib.Path,
-) -> dict[str, list[dict[str, Any]]]:
-    """Return mapping of relative .py file -> list of codelist_from_csv call dicts."""
-    results: dict[str, list[dict[str, Any]]] = {}
-    for py_path in repo_root.rglob("*.py"):
-        if any(part.startswith(".") for part in py_path.parts):
-            continue
-        try:
-            text = py_path.read_text(encoding="utf-8", errors="ignore")
-        except Exception:
-            continue
-        if "codelist_from_csv" not in text:
-            continue
-        try:
-            tree = ast.parse(text)
-        except Exception:
-            continue
-        visitor = _CodelistFromCsvVisitor()
-        visitor.visit(tree)
-        if visitor.calls:
-            rel = str(py_path.relative_to(repo_root))
-            results[rel] = visitor.calls
-    return results
-
-
-def _var_analysis_codelist_keys_by_file(
-    codelist_records: list[CodelistRecord],
-) -> dict[str, set[str]]:
-    """Build mapping of dataset file -> set of normalized first-arg keys from variable analysis."""
-    by_file: dict[str, set[str]] = {}
-    for r in codelist_records:
-        file_set = by_file.setdefault(r.file_name, set())
-        for call in r.codelist_calls:
-            if not call:
-                continue
-            first = call[0] if isinstance(call, (list, tuple)) and call else None
-            if isinstance(first, str):
-                key = _normalize_codelist_key(first)
-                if key:
-                    file_set.add(key)
-    return by_file
 
 
 def convert_spoofed_data(verbose: bool = False) -> int:
@@ -455,17 +274,6 @@ class VariableRecord:
     series_type: str
     line_no: int | tuple[str, int]
     qm_node: str
-
-
-@dataclass
-class CodelistRecord:
-    project_name: str
-    project_sha: str
-    file_name: str
-    variable_name: str
-    codelist_calls: list[
-        tuple[str | None, ...]
-    ]  # List of parameter tuples for each call
 
 
 def setup_spoofs(silent: bool = False, verbose: bool = False) -> None:
@@ -833,7 +641,6 @@ def spoof_args(verbose: bool = False) -> list:
 
 # Import the refactored variable extraction functionality
 from parsing.ehrql_variable_extractor import (  # noqa: E402
-    extract_variable_codelists,
     extract_variable_line_numbers,
 )
 
@@ -939,54 +746,6 @@ def _stringify_value(value):
         return f"frozenset({{{', '.join(sorted_strs)}}})"
     else:
         return str(value)
-
-
-# Compile regex once for performance
-_frozenset_pattern = re.compile(r"frozenset\(\{([^}]+)\}\)")
-
-
-def _sort_frozensets_in_string(s: str) -> str:
-    """Post-process a string to sort all frozenset({...}) occurrences deterministically."""
-
-    def sort_one_frozenset(match):
-        # Extract the contents of the frozenset
-        content = match.group(1)
-
-        # Fast path: if no nested structures, just split and sort
-        if "(" not in content and "[" not in content and "{" not in content:
-            items = [item.strip() for item in content.split(",") if item.strip()]
-            items.sort()
-            return f"frozenset({{{', '.join(items)}}})"
-
-        # Slow path: handle nested structures with depth tracking
-        items = []
-        current_start = 0
-        depth = 0
-
-        for i, char in enumerate(content):
-            if char in "({[":
-                depth += 1
-            elif char in ")}]":
-                depth -= 1
-            elif char == "," and depth == 0:
-                # End of item
-                item = content[current_start:i].strip()
-                if item:
-                    items.append(item)
-                current_start = i + 1
-
-        # Don't forget the last item
-        if current_start < len(content):
-            item = content[current_start:].strip()
-            if item:
-                items.append(item)
-
-        # Sort and rejoin
-        items.sort()
-        return f"frozenset({{{', '.join(items)}}})"
-
-    # Find all frozenset({...}) patterns and replace them with sorted versions
-    return _frozenset_pattern.sub(sort_one_frozenset, s)
 
 
 def compact_qm_node(qm_node: qm.Node, _normalized: bool = False) -> str:
@@ -1159,10 +918,6 @@ def compact_qm_node(qm_node: qm.Node, _normalized: bool = False) -> str:
                     fields[field_name] = _stringify_value(field_value)
             field_strs = [f"{k}={v}" for k, v in fields.items()]
             result = f"{qm_node.__class__.__name__}({', '.join(field_strs)})"
-            # Post-process to ensure ALL frozensets in the result are sorted deterministically
-            # Only do this at the top level to avoid repeated regex operations
-            # if not _normalized:
-            #     result = _sort_frozensets_in_string(result)
             return result
     except Exception as e:
         print(f"Error compacting QM node: {e}")
@@ -1205,60 +960,6 @@ def _compute_code_sets_signature(node_str: str) -> str:
         return ""
 
 
-def get_codelist_calls(
-    files: list[str],
-    repo_root: pathlib.Path,
-    head_sha: str,
-    repo_name: str,
-    silent: bool = False,
-    verbose: bool = False,
-) -> list[CodelistRecord]:
-    """Extract codelist_from_csv calls for each variable using AST analysis.
-
-    Returns:
-        List of CodelistRecord objects containing codelist call information for each variable.
-    """
-    codelist_records: list[CodelistRecord] = []
-
-    for rel_path in files:
-        abs_path = repo_root / rel_path
-        if not abs_path.exists():
-            if verbose:
-                print(f"..File {rel_path} does not exist; skipping", file=sys.stderr)
-            continue
-
-        abs_path = abs_path.resolve()
-        resolved_repo_root = repo_root.resolve()
-
-        if verbose:
-            print(f"..Extracting codelists for {abs_path}", file=sys.stderr)
-
-        # Extract codelist calls from AST
-        variable_codelist_calls = extract_variable_codelists(
-            abs_path, resolved_repo_root
-        )
-
-        if verbose and variable_codelist_calls:
-            print(
-                f"....Extracted codelist calls for {len(variable_codelist_calls)} variables",
-                file=sys.stderr,
-            )
-
-        # Create CodelistRecord for each variable with codelist calls
-        for var_name, calls in variable_codelist_calls.items():
-            codelist_records.append(
-                CodelistRecord(
-                    project_name=repo_name,
-                    project_sha=head_sha,
-                    file_name=rel_path,
-                    variable_name=var_name,
-                    codelist_calls=calls,
-                )
-            )
-
-    return codelist_records
-
-
 def get_runtime_dataset_variables(
     files: list[str],
     repo_root: pathlib.Path,
@@ -1296,16 +997,10 @@ def get_runtime_dataset_variables(
             extract_variable_line_numbers(abs_path, resolved_repo_root)
         )
 
-        # Extract codelist calls from AST
-        variable_codelist_calls = extract_variable_codelists(
-            abs_path, resolved_repo_root
-        )
-
         if verbose and variable_line_numbers:
             print(
                 f"....Extracted {len(variable_line_numbers)} variable line numbers from AST",
                 f"......and {len(variable_line_number_regexes)} variable line number regexes from AST",
-                f"......and {len(variable_codelist_calls)} variables with codelist calls from AST",
                 file=sys.stderr,
             )
 
@@ -1652,8 +1347,6 @@ def collect(
     cache_dir = pathlib.Path(".ehrql_repo_cache")
     cache_dir.mkdir(exist_ok=True)
     all_variables: list[VariableRecord] = []
-    all_codelists: list[CodelistRecord] = []
-    repo_scan_out: dict[str, dict[str, Any]] = {}
     total_repos = len(all_dataset_files)
     current_repo_index = 0
     start_time = time.time()
@@ -1684,96 +1377,6 @@ def collect(
                 verbose=verbose,
             )
         )
-
-        # Extract codelist calls for each variable
-        if verbose:
-            print(f"..Extracting codelist calls for {repo}", file=sys.stderr)
-        current_codelists = get_codelist_calls(
-            files,
-            repo_local_dir,
-            head_sha,
-            repo_name,
-            silent=silent,
-            verbose=verbose,
-        )
-        all_codelists.extend(current_codelists)
-
-        # New: repo-wide codelists scan and validation
-        if verbose:
-            print(
-                f"..Scanning {repo} for codelists.json and codelist_from_csv calls",
-                file=sys.stderr,
-            )
-        cj_path = _find_codelists_json(repo_local_dir)
-        cj_found = cj_path is not None
-        cj_files: dict[str, Any] | None = None
-        cj_warnings: list[str] = []
-        if not cj_found:
-            if not silent:
-                print(f"..No codelists.json found in {repo}", file=sys.stderr)
-        else:
-            cj_files, cj_warnings = _parse_codelists_json(cj_path)  # type: ignore[arg-type]
-            for w in cj_warnings:
-                if not silent:
-                    print(f"..codelists.json warning for {repo}: {w}", file=sys.stderr)
-
-        repo_calls_by_file = _scan_repo_for_codelist_calls(repo_local_dir)
-        cj_keys = set(cj_files.keys()) if isinstance(cj_files, dict) else set()
-        var_keys_by_file = _var_analysis_codelist_keys_by_file(current_codelists)
-
-        repo_entry: dict[str, Any] = {
-            "sha": head_sha,
-            "codelists_json": {
-                "found": cj_found,
-                "path": str(cj_path.relative_to(repo_local_dir)) if cj_found else None,
-                "warnings": cj_warnings,
-                "file_count": len(cj_files) if isinstance(cj_files, dict) else 0,
-            },
-            "files": {},
-        }
-
-        for rel_path, calls in sorted(repo_calls_by_file.items()):
-            out_calls = []
-            per_file_keys: set[str] = set()
-            unknown_keys: set[str] = set()
-            for c in calls:
-                norm = _normalize_codelist_key(c.get("first_arg"))
-                in_cj = (norm in cj_keys) if norm is not None else None
-                if norm is not None:
-                    per_file_keys.add(norm)
-                    if cj_keys and norm not in cj_keys:
-                        unknown_keys.add(norm)
-                        if not silent:
-                            print(
-                                f"..In {repo}/{rel_path}:{c.get('lineno')} first argument '{norm}' not in codelists.json files",
-                                file=sys.stderr,
-                            )
-                out_calls.append(
-                    {
-                        "lineno": c.get("lineno"),
-                        "first_arg": c.get("first_arg"),
-                        "normalized_key": norm,
-                        "in_codelists_json": in_cj,
-                        "args": c.get("args", []),
-                        "kwargs": c.get("kwargs", {}),
-                    }
-                )
-
-            missing_in_var = sorted(
-                per_file_keys - var_keys_by_file.get(rel_path, set())
-            )
-            if missing_in_var and not silent:
-                print(
-                    f"..Repo/file {repo}/{rel_path} codelists not seen in variable analysis: {missing_in_var}",
-                    file=sys.stderr,
-                )
-            repo_entry["files"][rel_path] = {
-                "calls": out_calls,
-                "missing_in_variable_analysis": missing_in_var,
-                "unknown_codelist_keys": sorted(unknown_keys),
-            }
-
-        repo_scan_out[repo] = repo_entry
 
         # Print completion message with timing
         repo_duration = time.time() - repo_start_time
@@ -1854,39 +1457,6 @@ def collect(
         with open("ehrql_qm_full_dump.json", "w", encoding="utf-8") as f:
             json.dump(full_qm_out_map, f, indent=2, ensure_ascii=False)
 
-    # Write codelist data in similar structure
-    codelist_out_map: dict[str, dict[str, Any]] = {}
-    for r in sorted(
-        all_codelists, key=lambda r: (r.project_name, r.file_name, r.variable_name)
-    ):
-        proj = r.project_name
-        codelist_out_map.setdefault(proj, {})
-        codelist_out_map[proj].setdefault("sha", r.project_sha)
-        codelist_out_map[proj].setdefault("files", {})
-        codelist_out_map[proj]["files"].setdefault(r.file_name, [])
-        codelist_out_map[proj]["files"][r.file_name].append(
-            [
-                r.variable_name,
-                r.codelist_calls,  # List of tuples with codelist parameters
-            ]
-        )
-
-    codelist_json_data = {
-        "generated_at": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-        "projects": codelist_out_map,
-    }
-
-    with open("ehrql_codelists.json", "w", encoding="utf-8") as f:
-        json.dump(codelist_json_data, f, indent=2, ensure_ascii=False)
-
-    # Write repo-wide codelist scan report
-    repo_scan_json = {
-        "generated_at": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-        "projects": repo_scan_out,
-    }
-    with open("ehrql_repo_codelist_scan.json", "w", encoding="utf-8") as f:
-        json.dump(repo_scan_json, f, indent=2, ensure_ascii=False)
-
     if not silent:
         # print summary correctly counting the total number of variables given the structure of out_map
         total_vars = sum(
@@ -1894,17 +1464,8 @@ def collect(
             for proj_data in out_map.values()
             for vars_list in proj_data.get("files", {}).values()
         )
-        total_codelist_vars = sum(
-            len(vars_list)
-            for proj_data in codelist_out_map.values()
-            for vars_list in proj_data.get("files", {}).values()
-        )
         print(
             f"\nWrote {output} with {total_vars} variables across {len(out_map)} projects and {sum(len(p.get('files', {})) for p in out_map.values())} dataset files",
-            file=sys.stderr,
-        )
-        print(
-            f"Wrote ehrql_codelists.json with {total_codelist_vars} variables with codelist calls across {len(codelist_out_map)} projects",
             file=sys.stderr,
         )
 
