@@ -930,38 +930,52 @@ def _stringify_value(value):
         return str(value)
 
 
+# Compile regex once for performance
+_frozenset_pattern = re.compile(r"frozenset\(\{([^}]+)\}\)")
+
+
 def _sort_frozensets_in_string(s: str) -> str:
     """Post-process a string to sort all frozenset({...}) occurrences deterministically."""
-    import re
 
     def sort_one_frozenset(match):
         # Extract the contents of the frozenset
         content = match.group(1)
-        # Split by comma, but be careful of nested structures
-        # For simple strings, we can just split and sort
+
+        # Fast path: if no nested structures, just split and sort
+        if "(" not in content and "[" not in content and "{" not in content:
+            items = [item.strip() for item in content.split(",") if item.strip()]
+            items.sort()
+            return f"frozenset({{{', '.join(items)}}})"
+
+        # Slow path: handle nested structures with depth tracking
         items = []
-        current = ""
+        current_start = 0
         depth = 0
-        for char in content:
+
+        for i, char in enumerate(content):
             if char in "({[":
                 depth += 1
             elif char in ")}]":
                 depth -= 1
-            if char == "," and depth == 0:
-                items.append(current.strip())
-                current = ""
-            else:
-                current += char
-        if current.strip():
-            items.append(current.strip())
+            elif char == "," and depth == 0:
+                # End of item
+                item = content[current_start:i].strip()
+                if item:
+                    items.append(item)
+                current_start = i + 1
+
+        # Don't forget the last item
+        if current_start < len(content):
+            item = content[current_start:].strip()
+            if item:
+                items.append(item)
 
         # Sort and rejoin
         items.sort()
         return f"frozenset({{{', '.join(items)}}})"
 
     # Find all frozenset({...}) patterns and replace them with sorted versions
-    pattern = r"frozenset\(\{([^}]+)\}\)"
-    return re.sub(pattern, sort_one_frozenset, s)
+    return _frozenset_pattern.sub(sort_one_frozenset, s)
 
 
 def compact_qm_node(qm_node: qm.Node, _normalized: bool = False) -> str:
