@@ -296,6 +296,21 @@ def working_directory(path):
         os.chdir(prev_cwd)
 
 
+@contextmanager
+def suppress_output():
+    """Suppress stdout and stderr output."""
+    with open(os.devnull, "w") as devnull:
+        old_stdout = sys.stdout
+        old_stderr = sys.stderr
+        try:
+            sys.stdout = devnull
+            sys.stderr = devnull
+            yield
+        finally:
+            sys.stdout = old_stdout
+            sys.stderr = old_stderr
+
+
 def run_gh(args: list[str], expect_json: bool = True) -> dict | list | str:
     """Run a gh CLI command and return parsed JSON or raw stdout.
 
@@ -1311,7 +1326,12 @@ def get_runtime_dataset_variables(
                         sys.argv = [str(abs_path)] + spoofed_args
                         #
                         try:
-                            spec.loader.exec_module(mod)  # type: ignore
+                            # Suppress output from print statements in dataset definitions when silent
+                            if silent:
+                                with suppress_output():
+                                    spec.loader.exec_module(mod)  # type: ignore
+                            else:
+                                spec.loader.exec_module(mod)  # type: ignore
                             if hasattr(mod, "dataset"):
                                 for var_name, series in mod.dataset._variables.items():  # type: ignore[attr-defined]
                                     # Get line number from AST parsing
@@ -1735,20 +1755,22 @@ def collect(
     ):
         # expr_hash: full expression with sorted frozensets (stable ordering)
         # expr_hash_without_codes: frozensets replaced with placeholder for semantic comparison
-        node_without_codes = re.sub(
-            r"frozenset\(\{[^}]+\}\)", "<<FROZEN_SET>>", r.qm_node
+
+        # First remove dates from the original node (keeping codes)
+        node_without_dates = re.sub(r"datetime.date\([^)]+\)", "<<DATE>>", r.qm_node)
+        # Then create a version without codes (for semantic comparison)
+        node_without_codes_or_dates = re.sub(
+            r"frozenset\(\{[^}]+\}\)", "<<FROZEN_SET>>", node_without_dates
         )
-        node_without_dates = re.sub(
-            r"datetime.date\([^)]+\)", "<<DATE>>", node_without_codes
-        )
+
         # Build a deterministic hash: structure without dates + multiset of code-set digests
         code_sig = _compute_code_sets_signature(r.qm_node)
         full_basis = node_without_dates + "::" + code_sig
         expr_hash = hashlib.sha256(full_basis.encode("utf-8")).hexdigest()[:16]
         expr_hash_without_codes = hashlib.sha256(
-            node_without_dates.encode("utf-8")
+            node_without_codes_or_dates.encode("utf-8")
         ).hexdigest()[:16]
-        qm_out_map[expr_hash_without_codes] = node_without_dates
+        qm_out_map[expr_hash_without_codes] = node_without_codes_or_dates
         # Also capture the full compacted node for debugging/diffing (use compacted version for determinism)
         full_qm_out_map[expr_hash] = r.qm_node
 
