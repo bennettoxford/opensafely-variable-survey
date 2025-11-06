@@ -904,6 +904,50 @@ def normalize_qm_node(qm_node: qm.Node) -> qm.Node:
     return current_node
 
 
+def _stringify_value(value):
+    """Convert a value to a deterministic string representation, handling frozensets specially."""
+    if isinstance(value, frozenset):
+        # Sort by repr string to ensure consistent ordering
+        sorted_strs = sorted(repr(x) for x in value)
+        return f"frozenset({{{', '.join(sorted_strs)}}})"
+    else:
+        return str(value)
+
+
+def _sort_frozensets_in_string(s: str) -> str:
+    """Post-process a string to sort all frozenset({...}) occurrences deterministically."""
+    import re
+
+    def sort_one_frozenset(match):
+        # Extract the contents of the frozenset
+        content = match.group(1)
+        # Split by comma, but be careful of nested structures
+        # For simple strings, we can just split and sort
+        items = []
+        current = ""
+        depth = 0
+        for char in content:
+            if char in "({[":
+                depth += 1
+            elif char in ")}]":
+                depth -= 1
+            if char == "," and depth == 0:
+                items.append(current.strip())
+                current = ""
+            else:
+                current += char
+        if current.strip():
+            items.append(current.strip())
+
+        # Sort and rejoin
+        items.sort()
+        return f"frozenset({{{', '.join(items)}}})"
+
+    # Find all frozenset({...}) patterns and replace them with sorted versions
+    pattern = r"frozenset\(\{([^}]+)\}\)"
+    return re.sub(pattern, sort_one_frozenset, s)
+
+
 def compact_qm_node(qm_node: qm.Node, _normalized: bool = False) -> str:
     # Navigate all dataclass fields of each node recursively
     # When encountering a SelectTable, replace it entirely with the string from the table name
@@ -935,27 +979,105 @@ def compact_qm_node(qm_node: qm.Node, _normalized: bool = False) -> str:
         elif isinstance(qm_node, qm.SelectPatientTable):
             return f"Table({qm_node.name})"
         elif isinstance(qm_node, qm.Node):
+            # Canonicalize commutative binary operations (Or, And) by flattening chains and sorting
+            if (
+                qm_node.__class__.__name__ in ("Or", "And")
+                and hasattr(qm_node, "lhs")
+                and hasattr(qm_node, "rhs")
+            ):
+                op_name = qm_node.__class__.__name__
+
+                # Flatten chains of the same operation (Or-of-Or or And-of-And)
+                def flatten_op(node, op_type):
+                    """Recursively flatten chains of the same commutative operation."""
+                    if (
+                        isinstance(node, qm.Node)
+                        and node.__class__.__name__ == op_type
+                        and hasattr(node, "lhs")
+                        and hasattr(node, "rhs")
+                    ):
+                        # Recursively flatten both sides
+                        return flatten_op(node.lhs, op_type) + flatten_op(
+                            node.rhs, op_type
+                        )
+                    else:
+                        return [node]
+
+                # Flatten the chain into a list of operands
+                operands = flatten_op(qm_node, op_name)
+
+                # Compact each operand and sort them
+                operand_strs = [
+                    compact_qm_node(op, _normalized=True) for op in operands
+                ]
+                operand_strs.sort()
+
+                # Rebuild as a right-associated binary tree
+                if len(operand_strs) == 1:
+                    return operand_strs[0]
+
+                result = operand_strs[0]
+                for i in range(1, len(operand_strs)):
+                    result = f"{op_name}(lhs={result}, rhs={operand_strs[i]})"
+                return result
+
             fields = {}
             for field_name in list(qm_node.__dataclass_fields__):
                 field_value = getattr(qm_node, field_name)
                 if isinstance(field_value, qm.Node):
                     fields[field_name] = compact_qm_node(field_value, _normalized=True)
                 elif field_name == "cases" and isinstance(field_value, dict):
-                    fields[field_name] = ", ".join(
-                        [
-                            f"if:{compact_qm_node(k, _normalized=True) if isinstance(k, qm.Node) else k}->then:{v}"
-                            for k, v in field_value.items()
-                        ]
-                    )
+                    # Sort cases by canonicalized key string for determinism
+                    def _case_key(k):
+                        return (
+                            compact_qm_node(k, _normalized=True)
+                            if isinstance(k, qm.Node)
+                            else str(k)
+                        )
+
+                    items = sorted(field_value.items(), key=lambda kv: _case_key(kv[0]))
+                    parts = []
+                    for k, v in items:
+                        k_str = _case_key(k)
+                        parts.append(f"if:{k_str}->then:{v}")
+                    fields[field_name] = ", ".join(parts)
                 elif isinstance(field_value, list):
-                    fields[field_name] = ", ".join(
-                        [
+                    # If list of Nodes, preserve order and compact each.
+                    if all(isinstance(item, qm.Node) for item in field_value):
+                        parts = [
                             compact_qm_node(item, _normalized=True)
-                            if isinstance(item, qm.Node)
-                            else item
                             for item in field_value
                         ]
-                    )
+                    else:
+                        # If list of scalars (e.g., codes), sort deterministically by string value
+                        if all(
+                            not isinstance(item, qm.Node)
+                            and isinstance(item, (str, int, float))
+                            for item in field_value
+                        ):
+                            sorted_vals = sorted(field_value, key=lambda x: str(x))
+                            parts = [_stringify_value(x) for x in sorted_vals]
+                        else:
+                            parts = [_stringify_value(x) for x in field_value]
+                    fields[field_name] = ", ".join(parts)
+                elif isinstance(field_value, tuple):
+                    # Apply the same determinism to tuples of scalars
+                    if all(isinstance(item, qm.Node) for item in field_value):
+                        parts = [
+                            compact_qm_node(item, _normalized=True)
+                            for item in field_value
+                        ]
+                    else:
+                        if all(
+                            not isinstance(item, qm.Node)
+                            and isinstance(item, (str, int, float))
+                            for item in field_value
+                        ):
+                            sorted_vals = sorted(field_value, key=lambda x: str(x))
+                            parts = [_stringify_value(x) for x in sorted_vals]
+                        else:
+                            parts = [_stringify_value(x) for x in field_value]
+                    fields[field_name] = ", ".join(parts)
                 elif isinstance(field_value, set):
                     # Handle sets (e.g., Domain sets)
                     sorted_items = sorted(field_value, key=lambda x: str(x))
@@ -965,7 +1087,7 @@ def compact_qm_node(qm_node: qm.Node, _normalized: bool = False) -> str:
                             [
                                 compact_qm_node(item, _normalized=True)
                                 if isinstance(item, qm.Node)
-                                else str(item)
+                                else _stringify_value(item)
                                 for item in sorted_items
                             ]
                         )
@@ -976,17 +1098,9 @@ def compact_qm_node(qm_node: qm.Node, _normalized: bool = False) -> str:
                 elif isinstance(field_value, str):
                     fields[field_name] = field_value
                 elif isinstance(field_value, frozenset):
-                    # Sort frozenset elements for consistent string representation
-                    # Frozensets don't guarantee iteration order, so we sort for stable hashing
-                    try:
-                        sorted_items = sorted(field_value)
-                        fields[field_name] = (
-                            f"frozenset({{{', '.join(repr(x) for x in sorted_items)}}})"
-                        )
-                    except TypeError:
-                        # If items aren't sortable (mixed types), fall back to sorted repr strings
-                        sorted_items = sorted(repr(x) for x in field_value)
-                        fields[field_name] = f"frozenset({{{', '.join(sorted_items)}}})"
+                    # Sort by repr string to avoid relying on object __lt__ implementations
+                    sorted_strs = sorted(repr(x) for x in field_value)
+                    fields[field_name] = f"frozenset({{{', '.join(sorted_strs)}}})"
                 elif isinstance(field_value, Enum):
                     fields[field_name] = field_value.name
                 elif isinstance(field_value, int):
@@ -994,12 +1108,54 @@ def compact_qm_node(qm_node: qm.Node, _normalized: bool = False) -> str:
                 elif isinstance(field_value, float):
                     fields[field_name] = field_value
                 else:
-                    fields[field_name] = field_value
+                    # For any other type, use our stringify helper to ensure determinism
+                    fields[field_name] = _stringify_value(field_value)
             field_strs = [f"{k}={v}" for k, v in fields.items()]
-            return f"{qm_node.__class__.__name__}({', '.join(field_strs)})"
+            result = f"{qm_node.__class__.__name__}({', '.join(field_strs)})"
+            # Post-process to ensure ALL frozensets in the result are sorted deterministically
+            # Only do this at the top level to avoid repeated regex operations
+            if not _normalized:
+                result = _sort_frozensets_in_string(result)
+            return result
     except Exception as e:
         print(f"Error compacting QM node: {e}")
         return str(qm_node)
+
+
+def _compute_code_sets_signature(node_str: str) -> str:
+    """Compute a stable signature over all frozenset({ ... }) code sets in node_str.
+
+    - Extract each frozenset block.
+    - From each, extract code tokens; prefer value='...' inside FooCode(value='...').
+    - Sort codes within a set, hash the joined list; collect per-set digests.
+    - Sort per-set digests and join.
+    """
+    try:
+        import re
+
+        fs_pat = re.compile(r"frozenset\(\{([^}]*)\}\)")
+        val_pat = re.compile(r"value='([^']+)'")
+        digests: list[str] = []
+        for inner in fs_pat.findall(node_str):
+            # Split naïvely on '),', good enough for our generated repr
+            parts = [p.strip() for p in inner.split("),") if p.strip()]
+            codes: list[str] = []
+            for p in parts:
+                m = val_pat.search(p)
+                if m:
+                    codes.append(m.group(1))
+                else:
+                    # Fallback: use the whole token
+                    codes.append(p)
+            codes_sorted = sorted(codes)
+            h = hashlib.sha256("\x1f".join(codes_sorted).encode("utf-8")).hexdigest()[
+                :16
+            ]
+            digests.append(h)
+        digests_sorted = sorted(digests)
+        return ";".join(digests_sorted)
+    except Exception:
+        return ""
 
 
 def get_codelist_calls(
@@ -1572,6 +1728,7 @@ def collect(
     qm_out_map: dict[str, int] = {}
 
     # sort rows by project, file, variable name
+    full_qm_out_map: dict[str, str] = {}
 
     for r in sorted(
         all_variables, key=lambda r: (r.project_name, r.file_name, r.variable_name)
@@ -1584,11 +1741,16 @@ def collect(
         node_without_dates = re.sub(
             r"datetime.date\([^)]+\)", "<<DATE>>", node_without_codes
         )
-        expr_hash = hashlib.sha256(r.qm_node.encode("utf-8")).hexdigest()[:16]
+        # Build a deterministic hash: structure without dates + multiset of code-set digests
+        code_sig = _compute_code_sets_signature(r.qm_node)
+        full_basis = node_without_dates + "::" + code_sig
+        expr_hash = hashlib.sha256(full_basis.encode("utf-8")).hexdigest()[:16]
         expr_hash_without_codes = hashlib.sha256(
             node_without_dates.encode("utf-8")
         ).hexdigest()[:16]
         qm_out_map[expr_hash_without_codes] = node_without_dates
+        # Also capture the full compacted node for debugging/diffing (use compacted version for determinism)
+        full_qm_out_map[expr_hash] = r.qm_node
 
         proj = r.project_name
         out_map.setdefault(proj, {})
@@ -1615,6 +1777,9 @@ def collect(
         json.dump(json_data, f, indent=2, ensure_ascii=False)
     with open("ehrql_qm_dump.json", "w", encoding="utf-8") as f:
         json.dump(qm_out_map, f, indent=2, ensure_ascii=False)
+    # Write full (non-normalized) node dump keyed by full hash to aid debugging
+    with open("ehrql_qm_full_dump.json", "w", encoding="utf-8") as f:
+        json.dump(full_qm_out_map, f, indent=2, ensure_ascii=False)
 
     # Write codelist data in similar structure
     codelist_out_map: dict[str, dict[str, Any]] = {}

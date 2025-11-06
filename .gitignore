@@ -8,3 +8,4 @@
 
 .ehrql_repo_cache/
 ehrql_qm_dump.json
+ehrql_qm_full_dump.json
