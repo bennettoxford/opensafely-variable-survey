@@ -38,6 +38,37 @@ import yaml
 from ehrql.query_model import nodes as qm
 
 
+# Cache commonly accessed query model node classes.
+_QM_NODE_BASE = getattr(qm, "Node", None)
+_FILTER_NODE = getattr(qm, "Filter", None)
+_SORT_NODE = getattr(qm, "Sort", None)
+_AND_NODE = getattr(qm, "And", None)
+
+
+def _is_qm_node(value: Any) -> bool:
+    if _QM_NODE_BASE is not None:
+        return isinstance(value, _QM_NODE_BASE)
+    return hasattr(value, "__dataclass_fields__")
+
+
+def _matches_filter(node: Any) -> bool:
+    if _FILTER_NODE is not None and isinstance(node, _FILTER_NODE):
+        return True
+    return getattr(node.__class__, "__name__", "") == "Filter"
+
+
+def _matches_sort(node: Any) -> bool:
+    if _SORT_NODE is not None and isinstance(node, _SORT_NODE):
+        return True
+    return getattr(node.__class__, "__name__", "") == "Sort"
+
+
+def _matches_and(node: Any) -> bool:
+    if _AND_NODE is not None and isinstance(node, _AND_NODE):
+        return True
+    return getattr(node.__class__, "__name__", "") == "And"
+
+
 def _find_codelists_json(repo_root: pathlib.Path) -> pathlib.Path | None:
     """Search for a file named codelists.json anywhere in repo_root.
 
@@ -838,69 +869,46 @@ def normalize_qm_node(qm_node: qm.Node) -> qm.Node:
             normalized_fields = {}
             for field_name in node.__dataclass_fields__:
                 field_value = getattr(node, field_name)
-                if isinstance(field_value, qm.Node):
+                if _is_qm_node(field_value):
                     normalized_value, child_changed = normalize_once(field_value)
                     normalized_fields[field_name] = normalized_value
                     changed = changed or child_changed
                 else:
                     normalized_fields[field_name] = field_value
 
-            # Only create new node if something changed
             if changed:
                 node = node.__class__(**normalized_fields)
 
-        # Now check if this node itself needs transformation
-        # Check if this is a Filter with an And condition
-        if (
-            node.__class__.__name__ == "Filter"
-            and hasattr(node, "source")
-            and hasattr(node, "condition")
-            and node.condition.__class__.__name__ == "And"
-            and hasattr(node.condition, "lhs")
-            and hasattr(node.condition, "rhs")
-        ):
-            # Transform: Filter(source=X, condition=And(lhs=L, rhs=R))
-            # into: Filter(source=Filter(source=X, condition=L), condition=R)
+        if _matches_filter(node):
+            filter_source = node.source
+            filter_condition = node.condition
 
-            # Get the components
-            original_source = node.source  # X - the original source
-            and_node = node.condition  # The And node
-            lhs_condition = and_node.lhs  # L - left-hand side of And
-            rhs_condition = and_node.rhs  # R - right-hand side of And
+            if _matches_and(filter_condition):
+                conditions: list[qm.Node] = []
+                stack = [filter_condition]
+                while stack:
+                    current = stack.pop()
+                    if _matches_and(current):
+                        stack.append(current.rhs)
+                        stack.append(current.lhs)
+                    else:
+                        conditions.append(current)
 
-            # Create new Filter with the original source and lhs condition
-            Filter = node.__class__
-            new_filter = Filter(source=original_source, condition=lhs_condition)
+                if len(conditions) > 1:
+                    filter_cls = node.__class__
+                    new_source = filter_source
+                    for cond in conditions[:-1]:
+                        new_source = filter_cls(source=new_source, condition=cond)
+                    return filter_cls(source=new_source, condition=conditions[-1]), True
 
-            # Create outer Filter with the new Filter as source and rhs condition
-            return Filter(source=new_filter, condition=rhs_condition), True
-
-        # Check if this is a Filter with a Sort as its source
-        if (
-            node.__class__.__name__ == "Filter"
-            and hasattr(node, "source")
-            and hasattr(node, "condition")
-            and node.source.__class__.__name__ == "Sort"
-            and hasattr(node.source, "source")
-            and hasattr(node.source, "sort_by")
-        ):
-            # Swap: Filter(Sort(X)) -> Sort(Filter(X))
-            # Original: Filter(source=Sort(source=X, sort_by=Y), condition=Z)
-            # Result:   Sort(source=Filter(source=X, condition=Z), sort_by=Y)
-
-            # Get the inner components
-            sort_node = node.source  # The Sort node
-            original_source = sort_node.source  # X - what Sort was sorting
-            sort_by = sort_node.sort_by  # Y - how to sort
-            condition = node.condition  # Z - the filter condition
-
-            # Create new Filter with the original source
-            Filter = node.__class__
-            new_filter = Filter(source=original_source, condition=condition)
-
-            # Create new Sort with the new Filter as source
-            Sort = sort_node.__class__
-            return Sort(source=new_filter, sort_by=sort_by), True
+            if _matches_sort(filter_source):
+                sort_node = filter_source
+                filter_cls = node.__class__
+                sort_cls = sort_node.__class__
+                new_filter = filter_cls(
+                    source=sort_node.source, condition=filter_condition
+                )
+                return sort_cls(source=new_filter, sort_by=sort_node.sort_by), True
 
         return node, changed
 
@@ -1645,6 +1653,7 @@ def collect(
     repo_scan_out: dict[str, dict[str, Any]] = {}
     total_repos = len(all_dataset_files)
     current_repo_index = 0
+    start_time = time.time()
     for repo, (head_sha, files, repo_local_dir) in all_dataset_files.items():
         current_repo_index += 1
         repo_name = repo
@@ -1772,6 +1781,12 @@ def collect(
                 file=sys.stderr,
             )
 
+    duration = time.time() - start_time
+    if not silent:
+        print(
+            f"\nCompleted processing {len(all_dataset_files)} repos in {duration:.1f}s",
+            file=sys.stderr,
+        )
     # Write JSON with structure project -> dataset_file -> list of [variable_name, expression, permalink, series_type]
     out_map: dict[str, dict[str, Any]] = {}
 
