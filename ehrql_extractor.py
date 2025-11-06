@@ -22,6 +22,7 @@ import pathlib
 import re
 import subprocess
 import sys
+import time
 import types
 from contextlib import contextmanager
 from dataclasses import dataclass
@@ -1043,18 +1044,21 @@ def compact_qm_node(qm_node: qm.Node, _normalized: bool = False) -> str:
                     fields[field_name] = compact_qm_node(field_value, _normalized=True)
                 elif field_name == "cases" and isinstance(field_value, dict):
                     # Sort cases by canonicalized key string for determinism
-                    def _case_key(k):
-                        return (
+                    # Compute key strings once and cache them to avoid redundant computation
+                    key_strs = []
+                    for k, v in field_value.items():
+                        k_str = (
                             compact_qm_node(k, _normalized=True)
                             if isinstance(k, qm.Node)
                             else str(k)
                         )
+                        key_strs.append((k_str, v))
 
-                    items = sorted(field_value.items(), key=lambda kv: _case_key(kv[0]))
-                    parts = []
-                    for k, v in items:
-                        k_str = _case_key(k)
-                        parts.append(f"if:{k_str}->then:{v}")
+                    # Sort by the pre-computed key strings
+                    key_strs.sort(key=lambda x: x[0])
+
+                    # Build the output string
+                    parts = [f"if:{k_str}->then:{v}" for k_str, v in key_strs]
                     fields[field_name] = ", ".join(parts)
                 elif isinstance(field_value, list):
                     # If list of Nodes, preserve order and compact each.
@@ -1461,11 +1465,6 @@ def get_runtime_dataset_variables(
                     file=sys.stderr,
                 )
 
-    if not silent:
-        print(
-            f"..Collected {len(variables)} variables across {len(files)} dataset files",
-            file=sys.stderr,
-        )
     return variables
 
 
@@ -1638,6 +1637,11 @@ def collect(
             )
         if not files:
             continue
+
+        # Start timing for this repo
+        repo_start_time = time.time()
+        variables_before = len(all_variables)
+
         if verbose:
             print(f"..Enriching runtime types for {repo}", file=sys.stderr)
 
@@ -1740,6 +1744,15 @@ def collect(
             }
 
         repo_scan_out[repo] = repo_entry
+
+        # Print completion message with timing
+        repo_duration = time.time() - repo_start_time
+        variables_collected = len(all_variables) - variables_before
+        if not silent:
+            print(
+                f"..Collected {variables_collected} variables across {len(files)} dataset files in {repo_duration:.1f}s",
+                file=sys.stderr,
+            )
 
     # Write JSON with structure project -> dataset_file -> list of [variable_name, expression, permalink, series_type]
     out_map: dict[str, dict[str, Any]] = {}
