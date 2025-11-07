@@ -1425,8 +1425,8 @@ def collect(
         )
 
         # Build a deterministic hash: structure without dates + multiset of code-set digests
-        code_sig = _compute_code_sets_signature(r.qm_node)
-        full_basis = node_without_dates + "::" + code_sig
+        ##code_sig = _compute_code_sets_signature(r.qm_node)
+        full_basis = node_without_dates  # + "::" + code_sig
         expr_hash = hashlib.sha256(full_basis.encode("utf-8")).hexdigest()[:16]
         expr_hash_without_codes = hashlib.sha256(
             node_without_codes_or_dates.encode("utf-8")
