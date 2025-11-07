@@ -991,7 +991,7 @@ class TestNormalizeQMNode:
     def test_simple_filter_with_and(self):
         """Test Filter with And condition is split into nested Filters."""
         # Import here to avoid circular dependencies
-        from ehrql_extractor import normalize_qm_node
+        from parsing.ehrql_qm_node_helpers import normalize_qm_node
 
         # Mock classes to simulate qm.Node structure
         class MockNode:
@@ -1051,7 +1051,7 @@ class TestNormalizeQMNode:
 
     def test_nested_and_conditions(self):
         """Test nested And conditions trigger multiple transformation iterations."""
-        from ehrql_extractor import normalize_qm_node
+        from parsing.ehrql_qm_node_helpers import normalize_qm_node
 
         class MockNode:
             def __init__(self, **kwargs):
@@ -1115,7 +1115,7 @@ class TestNormalizeQMNode:
 
     def test_filter_and_with_filter_sort(self):
         """Test that Filter/And and Filter/Sort transformations can coexist."""
-        from ehrql_extractor import normalize_qm_node
+        from parsing.ehrql_qm_node_helpers import normalize_qm_node
 
         class MockNode:
             def __init__(self, **kwargs):
@@ -1177,7 +1177,7 @@ class TestNormalizeQMNode:
 
     def test_no_transformation_needed(self):
         """Test that nodes without And conditions are unchanged."""
-        from ehrql_extractor import normalize_qm_node
+        from parsing.ehrql_qm_node_helpers import normalize_qm_node
 
         class MockNode:
             def __init__(self, **kwargs):
@@ -1221,7 +1221,7 @@ class TestCompactQMNode:
 
     def test_compact_set_input(self):
         """Test that compact_qm_node can handle a set as input (not just a single node)."""
-        from ehrql_extractor import compact_qm_node
+        from parsing.ehrql_qm_node_helpers import compact_qm_node
 
         class MockNode:
             def __init__(self, **kwargs):
@@ -1259,7 +1259,7 @@ class TestCompactQMNode:
         """Test that the set handling code doesn't crash."""
         # This is more of a smoke test to ensure the set handling logic exists
         # and doesn't cause exceptions. Full integration tests happen at runtime.
-        from ehrql_extractor import compact_qm_node
+        from parsing.ehrql_qm_node_helpers import compact_qm_node
 
         # Test with a simple set of strings (edge case but shouldn't crash)
         test_set = {"item1", "item2"}
