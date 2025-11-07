@@ -739,8 +739,6 @@ def normalize_qm_node(qm_node: qm.Node) -> qm.Node:
     return current_node
 
 
-# sorted_strs = sorted(repr(x) for x in field_value)
-# fields[field_name] = f"frozenset({{{', '.join(sorted_strs)}}})"
 @lru_cache(maxsize=4096)
 def _stringify_frozenset(value) -> str:
     # canonical key is a tuple of sorted reprs
@@ -931,42 +929,6 @@ def compact_qm_node(qm_node: qm.Node, _normalized: bool = False) -> str:
     except Exception as e:
         print(f"Error compacting QM node: {e}")
         return str(qm_node)
-
-
-def _compute_code_sets_signature(node_str: str) -> str:
-    """Compute a stable signature over all frozenset({ ... }) code sets in node_str.
-
-    - Extract each frozenset block.
-    - From each, extract code tokens; prefer value='...' inside FooCode(value='...').
-    - Sort codes within a set, hash the joined list; collect per-set digests.
-    - Sort per-set digests and join.
-    """
-    try:
-        import re
-
-        fs_pat = re.compile(r"frozenset\(\{([^}]*)\}\)")
-        val_pat = re.compile(r"value='([^']+)'")
-        digests: list[str] = []
-        for inner in fs_pat.findall(node_str):
-            # Split naïvely on '),', good enough for our generated repr
-            parts = [p.strip() for p in inner.split("),") if p.strip()]
-            codes: list[str] = []
-            for p in parts:
-                m = val_pat.search(p)
-                if m:
-                    codes.append(m.group(1))
-                else:
-                    # Fallback: use the whole token
-                    codes.append(p)
-            codes_sorted = sorted(codes)
-            h = hashlib.sha256("\x1f".join(codes_sorted).encode("utf-8")).hexdigest()[
-                :16
-            ]
-            digests.append(h)
-        digests_sorted = sorted(digests)
-        return ";".join(digests_sorted)
-    except Exception:
-        return ""
 
 
 def get_runtime_dataset_variables(
@@ -1424,10 +1386,7 @@ def collect(
             r"frozenset\(\{[^}]+\}\)", "<<FROZEN_SET>>", node_without_dates
         )
 
-        # Build a deterministic hash: structure without dates + multiset of code-set digests
-        ##code_sig = _compute_code_sets_signature(r.qm_node)
-        full_basis = node_without_dates  # + "::" + code_sig
-        expr_hash = hashlib.sha256(full_basis.encode("utf-8")).hexdigest()[:16]
+        expr_hash = hashlib.sha256(node_without_dates.encode("utf-8")).hexdigest()[:16]
         expr_hash_without_codes = hashlib.sha256(
             node_without_codes_or_dates.encode("utf-8")
         ).hexdigest()[:16]
