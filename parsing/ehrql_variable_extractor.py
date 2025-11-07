@@ -613,7 +613,7 @@ class ImportCollector:
                     self.imported_modules[imported_name] = (alias.name, None)
 
     def resolve_star_imports(self, module_resolver: ModuleResolver) -> None:
-        """Resolve star imports by loading the modules and finding functions."""
+        """Resolve star imports by loading the modules and finding functions and variables."""
         for star_module in self.star_imports:
             for module_file in module_resolver.find_module_file(star_module):
                 if not module_file.exists():
@@ -624,11 +624,20 @@ class ImportCollector:
                         module_source = f.read()
                     module_tree = ast.parse(module_source, filename=str(module_file))
 
-                    # Add all functions from this module
+                    # Add all functions and module-level variables from this module
                     for node in ast.walk(module_tree):
                         if isinstance(node, ast.FunctionDef):
                             # Map function name to its module
                             self.imported_modules[node.name] = (star_module, node.name)
+                        # Also track module-level variable assignments (like codelist definitions)
+                        elif isinstance(node, ast.Assign):
+                            for target in node.targets:
+                                if isinstance(target, ast.Name):
+                                    # Map variable name to its module
+                                    self.imported_modules[target.id] = (
+                                        star_module,
+                                        target.id,
+                                    )
                     break  # Only process first found file
                 except Exception:
                     continue

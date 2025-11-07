@@ -461,6 +461,102 @@ covid_emergency_codes = [
         )
 
 
+def test_codelist_via_case_when_with_helper_function():
+    """Test extracting codelists from case/when expressions with helper function calls.
+
+    This pattern is used in JAKi-hosp where:
+    1. Codelists are defined in a separate codelists.py file and imported with `from codelists import *`
+    2. prostate_cancer_death = cause_of_death_matches(prostate_cancer_icd10)
+    3. The helper function cause_of_death_matches takes a codelist parameter
+    4. The result is used in a case/when expression in qa_bin_prostate_cancer
+
+    The extractor should trace through function calls to find codelist parameters.
+    """
+    dataset_code = """
+from ehrql import create_dataset, case, when
+from ehrql.tables.tpp import clinical_events, apcs, ons_deaths
+from codelists import *
+from variable_helper_functions import *
+
+dataset = create_dataset()
+
+# Intermediate variables (not dataset variables)
+prostate_cancer_snomed = clinical_events.where(
+    clinical_events.snomedct_code.is_in(prostate_cancer_snomed_clinical)
+).exists_for_patient()
+
+prostate_cancer_hes = apcs.where(
+    apcs.all_diagnoses.contains_any_of(prostate_cancer_icd10)
+).exists_for_patient()
+
+prostate_cancer_death = cause_of_death_matches(prostate_cancer_icd10)
+
+# Final dataset variable using case/when with intermediate variables including helper function result
+dataset.qa_bin_prostate_cancer = case(
+    when(prostate_cancer_snomed).then(True),
+    when(prostate_cancer_hes).then(True),
+    when(prostate_cancer_death).then(True),
+    otherwise=False
+)
+"""
+
+    codelists_code = """
+from ehrql import codelist_from_csv
+
+prostate_cancer_snomed_clinical = codelist_from_csv("codelists/prostate_cancer_snomed.csv", column="code")
+prostate_cancer_icd10 = codelist_from_csv("codelists/prostate_cancer_icd10.csv", column="code")
+"""
+
+    helper_code = """
+from ehrql.tables.tpp import ons_deaths
+import operator
+from functools import reduce
+
+def any_of(conditions):
+    return reduce(operator.or_, conditions)
+
+def cause_of_death_matches(codelist):
+    conditions = [
+        getattr(ons_deaths, column_name).is_in(codelist)
+        for column_name in (["underlying_cause_of_death"]+[f"cause_of_death_{i:02d}" for i in range(1, 16)])
+    ]
+    return any_of(conditions)
+"""
+
+    with tempfile.TemporaryDirectory() as tmpdir:
+        repo_root = pathlib.Path(tmpdir)
+        file_path = repo_root / "dataset_definition.py"
+        file_path.write_text(dataset_code)
+
+        codelists_path = repo_root / "codelists.py"
+        codelists_path.write_text(codelists_code)
+
+        helper_path = repo_root / "variable_helper_functions.py"
+        helper_path.write_text(helper_code)
+
+        codelists_result = extract_variable_codelists(file_path, repo_root)
+
+        # qa_bin_prostate_cancer should find both codelists via intermediate variables
+        assert "qa_bin_prostate_cancer" in codelists_result
+        calls = codelists_result["qa_bin_prostate_cancer"]
+        assert len(calls) >= 2, (
+            f"Expected at least 2 codelist calls, got {len(calls)}: {calls}"
+        )
+
+        # Should find prostate_cancer_snomed.csv (appears once via prostate_cancer_snomed)
+        snomed_calls = [c for c in calls if "prostate_cancer_snomed.csv" in c[0]]
+        assert len(snomed_calls) == 1, (
+            f"Should find prostate_cancer_snomed.csv once, got {calls}"
+        )
+
+        # Should find prostate_cancer_icd10.csv (appears twice: via prostate_cancer_hes and prostate_cancer_death)
+        icd10_calls = [c for c in calls if "prostate_cancer_icd10.csv" in c[0]]
+        # We expect at least ONE reference to prostate_cancer_icd10.csv
+        assert len(icd10_calls) >= 1, (
+            f"Should find prostate_cancer_icd10.csv at least once, got {calls}"
+        )
+
+
 if __name__ == "__main__":
     import pytest
 
