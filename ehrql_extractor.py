@@ -6,7 +6,6 @@ See README.md for usage.
 from __future__ import annotations
 
 import argparse
-import base64
 import builtins
 import datetime
 import hashlib
@@ -30,8 +29,13 @@ import pyarrow as _pa
 import pyarrow as pa
 import pyarrow.feather as feather
 import pyarrow.ipc as _pa_ipc
-import yaml
 from ehrql.query_model import nodes as qm
+
+from parsing.ehrql_github_helpers import (
+    group_items_by_repo,
+    parse_project_yaml,
+    project_yaml_search,
+)
 
 
 # Cache commonly accessed query model node classes.
@@ -125,18 +129,6 @@ def convert_spoofed_data(verbose: bool = False) -> int:
     return 0
 
 
-class GitHubError(RuntimeError):
-    """Generic error for GitHub CLI interactions."""
-
-    pass
-
-
-GH_API_HEADERS = [
-    "Accept: application/vnd.github+json",
-    "X-GitHub-Api-Version: 2022-11-28",
-]
-
-
 @contextmanager
 def working_directory(path):
     """Context manager for changing the working directory"""
@@ -161,109 +153,6 @@ def suppress_output():
         finally:
             sys.stdout = old_stdout
             sys.stderr = old_stderr
-
-
-def run_gh(args: list[str], expect_json: bool = True) -> dict | list | str:
-    """Run a gh CLI command and return parsed JSON or raw stdout.
-
-    Raises GitHubError on non‑zero exit or JSON parse failure.
-    """
-    cmd = ["gh"] + args
-    try:
-        proc = subprocess.run(
-            cmd,
-            check=False,
-            capture_output=True,
-            text=True,
-        )
-    except FileNotFoundError as e:
-        raise GitHubError(
-            "gh CLI not found. Install from https://cli.github.com/"
-        ) from e
-    if proc.returncode != 0:
-        raise GitHubError(f"gh command failed: {' '.join(cmd)}\n{proc.stderr.strip()}")
-    if not expect_json:
-        return proc.stdout
-    try:
-        return json.loads(proc.stdout)
-    except json.JSONDecodeError as e:
-        raise GitHubError(
-            f"Failed to parse JSON from gh output for command: {' '.join(cmd)}\nOutput: {proc.stdout[:500]}"
-        ) from e
-
-
-def code_search(verbose: bool = False) -> list[dict]:
-    """Return list of code search result items for the whole org.
-
-    Uses paginated search up to 1000 results (GitHub API inherent cap). Each item includes
-    repository info and path. We add a derived key 'repo_full_name' for convenience.
-    """
-    query = "org:opensafely+ehrql+filename:project.yaml"
-    items: list[dict] = []
-    page = 1
-    while True:
-        header_args: list[str] = []
-        for h in GH_API_HEADERS:
-            header_args.extend(["-H", h])
-        path_with_query = f"/search/code?q={query}&per_page=100&page={page}"
-        result = run_gh(["api", *header_args, path_with_query])
-        batch = result.get("items", []) if isinstance(result, dict) else []
-        for it in batch:
-            repo = it.get("repository", {})
-            full_name = repo.get("full_name")
-            if repo["private"]:
-                if verbose:
-                    print(f"Skipping private repo {full_name}")
-                continue
-            if full_name:
-                it["repo_full_name"] = full_name
-                items.append(it)
-        if len(batch) < 100:
-            break
-        page += 1
-        if page > 10:  # safety guard (100 * 10 = 1000 limit)
-            break
-    return items
-
-
-def group_items_by_repo(items: list[dict]) -> dict:
-    grouped: dict = {}
-    for it in items:
-        repo = it.get("repo_full_name")
-        head_sha = it.get("html_url").split("/")[6]
-        if not repo:
-            continue
-        # Add key of repo and value of sha. If it already exists, log if different
-        existing = grouped.get(repo, None)
-        if existing and existing != head_sha:
-            print(
-                f"Warning: Different head SHA found for {repo}: {existing} vs {head_sha}"
-            )
-        grouped[repo] = head_sha
-    return grouped
-
-
-def fetch_file_content(owner: str, repo: str, path: str, ref: str) -> tuple[str, str]:
-    """Return (decoded_text, blob_sha) for file path at commit ref using gh api contents."""
-    data = run_gh(
-        [
-            "api",
-            f"repos/{owner}/{repo}/contents/{path}?ref={ref}",
-        ]
-    )
-    if isinstance(data, list):  # directory edge case, skip
-        return "", ""
-    encoding = data.get("encoding")
-    if encoding == "base64":
-        try:
-            content = base64.b64decode(data.get("content", "")).decode(
-                "utf-8", "replace"
-            )
-        except Exception:
-            content = ""
-    else:
-        content = data.get("content", "")
-    return content, data.get("sha", "")
 
 
 @dataclass
@@ -938,12 +827,8 @@ def get_runtime_dataset_variables(
     silent: bool = False,
     verbose: bool = False,
 ) -> set[str]:
-    """Execute dataset definition modules to capture runtime variable types.
-
-    Adds StrPatientSeries (etc) as series_type when available.
-
-    Returns a set of dataset file paths that had no captured datasets
-    (and whose rows should be excluded from the final output).
+    """
+    Execute dataset definition files to extract runtime variable information.
     """
 
     variables: list[VariableRecord] = []
@@ -1189,44 +1074,6 @@ def reset_modules_to_snapshot() -> None:
             pass
 
 
-def parse_project_yaml(repo_root: pathlib.Path) -> list[str]:
-    """Extract dataset definition file paths from project.yaml.
-
-    Returns list of relative paths to files that generate datasets.
-    """
-    try:
-        content = (repo_root / "project.yaml").read_text(encoding="utf-8")
-        data = yaml.safe_load(content)
-
-        dataset_files = set()
-        if not data:
-            return list(dataset_files)
-        actions = data.get("actions", {})
-
-        for action_name, action_config in actions.items():
-            # Look for generate_dataset commands
-            run_command = action_config.get("run", "")
-            if "generate-dataset" in run_command or "generate_dataset" in run_command:
-                filtered_command = re.sub(r"--test-data-file\s+\S+", "", run_command)
-                # Extract file path from command like "ehrql:v1 generate-dataset analysis/dataset_definition.py"
-                parts = filtered_command.split()
-
-                possible_files = [p for p in parts if p.endswith(".py")]
-                if len(possible_files) == 1:
-                    dataset_files.add(possible_files[0])
-                else:
-                    print(
-                        f"..Warning: Could not unambiguously extract dataset file from command: {run_command}\n"
-                        f"... in {repo_root / 'project.yaml'}",
-                        file=sys.stderr,
-                    )
-                    sys.exit(1)
-
-        return list(dataset_files)
-    except (GitHubError, yaml.YAMLError, KeyError) as _:
-        return []
-
-
 def collect(
     output: str,
     repos: list[str] | None,
@@ -1234,10 +1081,11 @@ def collect(
     verbose: bool = False,
     include_full_qm_node_dump: bool = False,
 ) -> None:
+    initial_start_time = time.time()
     cache_dir = pathlib.Path(".ehrql_repo_cache")
     cache_dir.mkdir(exist_ok=True)
 
-    items = code_search(verbose=verbose)
+    items = project_yaml_search(verbose=verbose)
 
     if not silent:
         print(
@@ -1311,12 +1159,13 @@ def collect(
                     file=sys.stderr,
                 )
 
-    # Runtime enrichment
+    duration = time.time() - initial_start_time
     if not silent:
-        print("\nStarting runtime type enrichment phase", file=sys.stderr)
+        print(
+            f"\nCompleted repository cloning and dataset file discovery in {duration:.1f}s",
+            file=sys.stderr,
+        )
 
-    cache_dir = pathlib.Path(".ehrql_repo_cache")
-    cache_dir.mkdir(exist_ok=True)
     all_variables: list[VariableRecord] = []
     total_repos = len(all_dataset_files)
     current_repo_index = 0
@@ -1364,6 +1213,7 @@ def collect(
             f"\nCompleted processing {len(all_dataset_files)} repos in {duration:.1f}s",
             file=sys.stderr,
         )
+    write_start_time = time.time()
     # Write JSON with structure project -> dataset_file -> list of [variable_name, expression, permalink, series_type]
     out_map: dict[str, dict[str, Any]] = {}
 
@@ -1426,6 +1276,11 @@ def collect(
             json.dump(full_qm_out_map, f, indent=2, ensure_ascii=False)
 
     if not silent:
+        write_duration = time.time() - write_start_time
+        print(
+            f"\nHashed nodes and wrote output files in {write_duration:.1f}s",
+            file=sys.stderr,
+        )
         # print summary correctly counting the total number of variables given the structure of out_map
         total_vars = sum(
             len(vars_list)
@@ -1434,6 +1289,11 @@ def collect(
         )
         print(
             f"\nWrote {output} with {total_vars} variables across {len(out_map)} projects and {sum(len(p.get('files', {})) for p in out_map.values())} dataset files",
+            file=sys.stderr,
+        )
+        total_duration = time.time() - initial_start_time
+        print(
+            f"\nTotal execution time: {total_duration:.1f}s",
             file=sys.stderr,
         )
 
@@ -1476,18 +1336,13 @@ def main(argv: list[str] | None = None) -> int:
 
     save_initial_module_snapshot()
 
-    try:
-        collect(
-            output=args.output,
-            repos=args.repos,
-            silent=args.silent,
-            verbose=args.verbose,
-            include_full_qm_node_dump=args.include_full_qm_node_dump,
-        )
-    except GitHubError as e:
-        print(f"Error: {e}", file=sys.stderr)
-        return 1
-    return 0
+    collect(
+        output=args.output,
+        repos=args.repos,
+        silent=args.silent,
+        verbose=args.verbose,
+        include_full_qm_node_dump=args.include_full_qm_node_dump,
+    )
 
 
 if __name__ == "__main__":  # pragma: no cover
