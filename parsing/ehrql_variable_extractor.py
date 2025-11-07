@@ -754,6 +754,119 @@ class CodelistTracer:
 
         return [CodelistCall(args=tuple(args_list), kwargs=kwargs_dict)]
 
+    def _check_for_codelist_call_in_enum(
+        self, call_node: ast.Call, enum_member_values: tuple[str, ...]
+    ) -> list[CodelistCall]:
+        """Check if a Call node is a codelist_from_csv call in an Enum and extract it.
+
+        This handles the pattern where codelists are defined in Enum __init__ with f-strings:
+            f"codelists/{self.codelist_name}.csv"
+
+        We resolve the f-string using the enum member's tuple value.
+
+        Args:
+            call_node: AST Call node to check
+            enum_member_values: The tuple values from the enum member definition
+
+        Returns:
+            List with single CodelistCall if this is a codelist_from_csv call, else empty list
+        """
+        func = call_node.func
+        is_codelist_call = False
+
+        # Check for direct call: codelist_from_csv(...)
+        if isinstance(func, ast.Name) and func.id == "codelist_from_csv":
+            is_codelist_call = True
+        # Check for module.codelist_from_csv(...)
+        elif isinstance(func, ast.Attribute) and func.attr == "codelist_from_csv":
+            is_codelist_call = True
+
+        if not is_codelist_call:
+            return []
+
+        # Extract arguments, resolving f-strings
+        args_list: list[str | None] = []
+        for arg in call_node.args:
+            if isinstance(arg, ast.Constant):
+                args_list.append(str(arg.value))
+            elif isinstance(arg, ast.JoinedStr):
+                # This is an f-string - try to resolve it
+                resolved = self._resolve_fstring_in_enum(arg, enum_member_values)
+                args_list.append(resolved)
+            else:
+                args_list.append(None)
+
+        # Extract keyword arguments, resolving f-strings
+        kwargs_dict: dict[str, str | None] = {}
+        for keyword in call_node.keywords:
+            if keyword.arg:
+                if isinstance(keyword.value, ast.Constant):
+                    kwargs_dict[keyword.arg] = str(keyword.value.value)
+                elif isinstance(keyword.value, ast.JoinedStr):
+                    resolved = self._resolve_fstring_in_enum(
+                        keyword.value, enum_member_values
+                    )
+                    kwargs_dict[keyword.arg] = resolved
+                # Check if it's self._column or similar attribute access
+                elif isinstance(keyword.value, ast.Attribute):
+                    if (
+                        isinstance(keyword.value.value, ast.Name)
+                        and keyword.value.value.id == "self"
+                    ):
+                        # Map self._column to the second enum value, etc.
+                        attr = keyword.value.attr
+                        if attr == "_column" and len(enum_member_values) > 1:
+                            kwargs_dict[keyword.arg] = enum_member_values[1]
+                        else:
+                            kwargs_dict[keyword.arg] = None
+                    else:
+                        kwargs_dict[keyword.arg] = None
+                else:
+                    kwargs_dict[keyword.arg] = None
+
+        return [CodelistCall(args=tuple(args_list), kwargs=kwargs_dict)]
+
+    def _resolve_fstring_in_enum(
+        self, fstring: ast.JoinedStr, enum_member_values: tuple[str, ...]
+    ) -> str | None:
+        """Resolve an f-string in an Enum __init__ using the enum member values.
+
+        Handles patterns like: f"codelists/{self.codelist_name}.csv"
+
+        Args:
+            fstring: AST JoinedStr node representing the f-string
+            enum_member_values: The tuple values from the enum member
+
+        Returns:
+            Resolved string or None if cannot resolve
+        """
+        parts: list[str] = []
+        for value in fstring.values:
+            if isinstance(value, ast.Constant):
+                # Static part of the f-string
+                parts.append(str(value.value))
+            elif isinstance(value, ast.FormattedValue):
+                # Dynamic part - check if it's self.codelist_name
+                if isinstance(value.value, ast.Attribute):
+                    if (
+                        isinstance(value.value.value, ast.Name)
+                        and value.value.value.id == "self"
+                    ):
+                        attr = value.value.attr
+                        # Map self.codelist_name to the first enum value
+                        if attr == "codelist_name" and len(enum_member_values) > 0:
+                            parts.append(enum_member_values[0])
+                        else:
+                            return None
+                    else:
+                        return None
+                else:
+                    return None
+            else:
+                return None
+
+        return "".join(parts) if parts else None
+
     def _trace_name(
         self,
         name: str,
@@ -1041,14 +1154,39 @@ class CodelistTracer:
                 break
 
         if is_enum:
-            # For Enum classes, look for codelist_from_csv calls in __init__
-            # The pattern is: self.codes = codelist_from_csv(...)
+            # For Enum classes, extract the enum member value and resolve codelist calls
+            # The pattern is: MEMBER_NAME = (value1, value2, ...)
+            # And __init__ has: self.codes = codelist_from_csv(f"codelists/{self.codelist_name}.csv", ...)
+
+            # First, find the enum member's value tuple
+            member_values: tuple[str, ...] | None = None
+            for node in class_node.body:
+                if isinstance(node, ast.Assign):
+                    for target in node.targets:
+                        if isinstance(target, ast.Name) and target.id == attr_name:
+                            # Extract the tuple value
+                            if isinstance(node.value, ast.Tuple):
+                                values: list[str] = []
+                                for elt in node.value.elts:
+                                    if isinstance(elt, ast.Constant):
+                                        values.append(str(elt.value))
+                                if values:
+                                    member_values = tuple(values)
+                            break
+
+            if not member_values:
+                return []
+
+            # Now find the __init__ and extract codelist_from_csv calls
+            # We'll need to resolve any f-strings using the member_values
             for node in class_node.body:
                 if isinstance(node, ast.FunctionDef) and node.name == "__init__":
                     # Find all codelist_from_csv calls in __init__
                     for init_node in ast.walk(node):
                         if isinstance(init_node, ast.Call):
-                            calls = self._check_for_codelist_call(init_node)
+                            calls = self._check_for_codelist_call_in_enum(
+                                init_node, member_values
+                            )
                             codelist_calls.extend(calls)
                     # Don't need to check further if we found calls in __init__
                     if codelist_calls:

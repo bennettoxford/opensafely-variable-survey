@@ -241,9 +241,86 @@ ethnicity_codes = codelist_from_csv(
         assert "codelists/ethnicity.csv" in codelist_files
 
 
+def test_codelist_from_enum_with_fstring():
+    """Test codelist extraction when codelist is defined in an Enum with f-string path.
+
+    This matches the pattern from pincer-measures where:
+    - Codelists are defined as Enum members
+    - Each enum member constructs the CSV path using an f-string
+    - Variables access codelists via Enum.MEMBER.codes
+    """
+    code = """
+from ehrql import Dataset, months
+from ehrql.tables.beta.core import medications
+from codelists import Codelists
+from utils import HistoricalEvent
+
+INTERVAL = months(3).starting_on("2024-01-01")
+dataset = Dataset()
+
+hist_med = HistoricalEvent("medication", interval=INTERVAL)
+
+oral_nsaid = hist_med.fetch(Codelists.ORAL_NSAID.codes, 3)
+dataset.oral_nsaid = oral_nsaid.exists_for_patient()
+
+ppi = hist_med.fetch(Codelists.ULCER_HEALING_DRUGS.codes, 3)
+dataset.ppi = ppi.exists_for_patient()
+"""
+    # Create codelists module with Enum pattern
+    codelists_code = """
+from enum import Enum
+from ehrql.codes import codelist_from_csv
+
+
+class Codelists(Enum):
+    ULCER_HEALING_DRUGS = ("pincer-ppi", "id")
+    ORAL_NSAID = ("pincer-nsaid", "id")
+    PEPTIC_ULCER = ("pincer-pep", "code")
+
+    def __init__(self, codelist_name: str, column: str) -> None:
+        self.codelist_name = codelist_name
+        self._column = column
+        self.codes = codelist_from_csv(
+            f"codelists/{self.codelist_name}.csv", column=self._column
+        )
+"""
+    with tempfile.TemporaryDirectory() as tmpdir:
+        repo_root = pathlib.Path(tmpdir)
+        file_path = repo_root / "dataset_definition.py"
+        file_path.write_text(code)
+
+        # Create codelists.py module
+        codelists_path = repo_root / "codelists.py"
+        codelists_path.write_text(codelists_code)
+
+        codelists_result = extract_variable_codelists(file_path, repo_root)
+
+        # oral_nsaid should find the codelist from the Enum
+        assert "oral_nsaid" in codelists_result
+        assert len(codelists_result["oral_nsaid"]) == 1, (
+            f"Expected 1 codelist for oral_nsaid, got {len(codelists_result['oral_nsaid'])}"
+        )
+
+        # Check the CSV path is correctly extracted
+        codelist_files = [call[0] for call in codelists_result["oral_nsaid"]]
+        assert "codelists/pincer-nsaid.csv" in codelist_files, (
+            f"Expected 'codelists/pincer-nsaid.csv' in {codelist_files}"
+        )
+
+        # Check the column parameter
+        oral_nsaid_params = codelists_result["oral_nsaid"][0]
+        assert "column=id" in oral_nsaid_params, (
+            f"Expected 'column=id' in {oral_nsaid_params}"
+        )
+
+        # ppi should also find its codelist
+        assert "ppi" in codelists_result
+        assert len(codelists_result["ppi"]) == 1
+        codelist_files = [call[0] for call in codelists_result["ppi"]]
+        assert "codelists/pincer-ppi.csv" in codelist_files
+
+
 if __name__ == "__main__":
     import pytest
-
-    pytest.main([__file__, "-v"])
 
     pytest.main([__file__, "-v"])

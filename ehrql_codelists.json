@@ -1,5 +1,5 @@
 {
-  "generated_at": "2025-11-07 11:37:22",
+  "generated_at": "2025-11-07 12:16:49",
   "projects": {
     "opensafely/research-template": {
       "sha": "64780e12d0079a73d02094b48994f92cccb6f70d",
@@ -53,171 +53,183 @@
           "registered_practice_id": [],
           "oral_nsaid": [
             [
-              null,
-              "column=<dynamic>"
+              "codelists/pincer-nsaid.csv",
+              "column=id"
             ]
           ],
           "ppi": [
             [
-              null,
-              "column=<dynamic>"
+              "codelists/pincer-ppi.csv",
+              "column=id"
             ]
           ],
           "peptic_ulcer": [
             [
-              null,
-              "column=<dynamic>"
+              "codelists/pincer-pep.csv",
+              "column=code"
             ]
           ],
           "gi_bleed": [
             [
-              null,
-              "column=<dynamic>"
+              "codelists/pincer-gi_bleed.csv",
+              "column=code"
             ]
           ],
           "co_prescribed_aspirin_antiplatelet_excluding_aspirin": [
             [
-              null,
-              "column=<dynamic>"
+              "codelists/pincer-aspirin.csv",
+              "column=id"
+            ],
+            [
+              "codelists/pincer-non_asp_antiplate.csv",
+              "column=id"
             ]
           ],
           "co_prescribed_anticoagulant_antiplatelet_including_aspirin": [
             [
-              null,
-              "column=<dynamic>"
+              "codelists/pincer-anticoag.csv",
+              "column=id"
+            ],
+            [
+              "codelists/pincer-antiplat.csv",
+              "column=id"
             ]
           ],
           "asthma": [
             [
-              null,
-              "column=<dynamic>"
+              "codelists/pincer-ast.csv",
+              "column=code"
             ]
           ],
           "asthma_resolved": [
             [
-              null,
-              "column=<dynamic>"
+              "codelists/pincer-ast_res.csv",
+              "column=code"
             ]
           ],
           "no_asthma_resolved": [
             [
-              null,
-              "column=<dynamic>"
+              "codelists/pincer-ast.csv",
+              "column=code"
+            ],
+            [
+              "codelists/pincer-ast_res.csv",
+              "column=code"
             ]
           ],
           "non_selective_bb": [
             [
-              null,
-              "column=<dynamic>"
+              "codelists/pincer-nsbb.csv",
+              "column=id"
             ]
           ],
           "heart_failure": [
             [
-              null,
-              "column=<dynamic>"
+              "codelists/pincer-hf.csv",
+              "column=code"
             ]
           ],
           "egfr_between_1_and_45": [
             [
-              null,
-              "column=<dynamic>"
+              "codelists/pincer-egfr.csv",
+              "column=code"
             ]
           ],
           "acei": [
             [
-              null,
-              "column=<dynamic>"
+              "codelists/pincer-acei.csv",
+              "column=id"
             ]
           ],
           "loop_diuretic": [
             [
-              null,
-              "column=<dynamic>"
+              "codelists/pincer-diur.csv",
+              "column=id"
             ]
           ],
           "acei_recent": [
             [
-              null,
-              "column=<dynamic>"
+              "codelists/pincer-acei.csv",
+              "column=id"
             ]
           ],
           "loop_diuretic_recent": [
             [
-              null,
-              "column=<dynamic>"
+              "codelists/pincer-diur.csv",
+              "column=id"
             ]
           ],
           "renal_function_test": [
             [
-              null,
-              "column=<dynamic>"
+              "codelists/pincer-renal.csv",
+              "column=code"
             ]
           ],
           "electrolytes_test": [
             [
-              null,
-              "column=<dynamic>"
+              "codelists/pincer-electro.csv",
+              "column=code"
             ]
           ],
           "age_gt_75": [],
           "methotrexate_6_3_month": [
             [
-              null,
-              "column=<dynamic>"
+              "codelists/pincer-met.csv",
+              "column=id"
             ]
           ],
           "methotrexate_3_month": [
             [
-              null,
-              "column=<dynamic>"
+              "codelists/pincer-met.csv",
+              "column=id"
             ]
           ],
           "full_blood_count": [
             [
-              null,
-              "column=<dynamic>"
+              "codelists/pincer-fbc.csv",
+              "column=code"
             ]
           ],
           "liver_function_test": [
             [
-              null,
-              "column=<dynamic>"
+              "codelists/pincer-fbc.csv",
+              "column=code"
             ]
           ],
           "lithiumm_6_3_month": [
             [
-              null,
-              "column=<dynamic>"
+              "codelists/pincer-lith.csv",
+              "column=id"
             ]
           ],
           "lithium_3_month": [
             [
-              null,
-              "column=<dynamic>"
+              "codelists/pincer-lith.csv",
+              "column=id"
             ]
           ],
           "lithium_level_3_month": [
             [
-              null,
-              "column=<dynamic>"
+              "codelists/pincer-lith_lev.csv",
+              "column=code"
             ]
           ],
           "amiodarone_12_6_month": [
             [
-              null,
-              "column=<dynamic>"
+              "codelists/pincer-amio.csv",
+              "column=id"
             ]
           ],
           "amiodarone_6_month": [
             [
-              null,
-              "column=<dynamic>"
+              "codelists/pincer-amio.csv",
+              "column=id"
             ]
           ],
           "thyroid_function_test": [
             [
-              null,
-              "column=<dynamic>"
+              "codelists/pincer-tft.csv",
+              "column=code"
             ]
           ],
           "population_filter": [],
@@ -235,14 +247,22 @@
           "indicator_f_numerator": [],
           "indicator_g_denominator": [
             [
-              null,
-              "column=<dynamic>"
+              "codelists/pincer-ast_res.csv",
+              "column=code"
+            ],
+            [
+              "codelists/pincer-ast.csv",
+              "column=code"
             ]
           ],
           "indicator_g_denominator_alternative": [
             [
-              null,
-              "column=<dynamic>"
+              "codelists/pincer-ast_res.csv",
+              "column=code"
+            ],
+            [
+              "codelists/pincer-ast.csv",
+              "column=code"
             ]
           ],
           "indicator_g_numerator": [],
@@ -265,6 +285,25 @@
     "opensafely/reusable-variables": {
       "sha": "dd18d9c3889c8424852912c769935c919471a9d9",
       "files": {
+        "analysis/PRIMIS/dataset_definition.py": {
+          "immunosuppressed": [],
+          "ckd": [],
+          "crd": [
+            [
+              "codelists/primis-covid19-vacc-uptake-resp_cov.csv",
+              "column=code"
+            ]
+          ],
+          "diabetes": [],
+          "cld": [],
+          "chd": [],
+          "cns": [],
+          "asplenia": [],
+          "learndis": [],
+          "smi": [],
+          "severe_obesity": [],
+          "primis_atrisk": []
+        },
         "analysis/ethnicity/dataset_definition.py": {
           "ethnicity5": [
             [
@@ -285,45 +324,12 @@
               "column=code"
             ]
           ]
-        },
-        "analysis/PRIMIS/dataset_definition.py": {
-          "immunosuppressed": [],
-          "ckd": [],
-          "crd": [
-            [
-              "codelists/primis-covid19-vacc-uptake-resp_cov.csv",
-              "column=code"
-            ]
-          ],
-          "diabetes": [],
-          "cld": [],
-          "chd": [],
-          "cns": [],
-          "asplenia": [],
-          "learndis": [],
-          "smi": [],
-          "severe_obesity": [],
-          "primis_atrisk": []
         }
       }
     },
     "opensafely/openprompt-cohort-profile": {
       "sha": "90d44ee26d30cd6c20b040721149719623c787be",
       "files": {
-        "analysis/extract_tpp_demographics.py": {
-          "pt_start_date": [],
-          "sex": [],
-          "age": [],
-          "practice_nuts": [],
-          "imd": [],
-          "ethnicity": [
-            [
-              "codelists/opensafely-ethnicity.csv",
-              "category_column=Grouping_6",
-              "column=Code"
-            ]
-          ]
-        },
         "analysis/add_tpp_data.py": {
           "pt_start_date": [],
           "pt_end_date": [],
@@ -561,6 +567,20 @@
         "analysis/dataset_definition.py": {
           "creation_date": [],
           "days_since_baseline": []
+        },
+        "analysis/extract_tpp_demographics.py": {
+          "pt_start_date": [],
+          "sex": [],
+          "age": [],
+          "practice_nuts": [],
+          "imd": [],
+          "ethnicity": [
+            [
+              "codelists/opensafely-ethnicity.csv",
+              "category_column=Grouping_6",
+              "column=Code"
+            ]
+          ]
         }
       }
     },
@@ -1074,6 +1094,23 @@
     "opensafely/qof": {
       "sha": "9d00aa15f04b294f88728518b7e6185a1a59b0cb",
       "files": {
+        "analysis/dm_reg_dataset.py": {
+          "pat_age": [],
+          "dmlat_dat": [
+            [
+              null,
+              "column=code"
+            ]
+          ],
+          "dmres_dat": [
+            [
+              null,
+              "column=code"
+            ]
+          ],
+          "dm_reg_r1": [],
+          "dm_reg_r2": []
+        },
         "analysis/hyp_reg_dataset.py": {
           "hyplat_dat": [
             [
@@ -1103,88 +1140,12 @@
               "column=code"
             ]
           ]
-        },
-        "analysis/dm_reg_dataset.py": {
-          "pat_age": [],
-          "dmlat_dat": [
-            [
-              null,
-              "column=code"
-            ]
-          ],
-          "dmres_dat": [
-            [
-              null,
-              "column=code"
-            ]
-          ],
-          "dm_reg_r1": [],
-          "dm_reg_r2": []
         }
       }
     },
     "opensafely/isaric-exploration": {
       "sha": "63b23df6f85df8991cf38a01afd73d90e59c490c",
       "files": {
-        "analysis/dataset_definition_sus.py": {
-          "prior_dereg_date_sus": [],
-          "dereg_date_sus": [],
-          "registered_sus": [],
-          "age_sus": [],
-          "sex_sus": [],
-          "ethnicity_sus": [
-            [
-              "codelists/opensafely-ethnicity-snomed-0removed.csv",
-              "category_column=Grouping_6",
-              "column=snomedcode"
-            ]
-          ],
-          "imd_sus": [],
-          "region_sus": [],
-          "suspected_covid_date_sus": [
-            [
-              "codelists/opensafely-covid-identification-in-primary-care-exposure-to-disease.csv",
-              "column=CTV3ID"
-            ],
-            [
-              "codelists/opensafely-covid-identification-in-primary-care-suspected-covid-isolation-code.csv",
-              "column=CTV3ID"
-            ],
-            [
-              "codelists/opensafely-covid-identification-in-primary-care-suspected-covid-advice.csv",
-              "column=CTV3ID"
-            ],
-            [
-              "codelists/opensafely-covid-identification-in-primary-care-suspected-covid-had-test.csv",
-              "column=CTV3ID"
-            ]
-          ],
-          "probable_covid_date_sus": [
-            [
-              "codelists/opensafely-covid-identification-in-primary-care-probable-covid-sequelae.csv",
-              "column=CTV3ID"
-            ],
-            [
-              "codelists/opensafely-covid-identification-in-primary-care-probable-covid-positive-test.csv",
-              "column=CTV3ID"
-            ],
-            [
-              "codelists/opensafely-covid-identification-in-primary-care-probable-covid-clinical-code.csv",
-              "column=CTV3ID"
-            ]
-          ],
-          "last_positive_test_date_sus": [],
-          "covid19_vaccine_sus": [],
-          "obesity_sus": [],
-          "ons_death_date": [],
-          "death_date": [],
-          "has_died": [],
-          "in_hospital_death": [],
-          "first_admission_date_sus": [],
-          "n_admissions": [],
-          "days_in_critical_care": [],
-          "discharge_date": []
-        },
         "analysis/dataset_definition_isaric.py": {
           "first_admission_date_isaric": [],
           "age_isaric": [],
@@ -1279,92 +1240,71 @@
           "prior_dereg_date_pc": [],
           "dereg_date_pc": [],
           "registered_pc": []
+        },
+        "analysis/dataset_definition_sus.py": {
+          "prior_dereg_date_sus": [],
+          "dereg_date_sus": [],
+          "registered_sus": [],
+          "age_sus": [],
+          "sex_sus": [],
+          "ethnicity_sus": [
+            [
+              "codelists/opensafely-ethnicity-snomed-0removed.csv",
+              "category_column=Grouping_6",
+              "column=snomedcode"
+            ]
+          ],
+          "imd_sus": [],
+          "region_sus": [],
+          "suspected_covid_date_sus": [
+            [
+              "codelists/opensafely-covid-identification-in-primary-care-exposure-to-disease.csv",
+              "column=CTV3ID"
+            ],
+            [
+              "codelists/opensafely-covid-identification-in-primary-care-suspected-covid-isolation-code.csv",
+              "column=CTV3ID"
+            ],
+            [
+              "codelists/opensafely-covid-identification-in-primary-care-suspected-covid-advice.csv",
+              "column=CTV3ID"
+            ],
+            [
+              "codelists/opensafely-covid-identification-in-primary-care-suspected-covid-had-test.csv",
+              "column=CTV3ID"
+            ]
+          ],
+          "probable_covid_date_sus": [
+            [
+              "codelists/opensafely-covid-identification-in-primary-care-probable-covid-sequelae.csv",
+              "column=CTV3ID"
+            ],
+            [
+              "codelists/opensafely-covid-identification-in-primary-care-probable-covid-positive-test.csv",
+              "column=CTV3ID"
+            ],
+            [
+              "codelists/opensafely-covid-identification-in-primary-care-probable-covid-clinical-code.csv",
+              "column=CTV3ID"
+            ]
+          ],
+          "last_positive_test_date_sus": [],
+          "covid19_vaccine_sus": [],
+          "obesity_sus": [],
+          "ons_death_date": [],
+          "death_date": [],
+          "has_died": [],
+          "in_hospital_death": [],
+          "first_admission_date_sus": [],
+          "n_admissions": [],
+          "days_in_critical_care": [],
+          "discharge_date": []
         }
       }
     },
     "opensafely/openprompt_health_utilisation": {
       "sha": "1051dd9b84071aab6a6353d4801d8e6c17f3af63",
       "files": {
-        "analysis/dataset_definition_matched_control_updated.py": {
-          "age": [],
-          "sex": [],
-          "region": [],
-          "registration_date": [],
-          "long_covid_dx": [],
-          "long_covid_dx_date": [],
-          "index_date": [],
-          "end_death": [],
-          "end_deregist": [],
-          "end_lc_cure": [],
-          "end_date": [],
-          "set_id": [],
-          "exposure": [],
-          "covid_positive": [],
-          "covid_dx_month": [],
-          "ethnicity": [],
-          "imd": [],
-          "bmi": [],
-          "bmi_date": [],
-          "previous_covid_hosp": [],
-          "admit_over_1m_count": [],
-          "cov_c19_vaccine_number": [],
-          "cov_cancer": [],
-          "cov_mental_health": [],
-          "cov_asthma": [],
-          "cov_organ_transplant": [],
-          "cov_chronic_cardiac_disease": [],
-          "cov_chronic_liver_disease": [],
-          "cov_stroke_dementia": [],
-          "cov_other_neuro_diseases": [],
-          "cov_ra_sle_psoriasis": [],
-          "cov_asplenia": [],
-          "cov_hiv": [],
-          "cov_aplastic_anemia": [],
-          "cov_permanent_immune_suppress": [],
-          "cov_temporary_immune_suppress": [],
-          "reg_and_visit_gp_1y": []
-        },
-        "analysis/dataset_definition_matched_control_drug_costs.py": {
-          "age": [],
-          "sex": [],
-          "index_date": [],
-          "end_death": [],
-          "end_deregist": [],
-          "end_lc_cure": [],
-          "end_date": [],
-          "exposure": []
-        },
-        "analysis/dataset_definition_hx_matched_exp_lc.py": {
-          "age": [],
-          "sex": [],
-          "region": [],
-          "lc_dx": [],
-          "index_date": [],
-          "exposure": [],
-          "ethnicity": [],
-          "imd": [],
-          "bmi": [],
-          "bmi_date": [],
-          "cov_cancer": [],
-          "cov_mental_health": [],
-          "cov_asthma": [],
-          "cov_organ_transplant": [],
-          "cov_chronic_cardiac_disease": [],
-          "cov_chronic_liver_disease": [],
-          "cov_stroke_dementia": [],
-          "cov_other_neuro_diseases": [],
-          "cov_ra_sle_psoriasis": [],
-          "cov_asplenia": [],
-          "cov_hiv": [],
-          "cov_aplastic_anemia": [],
-          "cov_permanent_immune_suppress": [],
-          "cov_temporary_immune_suppress": [],
-          "end_death": [],
-          "end_deregist": [],
-          "end_lc_cure": [],
-          "end_date": [],
-          "total_hx_drug_visit": []
-        },
         "analysis/dataset_definition_unmatched_exp_lc.py": {
           "age": [],
           "sex": [],
@@ -1377,6 +1317,9 @@
           "end_deregist": [],
           "end_lc_cure": []
         },
+        "analysis/dataset_definition_qc_total_n.py": {
+          "sex": []
+        },
         "analysis/dataset_definition_unmatched_comparator.py": {
           "age": [],
           "sex": [],
@@ -1387,6 +1330,59 @@
           "end_death": [],
           "end_deregist": [],
           "end_lc_cure": []
+        },
+        "analysis/dataset_definition_matched_control_drug_costs.py": {
+          "age": [],
+          "sex": [],
+          "index_date": [],
+          "end_death": [],
+          "end_deregist": [],
+          "end_lc_cure": [],
+          "end_date": [],
+          "exposure": []
+        },
+        "analysis/dataset_definition_cost_data_description.py": {
+          "apc_cost_1y": [],
+          "apc_cost_2y": [],
+          "apc_cost_total": [],
+          "ec_cost_1y": [],
+          "ec_cost_2y": [],
+          "ec_cost_total": [],
+          "opa_cost_1y": [],
+          "opa_cost_2y": [],
+          "opa_cost_total": []
+        },
+        "analysis/dataset_definition_hx_unmatched_com_no_lc.py": {
+          "age": [],
+          "sex": [],
+          "lc_exp": [
+            [
+              "codelists/opensafely-assessment-instruments-and-outcome-measures-for-long-covid.csv",
+              "column=code"
+            ],
+            [
+              "codelists/opensafely-nice-managing-the-long-term-effects-of-covid-19.csv",
+              "column=code"
+            ],
+            [
+              "codelists/opensafely-referral-and-signposting-for-long-covid.csv",
+              "column=code"
+            ]
+          ],
+          "region": [],
+          "end_death": [],
+          "end_deregist": [],
+          "end_lc_cure": []
+        },
+        "analysis/dataset_definition_matched_cases_drug_costs.py": {
+          "age": [],
+          "sex": [],
+          "index_date": [],
+          "end_death": [],
+          "end_deregist": [],
+          "end_lc_cure": [],
+          "end_date": [],
+          "exposure": []
         },
         "analysis/dataset_definition_hx_unmatched_exp_lc.py": {
           "age": [],
@@ -1455,8 +1451,78 @@
           "end_date": [],
           "total_hx_drug_visit": []
         },
+        "analysis/dataset_definition_hx_matched_exp_lc.py": {
+          "age": [],
+          "sex": [],
+          "region": [],
+          "lc_dx": [],
+          "index_date": [],
+          "exposure": [],
+          "ethnicity": [],
+          "imd": [],
+          "bmi": [],
+          "bmi_date": [],
+          "cov_cancer": [],
+          "cov_mental_health": [],
+          "cov_asthma": [],
+          "cov_organ_transplant": [],
+          "cov_chronic_cardiac_disease": [],
+          "cov_chronic_liver_disease": [],
+          "cov_stroke_dementia": [],
+          "cov_other_neuro_diseases": [],
+          "cov_ra_sle_psoriasis": [],
+          "cov_asplenia": [],
+          "cov_hiv": [],
+          "cov_aplastic_anemia": [],
+          "cov_permanent_immune_suppress": [],
+          "cov_temporary_immune_suppress": [],
+          "end_death": [],
+          "end_deregist": [],
+          "end_lc_cure": [],
+          "end_date": [],
+          "total_hx_drug_visit": []
+        },
         "analysis/dataset_definition_lc_gp_list.py": {
           "gp_practice": []
+        },
+        "analysis/dataset_definition_matched_control_updated.py": {
+          "age": [],
+          "sex": [],
+          "region": [],
+          "registration_date": [],
+          "long_covid_dx": [],
+          "long_covid_dx_date": [],
+          "index_date": [],
+          "end_death": [],
+          "end_deregist": [],
+          "end_lc_cure": [],
+          "end_date": [],
+          "set_id": [],
+          "exposure": [],
+          "covid_positive": [],
+          "covid_dx_month": [],
+          "ethnicity": [],
+          "imd": [],
+          "bmi": [],
+          "bmi_date": [],
+          "previous_covid_hosp": [],
+          "admit_over_1m_count": [],
+          "cov_c19_vaccine_number": [],
+          "cov_cancer": [],
+          "cov_mental_health": [],
+          "cov_asthma": [],
+          "cov_organ_transplant": [],
+          "cov_chronic_cardiac_disease": [],
+          "cov_chronic_liver_disease": [],
+          "cov_stroke_dementia": [],
+          "cov_other_neuro_diseases": [],
+          "cov_ra_sle_psoriasis": [],
+          "cov_asplenia": [],
+          "cov_hiv": [],
+          "cov_aplastic_anemia": [],
+          "cov_permanent_immune_suppress": [],
+          "cov_temporary_immune_suppress": [],
+          "reg_and_visit_gp_1y": []
         },
         "analysis/dataset_definition_matched_cases_updated.py": {
           "age": [],
@@ -1497,52 +1563,6 @@
           "cov_permanent_immune_suppress": [],
           "cov_temporary_immune_suppress": [],
           "reg_and_visit_gp_1y": []
-        },
-        "analysis/dataset_definition_matched_cases_drug_costs.py": {
-          "age": [],
-          "sex": [],
-          "index_date": [],
-          "end_death": [],
-          "end_deregist": [],
-          "end_lc_cure": [],
-          "end_date": [],
-          "exposure": []
-        },
-        "analysis/dataset_definition_cost_data_description.py": {
-          "apc_cost_1y": [],
-          "apc_cost_2y": [],
-          "apc_cost_total": [],
-          "ec_cost_1y": [],
-          "ec_cost_2y": [],
-          "ec_cost_total": [],
-          "opa_cost_1y": [],
-          "opa_cost_2y": [],
-          "opa_cost_total": []
-        },
-        "analysis/dataset_definition_hx_unmatched_com_no_lc.py": {
-          "age": [],
-          "sex": [],
-          "lc_exp": [
-            [
-              "codelists/opensafely-assessment-instruments-and-outcome-measures-for-long-covid.csv",
-              "column=code"
-            ],
-            [
-              "codelists/opensafely-nice-managing-the-long-term-effects-of-covid-19.csv",
-              "column=code"
-            ],
-            [
-              "codelists/opensafely-referral-and-signposting-for-long-covid.csv",
-              "column=code"
-            ]
-          ],
-          "region": [],
-          "end_death": [],
-          "end_deregist": [],
-          "end_lc_cure": []
-        },
-        "analysis/dataset_definition_qc_total_n.py": {
-          "sex": []
         }
       }
     },
@@ -2843,6 +2863,10 @@
     "opensafely/openprompt-hrqol": {
       "sha": "71f904943e31bb620716e37699b8026f434de2a0",
       "files": {
+        "analysis/model_questions/dataset_definition.py": {
+          "creation_date": [],
+          "days_since_baseline": []
+        },
         "analysis/add_tpp_data.py": {
           "pt_start_date": [],
           "pt_end_date": [],
@@ -3074,21 +3098,12 @@
               "column=CTV3ID"
             ]
           ]
-        },
-        "analysis/model_questions/dataset_definition.py": {
-          "creation_date": [],
-          "days_since_baseline": []
         }
       }
     },
     "opensafely/post-covid-renal": {
       "sha": "38ea1a98517a075ee0b2b048effc5348bfc1da8d",
       "files": {
-        "analysis/dataset_definition/dataset_definition_vax.py": {
-          "index_date": [],
-          "end_date_exposure": [],
-          "end_date_outcome": []
-        },
         "analysis/dataset_definition/dataset_definition_unvax.py": {
           "index_date": [],
           "end_date_exposure": [],
@@ -3109,6 +3124,11 @@
           "index_unvax": [],
           "end_unvax_exposure": [],
           "end_unvax_outcome": []
+        },
+        "analysis/dataset_definition/dataset_definition_vax.py": {
+          "index_date": [],
+          "end_date_exposure": [],
+          "end_date_outcome": []
         }
       }
     },
@@ -4209,27 +4229,89 @@
     "opensafely/metformin_covid": {
       "sha": "a49d4a584e8871a1ee86489f551d6877a610b4a0",
       "files": {
-        "analysis/dataset_definition_dm_algo.py": {
-          "qa_num_birth_year": [],
-          "cov_cat_ethnicity": [],
-          "tmp_elig_date_t1dm_ctv3": [],
-          "tmp_elig_date_t1dm": [],
-          "tmp_elig_count_t1dm": [],
-          "tmp_elig_date_t2dm_ctv3": [],
+        "analysis/dataset_definition_ppa.py": {
+          "landmark_date": [],
           "elig_date_t2dm": [],
-          "tmp_elig_count_t2dm": [],
-          "tmp_elig_date_otherdm": [],
-          "tmp_elig_count_otherdm": [],
-          "tmp_elig_date_gestationaldm": [],
-          "tmp_elig_date_poccdm": [],
-          "tmp_elig_count_poccdm_ctv3": [],
-          "tmp_elig_num_max_hba1c_mmol_mol": [],
-          "tmp_elig_date_max_hba1c": [],
-          "tmp_elig_date_insulin": [],
-          "tmp_elig_date_antidiabetic_drugs": [],
-          "tmp_elig_date_nonmetform_drugs": [],
-          "tmp_elig_date_diabetes_medication": [],
-          "tmp_elig_date_first_diabetes_diag": []
+          "cov_date_ami": [],
+          "cov_date_all_stroke": [],
+          "cov_date_other_arterial_embolism": [],
+          "cov_date_vte": [],
+          "cov_date_hf": [],
+          "cov_date_angina": [],
+          "cov_date_dementia": [],
+          "cov_date_cancer": [],
+          "cov_date_hypertension": [],
+          "cov_date_depression": [],
+          "cov_date_copd": [],
+          "cov_date_liver_disease": [],
+          "cov_date_chronic_kidney_disease": [],
+          "cov_date_pcos": [],
+          "cov_date_prediabetes": [],
+          "cov_date_diabetescomp": [],
+          "cov_date_bmi_1": [],
+          "cov_num_bmi_1": [],
+          "cov_date_bmi_2": [],
+          "cov_num_bmi_2": [],
+          "cov_date_bmi_3": [],
+          "cov_num_bmi_3": [],
+          "cov_date_bmi_4": [],
+          "cov_num_bmi_4": [],
+          "cov_date_bmi_5": [],
+          "cov_num_bmi_5": [],
+          "cov_date_bmi_6": [],
+          "cov_num_bmi_6": [],
+          "cov_date_bmi_7": [],
+          "cov_num_bmi_7": [],
+          "cov_date_bmi_8": [],
+          "cov_num_bmi_8": [],
+          "cov_date_hba1c_1": [],
+          "cov_num_hba1c_1": [],
+          "cov_date_hba1c_2": [],
+          "cov_num_hba1c_2": [],
+          "cov_date_hba1c_3": [],
+          "cov_num_hba1c_3": [],
+          "cov_date_hba1c_4": [],
+          "cov_num_hba1c_4": [],
+          "cov_date_hba1c_5": [],
+          "cov_num_hba1c_5": [],
+          "cov_date_hba1c_6": [],
+          "cov_num_hba1c_6": [],
+          "cov_date_hba1c_7": [],
+          "cov_num_hba1c_7": [],
+          "cov_date_hba1c_8": [],
+          "cov_num_hba1c_8": [],
+          "cov_date_chol_1": [],
+          "cov_num_chol_1": [],
+          "cov_date_chol_2": [],
+          "cov_num_chol_2": [],
+          "cov_date_chol_3": [],
+          "cov_num_chol_3": [],
+          "cov_date_chol_4": [],
+          "cov_num_chol_4": [],
+          "cov_date_chol_5": [],
+          "cov_num_chol_5": [],
+          "cov_date_chol_6": [],
+          "cov_num_chol_6": [],
+          "cov_date_chol_7": [],
+          "cov_num_chol_7": [],
+          "cov_date_chol_8": [],
+          "cov_num_chol_8": [],
+          "cov_date_hdl_chol_1": [],
+          "cov_num_hdl_chol_1": [],
+          "cov_date_hdl_chol_2": [],
+          "cov_num_hdl_chol_2": [],
+          "cov_date_hdl_chol_3": [],
+          "cov_num_hdl_chol_3": [],
+          "cov_date_hdl_chol_4": [],
+          "cov_num_hdl_chol_4": [],
+          "cov_date_hdl_chol_5": [],
+          "cov_num_hdl_chol_5": [],
+          "cov_date_hdl_chol_6": [],
+          "cov_num_hdl_chol_6": [],
+          "cov_date_hdl_chol_7": [],
+          "cov_num_hdl_chol_7": [],
+          "cov_date_hdl_chol_8": [],
+          "cov_num_hdl_chol_8": []
         },
         "analysis/dataset_definition_t2dm.py": {
           "elig_date_t2dm": [],
@@ -4334,89 +4416,27 @@
           "out_date_fracture": [],
           "tmp_date_diet_only": []
         },
-        "analysis/dataset_definition_ppa.py": {
-          "landmark_date": [],
+        "analysis/dataset_definition_dm_algo.py": {
+          "qa_num_birth_year": [],
+          "cov_cat_ethnicity": [],
+          "tmp_elig_date_t1dm_ctv3": [],
+          "tmp_elig_date_t1dm": [],
+          "tmp_elig_count_t1dm": [],
+          "tmp_elig_date_t2dm_ctv3": [],
           "elig_date_t2dm": [],
-          "cov_date_ami": [],
-          "cov_date_all_stroke": [],
-          "cov_date_other_arterial_embolism": [],
-          "cov_date_vte": [],
-          "cov_date_hf": [],
-          "cov_date_angina": [],
-          "cov_date_dementia": [],
-          "cov_date_cancer": [],
-          "cov_date_hypertension": [],
-          "cov_date_depression": [],
-          "cov_date_copd": [],
-          "cov_date_liver_disease": [],
-          "cov_date_chronic_kidney_disease": [],
-          "cov_date_pcos": [],
-          "cov_date_prediabetes": [],
-          "cov_date_diabetescomp": [],
-          "cov_date_bmi_1": [],
-          "cov_num_bmi_1": [],
-          "cov_date_bmi_2": [],
-          "cov_num_bmi_2": [],
-          "cov_date_bmi_3": [],
-          "cov_num_bmi_3": [],
-          "cov_date_bmi_4": [],
-          "cov_num_bmi_4": [],
-          "cov_date_bmi_5": [],
-          "cov_num_bmi_5": [],
-          "cov_date_bmi_6": [],
-          "cov_num_bmi_6": [],
-          "cov_date_bmi_7": [],
-          "cov_num_bmi_7": [],
-          "cov_date_bmi_8": [],
-          "cov_num_bmi_8": [],
-          "cov_date_hba1c_1": [],
-          "cov_num_hba1c_1": [],
-          "cov_date_hba1c_2": [],
-          "cov_num_hba1c_2": [],
-          "cov_date_hba1c_3": [],
-          "cov_num_hba1c_3": [],
-          "cov_date_hba1c_4": [],
-          "cov_num_hba1c_4": [],
-          "cov_date_hba1c_5": [],
-          "cov_num_hba1c_5": [],
-          "cov_date_hba1c_6": [],
-          "cov_num_hba1c_6": [],
-          "cov_date_hba1c_7": [],
-          "cov_num_hba1c_7": [],
-          "cov_date_hba1c_8": [],
-          "cov_num_hba1c_8": [],
-          "cov_date_chol_1": [],
-          "cov_num_chol_1": [],
-          "cov_date_chol_2": [],
-          "cov_num_chol_2": [],
-          "cov_date_chol_3": [],
-          "cov_num_chol_3": [],
-          "cov_date_chol_4": [],
-          "cov_num_chol_4": [],
-          "cov_date_chol_5": [],
-          "cov_num_chol_5": [],
-          "cov_date_chol_6": [],
-          "cov_num_chol_6": [],
-          "cov_date_chol_7": [],
-          "cov_num_chol_7": [],
-          "cov_date_chol_8": [],
-          "cov_num_chol_8": [],
-          "cov_date_hdl_chol_1": [],
-          "cov_num_hdl_chol_1": [],
-          "cov_date_hdl_chol_2": [],
-          "cov_num_hdl_chol_2": [],
-          "cov_date_hdl_chol_3": [],
-          "cov_num_hdl_chol_3": [],
-          "cov_date_hdl_chol_4": [],
-          "cov_num_hdl_chol_4": [],
-          "cov_date_hdl_chol_5": [],
-          "cov_num_hdl_chol_5": [],
-          "cov_date_hdl_chol_6": [],
-          "cov_num_hdl_chol_6": [],
-          "cov_date_hdl_chol_7": [],
-          "cov_num_hdl_chol_7": [],
-          "cov_date_hdl_chol_8": [],
-          "cov_num_hdl_chol_8": []
+          "tmp_elig_count_t2dm": [],
+          "tmp_elig_date_otherdm": [],
+          "tmp_elig_count_otherdm": [],
+          "tmp_elig_date_gestationaldm": [],
+          "tmp_elig_date_poccdm": [],
+          "tmp_elig_count_poccdm_ctv3": [],
+          "tmp_elig_num_max_hba1c_mmol_mol": [],
+          "tmp_elig_date_max_hba1c": [],
+          "tmp_elig_date_insulin": [],
+          "tmp_elig_date_antidiabetic_drugs": [],
+          "tmp_elig_date_nonmetform_drugs": [],
+          "tmp_elig_date_diabetes_medication": [],
+          "tmp_elig_date_first_diabetes_diag": []
         }
       }
     },
@@ -4464,6 +4484,47 @@
     "opensafely/mainroute_cancer": {
       "sha": "750f9804609c613eff525a31b356582960078508",
       "files": {
+        "analysis/define_static_dataset_fit.py": {
+          "period_entry": [],
+          "period_exit": [],
+          "follow_up_years": [],
+          "colorectal_ca_diag": [
+            [
+              "codelists/phc-phc-colorectal-cancer-snomed.csv",
+              "column=code"
+            ]
+          ],
+          "colorectal_ca_diag_date": [
+            [
+              "codelists/phc-phc-colorectal-cancer-snomed.csv",
+              "column=code"
+            ]
+          ],
+          "age": [],
+          "age_group": [],
+          "sex": [],
+          "imd5": [],
+          "ethnicity6": [
+            [
+              "codelists/opensafely-ethnicity-snomed-0removed.csv",
+              "category_column=Grouping_6",
+              "column=snomedcode"
+            ]
+          ],
+          "region": [],
+          "num_fit": [
+            [
+              "codelists/phc-fit-test.csv",
+              "column=code"
+            ]
+          ],
+          "fit_test_positive": [
+            [
+              "codelists/phc-fit-test.csv",
+              "column=code"
+            ]
+          ]
+        },
         "analysis/define_static_dataset.py": {
           "period_entry": [],
           "period_exit": [],
@@ -4593,47 +4654,6 @@
           "apcs_6w_icd10": [],
           "apcs_6w_hrg": [],
           "gp_events_snomed": []
-        },
-        "analysis/define_static_dataset_fit.py": {
-          "period_entry": [],
-          "period_exit": [],
-          "follow_up_years": [],
-          "colorectal_ca_diag": [
-            [
-              "codelists/phc-phc-colorectal-cancer-snomed.csv",
-              "column=code"
-            ]
-          ],
-          "colorectal_ca_diag_date": [
-            [
-              "codelists/phc-phc-colorectal-cancer-snomed.csv",
-              "column=code"
-            ]
-          ],
-          "age": [],
-          "age_group": [],
-          "sex": [],
-          "imd5": [],
-          "ethnicity6": [
-            [
-              "codelists/opensafely-ethnicity-snomed-0removed.csv",
-              "category_column=Grouping_6",
-              "column=snomedcode"
-            ]
-          ],
-          "region": [],
-          "num_fit": [
-            [
-              "codelists/phc-fit-test.csv",
-              "column=code"
-            ]
-          ],
-          "fit_test_positive": [
-            [
-              "codelists/phc-fit-test.csv",
-              "column=code"
-            ]
-          ]
         }
       }
     },
