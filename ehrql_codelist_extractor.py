@@ -139,7 +139,7 @@ def collect_codelists(
     cache_dir = pathlib.Path(".ehrql_repo_cache")
     cache_dir.mkdir(exist_ok=True)
 
-    # Clone repos and find dataset files (reuses existing functionality)
+    # Clone repos and find dataset files
     local_repos = clone_ehrql_repos(repos, cache_dir, silent=silent, verbose=verbose)
     all_dataset_files = get_dataset_files(local_repos, silent=silent, verbose=verbose)
 
