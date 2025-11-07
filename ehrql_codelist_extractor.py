@@ -13,6 +13,7 @@ import argparse
 import datetime
 import json
 import pathlib
+import re
 import sys
 import time
 
@@ -21,6 +22,85 @@ from parsing.ehrql_github_helpers import (
     get_dataset_files,
 )
 from parsing.ehrql_variable_extractor import extract_variable_codelists
+
+
+def should_ignore_variable(var_name: str) -> bool:
+    """Check if a variable should be ignored in the empty codelists report.
+
+    Args:
+        var_name: The variable name to check
+
+    Returns:
+        True if the variable should be ignored, False otherwise
+    """
+    # Ignore list
+    ignore_exact = [
+        "care_home_tpp",
+    ]
+    if var_name in ignore_exact:
+        return True
+    ignore_regex = [
+        # Add regex patterns here if needed in the future
+        # e.g., re.compile(r"^age_\d+$"),
+        r"^age.*$",
+        r"^sex.*$",
+        r"^imd.*$",
+        r"^ethnicity.*$",
+        r"^region.*$",
+        r"^death.*$",
+        r"^dereg.*$",
+        r"^stp.*$",
+    ]
+    for pattern in ignore_regex:
+        if re.compile(pattern).match(var_name):
+            return True
+    return False
+
+
+def generate_empty_codelists_report(out_map: dict[str, dict]) -> None:
+    """Generate and display a report of variables with no codelists found.
+
+    Args:
+        out_map: The output map containing project -> files -> variables -> codelists
+    """
+    empty_vars = []
+
+    # Collect all variables with empty codelists
+    for repo, proj_data in out_map.items():
+        for file_path, file_vars in proj_data.get("files", {}).items():
+            for var_name, codelist_calls in file_vars.items():
+                # Check if codelists list is empty and not in ignore list
+                if not codelist_calls and not should_ignore_variable(var_name):
+                    empty_vars.append((repo, file_path, var_name))
+
+    # Sort for consistent output
+    empty_vars.sort()
+
+    # Display report
+    print("\n" + "=" * 80, file=sys.stderr)
+    print("VARIABLES WITH NO CODELISTS FOUND", file=sys.stderr)
+    print("=" * 80, file=sys.stderr)
+
+    if not empty_vars:
+        print(
+            "\n✓ All variables have codelists (or are in the ignore list)",
+            file=sys.stderr,
+        )
+    else:
+        print(
+            f"\nTotal: {len(empty_vars)} variables with empty codelists",
+            file=sys.stderr,
+        )
+        print("\nTop 40:", file=sys.stderr)
+        print("-" * 80, file=sys.stderr)
+
+        for repo, file_path, var_name in empty_vars[:40]:
+            print(f"{repo} | {file_path} | {var_name}", file=sys.stderr)
+
+        if len(empty_vars) > 40:
+            print(f"\n... and {len(empty_vars) - 40} more", file=sys.stderr)
+
+    print("=" * 80 + "\n", file=sys.stderr)
 
 
 def collect_codelists(
@@ -207,6 +287,9 @@ def collect_codelists(
             f"\nTotal execution time: {total_duration:.1f}s",
             file=sys.stderr,
         )
+
+        # Generate report of variables with no codelists
+        generate_empty_codelists_report(out_map)
 
 
 def parse_args(argv: list[str]) -> argparse.Namespace:
