@@ -840,13 +840,23 @@ class CodelistTracer:
             # Check if obj_name is an imported class/module
             if obj_name in import_collector.imported_modules:
                 module_name, original_name = import_collector.imported_modules[obj_name]
-                target_class = original_name or obj_name
 
-                # Trace through the imported module to find the attribute
-                calls = self._trace_class_attribute(
-                    module_name, target_class, attr_name, import_collector, depth
-                )
-                codelist_calls.extend(calls)
+                # Check if this is a simple module import (import codelists)
+                # vs a from-import (from codelists import X)
+                if original_name is None:
+                    # This is "import module_name" so trace the attribute in that module
+                    calls = self._trace_imported_name(
+                        module_name, attr_name, import_collector, depth
+                    )
+                    codelist_calls.extend(calls)
+                else:
+                    # This is "from module_name import original_name as obj_name"
+                    # Treat as class attribute access
+                    target_class = original_name
+                    calls = self._trace_class_attribute(
+                        module_name, target_class, attr_name, import_collector, depth
+                    )
+                    codelist_calls.extend(calls)
             else:
                 # Check if it's a local class
                 calls = self._trace_local_class_attribute(
@@ -2494,12 +2504,19 @@ class VariableExtractor:
                                     node.value, tree, import_collector, self.file_path
                                 )
                             )
-                            # Convert to tuples
+                            # Convert to tuples and deduplicate
                             codelists = [
                                 self._codelist_call_to_tuple(call)
                                 for call in codelist_calls
                             ]
-                            variable_codelists[var_name] = codelists
+                            # Deduplicate while preserving order
+                            seen = set()
+                            unique_codelists = []
+                            for codelist in codelists:
+                                if codelist not in seen:
+                                    seen.add(codelist)
+                                    unique_codelists.append(codelist)
+                            variable_codelists[var_name] = unique_codelists
 
         # Pass 2: dataset.add_column() calls
         for node in ast.walk(tree):
@@ -2526,12 +2543,19 @@ class VariableExtractor:
                                         self.file_path,
                                     )
                                 )
-                                # Convert to tuples
+                                # Convert to tuples and deduplicate
                                 codelists = [
                                     self._codelist_call_to_tuple(call)
                                     for call in codelist_calls
                                 ]
-                                variable_codelists[var_name] = codelists
+                                # Deduplicate while preserving order
+                                seen = set()
+                                unique_codelists = []
+                                for codelist in codelists:
+                                    if codelist not in seen:
+                                        seen.add(codelist)
+                                        unique_codelists.append(codelist)
+                                variable_codelists[var_name] = unique_codelists
 
         # Pass 3: Check for variables defined in helper functions
         # This handles patterns like: dataset = create_dataset()
@@ -2593,7 +2617,14 @@ class VariableExtractor:
                                 self._codelist_call_to_tuple(call)
                                 for call in codelist_calls
                             ]
-                            variable_codelists[var_name] = codelists
+                            # Deduplicate while preserving order
+                            seen = set()
+                            unique_codelists = []
+                            for codelist in codelists:
+                                if codelist not in seen:
+                                    seen.add(codelist)
+                                    unique_codelists.append(codelist)
+                            variable_codelists[var_name] = unique_codelists
 
             # Also check for add_column calls
             elif isinstance(node, ast.Call):
@@ -2617,7 +2648,14 @@ class VariableExtractor:
                                     self._codelist_call_to_tuple(call)
                                     for call in codelist_calls
                                 ]
-                                variable_codelists[var_name] = codelists
+                                # Deduplicate while preserving order
+                                seen = set()
+                                unique_codelists = []
+                                for codelist in codelists:
+                                    if codelist not in seen:
+                                        seen.add(codelist)
+                                        unique_codelists.append(codelist)
+                                variable_codelists[var_name] = unique_codelists
 
         return variable_codelists
 
