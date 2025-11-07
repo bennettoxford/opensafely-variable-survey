@@ -154,3 +154,108 @@ def group_items_by_repo(items: list[dict]) -> dict:
             )
         grouped[repo] = head_sha
     return grouped
+
+
+def clone_repos(
+    all_repos: tuple[str, str],
+    repos: list[str],
+    cache_dir: pathlib.Path,
+    silent: bool = False,
+    verbose: bool = False,
+) -> tuple[str, str, str]:
+    """Clone or update GitHub repos to local base_dir.
+
+    repos: tuple of (full_repo_name, ref_sha)
+    Returns dict of repo name to local path.
+    """
+    local_repos = []
+    for repo_full_name, ref_sha in all_repos:
+        owner, repo_name = repo_full_name.split("/", 1)
+
+        if repos and repo_full_name not in repos and repo_name not in repos:
+            if verbose:
+                print(f"..Skipping {repo_full_name}", file=sys.stderr)
+            continue
+
+        if not silent:
+            print(f"\n==> {repo_full_name} ({ref_sha[:7]})", file=sys.stderr)
+
+        repo_local_dir = cache_dir / f"{repo_name}-{ref_sha[:8]}"
+        if not repo_local_dir.exists():
+            clone_url = f"https://github.com/{owner}/{repo_name}.git"
+            cmd = [
+                "git",
+                "clone",
+                "--depth",
+                "1",
+                clone_url,
+                str(repo_local_dir),
+            ]
+            proc = subprocess.run(cmd, capture_output=True, text=True)
+            if proc.returncode != 0 and not silent:
+                print(
+                    f"..Clone failed {owner}/{repo_name}: {proc.stderr.strip()}",
+                    file=sys.stderr,
+                )
+            else:
+                if verbose:
+                    print(
+                        f"..Cloned {repo_full_name} to {repo_local_dir}",
+                        file=sys.stderr,
+                    )
+        else:
+            if verbose:
+                print(f"..Using cached clone at {repo_local_dir}", file=sys.stderr)
+        local_repos.append((repo_full_name, ref_sha, repo_local_dir))
+    return local_repos
+
+
+def clone_ehrql_repos(
+    repos: list[str],
+    cache_dir: pathlib.Path,
+    silent: bool = False,
+    verbose: bool = False,
+):
+    project_yaml_files = project_yaml_search(verbose=verbose)
+    ehrql_repos = group_items_by_repo(project_yaml_files)
+
+    if not silent:
+        print(
+            f"Found {len(project_yaml_files)} project.yaml files in {len(ehrql_repos)} opensafely ehrql repos",
+            file=sys.stderr,
+        )
+
+    local_ehrql_repos = clone_repos(
+        ehrql_repos.items(), repos, cache_dir, silent=silent, verbose=verbose
+    )
+    return local_ehrql_repos
+
+
+def get_dataset_files(
+    local_repos: list[tuple[str, str, pathlib.Path]],
+    silent: bool = False,
+    verbose: bool = False,
+) -> dict[str, (str, list[str], pathlib.Path)]:
+    """Get dataset definition files from local cloned repos."""
+    all_dataset_files: dict[str, (str, list[str], pathlib.Path)] = {}
+    for repo_full, head_sha, repo_local_dir in local_repos:
+        dataset_files = parse_project_yaml(repo_local_dir)
+
+        if dataset_files:
+            all_dataset_files[repo_full] = (
+                head_sha,
+                dataset_files,
+                repo_local_dir,
+            )
+            if verbose:
+                print(
+                    f"..Found {len(dataset_files)} dataset files in project.yaml: {dataset_files}",
+                    file=sys.stderr,
+                )
+        else:
+            if not silent:
+                print(
+                    "..No ehrql generate_dataset commands found in project.yaml",
+                    file=sys.stderr,
+                )
+    return all_dataset_files
