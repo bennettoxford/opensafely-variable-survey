@@ -411,6 +411,56 @@ class Codelists(Enum):
         )
 
 
+def test_inline_literal_codelist_detection():
+    """Inline Python lists of codes should be surfaced as codelists."""
+
+    dataset_code = """
+from ehrql import create_dataset
+import codelists
+
+dataset = create_dataset()
+
+
+def next_emergency_attendance(index_date, diagnoses_contains_any_of=None):
+    return diagnoses_contains_any_of
+
+
+dataset.covid_emergency_date = next_emergency_attendance(
+    "2023-01-01", codelists.covid_emergency_codes
+)
+"""
+
+    codelists_code = """
+covid_emergency_codes = [
+    "1240751000000100",
+    "1325171000000109",
+    "1325181000000106",
+]
+"""
+
+    with tempfile.TemporaryDirectory() as tmpdir:
+        repo_root = pathlib.Path(tmpdir)
+        file_path = repo_root / "dataset_definition.py"
+        file_path.write_text(dataset_code)
+
+        codelists_path = repo_root / "codelists.py"
+        codelists_path.write_text(codelists_code)
+
+        codelists = extract_variable_codelists(file_path, repo_root)
+
+        assert "covid_emergency_date" in codelists
+        calls = codelists["covid_emergency_date"]
+        assert len(calls) == 1, "Should detect inline literal as a codelist"
+
+        inline_call = calls[0]
+        assert inline_call[0] == "<inline>", inline_call
+        assert any(part.startswith("source=codelists.py:") for part in inline_call[1:])
+        assert any(
+            part.startswith("values=1240751000000100|1325171000000109|1325181000000106")
+            for part in inline_call[1:]
+        )
+
+
 if __name__ == "__main__":
     import pytest
 

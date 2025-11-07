@@ -637,6 +637,8 @@ class ImportCollector:
 class CodelistTracer:
     """Traces codelist_from_csv calls through variable and function calls."""
 
+    INLINE_CODELIST_SENTINEL = "<inline>"
+
     def __init__(self, module_resolver: ModuleResolver):
         self.module_resolver = module_resolver
         self._visited_vars: set[tuple[str, str]] = set()  # (file_path, var_name)
@@ -692,6 +694,10 @@ class CodelistTracer:
 
         # Walk through all nodes in the expression
         for node in ast.walk(expr):
+            inline_call = self._extract_inline_literal(node, file_path)
+            if inline_call is not None:
+                codelist_calls.append(inline_call)
+
             # Direct codelist_from_csv call
             if isinstance(node, ast.Call):
                 calls = self._check_for_codelist_call(node)
@@ -712,6 +718,56 @@ class CodelistTracer:
                 codelist_calls.extend(calls)
 
         return codelist_calls
+
+    def _extract_inline_literal(
+        self, node: ast.AST, file_path: pathlib.Path
+    ) -> CodelistCall | None:
+        """Detect inline lists/tuples of literal codes and treat them as codelists."""
+
+        literal_nodes = (ast.List, ast.Tuple, ast.Set)
+        if not isinstance(node, literal_nodes):
+            return None
+
+        if not self._looks_like_codelist_file(file_path):
+            return None
+
+        values: list[str] = []
+        for element in getattr(node, "elts", []):
+            literal = self._literal_value_to_str(element)
+            if literal is None:
+                return None
+            values.append(literal)
+
+        if not values:
+            return None
+
+        rel_path = self.module_resolver.get_relative_path(file_path)
+        line = getattr(node, "lineno", None)
+        source = f"{rel_path}:{line}" if line is not None else rel_path
+        kwargs = {
+            "length": str(len(values)),
+            "source": source,
+            "values": "|".join(values),
+        }
+        return CodelistCall(
+            args=(self.INLINE_CODELIST_SENTINEL,),
+            kwargs=kwargs,
+        )
+
+    @staticmethod
+    def _literal_value_to_str(node: ast.AST) -> str | None:
+        """Convert a Constant literal to string if it looks like a code."""
+
+        if isinstance(node, ast.Constant):
+            if isinstance(node.value, (str, int, float)):
+                return str(node.value)
+        return None
+
+    @staticmethod
+    def _looks_like_codelist_file(file_path: pathlib.Path) -> bool:
+        """Heuristic to limit inline detection to codelist-focused modules."""
+
+        return "codelist" in str(file_path).lower()
 
     def _check_for_codelist_call(self, call_node: ast.Call) -> list[CodelistCall]:
         """Check if a Call node is a codelist_from_csv call and extract it.

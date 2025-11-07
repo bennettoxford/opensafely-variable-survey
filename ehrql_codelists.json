@@ -1,5 +1,5 @@
 {
-  "generated_at": "2025-11-07 12:26:18",
+  "generated_at": "2025-11-07 14:31:39",
   "projects": {
     "opensafely/ADHD-Pre-and-Post-Covid": {
       "sha": "deea8462d4e7ad69ed2bf3d89ee1b31c336056ea",
@@ -396,34 +396,78 @@
             [
               "codelists/opensafely-covid-identification.csv",
               "column=icd10_code"
+            ],
+            [
+              "<inline>",
+              "length=3",
+              "source=analysis/1-extract/codelists.py:21",
+              "values=U071|U072|U109"
             ]
           ],
           "covid_critcare": [
             [
               "codelists/opensafely-covid-identification.csv",
               "column=icd10_code"
+            ],
+            [
+              "<inline>",
+              "length=3",
+              "source=analysis/1-extract/codelists.py:21",
+              "values=U071|U072|U109"
             ]
           ],
           "covid_critcare_date": [
             [
               "codelists/opensafely-covid-identification.csv",
               "column=icd10_code"
+            ],
+            [
+              "<inline>",
+              "length=3",
+              "source=analysis/1-extract/codelists.py:21",
+              "values=U071|U072|U109"
             ]
           ],
           "covid_death_date": [
             [
               "codelists/opensafely-covid-identification.csv",
               "column=icd10_code"
+            ],
+            [
+              "<inline>",
+              "length=3",
+              "source=analysis/1-extract/codelists.py:21",
+              "values=U071|U072|U109"
             ]
           ],
-          "covid_emergency_date": [],
+          "covid_emergency_date": [
+            [
+              "<inline>",
+              "length=3",
+              "source=analysis/1-extract/codelists.py:28",
+              "values=1240751000000100|1325171000000109|1325181000000106"
+            ]
+          ],
           "covid_prior_admitted": [
             [
               "codelists/opensafely-covid-identification.csv",
               "column=icd10_code"
+            ],
+            [
+              "<inline>",
+              "length=3",
+              "source=analysis/1-extract/codelists.py:21",
+              "values=U071|U072|U109"
             ]
           ],
-          "covid_prior_emergency": [],
+          "covid_prior_emergency": [
+            [
+              "<inline>",
+              "length=3",
+              "source=analysis/1-extract/codelists.py:28",
+              "values=1240751000000100|1325171000000109|1325181000000106"
+            ]
+          ],
           "death_date": [],
           "dereg_date": [],
           "dvt_admitted_date": [
@@ -1380,6 +1424,12 @@
               "column=icd10_code"
             ],
             [
+              "<inline>",
+              "length=1",
+              "source=analysis/codelists_ehrql.py:9",
+              "values=1240751000000100"
+            ],
+            [
               "codelists/opensafely-covid-identification-in-primary-care-probable-covid-sequelae.csv",
               "column=CTV3ID"
             ],
@@ -1398,6 +1448,12 @@
               "column=icd10_code"
             ],
             [
+              "<inline>",
+              "length=1",
+              "source=analysis/codelists_ehrql.py:9",
+              "values=1240751000000100"
+            ],
+            [
               "codelists/opensafely-covid-identification-in-primary-care-probable-covid-sequelae.csv",
               "column=CTV3ID"
             ],
@@ -1414,6 +1470,12 @@
             [
               "codelists/opensafely-covid-identification.csv",
               "column=icd10_code"
+            ],
+            [
+              "<inline>",
+              "length=1",
+              "source=analysis/codelists_ehrql.py:9",
+              "values=1240751000000100"
             ],
             [
               "codelists/opensafely-covid-identification-in-primary-care-probable-covid-sequelae.csv",
@@ -1453,9 +1515,30 @@
               "column=icd10_code"
             ]
           ],
-          "covidemergency_01": [],
-          "covidemergency_14": [],
-          "covidemergency_ever": [],
+          "covidemergency_01": [
+            [
+              "<inline>",
+              "length=1",
+              "source=analysis/codelists_ehrql.py:9",
+              "values=1240751000000100"
+            ]
+          ],
+          "covidemergency_14": [
+            [
+              "<inline>",
+              "length=1",
+              "source=analysis/codelists_ehrql.py:9",
+              "values=1240751000000100"
+            ]
+          ],
+          "covidemergency_ever": [
+            [
+              "<inline>",
+              "length=1",
+              "source=analysis/codelists_ehrql.py:9",
+              "values=1240751000000100"
+            ]
+          ],
           "has_died": [],
           "msoa": [],
           "postest_01": [],
@@ -1526,7 +1609,14 @@
       "sha": "f73ba9a6e29f3acc9de4155cd2b8fe12e3c45f66",
       "files": {
         "analysis/1-extract/dataset_definition_fixed.py": {
-          "covid_death_date": [],
+          "covid_death_date": [
+            [
+              "<inline>",
+              "length=3",
+              "source=analysis/1-extract/codelists.py:260",
+              "values=U071|U072|U109"
+            ]
+          ],
           "covid_vax_count": [],
           "death_date": [],
           "ethnicity16": [
@@ -1778,6 +1868,12 @@
             [
               "codelists/user-markdrussell-psoriatic-arthritis.csv",
               "column=code"
+            ],
+            [
+              "<inline>",
+              "length=2",
+              "source=analysis/codelists_ehrQL.py:93",
+              "values=60621009|846931000000101"
             ]
           ],
           "bmi_date": [
@@ -1796,6 +1892,12 @@
             [
               "codelists/user-markdrussell-psoriatic-arthritis.csv",
               "column=code"
+            ],
+            [
+              "<inline>",
+              "length=2",
+              "source=analysis/codelists_ehrQL.py:93",
+              "values=60621009|846931000000101"
             ]
           ],
           "chronic_cardiac_disease": [
@@ -1822,8 +1924,22 @@
               "column=CTV3ID"
             ]
           ],
-          "creatinine": [],
-          "creatinine_date": [],
+          "creatinine": [
+            [
+              "<inline>",
+              "length=1",
+              "source=analysis/codelists_ehrQL.py:87",
+              "values=XE2q5"
+            ]
+          ],
+          "creatinine_date": [
+            [
+              "<inline>",
+              "length=1",
+              "source=analysis/codelists_ehrQL.py:87",
+              "values=XE2q5"
+            ]
+          ],
           "curr_reg_end": [
             [
               "codelists/user-markdrussell-undiff-eia.csv",
@@ -2000,10 +2116,38 @@
               "column=code"
             ]
           ],
-          "hba1c_mmol_per_mol": [],
-          "hba1c_mmol_per_mol_date": [],
-          "hba1c_percentage": [],
-          "hba1c_percentage_date": [],
+          "hba1c_mmol_per_mol": [
+            [
+              "<inline>",
+              "length=3",
+              "source=analysis/codelists_ehrQL.py:50",
+              "values=XaPbt|Xaeze|Xaezd"
+            ]
+          ],
+          "hba1c_mmol_per_mol_date": [
+            [
+              "<inline>",
+              "length=3",
+              "source=analysis/codelists_ehrQL.py:50",
+              "values=XaPbt|Xaeze|Xaezd"
+            ]
+          ],
+          "hba1c_percentage": [
+            [
+              "<inline>",
+              "length=3",
+              "source=analysis/codelists_ehrQL.py:51",
+              "values=X772q|XaERo|XaERp"
+            ]
+          ],
+          "hba1c_percentage_date": [
+            [
+              "<inline>",
+              "length=3",
+              "source=analysis/codelists_ehrQL.py:51",
+              "values=X772q|XaERo|XaERp"
+            ]
+          ],
           "hydroxychloroquine_count": [
             [
               "codelists/opensafely-hydroxychloroquine.csv",
@@ -2680,8 +2824,22 @@
       "sha": "608419e525f45aaaf1070d96b578c9f179ef165d",
       "files": {
         "analysis/dataset_definition_eia.py": {
-          "bmi_date": [],
-          "bmi_value": [],
+          "bmi_date": [
+            [
+              "<inline>",
+              "length=2",
+              "source=analysis/codelists_ehrQL.py:243",
+              "values=60621009|846931000000101"
+            ]
+          ],
+          "bmi_value": [
+            [
+              "<inline>",
+              "length=2",
+              "source=analysis/codelists_ehrQL.py:243",
+              "values=60621009|846931000000101"
+            ]
+          ],
           "ccp_code_date": [
             [
               "codelists/user-markdrussell-cyclic-citrullinated-peptide-ccp-antibody-positive-finding.csv",
@@ -3106,7 +3264,14 @@
           "corona_ieorres_isaric": [],
           "covid19_vaccine_isaric": [],
           "covid19_vaccine_pc": [],
-          "days_in_critical_care": [],
+          "days_in_critical_care": [
+            [
+              "<inline>",
+              "length=4",
+              "source=analysis/codelists_ehrql.py:25",
+              "values=U071|U072|U109|U099"
+            ]
+          ],
           "death_date": [],
           "dementia_isaric": [],
           "dereg_date_pc": [],
@@ -3144,7 +3309,14 @@
           "non_covid_admission_SUS_2days": [],
           "non_covid_admission_SUS_same_date": [],
           "obesity_isaric": [],
-          "obesity_pc": [],
+          "obesity_pc": [
+            [
+              "<inline>",
+              "length=2",
+              "source=analysis/codelists_ehrql.py:172",
+              "values=60621009|846931000000101"
+            ]
+          ],
           "ons_death_date": [],
           "prior_dereg_date_pc": [],
           "probable_covid_date_pc": [
@@ -3206,7 +3378,14 @@
           "in_hospital_death": [],
           "last_positive_test_date_sus": [],
           "n_admissions": [],
-          "obesity_sus": [],
+          "obesity_sus": [
+            [
+              "<inline>",
+              "length=2",
+              "source=analysis/codelists_ehrql.py:172",
+              "values=60621009|846931000000101"
+            ]
+          ],
           "ons_death_date": [],
           "prior_dereg_date_sus": [],
           "probable_covid_date_sus": [
@@ -4600,17 +4779,211 @@
               "column=snomedcode"
             ]
           ],
-          "has_pf_consultation": [],
+          "has_pf_consultation": [
+            [
+              "<inline>",
+              "length=1",
+              "source=analysis/codelists.py:76",
+              "values=1577041000000109"
+            ],
+            [
+              "<inline>",
+              "length=1",
+              "source=analysis/codelists.py:78",
+              "values=983341000000102"
+            ],
+            [
+              "<inline>",
+              "length=1",
+              "source=analysis/codelists.py:80",
+              "values=2129921000000100"
+            ]
+          ],
           "imd": [],
-          "impetigo_numerator": [],
-          "insectbite_numerator": [],
-          "otitismedia_numerator": [],
+          "impetigo_numerator": [
+            [
+              "<inline>",
+              "length=1",
+              "source=analysis/codelists.py:76",
+              "values=1577041000000109"
+            ],
+            [
+              "<inline>",
+              "length=1",
+              "source=analysis/codelists.py:78",
+              "values=983341000000102"
+            ],
+            [
+              "<inline>",
+              "length=1",
+              "source=analysis/codelists.py:80",
+              "values=2129921000000100"
+            ],
+            [
+              "<inline>",
+              "length=1",
+              "source=analysis/codelists.py:100",
+              "values=48277006"
+            ]
+          ],
+          "insectbite_numerator": [
+            [
+              "<inline>",
+              "length=1",
+              "source=analysis/codelists.py:76",
+              "values=1577041000000109"
+            ],
+            [
+              "<inline>",
+              "length=1",
+              "source=analysis/codelists.py:78",
+              "values=983341000000102"
+            ],
+            [
+              "<inline>",
+              "length=1",
+              "source=analysis/codelists.py:80",
+              "values=2129921000000100"
+            ],
+            [
+              "<inline>",
+              "length=1",
+              "source=analysis/codelists.py:96",
+              "values=262550002"
+            ]
+          ],
+          "otitismedia_numerator": [
+            [
+              "<inline>",
+              "length=1",
+              "source=analysis/codelists.py:76",
+              "values=1577041000000109"
+            ],
+            [
+              "<inline>",
+              "length=1",
+              "source=analysis/codelists.py:78",
+              "values=983341000000102"
+            ],
+            [
+              "<inline>",
+              "length=1",
+              "source=analysis/codelists.py:80",
+              "values=2129921000000100"
+            ],
+            [
+              "<inline>",
+              "length=1",
+              "source=analysis/codelists.py:97",
+              "values=3110003"
+            ]
+          ],
           "region": [],
           "sex": [],
-          "shingles_numerator": [],
-          "sinusitis_numerator": [],
-          "sorethroat_numerator": [],
-          "uti_numerator": []
+          "shingles_numerator": [
+            [
+              "<inline>",
+              "length=1",
+              "source=analysis/codelists.py:76",
+              "values=1577041000000109"
+            ],
+            [
+              "<inline>",
+              "length=1",
+              "source=analysis/codelists.py:78",
+              "values=983341000000102"
+            ],
+            [
+              "<inline>",
+              "length=1",
+              "source=analysis/codelists.py:80",
+              "values=2129921000000100"
+            ],
+            [
+              "<inline>",
+              "length=1",
+              "source=analysis/codelists.py:99",
+              "values=4740000"
+            ]
+          ],
+          "sinusitis_numerator": [
+            [
+              "<inline>",
+              "length=1",
+              "source=analysis/codelists.py:76",
+              "values=1577041000000109"
+            ],
+            [
+              "<inline>",
+              "length=1",
+              "source=analysis/codelists.py:78",
+              "values=983341000000102"
+            ],
+            [
+              "<inline>",
+              "length=1",
+              "source=analysis/codelists.py:80",
+              "values=2129921000000100"
+            ],
+            [
+              "<inline>",
+              "length=1",
+              "source=analysis/codelists.py:95",
+              "values=15805002"
+            ]
+          ],
+          "sorethroat_numerator": [
+            [
+              "<inline>",
+              "length=1",
+              "source=analysis/codelists.py:76",
+              "values=1577041000000109"
+            ],
+            [
+              "<inline>",
+              "length=1",
+              "source=analysis/codelists.py:78",
+              "values=983341000000102"
+            ],
+            [
+              "<inline>",
+              "length=1",
+              "source=analysis/codelists.py:80",
+              "values=2129921000000100"
+            ],
+            [
+              "<inline>",
+              "length=1",
+              "source=analysis/codelists.py:98",
+              "values=363746003"
+            ]
+          ],
+          "uti_numerator": [
+            [
+              "<inline>",
+              "length=1",
+              "source=analysis/codelists.py:76",
+              "values=1577041000000109"
+            ],
+            [
+              "<inline>",
+              "length=1",
+              "source=analysis/codelists.py:78",
+              "values=983341000000102"
+            ],
+            [
+              "<inline>",
+              "length=1",
+              "source=analysis/codelists.py:80",
+              "values=2129921000000100"
+            ],
+            [
+              "<inline>",
+              "length=1",
+              "source=analysis/codelists.py:94",
+              "values=1090711000000102"
+            ]
+          ]
         }
       }
     },
@@ -5309,18 +5682,60 @@
               "column=code"
             ]
           ],
-          "ccare_covid60d6m_date": [],
-          "ccare_covid_first_af_treat_alldiag_date": [],
-          "covid_death_60d_12m": [],
-          "covid_death_60d_24m": [],
-          "covid_death_60d_6m": [],
+          "ccare_covid60d6m_date": [
+            [
+              "<inline>",
+              "length=4",
+              "source=analysis/codelists.py:9",
+              "values=U071|U072|U099|U109"
+            ]
+          ],
+          "ccare_covid_first_af_treat_alldiag_date": [
+            [
+              "<inline>",
+              "length=4",
+              "source=analysis/codelists.py:9",
+              "values=U071|U072|U099|U109"
+            ]
+          ],
+          "covid_death_60d_12m": [
+            [
+              "<inline>",
+              "length=4",
+              "source=analysis/codelists.py:9",
+              "values=U071|U072|U099|U109"
+            ]
+          ],
+          "covid_death_60d_24m": [
+            [
+              "<inline>",
+              "length=4",
+              "source=analysis/codelists.py:9",
+              "values=U071|U072|U099|U109"
+            ]
+          ],
+          "covid_death_60d_6m": [
+            [
+              "<inline>",
+              "length=4",
+              "source=analysis/codelists.py:9",
+              "values=U071|U072|U099|U109"
+            ]
+          ],
           "covid_vacc1_date": [],
           "covid_vacc2_date": [],
           "covid_vacc3_date": [],
           "covid_vacc4_date": [],
           "covid_vacc_last_date": [],
           "date_of_first_admis_af_treat": [],
-          "death_cause_covid": [],
+          "death_cause_covid": [
+            [
+              "<inline>",
+              "length=4",
+              "source=analysis/codelists.py:9",
+              "values=U071|U072|U099|U109"
+            ]
+          ],
           "dereg_date": [],
           "dereg_date1": [],
           "dialysis": [
@@ -5382,9 +5797,30 @@
               "column=code"
             ]
           ],
-          "had_ccare_covid60d12m": [],
-          "had_ccare_covid60d24m": [],
-          "had_ccare_covid60d6m": [],
+          "had_ccare_covid60d12m": [
+            [
+              "<inline>",
+              "length=4",
+              "source=analysis/codelists.py:9",
+              "values=U071|U072|U099|U109"
+            ]
+          ],
+          "had_ccare_covid60d24m": [
+            [
+              "<inline>",
+              "length=4",
+              "source=analysis/codelists.py:9",
+              "values=U071|U072|U099|U109"
+            ]
+          ],
+          "had_ccare_covid60d6m": [
+            [
+              "<inline>",
+              "length=4",
+              "source=analysis/codelists.py:9",
+              "values=U071|U072|U099|U109"
+            ]
+          ],
           "had_ccare_covid_bf30d": [],
           "had_ccare_covid_bf60d": [],
           "had_chronic_cardiac_disease": [
@@ -5574,6 +6010,12 @@
             [
               "codelists/opensafely-kidney-transplant.csv",
               "column=CTV3ID"
+            ],
+            [
+              "<inline>",
+              "length=1",
+              "source=analysis/codelists.py:32",
+              "values=Z940"
             ]
           ],
           "had_learning_disability": [
@@ -6012,6 +6454,12 @@
               "column=CTV3ID"
             ],
             [
+              "<inline>",
+              "length=1",
+              "source=analysis/codelists.py:32",
+              "values=Z940"
+            ],
+            [
               "codelists/nhsd-oral-steroid-drugs-pra-dmd.csv",
               "column=dmd_id"
             ],
@@ -6138,6 +6586,12 @@
               "column=CTV3ID"
             ],
             [
+              "<inline>",
+              "length=1",
+              "source=analysis/codelists.py:32",
+              "values=Z940"
+            ],
+            [
               "codelists/nhsd-immunosuppresant-drugs-pra-dmd.csv",
               "column=code"
             ],
@@ -6166,8 +6620,22 @@
               "column=code"
             ]
           ],
-          "hosp_60daf_treat_alldiag_date": [],
-          "hosp_af_treat_alldiag_date": [],
+          "hosp_60daf_treat_alldiag_date": [
+            [
+              "<inline>",
+              "length=4",
+              "source=analysis/codelists.py:9",
+              "values=U071|U072|U099|U109"
+            ]
+          ],
+          "hosp_af_treat_alldiag_date": [
+            [
+              "<inline>",
+              "length=4",
+              "source=analysis/codelists.py:9",
+              "values=U071|U072|U099|U109"
+            ]
+          ],
           "hosp_allcause60d12m_classfic": [],
           "hosp_allcause60d12m_date": [],
           "hosp_allcause60d12m_pdiag": [],
@@ -6177,15 +6645,78 @@
           "hosp_allcause60d6m_classfic": [],
           "hosp_allcause60d6m_date": [],
           "hosp_allcause60d6m_pdiag": [],
-          "hosp_covid60d12m_classfic": [],
-          "hosp_covid60d12m_date": [],
-          "hosp_covid60d12m_pdiag": [],
-          "hosp_covid60d24m_classfic": [],
-          "hosp_covid60d24m_date": [],
-          "hosp_covid60d24m_pdiag": [],
-          "hosp_covid60d6m_classfic": [],
-          "hosp_covid60d6m_date": [],
-          "hosp_covid60d6m_pdiag": [],
+          "hosp_covid60d12m_classfic": [
+            [
+              "<inline>",
+              "length=4",
+              "source=analysis/codelists.py:9",
+              "values=U071|U072|U099|U109"
+            ]
+          ],
+          "hosp_covid60d12m_date": [
+            [
+              "<inline>",
+              "length=4",
+              "source=analysis/codelists.py:9",
+              "values=U071|U072|U099|U109"
+            ]
+          ],
+          "hosp_covid60d12m_pdiag": [
+            [
+              "<inline>",
+              "length=4",
+              "source=analysis/codelists.py:9",
+              "values=U071|U072|U099|U109"
+            ]
+          ],
+          "hosp_covid60d24m_classfic": [
+            [
+              "<inline>",
+              "length=4",
+              "source=analysis/codelists.py:9",
+              "values=U071|U072|U099|U109"
+            ]
+          ],
+          "hosp_covid60d24m_date": [
+            [
+              "<inline>",
+              "length=4",
+              "source=analysis/codelists.py:9",
+              "values=U071|U072|U099|U109"
+            ]
+          ],
+          "hosp_covid60d24m_pdiag": [
+            [
+              "<inline>",
+              "length=4",
+              "source=analysis/codelists.py:9",
+              "values=U071|U072|U099|U109"
+            ]
+          ],
+          "hosp_covid60d6m_classfic": [
+            [
+              "<inline>",
+              "length=4",
+              "source=analysis/codelists.py:9",
+              "values=U071|U072|U099|U109"
+            ]
+          ],
+          "hosp_covid60d6m_date": [
+            [
+              "<inline>",
+              "length=4",
+              "source=analysis/codelists.py:9",
+              "values=U071|U072|U099|U109"
+            ]
+          ],
+          "hosp_covid60d6m_pdiag": [
+            [
+              "<inline>",
+              "length=4",
+              "source=analysis/codelists.py:9",
+              "values=U071|U072|U099|U109"
+            ]
+          ],
           "hosp_covid_bf30d_classfic": [],
           "hosp_covid_bf30d_date": [],
           "hosp_covid_bf30d_pdiag": [],
@@ -6193,7 +6724,14 @@
           "hosp_covid_bf60d_date": [],
           "hosp_covid_bf60d_pdiag": [],
           "hospitalise_disc_allcause": [],
-          "hospitalise_disc_covid": [],
+          "hospitalise_disc_covid": [
+            [
+              "<inline>",
+              "length=4",
+              "source=analysis/codelists.py:9",
+              "values=U071|U072|U099|U109"
+            ]
+          ],
           "housebound_lastdate": [
             [
               "codelists/opensafely-housebound.csv",
@@ -6381,6 +6919,12 @@
               "column=CTV3ID"
             ],
             [
+              "<inline>",
+              "length=1",
+              "source=analysis/codelists.py:32",
+              "values=Z940"
+            ],
+            [
               "codelists/nhsd-oral-steroid-drugs-pra-dmd.csv",
               "column=dmd_id"
             ],
@@ -6507,6 +7051,12 @@
               "column=CTV3ID"
             ],
             [
+              "<inline>",
+              "length=1",
+              "source=analysis/codelists.py:32",
+              "values=Z940"
+            ],
+            [
               "codelists/nhsd-immunosuppresant-drugs-pra-dmd.csv",
               "column=code"
             ],
@@ -6559,6 +7109,12 @@
             [
               "codelists/opensafely-kidney-transplant.csv",
               "column=CTV3ID"
+            ],
+            [
+              "<inline>",
+              "length=1",
+              "source=analysis/codelists.py:32",
+              "values=Z940"
             ]
           ],
           "kidney_transplant_ctv3": [
@@ -6567,7 +7123,14 @@
               "column=CTV3ID"
             ]
           ],
-          "kidney_transplant_icd10": [],
+          "kidney_transplant_icd10": [
+            [
+              "<inline>",
+              "length=1",
+              "source=analysis/codelists.py:32",
+              "values=Z940"
+            ]
+          ],
           "kidney_transplant_procedure": [
             [
               "codelists/user-viyaasan-kidney-transplant-opcs-4.csv",
@@ -7130,9 +7693,30 @@
           "was_allcause_death_60d_6m": [],
           "was_allcause_death_under30d": [],
           "was_allcause_death_under60d": [],
-          "was_covid_death_60d_12m": [],
-          "was_covid_death_60d_24m": [],
-          "was_covid_death_60d_6m": [],
+          "was_covid_death_60d_12m": [
+            [
+              "<inline>",
+              "length=4",
+              "source=analysis/codelists.py:9",
+              "values=U071|U072|U099|U109"
+            ]
+          ],
+          "was_covid_death_60d_24m": [
+            [
+              "<inline>",
+              "length=4",
+              "source=analysis/codelists.py:9",
+              "values=U071|U072|U099|U109"
+            ]
+          ],
+          "was_covid_death_60d_6m": [
+            [
+              "<inline>",
+              "length=4",
+              "source=analysis/codelists.py:9",
+              "values=U071|U072|U099|U109"
+            ]
+          ],
           "was_registered_treated": []
         }
       }
