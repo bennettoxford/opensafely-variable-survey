@@ -6,7 +6,6 @@ See README.md for usage.
 from __future__ import annotations
 
 import argparse
-import base64
 import builtins
 import datetime
 import hashlib
@@ -15,12 +14,11 @@ import json
 import os
 import pathlib
 import re
-import subprocess
 import sys
+import time
 import types
 from contextlib import contextmanager
 from dataclasses import dataclass
-from enum import Enum
 from typing import Any
 
 import pandas as pd
@@ -28,8 +26,13 @@ import pyarrow as _pa
 import pyarrow as pa
 import pyarrow.feather as feather
 import pyarrow.ipc as _pa_ipc
-import yaml
-from ehrql.query_model import nodes as qm
+
+from parsing.ehrql_github_helpers import (
+    clone_ehrql_repos,
+    get_dataset_files,
+)
+from parsing.ehrql_qm_node_helpers import compact_qm_node
+from parsing.ehrql_variable_extractor import extract_variable_line_numbers
 
 
 def convert_spoofed_data(verbose: bool = False) -> int:
@@ -92,18 +95,6 @@ def convert_spoofed_data(verbose: bool = False) -> int:
     return 0
 
 
-class GitHubError(RuntimeError):
-    """Generic error for GitHub CLI interactions."""
-
-    pass
-
-
-GH_API_HEADERS = [
-    "Accept: application/vnd.github+json",
-    "X-GitHub-Api-Version: 2022-11-28",
-]
-
-
 @contextmanager
 def working_directory(path):
     """Context manager for changing the working directory"""
@@ -115,107 +106,19 @@ def working_directory(path):
         os.chdir(prev_cwd)
 
 
-def run_gh(args: list[str], expect_json: bool = True) -> dict | list | str:
-    """Run a gh CLI command and return parsed JSON or raw stdout.
-
-    Raises GitHubError on non‑zero exit or JSON parse failure.
-    """
-    cmd = ["gh"] + args
-    try:
-        proc = subprocess.run(
-            cmd,
-            check=False,
-            capture_output=True,
-            text=True,
-        )
-    except FileNotFoundError as e:
-        raise GitHubError(
-            "gh CLI not found. Install from https://cli.github.com/"
-        ) from e
-    if proc.returncode != 0:
-        raise GitHubError(f"gh command failed: {' '.join(cmd)}\n{proc.stderr.strip()}")
-    if not expect_json:
-        return proc.stdout
-    try:
-        return json.loads(proc.stdout)
-    except json.JSONDecodeError as e:
-        raise GitHubError(
-            f"Failed to parse JSON from gh output for command: {' '.join(cmd)}\nOutput: {proc.stdout[:500]}"
-        ) from e
-
-
-def code_search(verbose: bool = False) -> list[dict]:
-    """Return list of code search result items for the whole org.
-
-    Uses paginated search up to 1000 results (GitHub API inherent cap). Each item includes
-    repository info and path. We add a derived key 'repo_full_name' for convenience.
-    """
-    query = "org:opensafely+ehrql+filename:project.yaml"
-    items: list[dict] = []
-    page = 1
-    while True:
-        header_args: list[str] = []
-        for h in GH_API_HEADERS:
-            header_args.extend(["-H", h])
-        path_with_query = f"/search/code?q={query}&per_page=100&page={page}"
-        result = run_gh(["api", *header_args, path_with_query])
-        batch = result.get("items", []) if isinstance(result, dict) else []
-        for it in batch:
-            repo = it.get("repository", {})
-            full_name = repo.get("full_name")
-            if repo["private"]:
-                if verbose:
-                    print(f"Skipping private repo {full_name}")
-                continue
-            if full_name:
-                it["repo_full_name"] = full_name
-                items.append(it)
-        if len(batch) < 100:
-            break
-        page += 1
-        if page > 10:  # safety guard (100 * 10 = 1000 limit)
-            break
-    return items
-
-
-def group_items_by_repo(items: list[dict]) -> dict:
-    grouped: dict = {}
-    for it in items:
-        repo = it.get("repo_full_name")
-        head_sha = it.get("html_url").split("/")[6]
-        if not repo:
-            continue
-        # Add key of repo and value of sha. If it already exists, log if different
-        existing = grouped.get(repo, None)
-        if existing and existing != head_sha:
-            print(
-                f"Warning: Different head SHA found for {repo}: {existing} vs {head_sha}"
-            )
-        grouped[repo] = head_sha
-    return grouped
-
-
-def fetch_file_content(owner: str, repo: str, path: str, ref: str) -> tuple[str, str]:
-    """Return (decoded_text, blob_sha) for file path at commit ref using gh api contents."""
-    data = run_gh(
-        [
-            "api",
-            f"repos/{owner}/{repo}/contents/{path}?ref={ref}",
-        ]
-    )
-    if isinstance(data, list):  # directory edge case, skip
-        return "", ""
-    encoding = data.get("encoding")
-    if encoding == "base64":
+@contextmanager
+def suppress_output():
+    """Suppress stdout and stderr output."""
+    with open(os.devnull, "w") as devnull:
+        old_stdout = sys.stdout
+        old_stderr = sys.stderr
         try:
-            content = base64.b64decode(data.get("content", "")).decode(
-                "utf-8", "replace"
-            )
-        except Exception:
-            content = ""
-    else:
-        content = data.get("content", "")
-    return content, data.get("sha", "")
+            sys.stdout = devnull
+            sys.stderr = devnull
+            yield
+        finally:
+            sys.stdout = old_stdout
+            sys.stderr = old_stderr
 
 
 @dataclass
@@ -592,221 +495,6 @@ def spoof_args(verbose: bool = False) -> list:
     return []
 
 
-# Import the refactored variable extraction functionality
-from parsing.ehrql_variable_extractor import extract_variable_line_numbers  # noqa: E402
-
-
-def normalize_qm_node(qm_node: qm.Node) -> qm.Node:
-    """Normalize a QM node by reordering Filter and Sort operations.
-
-    Ensures Filters always come before Sorts, as they are semantically equivalent
-    but we want a canonical ordering for comparison purposes.
-
-    Recursively normalizes all nested nodes and applies transformations until
-    a fixed point is reached.
-
-    Transformations applied:
-    1. Filter with And condition:
-       Filter(source=X, condition=And(lhs=L, rhs=R))
-       becomes:
-       Filter(source=Filter(source=X, condition=L), condition=R)
-
-    2. Filter with Sort source:
-       Filter(source=Sort(source=X, sort_by=Y), condition=Z)
-       becomes:
-       Sort(source=Filter(source=X, condition=Z), sort_by=Y)
-
-    Example: Filter(Filter(Sort(X))) becomes Sort(Filter(Filter(X)))
-    """
-
-    def normalize_once(node: qm.Node) -> qm.Node:
-        """Apply one pass of normalization, recursively normalizing children first."""
-        # First, recursively normalize all child nodes that are qm.Nodes
-        if hasattr(node, "__dataclass_fields__"):
-            # Build a dict of normalized field values
-            normalized_fields = {}
-            for field_name in node.__dataclass_fields__:
-                field_value = getattr(node, field_name)
-                if isinstance(field_value, qm.Node):
-                    # Recursively normalize this child node
-                    normalized_fields[field_name] = normalize_once(field_value)
-                else:
-                    # Keep non-Node fields as-is
-                    normalized_fields[field_name] = field_value
-
-            # Create a new node with normalized children
-            node = node.__class__(**normalized_fields)
-
-        # Now check if this node itself needs transformation
-        # Check if this is a Filter with an And condition
-        if (
-            node.__class__.__name__ == "Filter"
-            and hasattr(node, "source")
-            and hasattr(node, "condition")
-            and node.condition.__class__.__name__ == "And"
-            and hasattr(node.condition, "lhs")
-            and hasattr(node.condition, "rhs")
-        ):
-            # Transform: Filter(source=X, condition=And(lhs=L, rhs=R))
-            # into: Filter(source=Filter(source=X, condition=L), condition=R)
-
-            # Get the components
-            original_source = node.source  # X - the original source
-            and_node = node.condition  # The And node
-            lhs_condition = and_node.lhs  # L - left-hand side of And
-            rhs_condition = and_node.rhs  # R - right-hand side of And
-
-            # Create new Filter with the original source and lhs condition
-            Filter = node.__class__
-            new_filter = Filter(source=original_source, condition=lhs_condition)
-
-            # Create outer Filter with the new Filter as source and rhs condition
-            return Filter(source=new_filter, condition=rhs_condition)
-
-        # Check if this is a Filter with a Sort as its source
-        if (
-            node.__class__.__name__ == "Filter"
-            and hasattr(node, "source")
-            and hasattr(node, "condition")
-            and node.source.__class__.__name__ == "Sort"
-            and hasattr(node.source, "source")
-            and hasattr(node.source, "sort_by")
-        ):
-            # Swap: Filter(Sort(X)) -> Sort(Filter(X))
-            # Original: Filter(source=Sort(source=X, sort_by=Y), condition=Z)
-            # Result:   Sort(source=Filter(source=X, condition=Z), sort_by=Y)
-
-            # Get the inner components
-            sort_node = node.source  # The Sort node
-            original_source = sort_node.source  # X - what Sort was sorting
-            sort_by = sort_node.sort_by  # Y - how to sort
-            condition = node.condition  # Z - the filter condition
-
-            # Create new Filter with the original source
-            Filter = node.__class__
-            new_filter = Filter(source=original_source, condition=condition)
-
-            # Create new Sort with the new Filter as source
-            Sort = sort_node.__class__
-            return Sort(source=new_filter, sort_by=sort_by)
-
-        return node
-
-    # Keep applying normalization until we reach a fixed point
-    # (i.e., no more changes occur)
-    max_iterations = 100  # Safety limit to prevent infinite loops
-    prev_node = None
-    current_node = qm_node
-
-    for _ in range(max_iterations):
-        current_node = normalize_once(current_node)
-        # Check if we've reached a fixed point by comparing string representations
-        # (comparing objects directly won't work as they're new instances)
-        if prev_node is not None and str(current_node) == str(prev_node):
-            break
-        prev_node = current_node
-
-    return current_node
-
-
-def compact_qm_node(qm_node: qm.Node, _normalized: bool = False) -> str:
-    # Navigate all dataclass fields of each node recursively
-    # When encountering a SelectTable, replace it entirely with the string from the table name
-    try:
-        # Handle sets of nodes (e.g., Domain sets)
-        if isinstance(qm_node, set):
-            # Sort by string representation for consistent output
-            sorted_nodes = sorted(qm_node, key=lambda n: str(n))
-            return (
-                "{"
-                + ", ".join(
-                    compact_qm_node(node, _normalized=True) for node in sorted_nodes
-                )
-                + "}"
-            )
-
-        # First, normalize the node structure (e.g., reorder Filter/Sort)
-        # Only do this at the top level, not recursively
-        if not _normalized:
-            try:
-                qm_node = normalize_qm_node(qm_node)
-            except Exception:
-                # If normalization fails (e.g., ehrql raises "Attempt to combine unrelated domains"),
-                # skip normalization and use the original node
-                pass
-
-        if isinstance(qm_node, qm.SelectTable):
-            return f"Table({qm_node.name})"
-        elif isinstance(qm_node, qm.SelectPatientTable):
-            return f"Table({qm_node.name})"
-        elif isinstance(qm_node, qm.Node):
-            fields = {}
-            for field_name in list(qm_node.__dataclass_fields__):
-                field_value = getattr(qm_node, field_name)
-                if isinstance(field_value, qm.Node):
-                    fields[field_name] = compact_qm_node(field_value, _normalized=True)
-                elif field_name == "cases" and isinstance(field_value, dict):
-                    fields[field_name] = ", ".join(
-                        [
-                            f"if:{compact_qm_node(k, _normalized=True) if isinstance(k, qm.Node) else k}->then:{v}"
-                            for k, v in field_value.items()
-                        ]
-                    )
-                elif isinstance(field_value, list):
-                    fields[field_name] = ", ".join(
-                        [
-                            compact_qm_node(item, _normalized=True)
-                            if isinstance(item, qm.Node)
-                            else item
-                            for item in field_value
-                        ]
-                    )
-                elif isinstance(field_value, set):
-                    # Handle sets (e.g., Domain sets)
-                    sorted_items = sorted(field_value, key=lambda x: str(x))
-                    fields[field_name] = (
-                        "{"
-                        + ", ".join(
-                            [
-                                compact_qm_node(item, _normalized=True)
-                                if isinstance(item, qm.Node)
-                                else str(item)
-                                for item in sorted_items
-                            ]
-                        )
-                        + "}"
-                    )
-                elif isinstance(field_value, datetime.date):
-                    fields[field_name] = "{{DATE}}"
-                elif isinstance(field_value, str):
-                    fields[field_name] = field_value
-                elif isinstance(field_value, frozenset):
-                    # Sort frozenset elements for consistent string representation
-                    # Frozensets don't guarantee iteration order, so we sort for stable hashing
-                    try:
-                        sorted_items = sorted(field_value)
-                        fields[field_name] = (
-                            f"frozenset({{{', '.join(repr(x) for x in sorted_items)}}})"
-                        )
-                    except TypeError:
-                        # If items aren't sortable (mixed types), fall back to sorted repr strings
-                        sorted_items = sorted(repr(x) for x in field_value)
-                        fields[field_name] = f"frozenset({{{', '.join(sorted_items)}}})"
-                elif isinstance(field_value, Enum):
-                    fields[field_name] = field_value.name
-                elif isinstance(field_value, int):
-                    fields[field_name] = field_value
-                elif isinstance(field_value, float):
-                    fields[field_name] = field_value
-                else:
-                    fields[field_name] = field_value
-            field_strs = [f"{k}={v}" for k, v in fields.items()]
-            return f"{qm_node.__class__.__name__}({', '.join(field_strs)})"
-    except Exception as e:
-        print(f"Error compacting QM node: {e}")
-        return str(qm_node)
-
-
 def get_runtime_dataset_variables(
     files: list[str],
     repo_root: pathlib.Path,
@@ -814,12 +502,8 @@ def get_runtime_dataset_variables(
     silent: bool = False,
     verbose: bool = False,
 ) -> set[str]:
-    """Execute dataset definition modules to capture runtime variable types.
-
-    Adds StrPatientSeries (etc) as series_type when available.
-
-    Returns a set of dataset file paths that had no captured datasets
-    (and whose rows should be excluded from the final output).
+    """
+    Execute dataset definition files to extract runtime variable information.
     """
 
     variables: list[VariableRecord] = []
@@ -843,6 +527,7 @@ def get_runtime_dataset_variables(
         variable_line_numbers, variable_line_number_regexes = (
             extract_variable_line_numbers(abs_path, resolved_repo_root)
         )
+
         if verbose and variable_line_numbers:
             print(
                 f"....Extracted {len(variable_line_numbers)} variable line numbers from AST",
@@ -899,7 +584,12 @@ def get_runtime_dataset_variables(
                         sys.argv = [str(abs_path)] + spoofed_args
                         #
                         try:
-                            spec.loader.exec_module(mod)  # type: ignore
+                            # Suppress output from print statements in dataset definitions unless verbose mode
+                            if not verbose:
+                                with suppress_output():
+                                    spec.loader.exec_module(mod)  # type: ignore
+                            else:
+                                spec.loader.exec_module(mod)  # type: ignore
                             if hasattr(mod, "dataset"):
                                 for var_name, series in mod.dataset._variables.items():  # type: ignore[attr-defined]
                                     # Get line number from AST parsing
@@ -1029,11 +719,6 @@ def get_runtime_dataset_variables(
                     file=sys.stderr,
                 )
 
-    if not silent:
-        print(
-            f"..Collected {len(variables)} variables across {len(files)} dataset files",
-            file=sys.stderr,
-        )
     return variables
 
 
@@ -1064,136 +749,32 @@ def reset_modules_to_snapshot() -> None:
             pass
 
 
-def parse_project_yaml(repo_root: pathlib.Path) -> list[str]:
-    """Extract dataset definition file paths from project.yaml.
-
-    Returns list of relative paths to files that generate datasets.
-    """
-    try:
-        content = (repo_root / "project.yaml").read_text(encoding="utf-8")
-        data = yaml.safe_load(content)
-
-        dataset_files = set()
-        if not data:
-            return list(dataset_files)
-        actions = data.get("actions", {})
-
-        for action_name, action_config in actions.items():
-            # Look for generate_dataset commands
-            run_command = action_config.get("run", "")
-            if "generate-dataset" in run_command or "generate_dataset" in run_command:
-                filtered_command = re.sub(r"--test-data-file\s+\S+", "", run_command)
-                # Extract file path from command like "ehrql:v1 generate-dataset analysis/dataset_definition.py"
-                parts = filtered_command.split()
-
-                possible_files = [p for p in parts if p.endswith(".py")]
-                if len(possible_files) == 1:
-                    dataset_files.add(possible_files[0])
-                else:
-                    print(
-                        f"..Warning: Could not unambiguously extract dataset file from command: {run_command}\n"
-                        f"... in {repo_root / 'project.yaml'}",
-                        file=sys.stderr,
-                    )
-                    sys.exit(1)
-
-        return list(dataset_files)
-    except (GitHubError, yaml.YAMLError, KeyError) as _:
-        return []
-
-
 def collect(
     output: str,
     repos: list[str] | None,
     silent: bool = False,
     verbose: bool = False,
+    include_full_qm_node_dump: bool = False,
 ) -> None:
+    initial_start_time = time.time()
     cache_dir = pathlib.Path(".ehrql_repo_cache")
     cache_dir.mkdir(exist_ok=True)
 
-    items = code_search(verbose=verbose)
+    local_repos = clone_ehrql_repos(repos, cache_dir, silent=silent, verbose=verbose)
+    all_dataset_files = get_dataset_files(local_repos, silent=silent, verbose=verbose)
 
+    duration = time.time() - initial_start_time
     if not silent:
         print(
-            f"Found {len(items)} Python files mentioning create_dataset",
+            f"\nCompleted repository cloning and dataset file discovery in {duration:.1f}s",
             file=sys.stderr,
         )
 
-    grouped = group_items_by_repo(items)
-
-    if not silent:
-        print(f"Across {len(grouped)} repos", file=sys.stderr)
-
-    global repo_name
-    all_dataset_files: dict[str, (str, list[str], pathlib.Path)] = {}
-    for repo_full, head_sha in grouped.items():
-        owner, repo_name = repo_full.split("/", 1)
-
-        if repos and repo_full not in repos and repo_name not in repos:
-            if verbose:
-                print(f"..Skipping {repo_full}", file=sys.stderr)
-            continue
-
-        if not silent:
-            print(f"\n==> {repo_full} ({head_sha[:7]})", file=sys.stderr)
-
-        repo_local_dir = cache_dir / f"{repo_name}-{head_sha[:8]}"
-        if not repo_local_dir.exists():
-            clone_url = f"https://github.com/{owner}/{repo_name}.git"
-            cmd = [
-                "git",
-                "clone",
-                "--depth",
-                "1",
-                clone_url,
-                str(repo_local_dir),
-            ]
-            proc = subprocess.run(cmd, capture_output=True, text=True)
-            if proc.returncode != 0 and not silent:
-                print(
-                    f"..Clone failed {owner}/{repo_name}: {proc.stderr.strip()}",
-                    file=sys.stderr,
-                )
-            else:
-                if verbose:
-                    print(
-                        f"..Cloned {repo_full} to {repo_local_dir}",
-                        file=sys.stderr,
-                    )
-        else:
-            if verbose:
-                print(f"..Using cached clone at {repo_local_dir}", file=sys.stderr)
-
-        # NEW: Parse project.yaml to find dataset files
-        dataset_files = parse_project_yaml(repo_local_dir)
-
-        if dataset_files:
-            all_dataset_files[repo_full] = (
-                head_sha,
-                dataset_files,
-                repo_local_dir,
-            )
-            if verbose:
-                print(
-                    f"..Found {len(dataset_files)} dataset files in project.yaml: {dataset_files}",
-                    file=sys.stderr,
-                )
-        else:
-            if not silent:
-                print(
-                    "..No ehrql generate_dataset commands found in project.yaml",
-                    file=sys.stderr,
-                )
-
-    # Runtime enrichment
-    if not silent:
-        print("\nStarting runtime type enrichment phase", file=sys.stderr)
-
-    cache_dir = pathlib.Path(".ehrql_repo_cache")
-    cache_dir.mkdir(exist_ok=True)
     all_variables: list[VariableRecord] = []
     total_repos = len(all_dataset_files)
     current_repo_index = 0
+    global repo_name
+    start_time = time.time()
     for repo, (head_sha, files, repo_local_dir) in all_dataset_files.items():
         current_repo_index += 1
         repo_name = repo
@@ -1204,6 +785,11 @@ def collect(
             )
         if not files:
             continue
+
+        # Start timing for this repo
+        repo_start_time = time.time()
+        variables_before = len(all_variables)
+
         if verbose:
             print(f"..Enriching runtime types for {repo}", file=sys.stderr)
 
@@ -1217,6 +803,22 @@ def collect(
             )
         )
 
+        # Print completion message with timing
+        repo_duration = time.time() - repo_start_time
+        variables_collected = len(all_variables) - variables_before
+        if not silent:
+            print(
+                f"..Collected {variables_collected} variables across {len(files)} dataset files in {repo_duration:.1f}s",
+                file=sys.stderr,
+            )
+
+    duration = time.time() - start_time
+    if not silent:
+        print(
+            f"\nCompleted processing {len(all_dataset_files)} repos in {duration:.1f}s",
+            file=sys.stderr,
+        )
+    write_start_time = time.time()
     # Write JSON with structure project -> dataset_file -> list of [variable_name, expression, permalink, series_type]
     out_map: dict[str, dict[str, Any]] = {}
 
@@ -1224,23 +826,29 @@ def collect(
     qm_out_map: dict[str, int] = {}
 
     # sort rows by project, file, variable name
+    full_qm_out_map: dict[str, str] = {}
 
     for r in sorted(
         all_variables, key=lambda r: (r.project_name, r.file_name, r.variable_name)
     ):
         # expr_hash: full expression with sorted frozensets (stable ordering)
         # expr_hash_without_codes: frozensets replaced with placeholder for semantic comparison
-        node_without_codes = re.sub(
-            r"frozenset\(\{[^}]+\}\)", "<<FROZEN_SET>>", r.qm_node
+
+        # First remove dates from the original node (keeping codes)
+        node_without_dates = re.sub(r"datetime.date\([^)]+\)", "<<DATE>>", r.qm_node)
+        # Then create a version without codes (for semantic comparison)
+        node_without_codes_or_dates = re.sub(
+            r"frozenset\(\{[^}]+\}\)", "<<FROZEN_SET>>", node_without_dates
         )
-        node_without_dates = re.sub(
-            r"datetime.date\([^)]+\)", "<<DATE>>", node_without_codes
-        )
-        expr_hash = hashlib.sha256(r.qm_node.encode("utf-8")).hexdigest()[:16]
+
+        expr_hash = hashlib.sha256(node_without_dates.encode("utf-8")).hexdigest()[:16]
         expr_hash_without_codes = hashlib.sha256(
-            node_without_dates.encode("utf-8")
+            node_without_codes_or_dates.encode("utf-8")
         ).hexdigest()[:16]
-        qm_out_map[expr_hash_without_codes] = node_without_dates
+        qm_out_map[expr_hash_without_codes] = node_without_codes_or_dates
+        if include_full_qm_node_dump:
+            # Also capture the full compacted node for debugging/diffing (use compacted version for determinism)
+            full_qm_out_map[expr_hash] = r.qm_node
 
         proj = r.project_name
         out_map.setdefault(proj, {})
@@ -1267,8 +875,17 @@ def collect(
         json.dump(json_data, f, indent=2, ensure_ascii=False)
     with open("ehrql_qm_dump.json", "w", encoding="utf-8") as f:
         json.dump(qm_out_map, f, indent=2, ensure_ascii=False)
+    if include_full_qm_node_dump:
+        # Write full (non-normalized) node dump keyed by full hash to aid debugging
+        with open("ehrql_qm_full_dump.json", "w", encoding="utf-8") as f:
+            json.dump(full_qm_out_map, f, indent=2, ensure_ascii=False)
 
     if not silent:
+        write_duration = time.time() - write_start_time
+        print(
+            f"\nHashed nodes and wrote output files in {write_duration:.1f}s",
+            file=sys.stderr,
+        )
         # print summary correctly counting the total number of variables given the structure of out_map
         total_vars = sum(
             len(vars_list)
@@ -1277,6 +894,11 @@ def collect(
         )
         print(
             f"\nWrote {output} with {total_vars} variables across {len(out_map)} projects and {sum(len(p.get('files', {})) for p in out_map.values())} dataset files",
+            file=sys.stderr,
+        )
+        total_duration = time.time() - initial_start_time
+        print(
+            f"\nTotal execution time: {total_duration:.1f}s",
             file=sys.stderr,
         )
 
@@ -1298,6 +920,11 @@ def parse_args(argv: list[str]) -> argparse.Namespace:
         action="store_true",
         help="Verbose progress output to stderr",
     )
+    p.add_argument(
+        "--include-full-qm-node-dump",
+        action="store_true",
+        help="Include full (non-normalized) node dump in output. This is many GB and only useful for debugging.",
+    )
     # args ends with an optional space separated list of repo names (e.g. "opensafely/pincer-measures opensafely/isaric-exploration")
     p.add_argument(
         "repos",
@@ -1314,17 +941,13 @@ def main(argv: list[str] | None = None) -> int:
 
     save_initial_module_snapshot()
 
-    try:
-        collect(
-            output=args.output,
-            repos=args.repos,
-            silent=args.silent,
-            verbose=args.verbose,
-        )
-    except GitHubError as e:
-        print(f"Error: {e}", file=sys.stderr)
-        return 1
-    return 0
+    collect(
+        output=args.output,
+        repos=args.repos,
+        silent=args.silent,
+        verbose=args.verbose,
+        include_full_qm_node_dump=args.include_full_qm_node_dump,
+    )
 
 
 if __name__ == "__main__":  # pragma: no cover

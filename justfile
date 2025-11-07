@@ -134,6 +134,10 @@ run: devenv
 ehrql *args: devenv
     python ehrql_extractor.py {{ args }}
 
+# Run the ehrQL codelist extractor script
+codelists *args: devenv
+    python ehrql_codelist_extractor.py {{ args }}
+
 # Remove built assets and collected static files
 assets-clean:
     rm -rf assets/dist

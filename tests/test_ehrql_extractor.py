@@ -991,7 +991,7 @@ class TestNormalizeQMNode:
     def test_simple_filter_with_and(self):
         """Test Filter with And condition is split into nested Filters."""
         # Import here to avoid circular dependencies
-        from ehrql_extractor import normalize_qm_node
+        from parsing.ehrql_qm_node_helpers import normalize_qm_node
 
         # Mock classes to simulate qm.Node structure
         class MockNode:
@@ -1051,7 +1051,7 @@ class TestNormalizeQMNode:
 
     def test_nested_and_conditions(self):
         """Test nested And conditions trigger multiple transformation iterations."""
-        from ehrql_extractor import normalize_qm_node
+        from parsing.ehrql_qm_node_helpers import normalize_qm_node
 
         class MockNode:
             def __init__(self, **kwargs):
@@ -1115,7 +1115,7 @@ class TestNormalizeQMNode:
 
     def test_filter_and_with_filter_sort(self):
         """Test that Filter/And and Filter/Sort transformations can coexist."""
-        from ehrql_extractor import normalize_qm_node
+        from parsing.ehrql_qm_node_helpers import normalize_qm_node
 
         class MockNode:
             def __init__(self, **kwargs):
@@ -1177,7 +1177,7 @@ class TestNormalizeQMNode:
 
     def test_no_transformation_needed(self):
         """Test that nodes without And conditions are unchanged."""
-        from ehrql_extractor import normalize_qm_node
+        from parsing.ehrql_qm_node_helpers import normalize_qm_node
 
         class MockNode:
             def __init__(self, **kwargs):
@@ -1221,7 +1221,7 @@ class TestCompactQMNode:
 
     def test_compact_set_input(self):
         """Test that compact_qm_node can handle a set as input (not just a single node)."""
-        from ehrql_extractor import compact_qm_node
+        from parsing.ehrql_qm_node_helpers import compact_qm_node
 
         class MockNode:
             def __init__(self, **kwargs):
@@ -1259,7 +1259,7 @@ class TestCompactQMNode:
         """Test that the set handling code doesn't crash."""
         # This is more of a smoke test to ensure the set handling logic exists
         # and doesn't cause exceptions. Full integration tests happen at runtime.
-        from ehrql_extractor import compact_qm_node
+        from parsing.ehrql_qm_node_helpers import compact_qm_node
 
         # Test with a simple set of strings (edge case but shouldn't crash)
         test_set = {"item1", "item2"}
@@ -1270,6 +1270,94 @@ class TestCompactQMNode:
         except Exception:
             # If there's an exception, at least verify it's caught gracefully
             pass
+
+
+class TestClassMethodVariables:
+    """Test extraction of variables created by class methods that call helper functions."""
+
+    def test_class_method_calling_setattr_helper(self):
+        """Test class with method that calls _update_dataset which uses setattr.
+
+        This tests the pattern seen in CoPrescribingVariableGenerator where:
+        1. A class has an __init__ that stores the dataset
+        2. A method calls a helper method (_update_dataset) with variable names
+        3. The helper uses setattr(self.dataset, variable_name, value)
+        """
+        utils_code = """
+class CoPrescribingVariableGenerator:
+    def __init__(self, dataset, codelist_names):
+        self.dataset = dataset
+        self.codelist_name_1, self.codelist_name_2 = codelist_names
+
+    def _update_dataset(self, dataset, variable, variable_name):
+        setattr(dataset, variable_name, variable)
+        return self.dataset
+
+    def generate_co_prescribing_variable(self):
+        # Create some variables using _update_dataset
+        self._update_dataset(
+            self.dataset, "value1", self.codelist_name_1
+        )
+        self._update_dataset(
+            self.dataset, "value2", self.codelist_name_2
+        )
+
+        # Create variables with constructed names
+        for month in range(1, 4):
+            self._update_dataset(
+                self.dataset, f"value_{month}", f"{self.codelist_name_1}_{month}"
+            )
+            self._update_dataset(
+                self.dataset, f"earliest_{month}", f"{self.codelist_name_1}_earliest_{month}"
+            )
+            self._update_dataset(
+                self.dataset, f"within_28_{month}",
+                f"{self.codelist_name_1}_{self.codelist_name_2}_within_28_days_1_earliest_2_earliest_{month}"
+            )
+
+        return "result"
+"""
+        main_code = """
+from ehrql import Dataset
+from utils import CoPrescribingVariableGenerator
+
+dataset = Dataset()
+
+cp_f = CoPrescribingVariableGenerator(
+    dataset,
+    ("aspirin", "antiplatelet_excluding_aspirin"),
+)
+
+dataset.co_prescribed_result = cp_f.generate_co_prescribing_variable()
+"""
+        with tempfile.TemporaryDirectory() as tmpdir:
+            repo_root = pathlib.Path(tmpdir)
+            utils_path = repo_root / "utils.py"
+            utils_path.write_text(utils_code)
+            file_path = repo_root / "measure_definition.py"
+            file_path.write_text(main_code)
+
+            line_numbers, regexes = extract_variable_line_numbers(file_path, repo_root)
+
+            # Should extract the static variables created by _update_dataset
+            # These are the direct calls with codelist_name_1 and codelist_name_2
+            assert "aspirin" in line_numbers or len(regexes) > 0
+            assert "antiplatelet_excluding_aspirin" in line_numbers or len(regexes) > 0
+
+            # Should also extract patterns for the dynamic variables
+            # These have month numbers in them
+            # Should match patterns like aspirin_1, aspirin_2, aspirin_3
+            # and aspirin_earliest_1, etc.
+            # and aspirin_antiplatelet_excluding_aspirin_within_28_days_1_earliest_2_earliest_1
+            assert len(regexes) >= 3, (
+                f"Expected at least 3 dynamic patterns, got {len(regexes)}"
+            )
+
+            # Check that patterns are from utils.py
+            cross_file_patterns = [r for r in regexes if isinstance(r[1], tuple)]
+            if cross_file_patterns:
+                filename, _ = cross_file_patterns[0][1]
+                assert filename == "utils.py"
 
 
 class TestHelperWithTemplateParameter:
@@ -1338,3 +1426,120 @@ get_sequential_admissions_date(dataset, "admission{n}_date_sus", admissions_data
             assert filename == "variables.py"
             # Line should be around where setattr is called (line 17 in the helper code)
             assert line > 0
+
+
+class TestDictSetAttrLoop:
+    """Test extraction of variables from a dict that's imported and used in a setattr loop."""
+
+    def test_dict_setattr_loop(self):
+        """Test variables created from an imported dict used in a setattr loop.
+
+        Pattern from post-covid-renal:
+        - variables_dates.py defines variables and creates a dict with them
+        - dataset_definition_dates.py imports the dict and loops: setattr(dataset, key, value)
+        - We want line numbers pointing to where each variable was defined in variables_dates.py
+        """
+        helper_code = """
+from ehrql import Dataset
+
+# Define some variables
+death_date = patients.date_of_death
+vax_date_1 = vaccinations.where(vaccinations.target_disease.contains("COVID")).first_for_patient().date
+vax_date_2 = vaccinations.where(vaccinations.target_disease.contains("COVID")).sort_by(vaccinations.date).first_for_patient().date
+
+# Create a dictionary of variables
+prelim_date_variables = dict(
+    cens_date_death = death_date,
+    vax_date_covid_1 = vax_date_1,
+    vax_date_covid_2 = vax_date_2,
+)
+"""
+        main_code = """
+from ehrql import create_dataset
+from variables_dates import prelim_date_variables
+
+dataset = create_dataset()
+
+# Loop over the imported dict and setattr
+for var_name, var_value in prelim_date_variables.items():
+    setattr(dataset, var_name, var_value)
+"""
+        with tempfile.TemporaryDirectory() as tmpdir:
+            repo_root = pathlib.Path(tmpdir)
+            helper_path = repo_root / "variables_dates.py"
+            helper_path.write_text(helper_code)
+            file_path = repo_root / "dataset_definition.py"
+            file_path.write_text(main_code)
+
+            line_numbers, regexes = extract_variable_line_numbers(file_path, repo_root)
+
+            # Should extract static variable names from the dict keys
+            assert "cens_date_death" in line_numbers
+            assert "vax_date_covid_1" in line_numbers
+            assert "vax_date_covid_2" in line_numbers
+
+            # The line numbers should point to where the variables are defined in variables_dates.py
+            # death_date is defined at line 5, used in dict at line 11
+            # We want line 5 (where death_date is defined)
+            filename, line = line_numbers["cens_date_death"]
+            assert filename == "variables_dates.py"
+            assert line == 5  # death_date definition line
+
+            filename, line = line_numbers["vax_date_covid_1"]
+            assert filename == "variables_dates.py"
+            assert line == 6  # vax_date_1 definition line
+
+            filename, line = line_numbers["vax_date_covid_2"]
+            assert filename == "variables_dates.py"
+            assert line == 7  # vax_date_2 definition line
+
+
+class TestLocalFunctionWithAddColumn:
+    """Test extraction from local functions that call dataset.add_column."""
+
+    def test_local_function_add_column(self):
+        """Test variables created by a local function that uses dataset.add_column.
+
+        Pattern from post-covid-vax-autoimmune:
+        - A function is defined locally that calls dataset.add_column(column_name, value)
+        - The function is called multiple times with different variable names
+        - We want line numbers pointing to the dataset.add_column line in the function
+        """
+        main_code = """
+from ehrql import create_dataset
+
+dataset = create_dataset()
+
+def add_outcome_date(column_name, snomed_code, icd_code):
+    primary_date = clinical_events.where(
+        clinical_events.snomedct_code.is_in(snomed_code)
+    ).sort_by(clinical_events.date).first_for_patient().date
+
+    secondary_date = apcs.where(
+        apcs.primary_diagnosis.is_in(icd_code)
+    ).sort_by(apcs.admission_date).first_for_patient().admission_date
+
+    dataset.add_column(column_name, minimum_of(primary_date, secondary_date))
+
+# Call the function to create variables
+add_outcome_date("rheu_arth", ra_code_snomed, ra_code_icd)
+add_outcome_date("psor_arth", psoa_code_snomed, psoa_code_icd)
+add_outcome_date("axial_arth", axial_code_snomed, axial_code_icd)
+"""
+        with tempfile.TemporaryDirectory() as tmpdir:
+            repo_root = pathlib.Path(tmpdir)
+            file_path = repo_root / "dataset_definition.py"
+            file_path.write_text(main_code)
+
+            line_numbers, regexes = extract_variable_line_numbers(file_path, repo_root)
+
+            # Should extract the variable names from the function calls
+            assert "rheu_arth" in line_numbers
+            assert "psor_arth" in line_numbers
+            assert "axial_arth" in line_numbers
+
+            # All should point to the dataset.add_column line in the function (line 15)
+            # Since the function is in the same file, line_numbers will just be integers
+            assert line_numbers["rheu_arth"] == 15  # dataset.add_column line
+            assert line_numbers["psor_arth"] == 15  # dataset.add_column line
+            assert line_numbers["axial_arth"] == 15  # dataset.add_column line

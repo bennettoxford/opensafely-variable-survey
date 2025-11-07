@@ -1,0 +1,360 @@
+"""Extract codelist_from_csv calls from ehrQL variables across GitHub repos.
+
+This script finds ehrQL dataset definition files, parses them with AST to find
+all calls to codelist_from_csv for each variable, and outputs the results to
+ehrql_codelists.json.
+
+See README.md for usage.
+"""
+
+from __future__ import annotations
+
+import argparse
+import datetime
+import json
+import pathlib
+import re
+import sys
+import time
+
+from parsing.ehrql_github_helpers import (
+    clone_ehrql_repos,
+    get_dataset_files,
+)
+from parsing.ehrql_variable_extractor import extract_variable_codelists
+
+
+def should_ignore_variable(var_name: str) -> bool:
+    """Check if a variable should be ignored in the empty codelists report.
+
+    Args:
+        var_name: The variable name to check
+
+    Returns:
+        True if the variable should be ignored, False otherwise
+    """
+    # Ignore list
+    ignore_exact = [
+        "care_home_tpp",
+    ]
+    if var_name in ignore_exact:
+        return True
+    ignore_regex = [
+        r"(^|_)sex($|_)",
+        r"(^|_)imd($|_)",
+        r"(^|_)ethnicity($|_)",
+        r"(^|_)region($|_)",
+        r"(^|_)death($|_)",
+        r"(^|_)died($|_)",
+        r"(^|_)dereg($|_)",
+        r"(^|_)stp($|_)",
+        r"(^|_)registered($|_)",
+        r"(^|_)appointment($|_)",
+        r"(^|_)alive($|_)",
+        r"(^|_)adult($|_)",
+        r"(^|_)male($|_)",
+        r"(^|_)female($|_)",
+        r"(^|_)date.*birth($|_)",
+        r"(^|_)rural($|_)",
+        r"(^|_)deprivation($|_)",
+        r"(^|_)age($|_)",
+        r"(^|_)admitted($|_)",
+        r"(^|_)registration($|_)",
+        r"(^|_)index_date($|_)",
+        r"(^|_)dob($|_)",
+        r"(^|_)dod($|_)",
+        r"(^|_)gp($|_)",
+        r"(^|_)practice($|_)",
+        r"(^|_)msoa($|_)",
+    ]
+    for pattern in ignore_regex:
+        # Use search so the pattern can match anywhere in the variable name
+        # (re.match/re.compile(...).match only tries to match at the start).
+        if re.compile(pattern, re.IGNORECASE).search(var_name):
+            return True
+    return False
+
+
+def generate_empty_codelists_report(out_map: dict[str, dict]) -> None:
+    """Generate and display a report of variables with no codelists found.
+
+    Args:
+        out_map: The output map containing project -> files -> variables -> codelists
+    """
+    empty_vars = []
+
+    # Collect all variables with empty codelists
+    for repo, proj_data in out_map.items():
+        for file_path, file_vars in proj_data.get("files", {}).items():
+            for var_name, codelist_calls in file_vars.items():
+                # Check if codelists list is empty and not in ignore list
+                if not codelist_calls and not should_ignore_variable(var_name):
+                    empty_vars.append((repo, file_path, var_name))
+
+    # Sort for consistent output
+    empty_vars.sort()
+
+    # Display report
+    print("\n" + "=" * 80, file=sys.stderr)
+    print("VARIABLES WITH NO CODELISTS FOUND", file=sys.stderr)
+    print("=" * 80, file=sys.stderr)
+
+    if not empty_vars:
+        print(
+            "\n✓ All variables have codelists (or are in the ignore list)",
+            file=sys.stderr,
+        )
+    else:
+        print(
+            f"\nTotal: {len(empty_vars)} variables with empty codelists",
+            file=sys.stderr,
+        )
+        print("\nTop 40:", file=sys.stderr)
+        print("-" * 80, file=sys.stderr)
+
+        for repo, file_path, var_name in empty_vars:
+            print(f"{repo} | {file_path} | {var_name}", file=sys.stderr)
+
+        # if len(empty_vars) > 40:
+        #     print(f"\n... and {len(empty_vars) - 40} more", file=sys.stderr)
+
+    print("=" * 80 + "\n", file=sys.stderr)
+
+
+def collect_codelists(
+    repos: list[str] | None,
+    output: str = "ehrql_codelists.json",
+    silent: bool = False,
+    verbose: bool = False,
+) -> None:
+    """Collect codelist_from_csv calls for all variables across repositories.
+
+    Args:
+        repos: Optional list of repo names to process (e.g., ["opensafely/repo1"])
+        output: Output JSON file path
+        silent: Suppress all output
+        verbose: Verbose progress output to stderr
+    """
+    initial_start_time = time.time()
+    cache_dir = pathlib.Path(".ehrql_repo_cache")
+    cache_dir.mkdir(exist_ok=True)
+
+    # Clone repos and find dataset files
+    local_repos = clone_ehrql_repos(repos, cache_dir, silent=silent, verbose=verbose)
+    all_dataset_files = get_dataset_files(local_repos, silent=silent, verbose=verbose)
+
+    duration = time.time() - initial_start_time
+    if not silent:
+        print(
+            f"\nCompleted repository cloning and dataset file discovery in {duration:.1f}s",
+            file=sys.stderr,
+        )
+
+    # Structure: project -> sha, files -> {filename -> variables}
+    out_map: dict[str, dict] = {}
+
+    total_repos = len(all_dataset_files)
+    current_repo_index = 0
+    start_time = time.time()
+
+    for repo, (head_sha, files, repo_local_dir) in all_dataset_files.items():
+        current_repo_index += 1
+
+        if not silent:
+            print(
+                f"\nProcessing {repo} with {len(files)} dataset files... ({current_repo_index}/{total_repos} repos)",
+                file=sys.stderr,
+            )
+
+        if not files:
+            continue
+
+        repo_start_time = time.time()
+        variables_processed = 0
+
+        # Initialize project entry
+        out_map[repo] = {"sha": head_sha, "files": {}}
+
+        for rel_path in files:
+            abs_path = repo_local_dir / rel_path
+            if not abs_path.exists():
+                if verbose:
+                    print(
+                        f"..File {rel_path} does not exist; skipping", file=sys.stderr
+                    )
+                continue
+
+            abs_path = abs_path.resolve()
+            resolved_repo_root = repo_local_dir.resolve()
+
+            if verbose:
+                print(f"..Extracting codelists from {abs_path}", file=sys.stderr)
+
+            try:
+                # Extract codelist calls for all variables in this file
+                variable_codelists = extract_variable_codelists(
+                    abs_path, resolved_repo_root
+                )
+
+                if variable_codelists:
+                    # Convert to JSON-serializable format
+                    file_data = {}
+                    for var_name, codelist_calls in variable_codelists.items():
+                        # Each codelist_calls is a list of tuples
+                        # Convert tuples to lists for JSON serialization
+                        file_data[var_name] = [list(call) for call in codelist_calls]
+                        variables_processed += 1
+
+                    out_map[repo]["files"][rel_path] = file_data
+
+                    if verbose:
+                        print(
+                            f"....Found codelists for {len(variable_codelists)} variables",
+                            file=sys.stderr,
+                        )
+
+            except SyntaxError as e:
+                if not silent:
+                    print(
+                        f"..Syntax error in {rel_path}: {e}",
+                        file=sys.stderr,
+                    )
+            except Exception as e:
+                if not silent:
+                    print(
+                        f"..Error processing {rel_path}: {e}",
+                        file=sys.stderr,
+                    )
+
+        repo_duration = time.time() - repo_start_time
+        if not silent:
+            print(
+                f"..Processed {variables_processed} variables across {len(files)} dataset files in {repo_duration:.1f}s",
+                file=sys.stderr,
+            )
+
+    duration = time.time() - start_time
+    if not silent:
+        print(
+            f"\nCompleted processing {len(all_dataset_files)} repos in {duration:.1f}s",
+            file=sys.stderr,
+        )
+
+    # Write output JSON
+    write_start_time = time.time()
+
+    # Sort for deterministic output:
+    # 1. Sort projects by name
+    # 2. Sort files within each project
+    # 3. Sort variables within each file
+    sorted_out_map = {}
+    for project in sorted(out_map.keys()):
+        project_data = out_map[project]
+        sorted_files = {}
+        for file_path in sorted(project_data.get("files", {}).keys()):
+            file_vars = project_data["files"][file_path]
+            # Sort variables by name
+            sorted_files[file_path] = {
+                var_name: file_vars[var_name] for var_name in sorted(file_vars.keys())
+            }
+        sorted_out_map[project] = {
+            "sha": project_data["sha"],
+            "files": sorted_files,
+        }
+
+    json_data = {
+        "generated_at": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+        "projects": sorted_out_map,
+    }
+
+    with open(output, "w", encoding="utf-8") as f:
+        json.dump(json_data, f, indent=2, ensure_ascii=False)
+
+    if not silent:
+        write_duration = time.time() - write_start_time
+        print(
+            f"\nWrote output file in {write_duration:.1f}s",
+            file=sys.stderr,
+        )
+
+        # Calculate statistics
+        total_files = sum(
+            len(proj_data.get("files", {})) for proj_data in out_map.values()
+        )
+        total_variables = sum(
+            len(file_vars)
+            for proj_data in out_map.values()
+            for file_vars in proj_data.get("files", {}).values()
+        )
+        total_codelist_calls = sum(
+            len(calls)
+            for proj_data in out_map.values()
+            for file_vars in proj_data.get("files", {}).values()
+            for calls in file_vars.values()
+        )
+
+        print(
+            f"\nWrote {output} with {total_codelist_calls} codelist calls "
+            f"across {total_variables} variables in {total_files} dataset files "
+            f"from {len(out_map)} projects",
+            file=sys.stderr,
+        )
+
+        total_duration = time.time() - initial_start_time
+        print(
+            f"\nTotal execution time: {total_duration:.1f}s",
+            file=sys.stderr,
+        )
+
+        # Generate report of variables with no codelists
+        generate_empty_codelists_report(out_map)
+
+
+def parse_args(argv: list[str]) -> argparse.Namespace:
+    """Parse command line arguments."""
+    p = argparse.ArgumentParser(
+        description="Extract codelist_from_csv calls from ehrQL variables across GitHub repos"
+    )
+    p.add_argument(
+        "--output",
+        default="ehrql_codelists.json",
+        help="Output JSON file path (default: ehrql_codelists.json)",
+    )
+    p.add_argument(
+        "--silent",
+        action="store_true",
+        help="Suppress all output",
+    )
+    p.add_argument(
+        "--verbose",
+        action="store_true",
+        help="Verbose progress output to stderr",
+    )
+    p.add_argument(
+        "repos",
+        nargs="*",
+        help="Optional list of repo names to process (e.g., opensafely/repo1 opensafely/repo2)",
+    )
+    return p.parse_args(argv)
+
+
+def main(argv: list[str] | None = None) -> int:
+    """Main entry point."""
+    args = parse_args(argv or sys.argv[1:])
+
+    try:
+        collect_codelists(
+            repos=args.repos if args.repos else None,
+            output=args.output,
+            silent=args.silent,
+            verbose=args.verbose,
+        )
+        return 0
+    except Exception as e:
+        if not args.silent:
+            print(f"Error: {e}", file=sys.stderr)
+        return 1
+
+
+if __name__ == "__main__":  # pragma: no cover
+    raise SystemExit(main())
