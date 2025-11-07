@@ -45,9 +45,11 @@ def should_ignore_variable(var_name: str) -> bool:
         r"(^|_)ethnicity($|_)",
         r"(^|_)region($|_)",
         r"(^|_)death($|_)",
+        r"(^|_)died($|_)",
         r"(^|_)dereg($|_)",
         r"(^|_)stp($|_)",
         r"(^|_)registered($|_)",
+        r"(^|_)appointment($|_)",
         r"(^|_)alive($|_)",
         r"(^|_)adult($|_)",
         r"(^|_)male($|_)",
@@ -56,6 +58,14 @@ def should_ignore_variable(var_name: str) -> bool:
         r"(^|_)rural($|_)",
         r"(^|_)deprivation($|_)",
         r"(^|_)age($|_)",
+        r"(^|_)admitted($|_)",
+        r"(^|_)registration($|_)",
+        r"(^|_)index_date($|_)",
+        r"(^|_)dob($|_)",
+        r"(^|_)dod($|_)",
+        r"(^|_)gp($|_)",
+        r"(^|_)practice($|_)",
+        r"(^|_)msoa($|_)",
     ]
     for pattern in ignore_regex:
         # Use search so the pattern can match anywhere in the variable name
@@ -102,11 +112,11 @@ def generate_empty_codelists_report(out_map: dict[str, dict]) -> None:
         print("\nTop 40:", file=sys.stderr)
         print("-" * 80, file=sys.stderr)
 
-        for repo, file_path, var_name in empty_vars[:40]:
+        for repo, file_path, var_name in empty_vars:
             print(f"{repo} | {file_path} | {var_name}", file=sys.stderr)
 
-        if len(empty_vars) > 40:
-            print(f"\n... and {len(empty_vars) - 40} more", file=sys.stderr)
+        # if len(empty_vars) > 40:
+        #     print(f"\n... and {len(empty_vars) - 40} more", file=sys.stderr)
 
     print("=" * 80 + "\n", file=sys.stderr)
 
