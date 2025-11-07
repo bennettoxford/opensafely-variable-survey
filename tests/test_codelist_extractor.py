@@ -557,6 +557,55 @@ def cause_of_death_matches(codelist):
         )
 
 
+def test_inline_codelist_with_star_import_attribute():
+    """Star imports that refer to codelists.<name> should still resolve inline lists."""
+
+    dataset_code = """
+from ehrql import create_dataset
+from codelists import *
+
+dataset = create_dataset()
+
+dataset.covid_critcare_date = records.where(
+    records.code.is_in(codelists.covid_critcare_codes)
+).first_for_patient().date
+"""
+
+    codelists_code = """
+from ehrql import codelist_from_csv
+
+covid_critcare_codes = codelist_from_csv(
+    "codelists/covid-critical-care.csv",
+    column="code",
+)
+
+# Override with inline tweak after review
+covid_critcare_codes = [
+    "U071",
+    "U072",
+    "U109",
+]
+"""
+
+    with tempfile.TemporaryDirectory() as tmpdir:
+        repo_root = pathlib.Path(tmpdir)
+        file_path = repo_root / "dataset_definition.py"
+        file_path.write_text(dataset_code)
+
+        codelists_path = repo_root / "codelists.py"
+        codelists_path.write_text(codelists_code)
+
+        codelists = extract_variable_codelists(file_path, repo_root)
+
+        assert "covid_critcare_date" in codelists
+        calls = codelists["covid_critcare_date"]
+        assert calls, "Should detect inline override despite star import"
+
+        inline_call = calls[-1]
+        assert inline_call[0] == "<inline>", inline_call
+        assert any(part.startswith("values=U071|U072|U109") for part in inline_call[1:])
+
+
 if __name__ == "__main__":
     import pytest
 

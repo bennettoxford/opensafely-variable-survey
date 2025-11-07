@@ -40,19 +40,27 @@ def should_ignore_variable(var_name: str) -> bool:
     if var_name in ignore_exact:
         return True
     ignore_regex = [
-        # Add regex patterns here if needed in the future
-        # e.g., re.compile(r"^age_\d+$"),
-        r"^age.*$",
-        r"^sex.*$",
-        r"^imd.*$",
-        r"^ethnicity.*$",
-        r"^region.*$",
-        r"^death.*$",
-        r"^dereg.*$",
-        r"^stp.*$",
+        r"(^|_)sex($|_)",
+        r"(^|_)imd($|_)",
+        r"(^|_)ethnicity($|_)",
+        r"(^|_)region($|_)",
+        r"(^|_)death($|_)",
+        r"(^|_)dereg($|_)",
+        r"(^|_)stp($|_)",
+        r"(^|_)registered($|_)",
+        r"(^|_)alive($|_)",
+        r"(^|_)adult($|_)",
+        r"(^|_)male($|_)",
+        r"(^|_)female($|_)",
+        r"(^|_)date.*birth($|_)",
+        r"(^|_)rural($|_)",
+        r"(^|_)deprivation($|_)",
+        r"(^|_)age($|_)",
     ]
     for pattern in ignore_regex:
-        if re.compile(pattern).match(var_name):
+        # Use search so the pattern can match anywhere in the variable name
+        # (re.match/re.compile(...).match only tries to match at the start).
+        if re.compile(pattern, re.IGNORECASE).search(var_name):
             return True
     return False
 

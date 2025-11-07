@@ -603,6 +603,12 @@ class ImportCollector:
                 for alias in node.names:
                     if alias.name == "*":
                         self.star_imports.append(module_name)
+                        if module_name:
+                            base_name = module_name.split(".")[-1]
+                            if base_name:
+                                self.imported_modules.setdefault(
+                                    base_name, (module_name, None)
+                                )
                     else:
                         imported_name = alias.asname if alias.asname else alias.name
                         self.imported_modules[imported_name] = (module_name, alias.name)

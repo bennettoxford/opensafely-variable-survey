@@ -1,5 +1,5 @@
 {
-  "generated_at": "2025-11-07 14:52:57",
+  "generated_at": "2025-11-07 15:12:41",
   "projects": {
     "opensafely/ADHD-Pre-and-Post-Covid": {
       "sha": "deea8462d4e7ad69ed2bf3d89ee1b31c336056ea",
@@ -1712,8 +1712,22 @@
           "sex": []
         },
         "analysis/1-extract/dataset_definition_snapshot.py": {
-          "covid_admitted_date": [],
-          "covid_critcare_date": [],
+          "covid_admitted_date": [
+            [
+              "<inline>",
+              "length=3",
+              "source=analysis/1-extract/codelists.py:260",
+              "values=U071|U072|U109"
+            ]
+          ],
+          "covid_critcare_date": [
+            [
+              "<inline>",
+              "length=3",
+              "source=analysis/1-extract/codelists.py:260",
+              "values=U071|U072|U109"
+            ]
+          ],
           "covid_vax_prior_count": [],
           "deregistered_date": []
         }
