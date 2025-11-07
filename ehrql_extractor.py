@@ -22,6 +22,7 @@ import types
 from contextlib import contextmanager
 from dataclasses import dataclass
 from enum import Enum
+from functools import lru_cache
 from typing import Any
 
 import pandas as pd
@@ -738,12 +739,19 @@ def normalize_qm_node(qm_node: qm.Node) -> qm.Node:
     return current_node
 
 
+# sorted_strs = sorted(repr(x) for x in field_value)
+# fields[field_name] = f"frozenset({{{', '.join(sorted_strs)}}})"
+@lru_cache(maxsize=4096)
+def _stringify_frozenset(value) -> str:
+    # canonical key is a tuple of sorted reprs
+    key = tuple(sorted(map(repr, value)))
+    return f"frozenset({{{', '.join(key)}}})"
+
+
 def _stringify_value(value):
     """Convert a value to a deterministic string representation, handling frozensets specially."""
     if isinstance(value, frozenset):
-        # Sort by repr string to ensure consistent ordering
-        sorted_strs = sorted(repr(x) for x in value)
-        return f"frozenset({{{', '.join(sorted_strs)}}})"
+        return _stringify_frozenset(value)
     else:
         return str(value)
 
@@ -905,8 +913,9 @@ def compact_qm_node(qm_node: qm.Node, _normalized: bool = False) -> str:
                     fields[field_name] = field_value
                 elif isinstance(field_value, frozenset):
                     # Sort by repr string to avoid relying on object __lt__ implementations
-                    sorted_strs = sorted(repr(x) for x in field_value)
-                    fields[field_name] = f"frozenset({{{', '.join(sorted_strs)}}})"
+                    # sorted_strs = sorted(repr(x) for x in field_value)
+                    # fields[field_name] = f"frozenset({{{', '.join(sorted_strs)}}})"
+                    fields[field_name] = _stringify_frozenset(field_value)
                 elif isinstance(field_value, Enum):
                     fields[field_name] = field_value.name
                 elif isinstance(field_value, int):
