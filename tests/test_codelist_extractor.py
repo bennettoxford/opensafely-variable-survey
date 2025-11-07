@@ -320,6 +320,97 @@ class Codelists(Enum):
         assert "codelists/pincer-ppi.csv" in codelist_files
 
 
+def test_codelist_via_dataset_variable_reference():
+    """Test codelist extraction when a variable references another dataset variable.
+
+    This matches the pattern from pincer-measures where:
+    - dataset.ppi uses a codelist
+    - dataset.indicator_a_denominator references dataset.ppi
+    - We should trace through dataset.ppi to find its codelists
+    """
+    code = """
+from ehrql import Dataset, months
+from ehrql.tables.beta.core import medications
+from codelists import Codelists
+from utils import HistoricalEvent
+
+INTERVAL = months(3).starting_on("2024-01-01")
+dataset = Dataset()
+
+hist_med = HistoricalEvent("medication", interval=INTERVAL)
+
+# Base variable that uses a codelist
+ppi = hist_med.fetch(Codelists.ULCER_HEALING_DRUGS.codes, 3)
+dataset.ppi = ppi.exists_for_patient()
+
+oral_nsaid = hist_med.fetch(Codelists.ORAL_NSAID.codes, 3)
+dataset.oral_nsaid = oral_nsaid.exists_for_patient()
+
+# Composite variable that references other dataset variables
+dataset.indicator_a_denominator = dataset.population_filter & ~dataset.ppi
+
+dataset.indicator_a_numerator = dataset.indicator_a_denominator & dataset.oral_nsaid
+"""
+    # Create codelists module with Enum pattern
+    codelists_code = """
+from enum import Enum
+from ehrql.codes import codelist_from_csv
+
+
+class Codelists(Enum):
+    ULCER_HEALING_DRUGS = ("pincer-ppi", "id")
+    ORAL_NSAID = ("pincer-nsaid", "id")
+
+    def __init__(self, codelist_name: str, column: str) -> None:
+        self.codelist_name = codelist_name
+        self._column = column
+        self.codes = codelist_from_csv(
+            f"codelists/{self.codelist_name}.csv", column=self._column
+        )
+"""
+    with tempfile.TemporaryDirectory() as tmpdir:
+        repo_root = pathlib.Path(tmpdir)
+        file_path = repo_root / "dataset_definition.py"
+        file_path.write_text(code)
+
+        # Create codelists.py module
+        codelists_path = repo_root / "codelists.py"
+        codelists_path.write_text(codelists_code)
+
+        codelists_result = extract_variable_codelists(file_path, repo_root)
+
+        # indicator_a_denominator should find the codelist from dataset.ppi
+        assert "indicator_a_denominator" in codelists_result
+        assert len(codelists_result["indicator_a_denominator"]) == 1, (
+            f"Expected 1 codelist for indicator_a_denominator (from dataset.ppi), "
+            f"got {len(codelists_result['indicator_a_denominator'])}: {codelists_result['indicator_a_denominator']}"
+        )
+
+        # Check it found the ppi codelist
+        codelist_files = [
+            call[0] for call in codelists_result["indicator_a_denominator"]
+        ]
+        assert "codelists/pincer-ppi.csv" in codelist_files, (
+            f"Expected 'codelists/pincer-ppi.csv' in {codelist_files}"
+        )
+
+        # indicator_a_numerator should find codelists from both dataset.ppi and dataset.oral_nsaid
+        assert "indicator_a_numerator" in codelists_result
+        assert len(codelists_result["indicator_a_numerator"]) == 2, (
+            f"Expected 2 codelists for indicator_a_numerator (ppi + oral_nsaid), "
+            f"got {len(codelists_result['indicator_a_numerator'])}: {codelists_result['indicator_a_numerator']}"
+        )
+
+        # Check it found both codelists
+        codelist_files = [call[0] for call in codelists_result["indicator_a_numerator"]]
+        assert "codelists/pincer-ppi.csv" in codelist_files, (
+            f"Expected 'codelists/pincer-ppi.csv' in {codelist_files}"
+        )
+        assert "codelists/pincer-nsaid.csv" in codelist_files, (
+            f"Expected 'codelists/pincer-nsaid.csv' in {codelist_files}"
+        )
+
+
 if __name__ == "__main__":
     import pytest
 

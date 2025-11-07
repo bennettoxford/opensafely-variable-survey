@@ -970,6 +970,13 @@ class CodelistTracer:
                         module_name, target_class, attr_name, import_collector, depth
                     )
                     codelist_calls.extend(calls)
+            # Check if this is a dataset variable reference (e.g., dataset.ppi)
+            elif obj_name == "dataset":
+                # Find the dataset variable assignment and trace its expression
+                calls = self._find_dataset_variable_reference(
+                    attr_name, tree, import_collector, file_path, depth
+                )
+                codelist_calls.extend(calls)
             else:
                 # Check if it's a local class
                 calls = self._trace_local_class_attribute(
@@ -983,6 +990,58 @@ class CodelistTracer:
                 attr_node.value, tree, import_collector, file_path, depth
             )
             codelist_calls.extend(calls)
+
+        return codelist_calls
+
+    def _find_dataset_variable_reference(
+        self,
+        var_name: str,
+        tree: ast.AST,
+        import_collector: ImportCollector,
+        file_path: pathlib.Path,
+        depth: int,
+    ) -> list[CodelistCall]:
+        """Find a dataset variable assignment and trace its expression.
+
+        When we see dataset.var_name in an expression, find where it was assigned
+        (dataset.var_name = expr) and trace that expression.
+
+        Args:
+            var_name: The dataset variable name (e.g., "ppi")
+            tree: AST tree to search
+            import_collector: Import information
+            file_path: Current file path
+            depth: Recursion depth
+
+        Returns:
+            List of CodelistCall objects
+        """
+        # Prevent infinite recursion
+        if depth > 50:
+            return []
+
+        codelist_calls: list[CodelistCall] = []
+
+        # Look for dataset.var_name = expression patterns
+        for node in ast.walk(tree):
+            if isinstance(node, ast.Assign):
+                # Check if target is dataset.var_name
+                for target in node.targets:
+                    if isinstance(target, ast.Attribute):
+                        if (
+                            isinstance(target.value, ast.Name)
+                            and target.value.id == "dataset"
+                            and target.attr == var_name
+                        ):
+                            # Found the assignment, trace the right-hand side
+                            calls = self._trace_expression(
+                                node.value,
+                                tree,
+                                import_collector,
+                                file_path,
+                                depth + 1,
+                            )
+                            codelist_calls.extend(calls)
 
         return codelist_calls
 

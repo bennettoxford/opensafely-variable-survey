@@ -145,9 +145,28 @@ def collect_codelists(
     # Write output JSON
     write_start_time = time.time()
 
+    # Sort for deterministic output:
+    # 1. Sort projects by name
+    # 2. Sort files within each project
+    # 3. Sort variables within each file
+    sorted_out_map = {}
+    for project in sorted(out_map.keys()):
+        project_data = out_map[project]
+        sorted_files = {}
+        for file_path in sorted(project_data.get("files", {}).keys()):
+            file_vars = project_data["files"][file_path]
+            # Sort variables by name
+            sorted_files[file_path] = {
+                var_name: file_vars[var_name] for var_name in sorted(file_vars.keys())
+            }
+        sorted_out_map[project] = {
+            "sha": project_data["sha"],
+            "files": sorted_files,
+        }
+
     json_data = {
         "generated_at": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-        "projects": out_map,
+        "projects": sorted_out_map,
     }
 
     with open(output, "w", encoding="utf-8") as f:
