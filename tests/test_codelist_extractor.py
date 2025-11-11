@@ -606,6 +606,58 @@ covid_critcare_codes = [
         assert any(part.startswith("values=U071|U072|U109") for part in inline_call[1:])
 
 
+def test_parse_codelists_json_url_mapping():
+    """Test that codelists.json is parsed correctly to get URL mapping."""
+    import json
+
+    from ehrql_codelist_extractor import normalize_path, parse_codelists_json
+
+    codelists_json_content = {
+        "files": {
+            "asthma.csv": {
+                "id": "opensafely/asthma/v1",
+                "url": "https://codelists.opensafely.org/codelist/opensafely/asthma/v1/",
+                "downloaded_at": "2023-01-01 12:00:00",
+                "sha": "abc123",
+            },
+            "diabetes.csv": {
+                "id": "opensafely/diabetes/v2",
+                "url": "https://codelists.opensafely.org/codelist/opensafely/diabetes/v2/",
+                "downloaded_at": "2023-01-01 12:00:00",
+                "sha": "def456",
+            },
+        }
+    }
+
+    with tempfile.TemporaryDirectory() as tmpdir:
+        repo_root = pathlib.Path(tmpdir)
+        codelists_dir = repo_root / "codelists"
+        codelists_dir.mkdir()
+
+        codelists_json = codelists_dir / "codelists.json"
+        codelists_json.write_text(json.dumps(codelists_json_content))
+
+        url_map, invalid_slugs = parse_codelists_json(repo_root)
+
+        # No invalid slugs expected for these canonical URLs
+        assert invalid_slugs == []
+
+        # Should map both with and without "codelists/" prefix to slug form
+        assert normalize_path("codelists/asthma.csv") in url_map
+        assert (
+            url_map[normalize_path("codelists/asthma.csv")] == "/opensafely/asthma/v1/"
+        )
+
+        assert normalize_path("asthma.csv") in url_map
+        assert url_map[normalize_path("asthma.csv")] == "/opensafely/asthma/v1/"
+
+        assert normalize_path("codelists/diabetes.csv") in url_map
+        assert (
+            url_map[normalize_path("codelists/diabetes.csv")]
+            == "/opensafely/diabetes/v2/"
+        )
+
+
 if __name__ == "__main__":
     import pytest
 

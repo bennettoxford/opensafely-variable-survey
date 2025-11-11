@@ -24,6 +24,98 @@ from parsing.ehrql_github_helpers import (
 from parsing.ehrql_variable_extractor import extract_variable_codelists
 
 
+def normalize_path(p: str) -> str:
+    """Normalize codelist path for comparison."""
+    p = p.replace("\\", "/").strip()
+    if p.startswith("./"):
+        p = p[2:]
+    return p
+
+
+def parse_codelists_json(repo_root: pathlib.Path) -> tuple[dict[str, str], list[str]]:
+    """Parse codelists.json if present and extract URL mapping.
+
+    Supports common layouts:
+    - <repo>/codelists/codelists.json (preferred)
+    - <repo>/codelists.json (fallback)
+    - any other codelists.json found via rglob (last resort)
+
+    Returns:
+        Dict mapping normalized codelist path -> URL
+    """
+    url_map: dict[str, str] = {}
+    invalid_slugs: list[str] = []
+
+    # Find candidates, prefer codelists/codelists.json
+    all_candidates = list(repo_root.rglob("codelists.json"))
+    if not all_candidates:
+        return url_map, invalid_slugs
+
+    def candidate_priority(p: pathlib.Path) -> int:
+        s = str(p).replace("\\", "/")
+        if s.endswith("/codelists/codelists.json"):
+            return 0
+        if s.endswith("/codelists.json"):
+            return 1
+        return 2
+
+    all_candidates.sort(key=candidate_priority)
+    cf = all_candidates[0]
+
+    try:
+        data = json.loads(cf.read_text(encoding="utf-8"))
+    except Exception:
+        return url_map, invalid_slugs
+
+    # Standard OpenSAFELY structure: { "files": { "<name>.csv": { "url": "...", ... }, ... } }
+    # Allowed domain prefixes we'll strip (handle a couple of common variants)
+    prefixes = [
+        "https://codelists.opensafely.org/codelist",
+        "http://codelists.opensafely.org/codelist",
+        "https://www.opencodelists.org/codelist",
+        "https://opencodelists.org/codelist",
+    ]
+
+    def _to_slug(url: str) -> str:
+        u = url.strip()
+        for p in prefixes:
+            if u.startswith(p):
+                slug = u[len(p) :]
+                # Ensure leading slash
+                if not slug.startswith("/"):
+                    slug = "/" + slug
+                return slug
+        # If not matching known prefixes, return the original URL so caller can see it
+        return u
+
+    if isinstance(data, dict) and isinstance(data.get("files"), dict):
+        for filename, meta in data["files"].items():
+            if isinstance(filename, str) and filename.endswith(".csv"):
+                if isinstance(meta, dict) and "url" in meta:
+                    slug = _to_slug(meta["url"])
+                    # Map both "codelists/filename.csv" and just "filename.csv"
+                    normalized = normalize_path(f"codelists/{filename}")
+                    url_map[normalized] = slug
+                    # Also map without codelists/ prefix for flexibility
+                    url_map[normalize_path(filename)] = slug
+                    # Collect invalid slugs for later reporting/validation
+                    # Valid patterns: /user/{username}/{codelist}/{hash_or_tag} OR /{org}/{codelist}/{hash_or_tag}
+                    # We'll allow an optional trailing slash
+                    if isinstance(slug, str):
+                        # If slug still looks like a full URL (didn't match prefixes), treat as invalid
+                        if slug.startswith("http://") or slug.startswith("https://"):
+                            invalid_slugs.append(slug)
+                        else:
+                            # Validate allowed slug formats
+                            if not re.match(
+                                r"^/(user/[^/]+/[^/]+/[^/]+|[^/]+/[^/]+/[^/]+)(?:/)?$",
+                                slug,
+                            ):
+                                invalid_slugs.append(slug)
+
+    return url_map, invalid_slugs
+
+
 def should_ignore_variable(var_name: str) -> bool:
     """Check if a variable should be ignored in the empty codelists report.
 
@@ -175,6 +267,24 @@ def collect_codelists(
         # Initialize project entry
         out_map[repo] = {"sha": head_sha, "files": {}}
 
+        # Parse codelists.json to get slug mapping for this repo
+        resolved_repo_root = repo_local_dir.resolve()
+        url_map, invalid_slugs = parse_codelists_json(resolved_repo_root)
+
+        if verbose:
+            if url_map:
+                print(
+                    f"..Found {len(url_map)} codelist entries in codelists.json",
+                    file=sys.stderr,
+                )
+            if invalid_slugs:
+                print(
+                    f"..Warning: {len(invalid_slugs)} codelist URLs did not match expected slug formats:",
+                    file=sys.stderr,
+                )
+                for s in invalid_slugs:
+                    print(f".... {s}", file=sys.stderr)
+
         for rel_path in files:
             abs_path = repo_local_dir / rel_path
             if not abs_path.exists():
@@ -185,7 +295,6 @@ def collect_codelists(
                 continue
 
             abs_path = abs_path.resolve()
-            resolved_repo_root = repo_local_dir.resolve()
 
             if verbose:
                 print(f"..Extracting codelists from {abs_path}", file=sys.stderr)
@@ -197,12 +306,21 @@ def collect_codelists(
                 )
 
                 if variable_codelists:
-                    # Convert to JSON-serializable format
+                    # Convert to JSON-serializable format and replace paths with URLs
                     file_data = {}
                     for var_name, codelist_calls in variable_codelists.items():
                         # Each codelist_calls is a list of tuples
-                        # Convert tuples to lists for JSON serialization
-                        file_data[var_name] = [list(call) for call in codelist_calls]
+                        # Convert tuples to lists and replace first param with URL if available
+                        processed_calls = []
+                        for call in codelist_calls:
+                            call_list = list(call)
+                            if call_list and call_list[0]:  # Has a first parameter
+                                normalized_path = normalize_path(call_list[0])
+                                if normalized_path in url_map:
+                                    call_list[0] = url_map[normalized_path]
+                            processed_calls.append(call_list)
+
+                        file_data[var_name] = processed_calls
                         variables_processed += 1
 
                     out_map[repo]["files"][rel_path] = file_data
