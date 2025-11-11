@@ -1,5 +1,5 @@
 {
-  "generated_at": "2025-11-07 15:14:30",
+  "generated_at": "2025-11-11 17:04:27",
   "projects": {
     "opensafely/ADHD-Pre-and-Post-Covid": {
       "sha": "deea8462d4e7ad69ed2bf3d89ee1b31c336056ea",
@@ -26873,7 +26873,7 @@
       }
     },
     "opensafely/pharmacy-first": {
-      "sha": "c17b13fa315eaa26afab27eb7fb115577688e0bf",
+      "sha": "4ebf74aad247fea7facbaa80f9c38c1d2447fa00",
       "files": {
         "analysis/dataset_definition_tables.py": [
           [
