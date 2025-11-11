@@ -1,4 +1,5 @@
 import base64
+import csv
 import json
 import pathlib
 import re
@@ -91,7 +92,9 @@ def parse_project_yaml(repo_root: pathlib.Path) -> list[str]:
             if "generate-dataset" in run_command or "generate_dataset" in run_command:
                 filtered_command = re.sub(r"--test-data-file\s+\S+", "", run_command)
                 # Extract file path from command like "ehrql:v1 generate-dataset analysis/dataset_definition.py"
-                parts = filtered_command.split()
+                # Split by whitespace and look for .py files. File names may be wrapped in quotes, so we strip
+                # them off.
+                parts = [p.strip("\"'") for p in filtered_command.split()]
 
                 possible_files = [p for p in parts if p.endswith(".py")]
                 if len(possible_files) == 1:
@@ -107,6 +110,45 @@ def parse_project_yaml(repo_root: pathlib.Path) -> list[str]:
         return list(dataset_files)
     except (GitHubError, yaml.YAMLError, KeyError) as _:
         return []
+
+
+def parse_jobs_csv(csv_path: pathlib.Path) -> dict[str, list[str]]:
+    """Parse jobs CSV and extract repo -> list of SHAs mapping.
+
+    Args:
+        csv_path: Path to the jobs CSV file
+
+    Returns:
+        Dict mapping repo full name (e.g., 'opensafely/repo-name') to list of unique SHAs
+    """
+    repo_shas: dict[str, set[str]] = {}
+
+    try:
+        with open(csv_path, encoding="utf-8") as f:
+            reader = csv.DictReader(f)
+            for row in reader:
+                url = row.get("url", "").strip()
+                sha = row.get("sha", "").strip()
+
+                if not url or not sha:
+                    continue
+
+                # Extract repo name from URL like "https://github.com/opensafely/repo-name"
+                if url.startswith("https://github.com/"):
+                    repo_full_name = url.replace("https://github.com/", "").strip("/")
+                    if "/" in repo_full_name:
+                        if repo_full_name not in repo_shas:
+                            repo_shas[repo_full_name] = set()
+                        repo_shas[repo_full_name].add(sha)
+    except FileNotFoundError:
+        print(f"Warning: CSV file not found: {csv_path}", file=sys.stderr)
+        return {}
+    except Exception as e:
+        print(f"Warning: Error parsing CSV: {e}", file=sys.stderr)
+        return {}
+
+    # Convert sets to sorted lists for deterministic output
+    return {repo: sorted(shas) for repo, shas in sorted(repo_shas.items())}
 
 
 def project_yaml_search(verbose: bool = False) -> list[dict]:
@@ -163,50 +205,173 @@ def clone_repos(
     silent: bool = False,
     verbose: bool = False,
 ) -> tuple[str, str, str]:
-    """Clone or update GitHub repos to local base_dir.
+    """Clone or update GitHub repos to local base_dir using worktrees.
+
+    For each repo:
+    - Creates a bare clone in {repo_name}/ (or updates if exists)
+    - Creates worktrees for each SHA in {repo_name}-{sha}/
+    - Fetches latest from origin to ensure main is up-to-date
 
     repos: tuple of (full_repo_name, ref_sha)
-    Returns dict of repo name to local path.
+    Returns list of tuples (repo_full_name, ref_sha, local_path).
     """
-    local_repos = []
+    # Group SHAs by repo
+    repo_sha_map: dict[str, list[str]] = {}
     for repo_full_name, ref_sha in all_repos:
+        if (
+            repos
+            and repo_full_name not in repos
+            and repo_full_name.split("/", 1)[1] not in repos
+        ):
+            continue
+        if repo_full_name not in repo_sha_map:
+            repo_sha_map[repo_full_name] = []
+        repo_sha_map[repo_full_name].append(ref_sha)
+
+    local_repos = []
+
+    for repo_full_name, shas in repo_sha_map.items():
         owner, repo_name = repo_full_name.split("/", 1)
 
-        if repos and repo_full_name not in repos and repo_name not in repos:
-            if verbose:
-                print(f"..Skipping {repo_full_name}", file=sys.stderr)
-            continue
-
         if not silent:
-            print(f"\n==> {repo_full_name} ({ref_sha[:7]})", file=sys.stderr)
+            unique_shas = list(set(shas))
+            print(
+                f"\n==> {repo_full_name} ({len(unique_shas)} unique SHA(s))",
+                file=sys.stderr,
+            )
 
-        repo_local_dir = cache_dir / f"{repo_name}-{ref_sha[:8]}"
-        if not repo_local_dir.exists():
-            clone_url = f"https://github.com/{owner}/{repo_name}.git"
-            cmd = [
-                "git",
-                "clone",
-                "--depth",
-                "1",
-                clone_url,
-                str(repo_local_dir),
-            ]
-            proc = subprocess.run(cmd, capture_output=True, text=True)
-            if proc.returncode != 0 and not silent:
+        cloned_repos = _clone_with_worktrees(
+            repo_full_name, owner, repo_name, shas, cache_dir, silent, verbose
+        )
+        local_repos.extend(cloned_repos)
+
+    return local_repos
+
+
+def _clone_with_worktrees(
+    repo_full_name: str,
+    owner: str,
+    repo_name: str,
+    shas: list[str],
+    cache_dir: pathlib.Path,
+    silent: bool,
+    verbose: bool,
+) -> list[tuple[str, str, pathlib.Path]]:
+    """Clone a repo as bare and create worktrees for each SHA.
+
+    On first run: creates bare clone
+    On subsequent runs: fetches latest from origin to update main
+
+    Returns list of tuples (repo_full_name, sha, worktree_path).
+    """
+    # Main bare repo directory (no suffix, just the repo name)
+    bare_repo_dir = cache_dir / repo_name
+    clone_url = f"https://github.com/{owner}/{repo_name}.git"
+
+    # Do bare clone if not already cached, otherwise fetch updates
+    if not bare_repo_dir.exists():
+        cmd = ["git", "clone", "--bare", clone_url, str(bare_repo_dir)]
+
+        if verbose:
+            print(
+                f"..Creating bare clone of {repo_full_name} at {bare_repo_dir}",
+                file=sys.stderr,
+            )
+
+        proc = subprocess.run(cmd, capture_output=True, text=True)
+        if proc.returncode != 0:
+            if not silent:
                 print(
-                    f"..Clone failed {owner}/{repo_name}: {proc.stderr.strip()}",
+                    f"..Bare clone failed {owner}/{repo_name}: {proc.stderr.strip()}",
                     file=sys.stderr,
                 )
-            else:
+            return []
+    else:
+        # Repo exists, fetch latest to ensure we have all refs
+        if verbose:
+            print(
+                f"..Updating bare repo at {bare_repo_dir} (fetching latest)",
+                file=sys.stderr,
+            )
+
+        fetch_proc = subprocess.run(
+            ["git", "--git-dir", str(bare_repo_dir), "fetch", "origin"],
+            capture_output=True,
+            text=True,
+        )
+        if fetch_proc.returncode != 0 and not silent:
+            print(
+                f"..Warning: fetch failed for {repo_full_name}: {fetch_proc.stderr.strip()}",
+                file=sys.stderr,
+            )
+
+    # Create worktrees for each SHA
+    local_repos = []
+    for sha in shas:
+        worktree_dir = cache_dir / f"{repo_name}-{sha[:8]}"
+
+        if not worktree_dir.exists():
+            # First, try to ensure we have this commit
+            # Check if commit exists, if not try to fetch it
+            check_proc = subprocess.run(
+                ["git", "--git-dir", str(bare_repo_dir), "cat-file", "-e", sha],
+                capture_output=True,
+                text=True,
+            )
+
+            if check_proc.returncode != 0:
+                # Commit doesn't exist locally, try to fetch it
                 if verbose:
                     print(
-                        f"..Cloned {repo_full_name} to {repo_local_dir}",
+                        f"..Fetching {sha[:8]} from origin",
                         file=sys.stderr,
                     )
+
+                fetch_commit_proc = subprocess.run(
+                    ["git", "--git-dir", str(bare_repo_dir), "fetch", "origin", sha],
+                    capture_output=True,
+                    text=True,
+                )
+
+                if fetch_commit_proc.returncode != 0:
+                    if not silent:
+                        print(
+                            f"..Cannot fetch {sha[:8]}: {fetch_commit_proc.stderr.strip()}",
+                            file=sys.stderr,
+                        )
+                    continue
+
+            # Create worktree at this SHA
+            cmd = [
+                "git",
+                "--git-dir",
+                str(bare_repo_dir),
+                "worktree",
+                "add",
+                str(worktree_dir),
+                sha,
+            ]
+
+            if verbose:
+                print(
+                    f"..Creating worktree for {sha[:8]} at {worktree_dir}",
+                    file=sys.stderr,
+                )
+
+            proc = subprocess.run(cmd, capture_output=True, text=True)
+            if proc.returncode != 0:
+                if not silent:
+                    print(
+                        f"..Worktree creation failed for {sha[:8]}: {proc.stderr.strip()}",
+                        file=sys.stderr,
+                    )
+                continue
         else:
             if verbose:
-                print(f"..Using cached clone at {repo_local_dir}", file=sys.stderr)
-        local_repos.append((repo_full_name, ref_sha, repo_local_dir))
+                print(f"..Using cached worktree at {worktree_dir}", file=sys.stderr)
+
+        local_repos.append((repo_full_name, sha, worktree_dir))
+
     return local_repos
 
 
@@ -215,7 +380,26 @@ def clone_ehrql_repos(
     cache_dir: pathlib.Path,
     silent: bool = False,
     verbose: bool = False,
+    csv_path: pathlib.Path | None = None,
 ):
+    """Clone ehrQL repos from GitHub API search, with optional additional SHAs from CSV.
+
+    Priority:
+    1. Always clone latest commit from GitHub API search for each repo
+    2. If CSV provided, also clone any additional SHAs for repos found in GitHub search
+    3. Report (but don't clone) repos that are in CSV but not in GitHub search
+
+    Args:
+        repos: Optional list of specific repos to include
+        cache_dir: Directory for caching cloned repos
+        silent: Suppress output
+        verbose: Verbose output
+        csv_path: Optional path to jobs CSV file for additional SHAs
+
+    Returns:
+        List of tuples (repo_full_name, sha, local_path) for each repo/SHA combination
+    """
+    # Always start with GitHub API search
     project_yaml_files = project_yaml_search(verbose=verbose)
     ehrql_repos = group_items_by_repo(project_yaml_files)
 
@@ -225,8 +409,68 @@ def clone_ehrql_repos(
             file=sys.stderr,
         )
 
+    # Start with GitHub API results (latest commit for each repo)
+    all_repos_shas = list(ehrql_repos.items())
+
+    # If CSV provided, add additional SHAs for repos in the GitHub search
+    if csv_path:
+        csv_repo_shas = parse_jobs_csv(csv_path)
+
+        if not silent:
+            total_csv_repos = len(csv_repo_shas)
+            total_csv_shas = sum(len(shas) for shas in csv_repo_shas.values())
+            print(
+                f"Found {total_csv_shas} unique repo/SHA combinations across {total_csv_repos} repos in CSV",
+                file=sys.stderr,
+            )
+
+        # Track repos in CSV but not in GitHub search
+        csv_only_repos = []
+
+        # Add additional SHAs from CSV for repos that are in the GitHub search
+        added_shas_count = 0
+        for repo_name, csv_shas in csv_repo_shas.items():
+            if repo_name in ehrql_repos:
+                # This repo is in GitHub search - add any additional SHAs from CSV
+                github_sha = ehrql_repos[repo_name]
+                for csv_sha in csv_shas:
+                    if csv_sha != github_sha:
+                        all_repos_shas.append((repo_name, csv_sha))
+                        added_shas_count += 1
+            else:
+                # This repo is in CSV but not in GitHub search
+                csv_only_repos.append((repo_name, len(csv_shas)))
+
+        if not silent and added_shas_count > 0:
+            print(
+                f"Added {added_shas_count} additional SHAs from CSV for repos in GitHub search",
+                file=sys.stderr,
+            )
+
+        # Report repos in CSV but not in GitHub search
+        if csv_only_repos and not silent:
+            print("\n" + "=" * 80, file=sys.stderr)
+            print("REPOS IN CSV BUT NOT IN GITHUB SEARCH", file=sys.stderr)
+            print("=" * 80, file=sys.stderr)
+            print(
+                f"\nTotal: {len(csv_only_repos)} repos in CSV were not found in GitHub ehrQL search",
+                file=sys.stderr,
+            )
+            print("(These will NOT be cloned or processed)", file=sys.stderr)
+            print("\nRepos:", file=sys.stderr)
+            print("-" * 80, file=sys.stderr)
+            print_limit = 10
+            for repo, sha_count in sorted(csv_only_repos)[:print_limit]:
+                print(f"  {repo} ({sha_count} SHA(s) in CSV)", file=sys.stderr)
+            if len(csv_only_repos) > print_limit:
+                print(
+                    f"\n  ... and {len(csv_only_repos) - print_limit} more",
+                    file=sys.stderr,
+                )
+            print("=" * 80 + "\n", file=sys.stderr)
+
     local_ehrql_repos = clone_repos(
-        ehrql_repos.items(), repos, cache_dir, silent=silent, verbose=verbose
+        all_repos_shas, repos, cache_dir, silent=silent, verbose=verbose
     )
     return local_ehrql_repos
 
@@ -236,13 +480,19 @@ def get_dataset_files(
     silent: bool = False,
     verbose: bool = False,
 ) -> dict[str, (str, list[str], pathlib.Path)]:
-    """Get dataset definition files from local cloned repos."""
+    """Get dataset definition files from local cloned repos.
+
+    Note: When multiple SHAs exist for the same repo, we use a composite key
+    "repo@sha" to distinguish them.
+    """
     all_dataset_files: dict[str, (str, list[str], pathlib.Path)] = {}
     for repo_full, head_sha, repo_local_dir in local_repos:
         dataset_files = parse_project_yaml(repo_local_dir)
 
         if dataset_files:
-            all_dataset_files[repo_full] = (
+            # Use composite key "repo@sha" to support multiple SHAs per repo
+            composite_key = f"{repo_full}@{head_sha}"
+            all_dataset_files[composite_key] = (
                 head_sha,
                 dataset_files,
                 repo_local_dir,
@@ -253,7 +503,7 @@ def get_dataset_files(
                     file=sys.stderr,
                 )
         else:
-            if not silent:
+            if verbose:
                 print(
                     "..No ehrql generate_dataset commands found in project.yaml",
                     file=sys.stderr,

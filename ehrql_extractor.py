@@ -776,6 +776,7 @@ def collect(
     global repo_name
     start_time = time.time()
     for repo, (head_sha, files, repo_local_dir) in all_dataset_files.items():
+        repo = repo.split("@")[0]  # strip off any @branch suffix
         current_repo_index += 1
         repo_name = repo
         if not silent:

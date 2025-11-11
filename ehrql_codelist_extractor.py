@@ -11,6 +11,7 @@ from __future__ import annotations
 
 import argparse
 import datetime
+import hashlib
 import json
 import pathlib
 import re
@@ -197,15 +198,40 @@ def generate_empty_codelists_report(out_map: dict[str, dict]) -> None:
             file=sys.stderr,
         )
     else:
+        # Calculate number of unique variable names (**only counting each once per repo**) and count of each
+        var_name_counts_per_repo: dict[str, set[str]] = {}
+        for repo, _, var_name in empty_vars:
+            repo = repo.split("@")[0] if "@" in repo else repo
+            if repo not in var_name_counts_per_repo:
+                var_name_counts_per_repo[repo] = set()
+            var_name_counts_per_repo[repo].add(var_name)
+        var_name_counts: dict[str, int] = {}
+        for _, var_names in var_name_counts_per_repo.items():
+            for var_name in var_names:
+                if var_name not in var_name_counts:
+                    var_name_counts[var_name] = 0
+                var_name_counts[var_name] += 1
+
+        # Print top 20 most common variable names with empty codelists
+        sorted_var_names = sorted(
+            var_name_counts.items(), key=lambda x: x[1], reverse=True
+        )
+
         print(
-            f"\nTotal: {len(empty_vars)} variables with empty codelists",
+            f"\nTotal: {len(var_name_counts)} variables with empty codelists",
             file=sys.stderr,
         )
-        print("\nTop 40:", file=sys.stderr)
-        print("-" * 80, file=sys.stderr)
 
-        for repo, file_path, var_name in empty_vars:
-            print(f"{repo} | {file_path} | {var_name}", file=sys.stderr)
+        print("\nTop 20 variable names with empty codelists:", file=sys.stderr)
+        print("-" * 80, file=sys.stderr)
+        for var_name, count in sorted_var_names[:20]:
+            print(f"{var_name}: {count} repos", file=sys.stderr)
+
+        # print("\nTop 40:", file=sys.stderr)
+        # print("-" * 80, file=sys.stderr)
+
+        # for repo, file_path, var_name in empty_vars:
+        #     print(f"{repo} | {file_path} | {var_name}", file=sys.stderr)
 
         # if len(empty_vars) > 40:
         #     print(f"\n... and {len(empty_vars) - 40} more", file=sys.stderr)
@@ -218,6 +244,8 @@ def collect_codelists(
     output: str = "ehrql_codelists.json",
     silent: bool = False,
     verbose: bool = False,
+    csv_path: pathlib.Path | None = None,
+    force: bool = False,
 ) -> None:
     """Collect codelist_from_csv calls for all variables across repositories.
 
@@ -226,13 +254,50 @@ def collect_codelists(
         output: Output JSON file path
         silent: Suppress all output
         verbose: Verbose progress output to stderr
+        csv_path: Optional path to jobs CSV file for repo/SHA combinations
+        force: If True, recalculate all results; if False, reuse existing results from output file
     """
     initial_start_time = time.time()
     cache_dir = pathlib.Path(".ehrql_repo_cache")
     cache_dir.mkdir(exist_ok=True)
 
+    # Load existing results if not forcing recalculation
+    existing_data: dict[str, dict[str, dict]] = {}
+    if not force and pathlib.Path(output).exists():
+        try:
+            with open(output, encoding="utf-8") as f:
+                existing_json = json.load(f)
+                existing_projects = existing_json.get("projects", {})
+                existing_signatures = existing_json.get("signatures", {})
+
+                # Build a map of (repo, sha) -> files_data
+                for repo_name, sha_dict in existing_projects.items():
+                    if repo_name not in existing_data:
+                        existing_data[repo_name] = {}
+                    for sha, signature in sha_dict.items():
+                        if signature in existing_signatures:
+                            existing_data[repo_name][sha] = existing_signatures[
+                                signature
+                            ]
+
+                if not silent:
+                    total_cached = sum(len(shas) for shas in existing_data.values())
+                    print(
+                        f"Loaded {total_cached} existing SHA results from {output}",
+                        file=sys.stderr,
+                    )
+        except (json.JSONDecodeError, KeyError, FileNotFoundError) as e:
+            if not silent:
+                print(
+                    f"Warning: Could not load existing results from {output}: {e}",
+                    file=sys.stderr,
+                )
+            existing_data = {}
+
     # Clone repos and find dataset files
-    local_repos = clone_ehrql_repos(repos, cache_dir, silent=silent, verbose=verbose)
+    local_repos = clone_ehrql_repos(
+        repos, cache_dir, silent=silent, verbose=verbose, csv_path=csv_path
+    )
     all_dataset_files = get_dataset_files(local_repos, silent=silent, verbose=verbose)
 
     duration = time.time() - initial_start_time
@@ -244,17 +309,40 @@ def collect_codelists(
 
     # Structure: project -> sha, files -> {filename -> variables}
     out_map: dict[str, dict] = {}
+    cached_count = 0
+    processed_count = 0
 
-    total_repos = len(all_dataset_files)
-    current_repo_index = 0
+    total_shas = len(all_dataset_files)
+    # Count unique repos (strip @sha suffix from composite keys)
+    unique_repos = set(
+        repo.split("@")[0] if "@" in repo else repo for repo in all_dataset_files.keys()
+    )
+    total_repos = len(unique_repos)
+    current_sha_index = 0
     start_time = time.time()
 
-    for repo, (head_sha, files, repo_local_dir) in all_dataset_files.items():
-        current_repo_index += 1
+    for repo_key, (head_sha, files, repo_local_dir) in all_dataset_files.items():
+        current_sha_index += 1
+
+        # Extract repo name (without @sha suffix)
+        repo_name = repo_key.split("@")[0] if "@" in repo_key else repo_key
+
+        # Check if we can use cached result
+        if repo_name in existing_data and head_sha in existing_data[repo_name]:
+            if not silent:
+                print(
+                    f"\nUsing cached result for {repo_key} ({current_sha_index}/{total_shas} SHAs)",
+                    file=sys.stderr,
+                )
+            if repo_name not in out_map:
+                out_map[repo_name] = {}
+            out_map[repo_name][head_sha] = existing_data[repo_name][head_sha]
+            cached_count += 1
+            continue
 
         if not silent:
             print(
-                f"\nProcessing {repo} with {len(files)} dataset files... ({current_repo_index}/{total_repos} repos)",
+                f"\nProcessing {repo_key} with {len(files)} dataset files... ({current_sha_index}/{total_shas} SHAs, for {total_repos} repos)",
                 file=sys.stderr,
             )
 
@@ -264,8 +352,8 @@ def collect_codelists(
         repo_start_time = time.time()
         variables_processed = 0
 
-        # Initialize project entry
-        out_map[repo] = {"sha": head_sha, "files": {}}
+        # Build files data structure for this SHA
+        files_data = {}
 
         # Parse codelists.json to get slug mapping for this repo
         resolved_repo_root = repo_local_dir.resolve()
@@ -323,7 +411,7 @@ def collect_codelists(
                         file_data[var_name] = processed_calls
                         variables_processed += 1
 
-                    out_map[repo]["files"][rel_path] = file_data
+                    files_data[rel_path] = file_data
 
                     if verbose:
                         print(
@@ -344,6 +432,14 @@ def collect_codelists(
                         file=sys.stderr,
                     )
 
+        # Initialize repo entry if not exists
+        if repo_name not in out_map:
+            out_map[repo_name] = {}
+
+        # Store files_data for this SHA under this repo
+        out_map[repo_name][head_sha] = files_data
+        processed_count += 1
+
         repo_duration = time.time() - repo_start_time
         if not silent:
             print(
@@ -354,35 +450,50 @@ def collect_codelists(
     duration = time.time() - start_time
     if not silent:
         print(
-            f"\nCompleted processing {len(all_dataset_files)} repos in {duration:.1f}s",
+            f"\nCompleted: {cached_count} cached, {processed_count} processed ({total_shas} total SHAs) in {duration:.1f}s",
             file=sys.stderr,
         )
 
-    # Write output JSON
+    # Write output JSON with signature-based deduplication
     write_start_time = time.time()
 
-    # Sort for deterministic output:
-    # 1. Sort projects by name
-    # 2. Sort files within each project
-    # 3. Sort variables within each file
-    sorted_out_map = {}
-    for project in sorted(out_map.keys()):
-        project_data = out_map[project]
-        sorted_files = {}
-        for file_path in sorted(project_data.get("files", {}).keys()):
-            file_vars = project_data["files"][file_path]
-            # Sort variables by name
-            sorted_files[file_path] = {
-                var_name: file_vars[var_name] for var_name in sorted(file_vars.keys())
-            }
-        sorted_out_map[project] = {
-            "sha": project_data["sha"],
-            "files": sorted_files,
-        }
+    # Create signature -> files mapping and repo -> (sha -> signature) mapping
+    signatures: dict[str, dict] = {}  # signature -> files data
+    sha_to_signature: dict[str, str] = {}  # sha -> signature
+    projects: dict[str, dict[str, str]] = {}  # repo -> {sha: signature}
+
+    for repo_name, sha_dict in out_map.items():
+        projects[repo_name] = {}
+        for sha, files_data in sha_dict.items():
+            # Sort files_data for deterministic hashing
+            sorted_files = {}
+            for file_path in sorted(files_data.keys()):
+                file_vars = files_data[file_path]
+                # Sort variables by name
+                sorted_files[file_path] = {
+                    var_name: file_vars[var_name]
+                    for var_name in sorted(file_vars.keys())
+                }
+
+            # Compute signature (hash of the sorted JSON)
+            files_json = json.dumps(sorted_files, sort_keys=True, ensure_ascii=False)
+            signature = hashlib.sha256(files_json.encode("utf-8")).hexdigest()[:16]
+
+            # Store mapping
+            sha_to_signature[sha] = signature
+            projects[repo_name][sha] = signature
+
+            # Store files data by signature (deduplicated)
+            if signature not in signatures:
+                signatures[signature] = sorted_files
+
+    # Sort projects for deterministic output
+    sorted_projects = {repo: projects[repo] for repo in sorted(projects.keys())}
 
     json_data = {
         "generated_at": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-        "projects": sorted_out_map,
+        "projects": sorted_projects,
+        "signatures": signatures,
     }
 
     with open(output, "w", encoding="utf-8") as f:
@@ -396,25 +507,26 @@ def collect_codelists(
         )
 
         # Calculate statistics
-        total_files = sum(
-            len(proj_data.get("files", {})) for proj_data in out_map.values()
-        )
+        total_shas = sum(len(sha_dict) for sha_dict in projects.values())
+        total_unique_signatures = len(signatures)
+        total_files = sum(len(files_data) for files_data in signatures.values())
         total_variables = sum(
             len(file_vars)
-            for proj_data in out_map.values()
-            for file_vars in proj_data.get("files", {}).values()
+            for files_data in signatures.values()
+            for file_vars in files_data.values()
         )
         total_codelist_calls = sum(
             len(calls)
-            for proj_data in out_map.values()
-            for file_vars in proj_data.get("files", {}).values()
+            for files_data in signatures.values()
+            for file_vars in files_data.values()
             for calls in file_vars.values()
         )
 
         print(
             f"\nWrote {output} with {total_codelist_calls} codelist calls "
             f"across {total_variables} variables in {total_files} dataset files "
-            f"from {len(out_map)} projects",
+            f"from {total_shas} SHAs ({total_unique_signatures} unique signatures) "
+            f"across {len(projects)} repos",
             file=sys.stderr,
         )
 
@@ -424,8 +536,14 @@ def collect_codelists(
             file=sys.stderr,
         )
 
-        # Generate report of variables with no codelists
-        generate_empty_codelists_report(out_map)
+        # Generate report of variables with no codelists (using signatures)
+        # Build a temporary out_map structure for the existing report function
+        temp_out_map = {}
+        for repo_name, sha_dict in out_map.items():
+            for sha, files_data in sha_dict.items():
+                key = f"{repo_name}@{sha}"
+                temp_out_map[key] = {"sha": sha, "files": files_data}
+        generate_empty_codelists_report(temp_out_map)
 
 
 def parse_args(argv: list[str]) -> argparse.Namespace:
@@ -449,6 +567,16 @@ def parse_args(argv: list[str]) -> argparse.Namespace:
         help="Verbose progress output to stderr",
     )
     p.add_argument(
+        "--csv",
+        type=pathlib.Path,
+        help="Path to jobs CSV file containing repo URLs and SHAs (uses GitHub API if not provided)",
+    )
+    p.add_argument(
+        "--force",
+        action="store_true",
+        help="Force recalculation of all results, ignoring cached data from previous runs",
+    )
+    p.add_argument(
         "repos",
         nargs="*",
         help="Optional list of repo names to process (e.g., opensafely/repo1 opensafely/repo2)",
@@ -466,6 +594,8 @@ def main(argv: list[str] | None = None) -> int:
             output=args.output,
             silent=args.silent,
             verbose=args.verbose,
+            csv_path=args.csv,
+            force=args.force,
         )
         return 0
     except Exception as e:
