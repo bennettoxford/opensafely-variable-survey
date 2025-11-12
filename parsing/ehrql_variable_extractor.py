@@ -2233,6 +2233,11 @@ class VariableExtractor:
             str, tuple[str, str]
         ] = {}  # instance_name -> (module_name, class_name)
 
+        # Also track constructor call nodes for resolving instance attributes
+        instance_constructor_calls: dict[
+            str, ast.Call
+        ] = {}  # instance_name -> constructor Call node
+
         for node in ast.walk(tree):
             if isinstance(node, ast.Assign):
                 # Look for: instance = ClassName(...)
@@ -2254,6 +2259,8 @@ class VariableExtractor:
                                     module_name,
                                     actual_class_name,
                                 )
+                                # Store the constructor call node
+                                instance_constructor_calls[instance_name] = node.value
 
         for node in ast.iter_child_nodes(tree):
             # Skip loops
@@ -2308,11 +2315,13 @@ class VariableExtractor:
                     # Check if this is an instance method call
                     if obj_name in instance_classes:
                         module_name, class_name = instance_classes[obj_name]
+                        constructor_call = instance_constructor_calls.get(obj_name)
                         self._extract_from_class_method(
                             module_name,
                             class_name,
                             method_or_func_name,
                             child,
+                            constructor_call,
                             line_numbers,
                             line_number_regexes,
                         )
@@ -2502,6 +2511,7 @@ class VariableExtractor:
         class_name: str,
         method_name: str,
         call_node: ast.Call,
+        constructor_call: ast.Call | None,
         line_numbers: dict[str, int | tuple[str, int]],
         line_number_regexes: list[tuple[str, int | tuple[str, int]]],
     ) -> None:
@@ -2550,6 +2560,7 @@ class VariableExtractor:
                     method_def,
                     module_file,
                     call_node,
+                    constructor_call,
                     line_numbers,
                     line_number_regexes,
                 )
@@ -2564,6 +2575,7 @@ class VariableExtractor:
         method_def: ast.FunctionDef,
         module_file: pathlib.Path,
         call_node: ast.Call,
+        constructor_call: ast.Call | None,
         line_numbers: dict[str, int | tuple[str, int]],
         line_number_regexes: list[tuple[str, int | tuple[str, int]]],
         visited_methods: set[str] | None = None,
@@ -2606,9 +2618,11 @@ class VariableExtractor:
                             # Extract variables from the helper method
                             # Check if it uses setattr
                             self._extract_setattr_from_method(
+                                class_def,
                                 item,
                                 node,
                                 call_node,
+                                constructor_call,
                                 rel_path,
                                 line_numbers,
                                 line_number_regexes,
@@ -2620,6 +2634,7 @@ class VariableExtractor:
                                 item,
                                 module_file,
                                 call_node,
+                                constructor_call,
                                 line_numbers,
                                 line_number_regexes,
                                 visited_methods,
@@ -2627,9 +2642,11 @@ class VariableExtractor:
 
     def _extract_setattr_from_method(
         self,
+        class_def: ast.ClassDef,
         method_def: ast.FunctionDef,
         method_call_node: ast.Call,
         original_call_node: ast.Call,
+        constructor_call: ast.Call | None,
         rel_path: str,
         line_numbers: dict[str, int | tuple[str, int]],
         line_number_regexes: list[tuple[str, int | tuple[str, int]]],
@@ -2637,9 +2654,11 @@ class VariableExtractor:
         """Extract variables from a method that uses setattr.
 
         Args:
+            class_def: The class definition containing the method
             method_def: The helper method definition (e.g., _update_dataset)
             method_call_node: The call to this method (e.g., self._update_dataset(...))
             original_call_node: The original method call on the instance
+            constructor_call: The constructor call node (e.g., ClassName(...))
             rel_path: Relative path to the source file
             line_numbers: Dict to update
             line_number_regexes: List to update
@@ -2693,6 +2712,23 @@ class VariableExtractor:
                             # Static variable name
                             line_numbers[actual_arg.value] = (rel_path, call_line)
 
+                        # Check if it's an instance attribute like self.codelist_name_1
+                        elif isinstance(actual_arg, ast.Attribute) and isinstance(
+                            actual_arg.value, ast.Name
+                        ):
+                            if actual_arg.value.id == "self" and constructor_call:
+                                # Resolve the attribute from the constructor call
+                                attr_name = actual_arg.attr
+                                resolved_values = (
+                                    self._resolve_instance_attribute_from_constructor(
+                                        class_def, attr_name, constructor_call
+                                    )
+                                )
+                                for value, value_line in resolved_values:
+                                    # The constructor call is from the main file,
+                                    # so use plain integer line numbers
+                                    line_numbers[value] = value_line
+
                         # Check if it's an f-string
                         elif isinstance(actual_arg, ast.JoinedStr):
                             pattern = self.name_extractor.extract_from_fstring(
@@ -2723,6 +2759,134 @@ class VariableExtractor:
         # A full implementation would track instance attributes through __init__
         # and resolve them from the constructor call arguments
         return pattern
+
+    def _resolve_instance_attribute_from_constructor(
+        self,
+        class_def: ast.ClassDef,
+        attr_name: str,
+        constructor_call: ast.Call,
+    ) -> list[tuple[str, int]]:
+        """Resolve an instance attribute value from the constructor call.
+
+        For example, if __init__ has:
+            self.codelist_name_1, self.codelist_name_2 = codelist_names
+
+        And the constructor is called with:
+            ClassName(dataset, ("aspirin", "antiplatelet"))
+
+        Then resolving "codelist_name_1" should return [("aspirin", 9)]
+        where 9 is the line number of "aspirin" in the constructor call.
+
+        Args:
+            class_def: The class definition
+            attr_name: The attribute name to resolve (e.g., "codelist_name_1")
+            constructor_call: The constructor call node
+
+        Returns:
+            List of (value, line_number) tuples
+        """
+        # Find the __init__ method
+        init_method: ast.FunctionDef | None = None
+        for item in class_def.body:
+            if isinstance(item, ast.FunctionDef) and item.name == "__init__":
+                init_method = item
+                break
+
+        if not init_method:
+            return []
+
+        # Look for assignments to self.attr_name in __init__
+        # Pattern 1: self.attr_name = something
+        # Pattern 2: self.attr_name, self.other = tuple_param (unpacking)
+
+        for node in ast.walk(init_method):
+            if not isinstance(node, ast.Assign):
+                continue
+
+            # Check for tuple unpacking: self.a, self.b = param
+            if isinstance(node.targets[0], ast.Tuple):
+                # Find the index of our attribute in the tuple
+                attr_index: int | None = None
+                for idx, target_elem in enumerate(node.targets[0].elts):
+                    if (
+                        isinstance(target_elem, ast.Attribute)
+                        and isinstance(target_elem.value, ast.Name)
+                        and target_elem.value.id == "self"
+                        and target_elem.attr == attr_name
+                    ):
+                        attr_index = idx
+                        break
+
+                if attr_index is not None:
+                    # The RHS should be a parameter name
+                    if isinstance(node.value, ast.Name):
+                        param_name = node.value.id
+
+                        # Find which parameter this is in __init__
+                        param_index: int | None = None
+                        for idx, param in enumerate(init_method.args.args):
+                            if param.arg == param_name:
+                                param_index = idx
+                                break
+
+                        if param_index is not None:
+                            # Adjust for self: param_index 0 is self, 1 is first arg, etc.
+                            call_arg_index = param_index - 1
+
+                            if call_arg_index >= 0 and call_arg_index < len(
+                                constructor_call.args
+                            ):
+                                # Get the argument from the constructor call
+                                constructor_arg = constructor_call.args[call_arg_index]
+
+                                # Check if it's a tuple
+                                if isinstance(constructor_arg, ast.Tuple):
+                                    if attr_index < len(constructor_arg.elts):
+                                        tuple_elem = constructor_arg.elts[attr_index]
+
+                                        # Extract the value if it's a constant string
+                                        if isinstance(
+                                            tuple_elem, ast.Constant
+                                        ) and isinstance(tuple_elem.value, str):
+                                            return [
+                                                (tuple_elem.value, tuple_elem.lineno)
+                                            ]
+
+            # Check for simple assignment: self.attr_name = param
+            elif isinstance(node.targets[0], ast.Attribute):
+                target = node.targets[0]
+                if (
+                    isinstance(target.value, ast.Name)
+                    and target.value.id == "self"
+                    and target.attr == attr_name
+                ):
+                    # The RHS should be a parameter or value
+                    if isinstance(node.value, ast.Name):
+                        param_name = node.value.id
+
+                        # Find which parameter this is in __init__
+                        param_index = None
+                        for idx, param in enumerate(init_method.args.args):
+                            if param.arg == param_name:
+                                param_index = idx
+                                break
+
+                        if param_index is not None:
+                            call_arg_index = param_index - 1
+
+                            if call_arg_index >= 0 and call_arg_index < len(
+                                constructor_call.args
+                            ):
+                                constructor_arg = constructor_call.args[call_arg_index]
+
+                                if isinstance(
+                                    constructor_arg, ast.Constant
+                                ) and isinstance(constructor_arg.value, str):
+                                    return [
+                                        (constructor_arg.value, constructor_arg.lineno)
+                                    ]
+
+        return []
 
     def _resolve_template_from_call(
         self, func_def: ast.FunctionDef, call_node: ast.Call

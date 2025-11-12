@@ -1341,8 +1341,21 @@ dataset.co_prescribed_result = cp_f.generate_co_prescribing_variable()
 
             # Should extract the static variables created by _update_dataset
             # These are the direct calls with codelist_name_1 and codelist_name_2
-            assert "aspirin" in line_numbers or len(regexes) > 0
-            assert "antiplatelet_excluding_aspirin" in line_numbers or len(regexes) > 0
+            # They should be extracted from the constructor call tuple
+            assert "aspirin" in line_numbers, (
+                "Expected 'aspirin' to be extracted from constructor tuple"
+            )
+            assert "antiplatelet_excluding_aspirin" in line_numbers, (
+                "Expected 'antiplatelet_excluding_aspirin' to be extracted from constructor tuple"
+            )
+
+            # Both should point to line 9 where the tuple is in the constructor call
+            assert line_numbers["aspirin"] == 9, (
+                f"Expected aspirin at line 9, got {line_numbers['aspirin']}"
+            )
+            assert line_numbers["antiplatelet_excluding_aspirin"] == 9, (
+                f"Expected antiplatelet_excluding_aspirin at line 9, got {line_numbers['antiplatelet_excluding_aspirin']}"
+            )
 
             # Should also extract patterns for the dynamic variables
             # These have month numbers in them

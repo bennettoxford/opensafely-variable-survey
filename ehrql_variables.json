@@ -1,5 +1,5 @@
 {
-  "generated_at": "2025-11-12 11:00:56",
+  "generated_at": "2025-11-12 11:51:32",
   "projects": {
     "opensafely/ADHD-Pre-and-Post-Covid": {
       "sha": "deea8462d4e7ad69ed2bf3d89ee1b31c336056ea",
@@ -30512,7 +30512,7 @@
           [
             "anticoagulant",
             "BoolPatientSeries",
-            -1,
+            106,
             "0d5beb0dac23fe8e",
             "eb88895c755b698e"
           ],
@@ -30769,10 +30769,7 @@
           [
             "antiplatelet_excluding_aspirin",
             "BoolPatientSeries",
-            [
-              "analysis/ehrQL/utils.py",
-              131
-            ],
+            86,
             "2049eb907a55fb55",
             "eb88895c755b698e"
           ],
@@ -30869,10 +30866,7 @@
           [
             "antiplatelet_including_aspirin",
             "BoolPatientSeries",
-            [
-              "analysis/ehrQL/utils.py",
-              131
-            ],
+            106,
             "5ef881b16635cd34",
             "eb88895c755b698e"
           ],
@@ -30969,7 +30963,7 @@
           [
             "aspirin",
             "BoolPatientSeries",
-            -1,
+            86,
             "5dd696300d013edc",
             "eb88895c755b698e"
           ],
