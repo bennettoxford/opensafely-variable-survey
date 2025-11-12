@@ -1341,8 +1341,21 @@ dataset.co_prescribed_result = cp_f.generate_co_prescribing_variable()
 
             # Should extract the static variables created by _update_dataset
             # These are the direct calls with codelist_name_1 and codelist_name_2
-            assert "aspirin" in line_numbers or len(regexes) > 0
-            assert "antiplatelet_excluding_aspirin" in line_numbers or len(regexes) > 0
+            # They should be extracted from the constructor call tuple
+            assert "aspirin" in line_numbers, (
+                "Expected 'aspirin' to be extracted from constructor tuple"
+            )
+            assert "antiplatelet_excluding_aspirin" in line_numbers, (
+                "Expected 'antiplatelet_excluding_aspirin' to be extracted from constructor tuple"
+            )
+
+            # Both should point to line 9 where the tuple is in the constructor call
+            assert line_numbers["aspirin"] == 9, (
+                f"Expected aspirin at line 9, got {line_numbers['aspirin']}"
+            )
+            assert line_numbers["antiplatelet_excluding_aspirin"] == 9, (
+                f"Expected antiplatelet_excluding_aspirin at line 9, got {line_numbers['antiplatelet_excluding_aspirin']}"
+            )
 
             # Should also extract patterns for the dynamic variables
             # These have month numbers in them
@@ -1543,3 +1556,59 @@ add_outcome_date("axial_arth", axial_code_snomed, axial_code_icd)
             assert line_numbers["rheu_arth"] == 15  # dataset.add_column line
             assert line_numbers["psor_arth"] == 15  # dataset.add_column line
             assert line_numbers["axial_arth"] == 15  # dataset.add_column line
+
+    def test_add_column_in_loop_with_local_dict(self):
+        """Test dataset.add_column(loop_var, value) inside a loop over local dict.items().
+
+        This is the pattern from waiting-list/dataset_definition_ortho.py:
+
+        comorb_codes = {
+            "anxiety": codelists.anxiety_codes,
+            ...
+        }
+
+        for comorb, comorb_codelist in comorb_codes.items():
+            snomed_query = ...
+            dataset.add_column(comorb, snomed_query)  # comorb is a Name node
+
+        The bug: when add_column receives a Name node (like 'comorb'), it's treated
+        as a static variable that needs parameter resolution. However, in loop processing,
+        only dynamic patterns were being captured, so static variables were lost.
+
+        The fix: Extended _extract_from_dict_items_loop to handle local dicts with add_column.
+        """
+        code = """
+from ehrql import create_dataset
+import codelists
+
+dataset = create_dataset()
+
+# Comorbidities dict
+comorb_codes = {
+    "diabetes": codelists.diabetes_codes,
+    "anxiety": codelists.anxiety_codes,
+    "depression": codelists.depression_codes,
+}
+
+for comorb, comorb_codelist in comorb_codes.items():
+    snomed_query = clinical_events.where(
+        clinical_events.snomedct_code.is_in(comorb_codelist)
+    ).exists_for_patient()
+    dataset.add_column(comorb, snomed_query)
+"""
+        with tempfile.TemporaryDirectory() as tmpdir:
+            repo_root = pathlib.Path(tmpdir)
+            file_path = repo_root / "dataset_definition.py"
+            file_path.write_text(code)
+
+            line_numbers, regexes = extract_variable_line_numbers(file_path, repo_root)
+
+            # These variables should be extracted from the dict
+            assert "diabetes" in line_numbers
+            assert "anxiety" in line_numbers
+            assert "depression" in line_numbers
+
+            # They should all point to their definition line in the dict
+            assert line_numbers["diabetes"] == 9
+            assert line_numbers["anxiety"] == 10
+            assert line_numbers["depression"] == 11
