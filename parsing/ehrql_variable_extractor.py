@@ -1852,12 +1852,13 @@ class VariableExtractor:
         for node in ast.iter_child_nodes(tree):
             if isinstance(node, (ast.For, ast.While)):
                 self._process_loop(
-                    node, import_collector, line_numbers, line_number_regexes
+                    node, tree, import_collector, line_numbers, line_number_regexes
                 )
 
     def _process_loop(
         self,
         loop_node: ast.For | ast.While,
+        tree: ast.AST,
         import_collector: ImportCollector,
         line_numbers: dict[str, int | tuple[str, int]],
         line_number_regexes: list[tuple[str, int | tuple[str, int]]],
@@ -1867,22 +1868,31 @@ class VariableExtractor:
 
         # Check if this is a dict.items() loop pattern
         if self._extract_from_dict_items_loop(
-            loop_node, import_collector, line_numbers
+            loop_node, tree, import_collector, line_numbers
         ):
             # Successfully extracted from dict.items() pattern, nothing more to do
             return
 
         for child in ast.walk(loop_node):
             # Direct dataset operations in loop
-            _, dynamic = self.operation_finder.find_add_column_calls(child)
+            static, dynamic = self.operation_finder.find_add_column_calls(child)
+            # Static variables with Name nodes (e.g., loop variables) that need resolution
+            for var_name, _ in static:
+                # Try to resolve the variable name from loop context
+                if isinstance(loop_node, ast.For) and isinstance(
+                    loop_node.target, ast.Tuple
+                ):
+                    # Check if this is the loop variable (e.g., "comorb" in for comorb, val in dict.items())
+                    # If so, we need dict.items() pattern handling which is done above
+                    pass
             for pattern, _ in dynamic:
                 line_number_regexes.append((pattern, loop_line))
 
-            _, dynamic = self.operation_finder.find_setattr_calls(child)
+            static, dynamic = self.operation_finder.find_setattr_calls(child)
             for pattern, _ in dynamic:
                 line_number_regexes.append((pattern, loop_line))
 
-            _, dynamic = self.operation_finder.find_subscript_assignments(child)
+            static, dynamic = self.operation_finder.find_subscript_assignments(child)
             for pattern, _ in dynamic:
                 line_number_regexes.append((pattern, loop_line))
 
@@ -1895,14 +1905,20 @@ class VariableExtractor:
     def _extract_from_dict_items_loop(
         self,
         loop_node: ast.For | ast.While,
+        tree: ast.AST,
         import_collector: ImportCollector,
         line_numbers: dict[str, int | tuple[str, int]],
     ) -> bool:
         """Extract variables from a dict.items() loop pattern.
 
-        Pattern:
+        Pattern 1 (imported dict with setattr):
             for var_name, var_value in imported_dict.items():
                 setattr(dataset, var_name, var_value)
+
+        Pattern 2 (local dict with add_column):
+            my_dict = {"key1": val1, "key2": val2}
+            for key, value in my_dict.items():
+                dataset.add_column(key, value)
 
         Returns True if this pattern was detected and processed.
         """
@@ -1924,66 +1940,87 @@ class VariableExtractor:
 
         dict_name = loop_node.iter.func.value.id
 
-        # Check if the dict is imported
-        if dict_name not in import_collector.imported_modules:
-            return False
+        # Try Pattern 1: Imported dict with setattr
+        if dict_name in import_collector.imported_modules:
+            module_name, original_name = import_collector.imported_modules[dict_name]
+            target_dict_name = original_name or dict_name
 
-        module_name, original_name = import_collector.imported_modules[dict_name]
-        target_dict_name = original_name or dict_name
+            # Find the setattr call in the loop body
+            setattr_node = None
+            for node in ast.walk(loop_node):
+                if (
+                    isinstance(node, ast.Call)
+                    and isinstance(node.func, ast.Name)
+                    and node.func.id == "setattr"
+                ):
+                    setattr_node = node
+                    break
 
-        # Find the setattr call in the loop body
-        setattr_node = None
+            if setattr_node and len(setattr_node.args) >= 3:
+                # Now we need to find the dict definition in the imported module
+                # and extract the variable names and their definition line numbers
+                module_candidates = self.module_resolver.find_module_file(module_name)
+                module_path = None
+                for candidate in module_candidates:
+                    if candidate.exists():
+                        module_path = candidate
+                        break
+
+                if module_path:
+                    try:
+                        with open(module_path) as f:
+                            module_source = f.read()
+                        module_tree = ast.parse(module_source)
+                    except (OSError, SyntaxError):
+                        return False
+
+                    # Find the dict assignment in the module
+                    dict_definition = self._find_dict_definition(
+                        module_tree, target_dict_name
+                    )
+                    if dict_definition:
+                        # Extract variable definitions from the dict
+                        rel_path = str(
+                            pathlib.Path(module_path).relative_to(self.repo_root)
+                        )
+                        for key, value_node in dict_definition.items():
+                            # key is the variable name (e.g., "cens_date_death")
+                            # value_node is the AST node for the value (e.g., Name("death_date"))
+
+                            # If the value is a Name node, find where that variable was defined
+                            if isinstance(value_node, ast.Name):
+                                var_def_line = self._find_variable_definition_line(
+                                    module_tree, value_node.id
+                                )
+                                if var_def_line:
+                                    line_numbers[key] = (rel_path, var_def_line)
+
+                        return True
+
+        # Try Pattern 2: Local dict with add_column
+        # Find add_column call in the loop body
+        add_column_node = None
         for node in ast.walk(loop_node):
             if (
                 isinstance(node, ast.Call)
-                and isinstance(node.func, ast.Name)
-                and node.func.id == "setattr"
+                and isinstance(node.func, ast.Attribute)
+                and node.func.attr == "add_column"
+                and isinstance(node.func.value, ast.Name)
+                and node.func.value.id == "dataset"
             ):
-                setattr_node = node
+                add_column_node = node
                 break
 
-        if not setattr_node or len(setattr_node.args) < 3:
-            return False
+        if add_column_node and len(add_column_node.args) >= 1:
+            # Find the local dict definition
+            dict_dict, dict_line = self._find_local_dict_literal(tree, dict_name)
+            if dict_dict:
+                # Extract keys from the dict literal
+                for key, key_line in dict_dict.items():
+                    line_numbers[key] = key_line
+                return True
 
-        # Now we need to find the dict definition in the imported module
-        # and extract the variable names and their definition line numbers
-        module_candidates = self.module_resolver.find_module_file(module_name)
-        module_path = None
-        for candidate in module_candidates:
-            if candidate.exists():
-                module_path = candidate
-                break
-
-        if not module_path:
-            return False
-
-        try:
-            with open(module_path) as f:
-                module_source = f.read()
-            module_tree = ast.parse(module_source)
-        except (OSError, SyntaxError):
-            return False
-
-        # Find the dict assignment in the module
-        dict_definition = self._find_dict_definition(module_tree, target_dict_name)
-        if not dict_definition:
-            return False
-
-        # Extract variable definitions from the dict
-        rel_path = str(pathlib.Path(module_path).relative_to(self.repo_root))
-        for key, value_node in dict_definition.items():
-            # key is the variable name (e.g., "cens_date_death")
-            # value_node is the AST node for the value (e.g., Name("death_date"))
-
-            # If the value is a Name node, find where that variable was defined
-            if isinstance(value_node, ast.Name):
-                var_def_line = self._find_variable_definition_line(
-                    module_tree, value_node.id
-                )
-                if var_def_line:
-                    line_numbers[key] = (rel_path, var_def_line)
-
-        return True
+        return False
 
     def _find_dict_definition(
         self, tree: ast.AST, dict_name: str
@@ -2029,6 +2066,44 @@ class VariableExtractor:
                 return node.lineno
 
         return None
+
+    def _find_local_dict_literal(
+        self, tree: ast.AST, dict_name: str
+    ) -> tuple[dict[str, int], int] | tuple[None, None]:
+        """Find a local dict literal and return its keys with line numbers.
+
+        Looks for patterns like:
+            my_dict = {
+                "key1": value1,  # line 5
+                "key2": value2,  # line 6
+            }
+
+        Returns:
+            Tuple of (dict_mapping, dict_line) where:
+            - dict_mapping: dict[key_string -> line_number]
+            - dict_line: line number of the dict assignment
+            Returns (None, None) if not found
+        """
+        for node in ast.walk(tree):
+            if (
+                isinstance(node, ast.Assign)
+                and len(node.targets) == 1
+                and isinstance(node.targets[0], ast.Name)
+                and node.targets[0].id == dict_name
+                and isinstance(node.value, ast.Dict)
+            ):
+                # Extract keys and their line numbers
+                result = {}
+                for key_node in node.value.keys:
+                    if isinstance(key_node, ast.Constant) and isinstance(
+                        key_node.value, str
+                    ):
+                        # Use the line number of the key node
+                        result[key_node.value] = key_node.lineno
+
+                return result, node.lineno
+
+        return None, None
 
     def _process_loop_function_call(
         self,

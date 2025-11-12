@@ -1,5 +1,5 @@
 {
-  "generated_at": "2025-11-11 17:04:27",
+  "generated_at": "2025-11-12 11:00:56",
   "projects": {
     "opensafely/ADHD-Pre-and-Post-Covid": {
       "sha": "deea8462d4e7ad69ed2bf3d89ee1b31c336056ea",
@@ -65,13 +65,27 @@
       }
     },
     "opensafely/COMPARES-vaccines": {
-      "sha": "9b13979874ef64cc8146d7de2d34d7a4e95421d5",
+      "sha": "039edee8b11a213708771468683b52cf93192ba3",
       "files": {
         "analysis/1-extract/dataset_definition.py": [
           [
+            "acute_otitis_gp",
+            "BoolPatientSeries",
+            469,
+            "a02f0705441cd2fb",
+            "6176453061d93dc0"
+          ],
+          [
+            "acute_otitis_gp_date",
+            "DatePatientSeries",
+            759,
+            "c2fa763163417f68",
+            "2b3b1f2bc4ec6fe0"
+          ],
+          [
             "admitted_date",
             "DatePatientSeries",
-            544,
+            548,
             "7eeae6ef03e554aa",
             "0eceb12db6595036"
           ],
@@ -92,28 +106,28 @@
           [
             "ami_admitted_date",
             "DatePatientSeries",
-            605,
+            609,
             "b3062a0c4409c42b",
             "3752d538bcba3765"
           ],
           [
             "ami_date",
             "DatePatientSeries",
-            608,
+            612,
             "d23f9121e42c946c",
             "5573cdab9c322cbb"
           ],
           [
             "ami_death_date",
             "DatePatientSeries",
-            606,
+            610,
             "c055ec8e531881b0",
             "c7605a04b61b313b"
           ],
           [
             "ami_gp_date",
             "DatePatientSeries",
-            604,
+            608,
             "3f6aecab48674d1c",
             "2b3b1f2bc4ec6fe0"
           ],
@@ -141,35 +155,35 @@
           [
             "anaphylaxis_admitted_date",
             "DatePatientSeries",
-            739,
+            743,
             "99b49c57c3745d17",
             "a5871412b9e8d22d"
           ],
           [
             "anaphylaxis_date",
             "DatePatientSeries",
-            742,
+            746,
             "5618a87b61d580b8",
             "f0f4e0fe15a7038d"
           ],
           [
             "anaphylaxis_death_date",
             "DatePatientSeries",
-            740,
+            744,
             "5c3d8935770af9d7",
             "c7605a04b61b313b"
           ],
           [
             "anaphylaxis_emergency_date",
             "DatePatientSeries",
-            738,
+            742,
             "a97b47481ebaa93c",
             "5514a416e510bc76"
           ],
           [
             "anaphylaxis_gp_date",
             "DatePatientSeries",
-            737,
+            741,
             "58d12a5bdc7aea8d",
             "2b3b1f2bc4ec6fe0"
           ],
@@ -214,28 +228,28 @@
           [
             "ate_admitted_date",
             "DatePatientSeries",
-            627,
+            631,
             "eeb54c776f1028fb",
             "713334bbab402c03"
           ],
           [
             "ate_date",
             "DatePatientSeries",
-            630,
+            634,
             "1418ee4cb42fcb5d",
             "cc8bddc4e3df6f0f"
           ],
           [
             "ate_death_date",
             "DatePatientSeries",
-            628,
+            632,
             "15c3081e0c68a9cd",
             "c7605a04b61b313b"
           ],
           [
             "ate_gp_date",
             "DatePatientSeries",
-            626,
+            630,
             "1d45356d8e8c65b7",
             "2b3b1f2bc4ec6fe0"
           ],
@@ -263,35 +277,35 @@
           [
             "bells_palsy_admitted_date",
             "DatePatientSeries",
-            579,
+            583,
             "9dd791147786ae56",
             "c51dc153230d8899"
           ],
           [
             "bells_palsy_date",
             "DatePatientSeries",
-            582,
+            586,
             "5cbed5cba0abeadd",
             "c09d3d2b72a49c7f"
           ],
           [
             "bells_palsy_death_date",
             "DatePatientSeries",
-            580,
+            584,
             "1b80ffb4464dfa96",
             "c7605a04b61b313b"
           ],
           [
             "bells_palsy_emergency_date",
             "DatePatientSeries",
-            578,
+            582,
             "478a58bf942a3885",
             "5514a416e510bc76"
           ],
           [
             "bells_palsy_gp_date",
             "DatePatientSeries",
-            577,
+            581,
             "a5990931c6d8f5d8",
             "2b3b1f2bc4ec6fe0"
           ],
@@ -338,6 +352,20 @@
             "8092dc037383df72"
           ],
           [
+            "cellulitis_gp",
+            "BoolPatientSeries",
+            470,
+            "d05b8c3130f1ac18",
+            "6176453061d93dc0"
+          ],
+          [
+            "cellulitis_gp_date",
+            "DatePatientSeries",
+            760,
+            "59508928f76ecdf9",
+            "2b3b1f2bc4ec6fe0"
+          ],
+          [
             "chd",
             "BoolPatientSeries",
             [
@@ -380,7 +408,7 @@
           [
             "covid_admitted_date",
             "DatePatientSeries",
-            555,
+            559,
             "75e6af8d1dc1b7f0",
             "462930d2ff8a953d"
           ],
@@ -394,21 +422,21 @@
           [
             "covid_critcare_date",
             "DatePatientSeries",
-            557,
+            561,
             "75e6af8d1dc1b7f0",
             "462930d2ff8a953d"
           ],
           [
             "covid_death_date",
             "DatePatientSeries",
-            559,
+            563,
             "8609e343c6a0d8db",
             "c7605a04b61b313b"
           ],
           [
             "covid_emergency_date",
             "DatePatientSeries",
-            553,
+            557,
             "47ebf443f09a4a25",
             "5514a416e510bc76"
           ],
@@ -439,7 +467,7 @@
           [
             "death_date",
             "DatePatientSeries",
-            546,
+            550,
             "feaf5a1e5a66bbce",
             "feaf5a1e5a66bbce"
           ],
@@ -463,28 +491,28 @@
           [
             "dvt_admitted_date",
             "DatePatientSeries",
-            639,
+            643,
             "0c51cb15e2860a8f",
             "338d6654b3c8074b"
           ],
           [
             "dvt_date",
             "DatePatientSeries",
-            642,
+            646,
             "9c7e14eece8a22de",
             "6b9d6e36966dadc1"
           ],
           [
             "dvt_death_date",
             "DatePatientSeries",
-            640,
+            644,
             "9efd2a17d58cbacf",
             "c7605a04b61b313b"
           ],
           [
             "dvt_gp_date",
             "DatePatientSeries",
-            638,
+            642,
             "f1131563bfbd832c",
             "2b3b1f2bc4ec6fe0"
           ],
@@ -512,42 +540,42 @@
           [
             "emergency_date",
             "DatePatientSeries",
-            542,
+            546,
             "cca53a797adca14b",
             "d885b72eec2fac8c"
           ],
           [
             "ery_multi_admitted_date",
             "DatePatientSeries",
-            726,
+            730,
             "80f4ddab4fb15b73",
             "d38869ea8dfaf3d6"
           ],
           [
             "ery_multi_date",
             "DatePatientSeries",
-            729,
+            733,
             "83aba315aa6bdda6",
             "9f497096529fa6d5"
           ],
           [
             "ery_multi_death_date",
             "DatePatientSeries",
-            727,
+            731,
             "8dd93af7038981cc",
             "c7605a04b61b313b"
           ],
           [
             "ery_multi_emergency_date",
             "DatePatientSeries",
-            725,
+            729,
             "e2ee702cfdb88356",
             "5514a416e510bc76"
           ],
           [
             "ery_multi_gp_date",
             "DatePatientSeries",
-            724,
+            728,
             "a5d9faa8085a102b",
             "2b3b1f2bc4ec6fe0"
           ],
@@ -603,28 +631,28 @@
           [
             "icvt_admitted_date",
             "DatePatientSeries",
-            650,
+            654,
             "cd45060b626df4f9",
             "1bde13bac6b7c681"
           ],
           [
             "icvt_date",
             "DatePatientSeries",
-            653,
+            657,
             "60b013ea636b59e8",
             "7bb3bf161843bc8c"
           ],
           [
             "icvt_death_date",
             "DatePatientSeries",
-            651,
+            655,
             "781183bc6eb593c2",
             "c7605a04b61b313b"
           ],
           [
             "icvt_gp_date",
             "DatePatientSeries",
-            649,
+            653,
             "0b85bb723c8c2323",
             "2b3b1f2bc4ec6fe0"
           ],
@@ -686,28 +714,28 @@
           [
             "menorrhagia_admitted_date",
             "DatePatientSeries",
-            714,
+            718,
             "64205c015abcaba6",
             "43fed30a0274acf8"
           ],
           [
             "menorrhagia_date",
             "DatePatientSeries",
-            717,
+            721,
             "5f06416fbf16ebd7",
             "04e663aa9cd70a3a"
           ],
           [
             "menorrhagia_death_date",
             "DatePatientSeries",
-            715,
+            719,
             "3c0d8afff8547a45",
             "c7605a04b61b313b"
           ],
           [
             "menorrhagia_gp_date",
             "DatePatientSeries",
-            713,
+            717,
             "dceefa42f480c6f1",
             "2b3b1f2bc4ec6fe0"
           ],
@@ -735,35 +763,35 @@
           [
             "myocarditis_admitted_date",
             "DatePatientSeries",
-            701,
+            705,
             "5076af2cd0d029b1",
             "6b177b33acc2e3eb"
           ],
           [
             "myocarditis_date",
             "DatePatientSeries",
-            704,
+            708,
             "cf071020845b3964",
             "13505e9fe58190d3"
           ],
           [
             "myocarditis_death_date",
             "DatePatientSeries",
-            702,
+            706,
             "33a61d6dbc611bec",
             "c7605a04b61b313b"
           ],
           [
             "myocarditis_emergency_date",
             "DatePatientSeries",
-            700,
+            704,
             "1638f38453abd48a",
             "5514a416e510bc76"
           ],
           [
             "myocarditis_gp_date",
             "DatePatientSeries",
-            699,
+            703,
             "3a7c3a83a0841002",
             "2b3b1f2bc4ec6fe0"
           ],
@@ -798,28 +826,28 @@
           [
             "pe_admitted_date",
             "DatePatientSeries",
-            661,
+            665,
             "afa8572a4b66937f",
             "69aae94b8436354f"
           ],
           [
             "pe_date",
             "DatePatientSeries",
-            664,
+            668,
             "c656d6538c057444",
             "615b84979dedc1ea"
           ],
           [
             "pe_death_date",
             "DatePatientSeries",
-            662,
+            666,
             "af0043f50e53eb5e",
             "c7605a04b61b313b"
           ],
           [
             "pe_gp_date",
             "DatePatientSeries",
-            660,
+            664,
             "3032523034373efe",
             "2b3b1f2bc4ec6fe0"
           ],
@@ -847,35 +875,35 @@
           [
             "pericarditis_admitted_date",
             "DatePatientSeries",
-            687,
+            691,
             "d38a47c77242ad85",
             "b8642a3b0cf72432"
           ],
           [
             "pericarditis_date",
             "DatePatientSeries",
-            690,
+            694,
             "c3511b33f59a9d64",
             "d2a3d79b2fc6f818"
           ],
           [
             "pericarditis_death_date",
             "DatePatientSeries",
-            688,
+            692,
             "bcce5e0cf508b616",
             "c7605a04b61b313b"
           ],
           [
             "pericarditis_emergency_date",
             "DatePatientSeries",
-            686,
+            690,
             "4c78b00c4ff19485",
             "5514a416e510bc76"
           ],
           [
             "pericarditis_gp_date",
             "DatePatientSeries",
-            685,
+            689,
             "ed8dc93c1e671df6",
             "2b3b1f2bc4ec6fe0"
           ],
@@ -955,28 +983,28 @@
           [
             "sgb_admitted_date",
             "DatePatientSeries",
-            567,
+            571,
             "e8911011a90e8111",
             "cb05e7c35cab49f1"
           ],
           [
             "sgb_date",
             "DatePatientSeries",
-            570,
+            574,
             "84091ba97b90e9ef",
             "1a5ac28ce7a2d583"
           ],
           [
             "sgb_death_date",
             "DatePatientSeries",
-            568,
+            572,
             "66eeb95da7ccfd17",
             "c7605a04b61b313b"
           ],
           [
             "sgb_gp_date",
             "DatePatientSeries",
-            566,
+            570,
             "769f7b956adccd00",
             "2b3b1f2bc4ec6fe0"
           ],
@@ -1021,28 +1049,28 @@
           [
             "stroke_isch_admitted_date",
             "DatePatientSeries",
-            616,
+            620,
             "1ae1a2b9cdf82577",
             "07948dada320f5f2"
           ],
           [
             "stroke_isch_date",
             "DatePatientSeries",
-            619,
+            623,
             "4b1049c30ed24620",
             "9ed543836818b139"
           ],
           [
             "stroke_isch_death_date",
             "DatePatientSeries",
-            617,
+            621,
             "5ff78ab2fb2d545a",
             "c7605a04b61b313b"
           ],
           [
             "stroke_isch_gp_date",
             "DatePatientSeries",
-            615,
+            619,
             "c7bf3bd89667e759",
             "2b3b1f2bc4ec6fe0"
           ],
@@ -1070,28 +1098,28 @@
           [
             "ttp_admitted_date",
             "DatePatientSeries",
-            593,
+            597,
             "c444b8b9f5a30d1f",
             "16a0b367a3992db2"
           ],
           [
             "ttp_date",
             "DatePatientSeries",
-            596,
+            600,
             "638aa1aa01e13fad",
             "ebc55cc637197de3"
           ],
           [
             "ttp_death_date",
             "DatePatientSeries",
-            594,
+            598,
             "9520a2b0b93f7f79",
             "c7605a04b61b313b"
           ],
           [
             "ttp_gp_date",
             "DatePatientSeries",
-            592,
+            596,
             "0b9b0d527a05e065",
             "2b3b1f2bc4ec6fe0"
           ],
@@ -1260,28 +1288,28 @@
           [
             "vte_admitted_date",
             "DatePatientSeries",
-            673,
+            677,
             "17bef494e88ba85c",
             "b3cd02a7094e38c9"
           ],
           [
             "vte_date",
             "DatePatientSeries",
-            676,
+            680,
             "3b0d5a484e8b5f27",
             "f2333ff487b94fb1"
           ],
           [
             "vte_death_date",
             "DatePatientSeries",
-            674,
+            678,
             "e40b7d447e796ffb",
             "c7605a04b61b313b"
           ],
           [
             "vte_gp_date",
             "DatePatientSeries",
-            672,
+            676,
             "1ead87b2cba404c3",
             "2b3b1f2bc4ec6fe0"
           ],
@@ -39444,7 +39472,7 @@
           [
             "anxiety",
             "BoolPatientSeries",
-            -1,
+            307,
             "a963ab9e78a9a018",
             "5dcf16922da598d8"
           ],
@@ -39472,7 +39500,7 @@
           [
             "cardiac",
             "BoolPatientSeries",
-            -1,
+            300,
             "fc6e36062c609f21",
             "5dcf16922da598d8"
           ],
@@ -39493,7 +39521,7 @@
           [
             "ckd",
             "BoolPatientSeries",
-            -1,
+            303,
             "c5a1bb79ab0656f9",
             "5dcf16922da598d8"
           ],
@@ -39507,7 +39535,7 @@
           [
             "copd",
             "BoolPatientSeries",
-            -1,
+            301,
             "e26d6f795dcc8271",
             "5dcf16922da598d8"
           ],
@@ -39549,14 +39577,14 @@
           [
             "depression",
             "BoolPatientSeries",
-            -1,
+            306,
             "6cb6aaa3e42014e5",
             "5dcf16922da598d8"
           ],
           [
             "diabetes",
             "BoolPatientSeries",
-            -1,
+            299,
             "d75e6bbba1d8a035",
             "5dcf16922da598d8"
           ],
@@ -39703,7 +39731,7 @@
           [
             "liver",
             "BoolPatientSeries",
-            -1,
+            302,
             "8c2fb382ad9fae45",
             "5dcf16922da598d8"
           ],
@@ -39927,7 +39955,7 @@
           [
             "oa",
             "BoolPatientSeries",
-            -1,
+            304,
             "4dfaa96f19a78e84",
             "5dcf16922da598d8"
           ],
@@ -40004,7 +40032,7 @@
           [
             "oud",
             "BoolPatientSeries",
-            -1,
+            309,
             "f90878fa9c54c7fc",
             "5dcf16922da598d8"
           ],
@@ -40025,7 +40053,7 @@
           [
             "ra",
             "BoolPatientSeries",
-            -1,
+            305,
             "15f0c1e849b4dba1",
             "5dcf16922da598d8"
           ],
@@ -40151,7 +40179,7 @@
           [
             "smi",
             "BoolPatientSeries",
-            -1,
+            308,
             "b4f34068dbd30968",
             "5dcf16922da598d8"
           ],
