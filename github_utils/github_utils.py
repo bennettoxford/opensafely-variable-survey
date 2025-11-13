@@ -1,7 +1,7 @@
 import os
 from collections.abc import Iterator, Mapping
 from traceback import format_exception
-from typing import Any, Optional
+from typing import Any
 
 import requests as rq
 import yaml
@@ -39,7 +39,7 @@ class RepoGetter:
 
     def get_cohortextractor_study_definitions(
         self, repository: Repository | str
-    ) -> Optional[list[tuple[str, str]]]:
+    ) -> list[tuple[str, str]] | None:
         if isinstance(repository, str):
             repository = self.organisation_client.get_repo(repository)
         cohortextractor_actions = _get_cohortextractor_actions(repository=repository)
@@ -67,7 +67,7 @@ class RepoGetter:
         return {repo: format_exception(e) for repo, e in self.exceptions.items()}
 
 
-def _get_cohortextractor_actions(repository: Repository) -> Optional[list[Any]]:
+def _get_cohortextractor_actions(repository: Repository) -> list[Any] | None:
     project_config = _get_project_config(repository=repository)
     if not project_config:
         return
@@ -147,7 +147,7 @@ def _get_study_definitions(
     return study_definitions
 
 
-def _get_project_config(repository: Repository) -> Optional[Mapping]:
+def _get_project_config(repository: Repository) -> Mapping | None:
     try:
         project_file = repository.get_contents("project.yaml")
     except GithubException as exc:  # pragma: no cover - network errors in prod only
