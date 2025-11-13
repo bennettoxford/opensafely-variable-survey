@@ -127,8 +127,8 @@ fix: devenv
 
 
 # Run the dev project
-run: devenv
-    python main.py
+run *args: devenv
+    python main.py {{ args }}
 
 # Run the ehrQL extractor script
 ehrql *args: devenv
