@@ -10,5 +10,3 @@
 .project_yaml_cache.json
 ehrql_qm_dump.json
 ehrql_qm_full_dump.json
-
-All.jobs-data-*.csv
