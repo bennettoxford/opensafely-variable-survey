@@ -17,7 +17,7 @@ def _():
 
 @app.cell
 def _(json, pd):
-    with open("cohort_extractor_variables.json") as f:
+    with open("data/cohort_extractor_variables.json") as f:
         variables = json.load(f)
     flattened = []
     for repo, studies in variables.items():

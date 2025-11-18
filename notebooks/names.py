@@ -35,7 +35,7 @@ def _(json):
     # It'd be nice if this just worked. bleh
     # pd.read_json("cohort_extractor_variables.json")
     # let's wrangle it manually
-    with open("cohort_extractor_variables.json") as f:
+    with open("data/cohort_extractor_variables.json") as f:
         variables = json.load(f)
     return (variables,)
 
