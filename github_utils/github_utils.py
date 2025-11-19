@@ -1,3 +1,4 @@
+import json
 import os
 from collections.abc import Iterator, Mapping
 from traceback import format_exception
@@ -20,6 +21,21 @@ class RepoGetter:
         self.organisation = organisation
         self.exceptions: dict[str, Exception] = {}
         self.organisation_client = _get_organisation_client(self.organisation)
+
+    def get_all_cohortextractor_codelists(
+        self,
+    ) -> Iterator[tuple[Repository, set[str]]]:
+        for repository in self.organisation_client.get_repos():
+            if repository.name in REPOS_TO_EXCLUDE:
+                continue
+            try:
+                if not _get_cohortextractor_actions(repository=repository):
+                    continue
+                if not (codelists := _get_project_codelists(repository=repository)):
+                    continue
+                yield (repository, codelists)
+            except Exception as e:
+                self.exceptions[repository.name] = e
 
     def get_all_cohortextractor_study_definitions(
         self,
@@ -147,22 +163,26 @@ def _get_study_definitions(
     return study_definitions
 
 
-def _get_project_config(repository: Repository) -> Mapping | None:
-    try:
-        project_file = repository.get_contents("project.yaml")
-    except GithubException as exc:  # pragma: no cover - network errors in prod only
-        if exc.status == 404:
+def _get_project_codelists(repository: Repository) -> set[str] | None:
+    if not (
+        codelists_file := _get_repo_file_contents(
+            repository, "codelists/codelists.json"
+        )
+    ):
+        if not (
+            codelists_file := _get_repo_file_contents(
+                repository, "codelists/codelists.txt"
+            )
+        ):
             return
-        raise
-    if isinstance(project_file, list):
-        project_file = project_file[0]
-    if project_file.size / (1024**2) > 1:
-        # >1MB files have to be requested from the raw download
-        response = rq.get(project_file.download_url)
-        project_yaml = response.content.decode("utf-8")
-    else:
-        project_yaml = project_file.decoded_content.decode("utf-8")
+        return set(codelists_file.splitlines())
+    codelists_dict = json.loads(codelists_file)
+    return {file["id"] for file in codelists_dict["files"].values()}
 
+
+def _get_project_config(repository: Repository) -> Mapping | None:
+    if not (project_yaml := _get_repo_file_contents(repository, "project.yaml")):
+        return {}
     try:
         return yaml.safe_load(project_yaml) or {}
     # "research_temp_tm" has an invalid project.yaml, there may be others!
@@ -171,6 +191,22 @@ def _get_project_config(repository: Repository) -> Mapping | None:
         yaml.parser.ParserError,
     ):
         return {}
+
+
+def _get_repo_file_contents(repository: Repository, path: str) -> str | None:
+    try:
+        repo_file = repository.get_contents(path)
+    except GithubException as exc:
+        if exc.status == 404:
+            return
+        raise
+    if isinstance(repo_file, list):
+        repo_file = repo_file[0]
+    if repo_file.size / (1024**2) > 1:
+        # >1MB files have to be requested from the raw download
+        response = rq.get(repo_file.download_url)
+        return response.content.decode("utf-8")
+    return repo_file.decoded_content.decode("utf-8")
 
 
 def _get_organisation_client(organisation):
