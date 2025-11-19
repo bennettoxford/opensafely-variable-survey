@@ -324,8 +324,59 @@ def _(never_used_codelists):
 
 
 @app.cell
+def _(Path, codelists, ever_used_slugs, json, mo, pd):
+    # remove cohortextractor-used codelists
+    cohort_extractor_codelists = json.load(
+        Path("data/cohort_extractor_codelists.json").open()
+    )
+    _all_cohort_extractor_codelists = {
+        c for cs in cohort_extractor_codelists.values() for c in cs
+    }
+    _never_used = []
+    for _codelist in codelists:
+        if any(e for e in ever_used_slugs if e.startswith(_codelist["slug"])) or any(
+            e
+            for e in _all_cohort_extractor_codelists
+            if e.startswith(_codelist["slug"])
+        ):
+            continue
+        _never_used.append(
+            {
+                _k: _v
+                for _k, _v in _codelist.items()
+                if _k in ["name", "owner", "coding_system"]
+            }
+        )
+    never_used_codelists_cohortextractor = pd.DataFrame(_never_used)
+    mo.md("## Never-used codelists:")
+    return (never_used_codelists_cohortextractor,)
+
+
+@app.cell
+def _(never_used_codelists_cohortextractor):
+    never_used_codelists_cohortextractor
+    return
+
+
+@app.cell
+def _(never_used_codelists_cohortextractor):
+    never_used_codelists_cohortextractor.groupby("coding_system").count()[
+        "name"
+    ].rename("never_used_codelist_count")
+    return
+
+
+@app.cell
+def _(never_used_codelists_cohortextractor):
+    never_used_codelists_cohortextractor.groupby("owner").count()["name"].rename(
+        "never_used_codelist_count"
+    )
+    return
+
+
+@app.cell
 def _(mo):
-    mo.md("## Most popular codelists (across all versions)")
+    mo.md("""## Most popular codelists (across all versions)""")
     return
 
 
@@ -370,7 +421,7 @@ def _(codelist_projects, defaultdict, pd):
 
 @app.cell
 def _(mo):
-    mo.md("## How out of date are codelists when used?")
+    mo.md("""## How out of date are codelists when used?""")
     return
 
 
@@ -442,10 +493,13 @@ def _(all_delta_days, plot):
 
 @app.cell
 def _(mo):
-    mo.md("""`updated_at` gets updated when the underlying coding system is updated (in most but not all circumstances) therefore unreliable!
+    mo.md(
+        """
+    `updated_at` gets updated when the underlying coding system is updated (in most but not all circumstances) therefore unreliable!
 
     Let's re-run with `created_at` and accept there might be some errors where a Codelist Version is updated significantly after creation
-    """)
+    """
+    )
     return
 
 
@@ -533,7 +587,7 @@ def _(all_delta_days_created, np):
 
 @app.cell
 def _(mo):
-    mo.md(r"""## Was there a newer version available at time of use? """)
+    mo.md(r"""## Was there a newer version available at time of use?""")
     return
 
 
@@ -553,6 +607,8 @@ def _(Counter, codelist_jobs, codelists, datetime, sucessful_job_dates):
                         if datetime.fromisoformat(_v["created_at"]).replace(tzinfo=None)
                         < _run_date
                     ]
+                    if not _versions_available_at_job_run:
+                        continue
                     _newer_codelists = True
                     for _version in sorted(
                         _versions_available_at_job_run, key=lambda x: x["created_at"]
@@ -562,9 +618,165 @@ def _(Counter, codelist_jobs, codelists, datetime, sucessful_job_dates):
                             _codelist["slug"] + "/" + _version["hash"],
                         ]:
                             _newer_codelists = False
+                        else:
+                            _newer_codelists = True
                     _newer_available.append(_newer_codelists)
     Counter(_newer_available)
+    return
 
+
+@app.cell
+def _(Counter, codelist_jobs, codelists, datetime, sucessful_job_dates):
+    _newer_available = []
+    for _codelist_slug, _shas in codelist_jobs.items():
+        for _sha in _shas:
+            _run_date = sucessful_job_dates[_sha]
+            for _codelist in codelists:
+                if _codelist_slug and _codelist_slug.strip("/").startswith(
+                    _codelist["slug"]
+                ):
+                    _published_versions_available_at_job_run = [
+                        _v
+                        for _v in _codelist["versions"]
+                        if datetime.fromisoformat(_v["created_at"]).replace(tzinfo=None)
+                        < _run_date
+                        and _v["status"] == "published"
+                    ]
+                    if not _published_versions_available_at_job_run:
+                        continue
+                    _newer_codelists = True
+                    for _version in sorted(
+                        _published_versions_available_at_job_run,
+                        key=lambda x: x["created_at"],
+                    ):
+                        if _codelist_slug.strip("/") in [
+                            _version["slug"],
+                            _codelist["slug"] + "/" + _version["hash"],
+                        ]:
+                            _newer_codelists = False
+                        else:
+                            _newer_codelists = True
+                    _newer_available.append(_newer_codelists)
+    Counter(_newer_available)
+    return
+
+
+@app.cell
+def _(mo):
+    mo.md(
+        """
+    ## How often are 'out of date'* codelists used?
+
+    *_if a new version of the codelist had been created at job run time, would there have been new codes?_
+
+    N.B: Not 100% certain of results, uses compatible_releases OCL feature introduced end of 2022, however definitely some cases of where codelists created prior to this feature's introduction have had compatible releases calculated
+    """
+    )
+    return
+
+
+@app.cell
+def _(Path, json):
+    coding_system_release_dates = json.load(
+        Path("data/coding_system_release_dates.json").open()
+    )
+
+    # {v.full_slug():sorted([c.valid_from.isoformat() for c in v.compatible_releases.all()]|[v.coding_system_release.valid_from.isoformat()]) for v in CodelistVersion.objects.filter(status__in=[Status.PUBLISHED,Status.UNDER_REVIEW]).filter(searches__isnull=False)}
+    version_compatible_release_dates = json.load(
+        Path("data/version_compat.json").open()
+    )
+    return coding_system_release_dates, version_compatible_release_dates
+
+
+@app.cell
+def _(mo, version_compatible_release_dates):
+    mo.md(
+        f"""{len(version_compatible_release_dates)} codelist versions eligible for this analysis (have Searches)"""
+    )
+    return
+
+
+@app.cell
+def _(
+    codelists,
+    coding_system_release_dates,
+    version_compatible_release_dates,
+):
+    # normalise to hash-based slugs for versions
+    normalised_version_slugs = {}
+    for _codelist in codelists:
+        for _version in _codelist["versions"]:
+            normalised_version_slugs[_version["slug"]] = (
+                _codelist["slug"] + "/" + _version["hash"]
+            )
+            normalised_version_slugs[_codelist["slug"] + "/" + _version["hash"]] = (
+                _codelist["slug"] + "/" + _version["hash"]
+            )
+
+    # valid_from date of next coding system release after the last compatible one
+    version_out_of_date_at = {}
+    for _version, _dates in version_compatible_release_dates.items():
+        _last_compat_date = max(_dates)
+        _coding_system = None
+        for _c in codelists:
+            if _version.startswith(_c["slug"]):
+                _coding_system = _c["coding_system"]
+                break
+        # None == we're already at the latest version
+        _use_before_date = min(
+            [
+                _d
+                for _d in coding_system_release_dates[_coding_system]
+                if _d > _last_compat_date
+            ]
+            or [None]
+        )
+        version_out_of_date_at[normalised_version_slugs[_version]] = _use_before_date
+    return normalised_version_slugs, version_out_of_date_at
+
+
+@app.cell
+def _(mo, version_out_of_date_at):
+    mo.md(
+        f"""{len([_k for _k, _v in version_out_of_date_at.items() if not _v])} codelist versions compatible with latest release"""
+    )
+    return
+
+
+@app.cell
+def _(
+    Counter,
+    codelist_jobs,
+    datetime,
+    normalised_version_slugs,
+    sucessful_job_dates,
+    version_out_of_date_at,
+):
+    _used_after_expiry = []
+    _versions_with_expiry_dates = {
+        _k: datetime.fromisoformat(_v).date()
+        for _k, _v in version_out_of_date_at.items()
+        if _v
+    }
+    for _run_codelist_version_slug, _shas in codelist_jobs.items():
+        if not _run_codelist_version_slug:
+            continue
+        _normalised_slug = normalised_version_slugs.get(
+            _run_codelist_version_slug.strip("/")
+        )
+        if not (_expiry_date := _versions_with_expiry_dates.get(_normalised_slug)):
+            continue
+        for _sha in _shas:
+            _job_date = sucessful_job_dates.get(_sha)
+            if not _job_date:
+                continue
+            _used_after_expiry.append(_job_date.date() > _expiry_date)
+    Counter(_used_after_expiry)
+    return
+
+
+@app.cell
+def _():
     return
 
 
