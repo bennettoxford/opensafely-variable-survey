@@ -649,6 +649,58 @@ class ImportCollector:
                     continue
 
 
+class ASTIndex:
+    """Pre-computed index of AST nodes for fast lookup."""
+
+    def __init__(self, tree: ast.AST):
+        # Maps for fast lookup
+        self.var_assignments: dict[
+            str, list[ast.Assign]
+        ] = {}  # var_name -> [assign_nodes]
+        self.dataset_assignments: dict[
+            str, ast.Assign
+        ] = {}  # attr_name -> assign_node (dataset.attr = ...)
+        self.class_defs: dict[str, ast.ClassDef] = {}  # class_name -> class_def
+
+        # Build indexes
+        self._build_indexes(tree)
+
+    def _build_indexes(self, tree: ast.AST) -> None:
+        """Walk the tree once and build all indexes."""
+        # Only walk top-level and function-level nodes
+        nodes_to_check: list[ast.AST] = []
+        if isinstance(tree, ast.Module):
+            nodes_to_check.extend(tree.body)
+            # Also check inside function definitions for local assignments
+            for node in tree.body:
+                if isinstance(node, ast.FunctionDef):
+                    nodes_to_check.extend(node.body)
+                elif isinstance(node, ast.ClassDef):
+                    # Index class definitions
+                    self.class_defs[node.name] = node
+        else:
+            nodes_to_check = list(ast.walk(tree))
+
+        for node in nodes_to_check:
+            # Index variable assignments
+            if isinstance(node, ast.Assign):
+                for target in node.targets:
+                    # Regular variable assignment: var = expr
+                    if isinstance(target, ast.Name):
+                        var_name = target.id
+                        if var_name not in self.var_assignments:
+                            self.var_assignments[var_name] = []
+                        self.var_assignments[var_name].append(node)
+
+                    # Dataset attribute assignment: dataset.attr = expr
+                    elif isinstance(target, ast.Attribute):
+                        if (
+                            isinstance(target.value, ast.Name)
+                            and target.value.id == "dataset"
+                        ):
+                            self.dataset_assignments[target.attr] = node
+
+
 class CodelistTracer:
     """Traces codelist_from_csv calls through variable and function calls."""
 
@@ -658,6 +710,9 @@ class CodelistTracer:
         self.module_resolver = module_resolver
         self._visited_vars: set[tuple[str, str]] = set()  # (file_path, var_name)
         self._codelist_cache: dict[tuple[str, str], list[CodelistCall]] = {}
+        self._module_tree_cache: dict[
+            str, tuple[ast.AST, ImportCollector, ASTIndex]
+        ] = {}  # file_path -> (tree, imports, index)
 
     def trace_expression_for_codelists(
         self,
@@ -680,7 +735,11 @@ class CodelistTracer:
             List of all CodelistCall objects found in the expression's call tree
         """
         self._visited_vars.clear()
-        return self._trace_expression(expr, tree, import_collector, file_path)
+        # Create index for this tree if not already cached
+        ast_index = ASTIndex(tree)
+        return self._trace_expression(
+            expr, tree, import_collector, file_path, ast_index
+        )
 
     def _trace_expression(
         self,
@@ -688,6 +747,7 @@ class CodelistTracer:
         tree: ast.AST,
         import_collector: ImportCollector,
         file_path: pathlib.Path,
+        ast_index: ASTIndex,
         depth: int = 0,
     ) -> list[CodelistCall]:
         """Recursively trace an expression to find all codelist_from_csv calls.
@@ -697,6 +757,7 @@ class CodelistTracer:
             tree: AST tree of current file
             import_collector: Import information
             file_path: Current file path
+            ast_index: Pre-computed AST index for fast lookups
             depth: Recursion depth (for debugging/limits)
 
         Returns:
@@ -721,14 +782,14 @@ class CodelistTracer:
             # Name reference - could be a variable holding a codelist
             if isinstance(node, ast.Name):
                 calls = self._trace_name(
-                    node.id, tree, import_collector, file_path, depth
+                    node.id, tree, import_collector, file_path, ast_index, depth
                 )
                 codelist_calls.extend(calls)
 
             # Attribute access - could be accessing codelist from class/module
             if isinstance(node, ast.Attribute):
                 calls = self._trace_attribute(
-                    node, tree, import_collector, file_path, depth
+                    node, tree, import_collector, file_path, ast_index, depth
                 )
                 codelist_calls.extend(calls)
 
@@ -944,6 +1005,7 @@ class CodelistTracer:
         tree: ast.AST,
         import_collector: ImportCollector,
         file_path: pathlib.Path,
+        ast_index: ASTIndex,
         depth: int,
     ) -> list[CodelistCall]:
         """Trace a Name reference to find codelists.
@@ -953,6 +1015,7 @@ class CodelistTracer:
             tree: AST tree of current file
             import_collector: Import information
             file_path: Current file path
+            ast_index: Pre-computed AST index
             depth: Recursion depth
 
         Returns:
@@ -979,9 +1042,9 @@ class CodelistTracer:
             )
             codelist_calls.extend(calls)
         else:
-            # Look for local variable definition
+            # Look for local variable definition using index
             calls = self._find_local_definition(
-                name, tree, import_collector, file_path, depth
+                name, tree, import_collector, file_path, ast_index, depth
             )
             codelist_calls.extend(calls)
 
@@ -995,6 +1058,7 @@ class CodelistTracer:
         tree: ast.AST,
         import_collector: ImportCollector,
         file_path: pathlib.Path,
+        ast_index: ASTIndex,
         depth: int,
     ) -> list[CodelistCall]:
         """Trace an Attribute access to find codelists.
@@ -1009,6 +1073,7 @@ class CodelistTracer:
             tree: AST tree of current file
             import_collector: Import information
             file_path: Current file path
+            ast_index: Pre-computed AST index
             depth: Recursion depth
 
         Returns:
@@ -1043,22 +1108,28 @@ class CodelistTracer:
                     codelist_calls.extend(calls)
             # Check if this is a dataset variable reference (e.g., dataset.ppi)
             elif obj_name == "dataset":
-                # Find the dataset variable assignment and trace its expression
+                # Find the dataset variable assignment and trace its expression using index
                 calls = self._find_dataset_variable_reference(
-                    attr_name, tree, import_collector, file_path, depth
+                    attr_name, tree, import_collector, file_path, ast_index, depth
                 )
                 codelist_calls.extend(calls)
             else:
                 # Check if it's a local class
                 calls = self._trace_local_class_attribute(
-                    obj_name, attr_name, tree, import_collector, file_path, depth
+                    obj_name,
+                    attr_name,
+                    tree,
+                    import_collector,
+                    file_path,
+                    ast_index,
+                    depth,
                 )
                 codelist_calls.extend(calls)
 
         # Handle nested attributes like obj.attr1.attr2
         elif isinstance(attr_node.value, ast.Attribute):
             calls = self._trace_attribute(
-                attr_node.value, tree, import_collector, file_path, depth
+                attr_node.value, tree, import_collector, file_path, ast_index, depth
             )
             codelist_calls.extend(calls)
 
@@ -1070,6 +1141,7 @@ class CodelistTracer:
         tree: ast.AST,
         import_collector: ImportCollector,
         file_path: pathlib.Path,
+        ast_index: ASTIndex,
         depth: int,
     ) -> list[CodelistCall]:
         """Find a dataset variable assignment and trace its expression.
@@ -1082,6 +1154,7 @@ class CodelistTracer:
             tree: AST tree to search
             import_collector: Import information
             file_path: Current file path
+            ast_index: Pre-computed AST index
             depth: Recursion depth
 
         Returns:
@@ -1093,26 +1166,19 @@ class CodelistTracer:
 
         codelist_calls: list[CodelistCall] = []
 
-        # Look for dataset.var_name = expression patterns
-        for node in ast.walk(tree):
-            if isinstance(node, ast.Assign):
-                # Check if target is dataset.var_name
-                for target in node.targets:
-                    if isinstance(target, ast.Attribute):
-                        if (
-                            isinstance(target.value, ast.Name)
-                            and target.value.id == "dataset"
-                            and target.attr == var_name
-                        ):
-                            # Found the assignment, trace the right-hand side
-                            calls = self._trace_expression(
-                                node.value,
-                                tree,
-                                import_collector,
-                                file_path,
-                                depth + 1,
-                            )
-                            codelist_calls.extend(calls)
+        # Use index for O(1) lookup
+        assign_node = ast_index.dataset_assignments.get(var_name)
+        if assign_node:
+            # Found the assignment, trace the right-hand side
+            calls = self._trace_expression(
+                assign_node.value,
+                tree,
+                import_collector,
+                file_path,
+                ast_index,
+                depth + 1,
+            )
+            codelist_calls.extend(calls)
 
         return codelist_calls
 
@@ -1122,6 +1188,7 @@ class CodelistTracer:
         tree: ast.AST,
         import_collector: ImportCollector,
         file_path: pathlib.Path,
+        ast_index: ASTIndex,
         depth: int,
     ) -> list[CodelistCall]:
         """Find and trace a local variable definition.
@@ -1131,6 +1198,7 @@ class CodelistTracer:
             tree: AST tree to search
             import_collector: Import information
             file_path: Current file path
+            ast_index: Pre-computed AST index
             depth: Recursion depth
 
         Returns:
@@ -1138,18 +1206,15 @@ class CodelistTracer:
         """
         codelist_calls: list[CodelistCall] = []
 
-        for node in ast.walk(tree):
-            if not isinstance(node, ast.Assign):
-                continue
+        # Use index for O(1) lookup instead of O(n) walk
+        assign_nodes = ast_index.var_assignments.get(var_name, [])
 
-            # Check if this assigns to our variable
-            for target in node.targets:
-                if isinstance(target, ast.Name) and target.id == var_name:
-                    # Recursively trace the RHS
-                    calls = self._trace_expression(
-                        node.value, tree, import_collector, file_path, depth + 1
-                    )
-                    codelist_calls.extend(calls)
+        for node in assign_nodes:
+            # Recursively trace the RHS
+            calls = self._trace_expression(
+                node.value, tree, import_collector, file_path, ast_index, depth + 1
+            )
+            codelist_calls.extend(calls)
 
         return codelist_calls
 
@@ -1176,14 +1241,33 @@ class CodelistTracer:
                 continue
 
             try:
-                with open(module_file, encoding="utf-8") as f:
-                    module_source = f.read()
-                module_tree = ast.parse(module_source, filename=str(module_file))
+                module_file_str = str(module_file)
 
-                # Create import collector for this module
-                module_import_collector = ImportCollector()
-                module_import_collector.collect(module_tree)
-                module_import_collector.resolve_star_imports(self.module_resolver)
+                # Check cache first
+                if module_file_str in self._module_tree_cache:
+                    module_tree, module_import_collector, module_index = (
+                        self._module_tree_cache[module_file_str]
+                    )
+                else:
+                    # Parse and cache
+                    with open(module_file, encoding="utf-8") as f:
+                        module_source = f.read()
+                    module_tree = ast.parse(module_source, filename=module_file_str)
+
+                    # Create import collector for this module
+                    module_import_collector = ImportCollector()
+                    module_import_collector.collect(module_tree)
+                    module_import_collector.resolve_star_imports(self.module_resolver)
+
+                    # Create index for this module
+                    module_index = ASTIndex(module_tree)
+
+                    # Cache it
+                    self._module_tree_cache[module_file_str] = (
+                        module_tree,
+                        module_import_collector,
+                        module_index,
+                    )
 
                 # Find the definition in this module
                 return self._find_local_definition(
@@ -1191,6 +1275,7 @@ class CodelistTracer:
                     module_tree,
                     module_import_collector,
                     module_file,
+                    module_index,
                     depth + 1,
                 )
             except Exception:
@@ -1225,27 +1310,46 @@ class CodelistTracer:
                 continue
 
             try:
-                with open(module_file, encoding="utf-8") as f:
-                    module_source = f.read()
-                module_tree = ast.parse(module_source, filename=str(module_file))
+                module_file_str = str(module_file)
 
-                # Create import collector for this module
-                module_import_collector = ImportCollector()
-                module_import_collector.collect(module_tree)
-                module_import_collector.resolve_star_imports(self.module_resolver)
+                # Check cache first
+                if module_file_str in self._module_tree_cache:
+                    module_tree, module_import_collector, module_index = (
+                        self._module_tree_cache[module_file_str]
+                    )
+                else:
+                    # Parse and cache
+                    with open(module_file, encoding="utf-8") as f:
+                        module_source = f.read()
+                    module_tree = ast.parse(module_source, filename=module_file_str)
 
-                # Find the class definition
-                for node in ast.walk(module_tree):
-                    if isinstance(node, ast.ClassDef) and node.name == class_name:
-                        # Look for the attribute in the class
-                        return self._find_class_attribute_definition(
-                            node,
-                            attr_name,
-                            module_tree,
-                            module_import_collector,
-                            module_file,
-                            depth,
-                        )
+                    # Create import collector for this module
+                    module_import_collector = ImportCollector()
+                    module_import_collector.collect(module_tree)
+                    module_import_collector.resolve_star_imports(self.module_resolver)
+
+                    # Create index for this module
+                    module_index = ASTIndex(module_tree)
+
+                    # Cache it
+                    self._module_tree_cache[module_file_str] = (
+                        module_tree,
+                        module_import_collector,
+                        module_index,
+                    )
+
+                # Use index for O(1) class lookup
+                class_def = module_index.class_defs.get(class_name)
+                if class_def:
+                    return self._find_class_attribute_definition(
+                        class_def,
+                        attr_name,
+                        module_tree,
+                        module_import_collector,
+                        module_file,
+                        module_index,
+                        depth,
+                    )
 
             except Exception:
                 continue
@@ -1259,6 +1363,7 @@ class CodelistTracer:
         tree: ast.AST,
         import_collector: ImportCollector,
         file_path: pathlib.Path,
+        ast_index: ASTIndex,
         depth: int,
     ) -> list[CodelistCall]:
         """Find an attribute definition within a class.
@@ -1269,6 +1374,7 @@ class CodelistTracer:
             tree: Full AST tree
             import_collector: Import information
             file_path: Current file path
+            ast_index: Pre-computed AST index
             depth: Recursion depth
 
         Returns:
@@ -1328,7 +1434,12 @@ class CodelistTracer:
                 for target in node.targets:
                     if isinstance(target, ast.Name) and target.id == attr_name:
                         calls = self._trace_expression(
-                            node.value, tree, import_collector, file_path, depth + 1
+                            node.value,
+                            tree,
+                            import_collector,
+                            file_path,
+                            ast_index,
+                            depth + 1,
                         )
                         codelist_calls.extend(calls)
 
@@ -1341,6 +1452,7 @@ class CodelistTracer:
         tree: ast.AST,
         import_collector: ImportCollector,
         file_path: pathlib.Path,
+        ast_index: ASTIndex,
         depth: int,
     ) -> list[CodelistCall]:
         """Trace an attribute of a locally-defined class.
@@ -1351,17 +1463,24 @@ class CodelistTracer:
             tree: AST tree
             import_collector: Import information
             file_path: Current file path
+            ast_index: Pre-computed AST index
             depth: Recursion depth
 
         Returns:
             List of CodelistCall objects
         """
-        # Find the class definition in the local tree
-        for node in ast.walk(tree):
-            if isinstance(node, ast.ClassDef) and node.name == class_name:
-                return self._find_class_attribute_definition(
-                    node, attr_name, tree, import_collector, file_path, depth
-                )
+        # Use index for O(1) class lookup
+        class_def = ast_index.class_defs.get(class_name)
+        if class_def:
+            return self._find_class_attribute_definition(
+                class_def,
+                attr_name,
+                tree,
+                import_collector,
+                file_path,
+                ast_index,
+                depth,
+            )
 
         return []
 
