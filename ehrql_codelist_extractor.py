@@ -300,7 +300,9 @@ def collect_codelists(
         repos, cache_dir, silent=silent, verbose=verbose, csv_path=csv_path
     )
     print(f"{time.strftime('%Y-%m-%d %H:%M:%S')} - Getting dataset files")
-    all_dataset_files = get_dataset_files(local_repos, silent=silent, verbose=verbose)
+    all_dataset_files = get_dataset_files(
+        local_repos, silent=silent, verbose=verbose, force=force
+    )
     print(f"{time.strftime('%Y-%m-%d %H:%M:%S')} - Completed getting dataset files")
 
     duration = time.time() - initial_start_time

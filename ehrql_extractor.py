@@ -761,7 +761,9 @@ def collect(
     cache_dir.mkdir(exist_ok=True)
 
     local_repos = clone_ehrql_repos(repos, cache_dir, silent=silent, verbose=verbose)
-    all_dataset_files = get_dataset_files(local_repos, silent=silent, verbose=verbose)
+    all_dataset_files = get_dataset_files(
+        local_repos, silent=silent, verbose=verbose, force=False
+    )
 
     duration = time.time() - initial_start_time
     if not silent:

@@ -1,5 +1,6 @@
 import base64
 import csv
+import hashlib
 import json
 import pathlib
 import re
@@ -15,11 +16,64 @@ GH_API_HEADERS = [
     "X-GitHub-Api-Version: 2022-11-28",
 ]
 
+# Global cache for project.yaml parsing
+# Maps content hash -> list of dataset files
+_PROJECT_YAML_CACHE: dict[str, list[str]] = {}
+_PROJECT_YAML_CACHE_FILE = pathlib.Path(".project_yaml_cache.json")
+_PROJECT_YAML_CACHE_MODIFIED = False
+
 
 class GitHubError(RuntimeError):
     """Generic error for GitHub CLI interactions."""
 
     pass
+
+
+def _load_project_yaml_cache() -> None:
+    """Load the project.yaml parsing cache from disk."""
+    global _PROJECT_YAML_CACHE, _PROJECT_YAML_CACHE_MODIFIED
+
+    if _PROJECT_YAML_CACHE_FILE.exists():
+        try:
+            with open(_PROJECT_YAML_CACHE_FILE, encoding="utf-8") as f:
+                _PROJECT_YAML_CACHE = json.load(f)
+        except (json.JSONDecodeError, OSError):
+            # If cache is corrupted, start fresh
+            _PROJECT_YAML_CACHE = {}
+    _PROJECT_YAML_CACHE_MODIFIED = False
+
+
+def _save_project_yaml_cache() -> None:
+    """Save the project.yaml parsing cache to disk if modified."""
+    global _PROJECT_YAML_CACHE_MODIFIED
+
+    if _PROJECT_YAML_CACHE_MODIFIED:
+        try:
+            with open(_PROJECT_YAML_CACHE_FILE, "w", encoding="utf-8") as f:
+                json.dump(_PROJECT_YAML_CACHE, f)
+            _PROJECT_YAML_CACHE_MODIFIED = False
+        except OSError:
+            # Ignore save errors - cache is just an optimization
+            pass
+
+
+def _clear_project_yaml_cache() -> None:
+    """Clear the project.yaml parsing cache."""
+    global _PROJECT_YAML_CACHE, _PROJECT_YAML_CACHE_MODIFIED
+
+    _PROJECT_YAML_CACHE = {}
+    _PROJECT_YAML_CACHE_MODIFIED = False
+
+    if _PROJECT_YAML_CACHE_FILE.exists():
+        try:
+            _PROJECT_YAML_CACHE_FILE.unlink()
+        except OSError:
+            pass
+
+
+def _hash_content(content: str) -> str:
+    """Create a hash of content for cache lookup."""
+    return hashlib.sha256(content.encode("utf-8")).hexdigest()
 
 
 def run_gh(args: list[str], expect_json: bool = True) -> dict | list | str:
@@ -77,14 +131,28 @@ def parse_project_yaml(repo_root: pathlib.Path) -> list[str]:
     """Extract dataset definition file paths from project.yaml.
 
     Returns list of relative paths to files that generate datasets.
+    Uses caching based on file content hash to speed up repeated parsing.
     """
+    global _PROJECT_YAML_CACHE, _PROJECT_YAML_CACHE_MODIFIED
+
     try:
         content = (repo_root / "project.yaml").read_text(encoding="utf-8")
+
+        # Check cache first
+        content_hash = _hash_content(content)
+        if content_hash in _PROJECT_YAML_CACHE:
+            return _PROJECT_YAML_CACHE[content_hash]
+
+        # Cache miss - do the parsing
         data = yaml.safe_load(content)
 
         dataset_files = set()
         if not data:
-            return list(dataset_files)
+            result = list(dataset_files)
+            _PROJECT_YAML_CACHE[content_hash] = result
+            _PROJECT_YAML_CACHE_MODIFIED = True
+            return result
+
         actions = data.get("actions", {})
 
         for action_name, action_config in actions.items():
@@ -108,7 +176,11 @@ def parse_project_yaml(repo_root: pathlib.Path) -> list[str]:
                     )
                     sys.exit(1)
 
-        return list(dataset_files)
+        result = list(dataset_files)
+        # Update cache
+        _PROJECT_YAML_CACHE[content_hash] = result
+        _PROJECT_YAML_CACHE_MODIFIED = True
+        return result
     except (GitHubError, yaml.YAMLError, KeyError) as _:
         return []
 
@@ -570,12 +642,25 @@ def get_dataset_files(
     local_repos: list[tuple[str, str, pathlib.Path]],
     silent: bool = False,
     verbose: bool = False,
+    force: bool = False,
 ) -> dict[str, (str, list[str], pathlib.Path)]:
     """Get dataset definition files from local cloned repos.
 
     Note: When multiple SHAs exist for the same repo, we use a composite key
     "repo@sha" to distinguish them.
+
+    Args:
+        local_repos: List of (repo_full_name, sha, local_path) tuples
+        silent: Suppress output
+        verbose: Verbose output
+        force: If True, clear cache and force re-parsing
     """
+    # Load cache on first call, or clear it if force=True
+    if force:
+        _clear_project_yaml_cache()
+    elif not _PROJECT_YAML_CACHE:
+        _load_project_yaml_cache()
+
     all_dataset_files: dict[str, (str, list[str], pathlib.Path)] = {}
     for repo_full, head_sha, repo_local_dir in local_repos:
         dataset_files = parse_project_yaml(repo_local_dir)
@@ -599,4 +684,8 @@ def get_dataset_files(
                     "..No ehrql generate_dataset commands found in project.yaml",
                     file=sys.stderr,
                 )
+
+    # Save cache if modified
+    _save_project_yaml_cache()
+
     return all_dataset_files
