@@ -5,6 +5,7 @@ import pathlib
 import re
 import subprocess
 import sys
+import time
 
 import yaml
 
@@ -274,8 +275,13 @@ def clone_repos(
         repo_sha_map[repo_full_name].append(ref_sha)
 
     # Get remote HEAD SHAs for all repos in one batch API call
+    print(
+        f"{time.strftime('%Y-%m-%d %H:%M:%S')} - Getting remote HEAD SHAs for ehrQL repos"
+    )
     remote_heads = get_remote_head_shas(list(repo_sha_map.keys()), verbose=verbose)
-
+    print(
+        f"{time.strftime('%Y-%m-%d %H:%M:%S')} - Completed getting remote HEAD SHAs for ehrQL repos"
+    )
     local_repos = []
 
     for repo_full_name, shas in repo_sha_map.items():
@@ -289,6 +295,7 @@ def clone_repos(
             )
 
         remote_head_sha = remote_heads.get(repo_full_name)
+        print(f"{time.strftime('%Y-%m-%d %H:%M:%S')} - Cloning {repo_full_name}")
         cloned_repos = _clone_with_worktrees(
             repo_full_name,
             owner,
@@ -348,43 +355,30 @@ def _clone_with_worktrees(
             return []
     else:
         # Repo exists, check if we need to fetch
-        # Get local HEAD SHA
-        local_head_proc = subprocess.run(
-            ["git", "--git-dir", str(bare_repo_dir), "rev-parse", "HEAD"],
-            capture_output=True,
-            text=True,
-        )
+        # If we have the remote HEAD SHA, check if its worktree exists
+        needs_fetch = False
 
-        local_head_sha = (
-            local_head_proc.stdout.strip() if local_head_proc.returncode == 0 else None
-        )
-
-        # Only fetch if remote HEAD differs from local HEAD
-        if remote_head_sha and local_head_sha and remote_head_sha != local_head_sha:
-            if verbose:
-                print(
-                    f"..Local HEAD ({local_head_sha[:8]}) differs from remote ({remote_head_sha[:8]}), fetching updates",
-                    file=sys.stderr,
-                )
-
-            fetch_proc = subprocess.run(
-                ["git", "--git-dir", str(bare_repo_dir), "fetch", "origin"],
-                capture_output=True,
-                text=True,
-            )
-            if fetch_proc.returncode != 0 and not silent:
-                print(
-                    f"..Warning: fetch failed for {repo_full_name}: {fetch_proc.stderr.strip()}",
-                    file=sys.stderr,
-                )
-        elif remote_head_sha is None:
+        if remote_head_sha:
+            # Check if worktree for remote HEAD exists - if so, we're up to date
+            remote_head_worktree = cache_dir / f"{repo_name}-{remote_head_sha[:8]}"
+            if not remote_head_worktree.exists():
+                # Remote HEAD worktree doesn't exist, need to fetch
+                needs_fetch = True
+                if verbose:
+                    print(
+                        "..Remote HEAD worktree not found, fetching updates",
+                        file=sys.stderr,
+                    )
+        else:
             # No remote HEAD info from API, fall back to fetch (rare case)
+            needs_fetch = True
             if verbose:
                 print(
                     "..No remote HEAD info available, fetching to be safe",
                     file=sys.stderr,
                 )
 
+        if needs_fetch:
             fetch_proc = subprocess.run(
                 ["git", "--git-dir", str(bare_repo_dir), "fetch", "origin"],
                 capture_output=True,
@@ -395,12 +389,11 @@ def _clone_with_worktrees(
                     f"..Warning: fetch failed for {repo_full_name}: {fetch_proc.stderr.strip()}",
                     file=sys.stderr,
                 )
-        else:
-            if verbose:
-                print(
-                    f"..Local HEAD ({local_head_sha[:8] if local_head_sha else 'unknown'}) matches remote, skipping fetch",
-                    file=sys.stderr,
-                )
+        elif verbose:
+            print(
+                "..Remote HEAD worktree exists, skipping fetch",
+                file=sys.stderr,
+            )
 
     # Create worktrees for each SHA
     local_repos = []
@@ -566,6 +559,7 @@ def clone_ehrql_repos(
                 )
             print("=" * 80 + "\n", file=sys.stderr)
 
+    print(f"{time.strftime('%Y-%m-%d %H:%M:%S')} - Cloning ehrQL repos")
     local_ehrql_repos = clone_repos(
         all_repos_shas, repos, cache_dir, silent=silent, verbose=verbose
     )

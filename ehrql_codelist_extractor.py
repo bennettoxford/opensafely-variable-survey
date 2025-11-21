@@ -295,10 +295,13 @@ def collect_codelists(
             existing_data = {}
 
     # Clone repos and find dataset files
+    print(f"{time.strftime('%Y-%m-%d %H:%M:%S')} - Cloning ehrQL repos")
     local_repos = clone_ehrql_repos(
         repos, cache_dir, silent=silent, verbose=verbose, csv_path=csv_path
     )
+    print(f"{time.strftime('%Y-%m-%d %H:%M:%S')} - Getting dataset files")
     all_dataset_files = get_dataset_files(local_repos, silent=silent, verbose=verbose)
+    print(f"{time.strftime('%Y-%m-%d %H:%M:%S')} - Completed getting dataset files")
 
     duration = time.time() - initial_start_time
     if not silent:
