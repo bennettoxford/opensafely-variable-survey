@@ -873,13 +873,13 @@ def collect(
     }
 
     with open(output, "w", encoding="utf-8") as f:
-        json.dump(json_data, f, indent=2, ensure_ascii=False)
+        json.dump(json_data, f, indent=2, ensure_ascii=False, sort_keys=True)
     with open("ehrql_qm_dump.json", "w", encoding="utf-8") as f:
-        json.dump(qm_out_map, f, indent=2, ensure_ascii=False)
+        json.dump(qm_out_map, f, indent=2, ensure_ascii=False, sort_keys=True)
     if include_full_qm_node_dump:
         # Write full (non-normalized) node dump keyed by full hash to aid debugging
         with open("ehrql_qm_full_dump.json", "w", encoding="utf-8") as f:
-            json.dump(full_qm_out_map, f, indent=2, ensure_ascii=False)
+            json.dump(full_qm_out_map, f, indent=2, ensure_ascii=False, sort_keys=True)
 
     if not silent:
         write_duration = time.time() - write_start_time
