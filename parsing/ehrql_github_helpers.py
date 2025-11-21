@@ -198,6 +198,51 @@ def group_items_by_repo(items: list[dict]) -> dict:
     return grouped
 
 
+def get_remote_head_shas(repos: list[str], verbose: bool = False) -> dict[str, str]:
+    """Get the current HEAD SHA for multiple repos via GitHub GraphQL API.
+
+    This is much faster than doing git fetch for each repo individually.
+    Returns dict mapping repo_full_name -> HEAD SHA.
+    """
+    if not repos:
+        return {}
+
+    # Build GraphQL query for all repos at once
+    # Format: repo1: repository(owner: "opensafely", name: "repo1") { defaultBranchRef { target { oid } } }
+    repo_queries = []
+    repo_aliases = {}
+
+    for i, repo_full_name in enumerate(repos):
+        owner, repo_name = repo_full_name.split("/", 1)
+        alias = f"repo{i}"
+        repo_aliases[alias] = repo_full_name
+        repo_queries.append(
+            f'{alias}: repository(owner: "{owner}", name: "{repo_name}") {{ defaultBranchRef {{ target {{ oid }} }} }}'
+        )
+
+    query = "query { " + " ".join(repo_queries) + " }"
+
+    try:
+        result = run_gh(["api", "graphql", "-f", f"query={query}"])
+
+        head_shas = {}
+        if isinstance(result, dict) and "data" in result:
+            for alias, repo_full_name in repo_aliases.items():
+                repo_data = result["data"].get(alias)
+                if repo_data and repo_data.get("defaultBranchRef"):
+                    sha = repo_data["defaultBranchRef"]["target"]["oid"]
+                    head_shas[repo_full_name] = sha
+
+        return head_shas
+    except GitHubError as e:
+        if verbose:
+            print(
+                f"Warning: Failed to fetch remote HEADs via GraphQL: {e}",
+                file=sys.stderr,
+            )
+        return {}
+
+
 def clone_repos(
     all_repos: tuple[str, str],
     repos: list[str],
@@ -210,7 +255,7 @@ def clone_repos(
     For each repo:
     - Creates a bare clone in {repo_name}/ (or updates if exists)
     - Creates worktrees for each SHA in {repo_name}-{sha}/
-    - Fetches latest from origin to ensure main is up-to-date
+    - Fetches latest from origin only if local HEAD differs from remote
 
     repos: tuple of (full_repo_name, ref_sha)
     Returns list of tuples (repo_full_name, ref_sha, local_path).
@@ -228,6 +273,9 @@ def clone_repos(
             repo_sha_map[repo_full_name] = []
         repo_sha_map[repo_full_name].append(ref_sha)
 
+    # Get remote HEAD SHAs for all repos in one batch API call
+    remote_heads = get_remote_head_shas(list(repo_sha_map.keys()), verbose=verbose)
+
     local_repos = []
 
     for repo_full_name, shas in repo_sha_map.items():
@@ -240,8 +288,16 @@ def clone_repos(
                 file=sys.stderr,
             )
 
+        remote_head_sha = remote_heads.get(repo_full_name)
         cloned_repos = _clone_with_worktrees(
-            repo_full_name, owner, repo_name, shas, cache_dir, silent, verbose
+            repo_full_name,
+            owner,
+            repo_name,
+            shas,
+            cache_dir,
+            remote_head_sha,
+            silent,
+            verbose,
         )
         local_repos.extend(cloned_repos)
 
@@ -254,13 +310,17 @@ def _clone_with_worktrees(
     repo_name: str,
     shas: list[str],
     cache_dir: pathlib.Path,
+    remote_head_sha: str | None,
     silent: bool,
     verbose: bool,
 ) -> list[tuple[str, str, pathlib.Path]]:
     """Clone a repo as bare and create worktrees for each SHA.
 
     On first run: creates bare clone
-    On subsequent runs: fetches latest from origin to update main
+    On subsequent runs: only fetches if remote HEAD differs from local HEAD
+
+    Args:
+        remote_head_sha: The current HEAD SHA from GitHub API (if available)
 
     Returns list of tuples (repo_full_name, sha, worktree_path).
     """
@@ -268,7 +328,7 @@ def _clone_with_worktrees(
     bare_repo_dir = cache_dir / repo_name
     clone_url = f"https://github.com/{owner}/{repo_name}.git"
 
-    # Do bare clone if not already cached, otherwise fetch updates
+    # Do bare clone if not already cached, otherwise check if fetch needed
     if not bare_repo_dir.exists():
         cmd = ["git", "clone", "--bare", clone_url, str(bare_repo_dir)]
 
@@ -287,23 +347,60 @@ def _clone_with_worktrees(
                 )
             return []
     else:
-        # Repo exists, fetch latest to ensure we have all refs
-        if verbose:
-            print(
-                f"..Updating bare repo at {bare_repo_dir} (fetching latest)",
-                file=sys.stderr,
-            )
-
-        fetch_proc = subprocess.run(
-            ["git", "--git-dir", str(bare_repo_dir), "fetch", "origin"],
+        # Repo exists, check if we need to fetch
+        # Get local HEAD SHA
+        local_head_proc = subprocess.run(
+            ["git", "--git-dir", str(bare_repo_dir), "rev-parse", "HEAD"],
             capture_output=True,
             text=True,
         )
-        if fetch_proc.returncode != 0 and not silent:
-            print(
-                f"..Warning: fetch failed for {repo_full_name}: {fetch_proc.stderr.strip()}",
-                file=sys.stderr,
+
+        local_head_sha = (
+            local_head_proc.stdout.strip() if local_head_proc.returncode == 0 else None
+        )
+
+        # Only fetch if remote HEAD differs from local HEAD
+        if remote_head_sha and local_head_sha and remote_head_sha != local_head_sha:
+            if verbose:
+                print(
+                    f"..Local HEAD ({local_head_sha[:8]}) differs from remote ({remote_head_sha[:8]}), fetching updates",
+                    file=sys.stderr,
+                )
+
+            fetch_proc = subprocess.run(
+                ["git", "--git-dir", str(bare_repo_dir), "fetch", "origin"],
+                capture_output=True,
+                text=True,
             )
+            if fetch_proc.returncode != 0 and not silent:
+                print(
+                    f"..Warning: fetch failed for {repo_full_name}: {fetch_proc.stderr.strip()}",
+                    file=sys.stderr,
+                )
+        elif remote_head_sha is None:
+            # No remote HEAD info from API, fall back to fetch (rare case)
+            if verbose:
+                print(
+                    "..No remote HEAD info available, fetching to be safe",
+                    file=sys.stderr,
+                )
+
+            fetch_proc = subprocess.run(
+                ["git", "--git-dir", str(bare_repo_dir), "fetch", "origin"],
+                capture_output=True,
+                text=True,
+            )
+            if fetch_proc.returncode != 0 and not silent:
+                print(
+                    f"..Warning: fetch failed for {repo_full_name}: {fetch_proc.stderr.strip()}",
+                    file=sys.stderr,
+                )
+        else:
+            if verbose:
+                print(
+                    f"..Local HEAD ({local_head_sha[:8] if local_head_sha else 'unknown'}) matches remote, skipping fetch",
+                    file=sys.stderr,
+                )
 
     # Create worktrees for each SHA
     local_repos = []
