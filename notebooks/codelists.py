@@ -2,892 +2,779 @@ import marimo
 
 
 __generated_with = "0.16.5"
-app = marimo.App(width="medium")
+app = marimo.App()
 
 
 @app.cell
 def _():
-    import csv
-    import json
-    from collections import Counter, defaultdict
-    from datetime import datetime
-    from pathlib import Path
+    import sys
+    from collections import defaultdict
 
     import marimo as mo
-    import matplotlib.pyplot as plot
-    import numpy as np
     import pandas as pd
+    import seaborn as sns
 
-    return Counter, Path, csv, datetime, defaultdict, json, mo, np, pd, plot
-
-
-@app.cell
-def _(Path, csv):
-    # load job server data file, restructure for convenience/performance
-    jobs = list(
-        csv.DictReader(Path("data/All.jobs-data-2025-11-10.18_25_26.csv").open())
-    )
-    job_shas = {job["sha"] for job in jobs}
-    successful_job_shas = {job["sha"] for job in jobs if job["_status"] == "succeeded"}
-    return job_shas, jobs, successful_job_shas
-
-
-@app.cell
-def _(Path, json):
-    # load OpenCodelists data file
-    codelists = json.load(Path("data/rsi-codelists-analysis.json").open())
-    return (codelists,)
-
-
-@app.cell
-def _(Path, defaultdict, json):
-    # load ehrl codelist usage file, restructure for convenience/performance
-    ehrql_codelists = json.load(Path("data/ehrql_codelists.json").open())
-    signatures_to_shas = defaultdict(set[str])
-    signatures_to_projects = defaultdict(str)
-    for _project, _hashes in ehrql_codelists["projects"].items():
-        for _sha, _signature in _hashes.items():
-            signatures_to_shas[_signature].add(_sha)
-            signatures_to_projects[_signature] = _project
-    return ehrql_codelists, signatures_to_projects, signatures_to_shas
+    return defaultdict, mo, pd, sns, sys
 
 
 @app.cell
 def _(mo):
-    mo.md("""## Overall codelist counts on OpenCodelists""")
-    return
+    def data(path):
+        return str(mo.notebook_location() / "public" / path)
+
+    return (data,)
 
 
 @app.cell
-def _(codelists, mo):
-    mo.md(
-        f"""Total number of codelist with at least one under review/published version: {len(codelists)}"""
-    )
-    return
-
-
-@app.cell
-def _(Counter, codelists):
-    Counter([_v["status"] for _c in codelists for _v in _c["versions"]])
-    return
-
-
-@app.cell
-def _(codelists, mo):
-    mo.md(
-        f"""Total number of published/under review codelist versions: {sum([len(codelist["versions"]) for codelist in codelists])}"""
-    )
-    return
-
-
-@app.cell
-def _(codelists, pd):
-    df_versioncount = pd.DataFrame(
-        [
-            {_k: _v for _k, _v in _codelist.items() if _k in ["owner", "coding_system"]}
-            | {"version_count": len(_codelist["versions"])}
-            for _codelist in codelists
-        ]
-    )
-    return (df_versioncount,)
-
-
-@app.cell
-def _(df_versioncount):
-    df_versioncount.groupby("owner").sum("version_count")
-    return
-
-
-@app.cell
-def _(df_versioncount):
-    df_versioncount.groupby("coding_system").sum("version_count")
-    return
-
-
-@app.cell
-def _(
-    defaultdict,
-    ehrql_codelists,
-    job_shas,
-    signatures_to_projects,
-    signatures_to_shas,
-):
-    # link ehrl codelist data and job server data to count codelist usage by job
-    codelist_projects = defaultdict(set[str])
-    codelist_variables = defaultdict(int)
-    unique_variables = set()
-    unique_codelist_variables = set()
-    codelist_jobs = defaultdict(set[str])
-    for _signature, _files in ehrql_codelists["signatures"].items():
-        _project = signatures_to_projects[_signature]
-        _shas = {_sha for _sha in signatures_to_shas[_signature] if _sha in job_shas}
-        for _file, _variables in _files.items():
-            for _name, _codelists in _variables.items():
-                unique_variables.add(frozenset([_project, _file, _name]))
-                for _definition in _codelists:
-                    if len(_definition) in [2, 3]:
-                        unique_codelist_variables.add(
-                            frozenset([_project, _file, _name])
-                        )
-                        _codelist = _definition[0]
-                        codelist_variables[_codelist] += 1
-                        codelist_projects[_codelist].add(_project)
-                        codelist_jobs[_codelist] |= _shas
-    return (
-        codelist_jobs,
-        codelist_projects,
-        codelist_variables,
-        unique_codelist_variables,
-        unique_variables,
-    )
-
-
-@app.cell
-def _(codelist_variables):
-    sum(codelist_variables.values())
-    return
-
-
-@app.cell
-def _(unique_variables):
-    len(unique_variables)
-    return
-
-
-@app.cell
-def _(unique_codelist_variables):
-    len(unique_codelist_variables)
-    return
-
-
-@app.cell
-def _(mo):
-    mo.md("""## Codelist versions in any job:""")
-    return
-
-
-@app.cell
-def _(codelist_jobs, pd):
-    pd.DataFrame(
-        [
-            {
-                "codelist_version_slug": _k,
-                "count_variables_X_jobs_using_codelist": len(_v),
-            }
-            for _k, _v in codelist_jobs.items()
-        ]
-    )
-    return
-
-
-@app.cell
-def _(mo):
-    mo.md("""## Codelist versions in successful jobs:""")
-    return
-
-
-@app.cell
-def _(codelist_jobs, pd, successful_job_shas):
-    df_successful_jobs = pd.DataFrame(
-        [
-            {
-                "codelist_version_slug": _k,
-                "count_variables_X_successful_jobs_using_codelist": len(
-                    _v.intersection(successful_job_shas)
+def _(data, pd):
+    # load into dataframes
+    df_codelists = pd.read_json(data("rsi-codelists-analysis.json"))
+    df_codelist_versions = pd.DataFrame()
+    for _, row in df_codelists.iterrows():
+        codelist_slug = row["slug"]
+        df_codelist_versions = pd.concat(
+            [
+                df_codelist_versions,
+                pd.DataFrame(
+                    [
+                        {"codelist_slug": codelist_slug} | version
+                        for version in row["versions"]
+                    ]
                 ),
-            }
-            for _k, _v in codelist_jobs.items()
-        ]
-    )
-    df_successful_jobs
-    return (df_successful_jobs,)
-
-
-@app.cell
-def _(df_successful_jobs):
-    df_successful_jobs.count_variables_X_successful_jobs_using_codelist.sum()
-    return
-
-
-@app.cell
-def _(mo):
-    mo.md("""## Numbers of variables featuring codelist version:""")
-    return
-
-
-@app.cell
-def _(codelist_variables, pd):
-    pd.DataFrame(
-        [
-            {"codelist_version_slug": _k, "count_of_variables_using_codelist": _v}
-            for _k, _v in codelist_variables.items()
-        ]
-    )
-    return
-
-
-@app.cell
-def _(mo):
-    mo.md("""## Numbers of projects featuring codelist version:""")
-    return
-
-
-@app.cell
-def _(codelist_projects, pd):
-    pd.DataFrame(
-        [
-            {
-                "codelist_version_slug": _k,
-                "count_projects_with_variable_using_codelist_version": len(_v),
-            }
-            for _k, _v in codelist_projects.items()
-        ]
-    )
-    return
-
-
-@app.cell
-def _(mo):
-    mo.md(r"""### Stray observervation: some slugs don't have version identifiers?""")
-    return
-
-
-@app.function
-def has_version_identifier(_codelist: str) -> bool | None:
-    if _codelist:
-        _parts = _codelist.strip("/").split("/")
-        return len(_parts) == (4 if _parts[0] == "user" else 3)
-
-
-@app.cell
-def _(Counter, codelist_variables):
-    # how many are referred to with a version identifier
-    Counter(
-        [has_version_identifier(_codelist) for _codelist in codelist_variables.keys()]
-    )
-    return
-
-
-@app.cell
-def _(codelist_variables):
-    # local codelists/failure to match up in codelists.txt?
-    [
-        _codelist
-        for _codelist in codelist_variables.keys()
-        if not has_version_identifier(_codelist)
-    ]
-    return
-
-
-@app.cell
-def _(codelist_jobs, codelists, mo, pd):
-    ever_used_slugs = set(_k.strip("/") for _k in codelist_jobs.keys() if _k)
-    _never_used = []
-    for _codelist in codelists:
-        for _version in _codelist["versions"]:
-            if _version["slug"] in ever_used_slugs:
-                continue
-            _never_used.append(
-                {
-                    _k: _v
-                    for _k, _v in _codelist.items()
-                    if _k in ["name", "owner", "coding_system"]
-                }
-                | {
-                    _k: _v
-                    for _k, _v in _version.items()
-                    if _k in ["slug", "updated_at", "status", "creation_method"]
-                }
-            )
-    never_used = pd.DataFrame(_never_used)
-    mo.md("## Never-used codelist versions (ehrQL):")
-    return ever_used_slugs, never_used
-
-
-@app.cell
-def _(never_used):
-    never_used
-    return
-
-
-@app.cell
-def _(never_used):
-    never_used.groupby("coding_system").count()["name"].rename(
-        "never_used_codelistversion_count"
-    )
-    return
-
-
-@app.cell
-def _(never_used):
-    never_used.groupby("owner").count()["name"].rename(
-        "never_used_codelist_version_count"
-    )
-    return
-
-
-@app.cell
-def _(codelists, ever_used_slugs, mo, pd):
-    _never_used = []
-    for _codelist in codelists:
-        if any(e for e in ever_used_slugs if e.startswith(_codelist["slug"])):
-            continue
-        _never_used.append(
-            {
-                _k: _v
-                for _k, _v in _codelist.items()
-                if _k in ["name", "owner", "coding_system"]
-            }
+            ]
         )
-    never_used_codelists = pd.DataFrame(_never_used)
-    mo.md("## Never-used codelists:")
-    return (never_used_codelists,)
 
-
-@app.cell
-def _(never_used_codelists):
-    never_used_codelists
-    return
-
-
-@app.cell
-def _(never_used_codelists):
-    never_used_codelists.groupby("coding_system").count()["name"].rename(
-        "never_used_codelist_count"
+    # normalise to hash-based slugs for versions
+    # some variables reference the same codelist version by hash or tag
+    df_codelist_versions["normalised_slug"] = (
+        df_codelist_versions["codelist_slug"] + "/" + df_codelist_versions["hash"]
     )
-    return
-
-
-@app.cell
-def _(never_used_codelists):
-    never_used_codelists.groupby("owner").count()["name"].rename(
-        "never_used_codelist_count"
-    )
-    return
-
-
-@app.cell
-def _(Path, codelists, ever_used_slugs, json, mo, pd):
-    # remove cohortextractor-used codelists
-    cohort_extractor_codelists = json.load(
-        Path("data/cohort_extractor_codelists.json").open()
-    )
-    _all_cohort_extractor_codelists = {
-        c for cs in cohort_extractor_codelists.values() for c in cs
-    }
-    _never_used = []
-    for _codelist in codelists:
-        if any(e for e in ever_used_slugs if e.startswith(_codelist["slug"])) or any(
-            e
-            for e in _all_cohort_extractor_codelists
-            if e.startswith(_codelist["slug"])
-        ):
-            continue
-        _never_used.append(
-            {
-                _k: _v
-                for _k, _v in _codelist.items()
-                if _k in ["name", "owner", "coding_system"]
-            }
-        )
-    never_used_codelists_cohortextractor = pd.DataFrame(_never_used)
-    mo.md("## Never-used codelists:")
-    return (never_used_codelists_cohortextractor,)
-
-
-@app.cell
-def _(never_used_codelists_cohortextractor):
-    never_used_codelists_cohortextractor
-    return
-
-
-@app.cell
-def _(never_used_codelists_cohortextractor):
-    never_used_codelists_cohortextractor.groupby("coding_system").count()[
-        "name"
-    ].rename("never_used_codelist_count")
-    return
-
-
-@app.cell
-def _(never_used_codelists_cohortextractor):
-    never_used_codelists_cohortextractor.groupby("owner").count()["name"].rename(
-        "never_used_codelist_count"
-    )
-    return
-
-
-@app.cell
-def _(never_used_codelists_cohortextractor):
-    never_used_codelists_cohortextractor.groupby(["coding_system", "owner"]).count()[
-        "name"
-    ].rename("never_used_codelist_count")
-    return
-
-
-@app.cell
-def _(never_used_codelists_cohortextractor):
-    never_used_codelists_cohortextractor[
-        never_used_codelists_cohortextractor.coding_system == "icd10"
-    ].groupby("owner").count()["name"].rename("never_used_codelist_count")
-    return
-
-
-@app.cell
-def _(mo):
-    mo.md("""## Most popular codelists (across all versions)""")
-    return
-
-
-@app.cell
-def _(codelist_variables, defaultdict, pd):
-    _codelist_variable_counts = defaultdict(int)
-    for _k, _v in codelist_variables.items():
-        if not _k:
-            continue
-        _slug_parts = _k.strip("/").split("/")
-        _codelist_variable_counts["/".join(_slug_parts[: len(_slug_parts) - 1])] += _v
-    pd.DataFrame(
-        [
-            {"codelist_slug": _k, "count_of_variables_using_codelist": _v}
-            for _k, _v in _codelist_variable_counts.items()
-        ]
-    )
-    return
-
-
-@app.cell
-def _(codelist_projects, defaultdict, pd):
-    _codelist_project_counts = defaultdict(int)
-    for _k, _v in codelist_projects.items():
-        if not _k:
-            continue
-        _slug_parts = _k.strip("/").split("/")
-        _codelist_project_counts["/".join(_slug_parts[: len(_slug_parts) - 1])] += len(
-            _v
-        )
-    pd.DataFrame(
-        [
-            {
-                "codelist_slug": _k,
-                "count_projects_with_variable_using_codelist": _v,
-            }
-            for _k, _v in _codelist_project_counts.items()
-            if _k != "codelists"
-        ]
-    )
-    return
-
-
-@app.cell
-def _(Counter, codelists):
-    Counter([_v["creation_method"] for _c in codelists for _v in _c["versions"]])
-    return
-
-
-@app.cell
-def _(mo):
-    mo.md("""## How out of date are codelists when used?""")
-    return
-
-
-@app.cell
-def _(codelist_jobs, codelists, datetime, jobs, pd):
-    # calculate time delta between codelist version update and job execution
-    sucessful_job_dates = {
-        _job["sha"]: datetime.fromisoformat(_job["created_at"]).replace(tzinfo=None)
-        for _job in jobs
-    }
-    _version_updated_at = {}
-    for _codelist in codelists:
-        for _version in _codelist["versions"]:
-            _version_updated_at[_version["slug"]] = datetime.fromisoformat(
-                _version["updated_at"]
-            ).replace(tzinfo=None)
-            if _version["tag"] and _version["slug"].endswith(_version["tag"]):
-                _version_updated_at[
-                    _version["slug"].replace(_version["tag"], _version["hash"])
-                ] = datetime.fromisoformat(_version["updated_at"]).replace(tzinfo=None)
-    _codelist_deltas = {
-        _codelist_slug.strip("/"): {
-            sucessful_job_dates[_sha] - _version_updated_at[_codelist_slug.strip("/")]
-            for _sha in _shas
-        }
-        for _codelist_slug, _shas in codelist_jobs.items()
-        if _codelist_slug and _codelist_slug.strip("/") in _version_updated_at
+    normalised_version_slugs = {
+        _row["slug"]: _row["normalised_slug"]
+        for _, _row in df_codelist_versions.iterrows()
+    } | {
+        _row["normalised_slug"]: _row["normalised_slug"]
+        for _, _row in df_codelist_versions.iterrows()
     }
 
-    df_timedeltas = pd.DataFrame(
-        [
-            {
-                "slug": _c["owner"],
-                "coding_system": _c["coding_system"],
-                "updated_at": _v["updated_at"],
-                "delta": (
-                    _codelist_deltas.get(_v["slug"], set())
-                    | _codelist_deltas.get(_c["slug"] + "/" + _v["hash"], set())
-                ),
-            }
-            for _c in codelists
-            for _v in _c["versions"]
-        ]
-    )
-    return df_timedeltas, sucessful_job_dates
+    df_codelist_versions["slug"] = df_codelist_versions["normalised_slug"]
+    df_codelist_versions.drop(columns="normalised_slug")
+
+    df_codelists.set_index("slug", inplace=True)
+    df_codelist_versions.set_index("slug", inplace=True)
+    return df_codelist_versions, df_codelists, normalised_version_slugs
 
 
-@app.cell
-def _(df_timedeltas):
-    df_timedeltas
-    return
-
-
-@app.cell
-def _(df_timedeltas):
-    all_delta_days = [
-        d.days
-        for ds in df_timedeltas[df_timedeltas.delta.apply(len) > 0].delta.values
-        for d in ds
-    ]
-    return (all_delta_days,)
-
-
-@app.cell
-def _(all_delta_days, plot):
-    plot.hist(x=all_delta_days)[2][0]
-    return
-
-
-@app.cell
+@app.cell(hide_code=True)
 def _(mo):
     mo.md(
-        """
-    `updated_at` gets updated when the underlying coding system is updated (in most but not all circumstances) therefore unreliable!
-
-    Let's re-run with `created_at` and accept there might be some errors where a Codelist Version is updated significantly after creation
+        r"""
+    ## Overall counts from OpenCodelists
+    ### Codelists with at least one under review/published version:
     """
     )
     return
 
 
 @app.cell
-def _(codelist_jobs, codelists, datetime, pd, sucessful_job_dates):
-    # calculate time delta between codelist version creation and job execution
-    _version_created_at = {}
-    for _codelist in codelists:
-        for _version in _codelist["versions"]:
-            _version_created_at[_version["slug"]] = datetime.fromisoformat(
-                _version["created_at"]
-            ).replace(tzinfo=None)
-            if _version["tag"] and _version["slug"].endswith(_version["tag"]):
-                _version_created_at[
-                    _version["slug"].replace(_version["tag"], _version["hash"])
-                ] = datetime.fromisoformat(_version["created_at"]).replace(tzinfo=None)
-    _codelist_deltas = {
-        _codelist_slug.strip("/"): {
-            sucessful_job_dates[_sha] - _version_created_at[_codelist_slug.strip("/")]
-            for _sha in _shas
-        }
-        for _codelist_slug, _shas in codelist_jobs.items()
-        if _codelist_slug and _codelist_slug.strip("/") in _version_created_at
-    }
+def _(df_codelists):
+    len(df_codelists)
+    return
 
-    df_timedeltas_created = pd.DataFrame(
-        [
-            {
-                "slug": _c["owner"],
-                "coding_system": _c["coding_system"],
-                "created_at": _v["created_at"],
-                "delta": (
-                    _codelist_deltas.get(_v["slug"], set())
-                    | _codelist_deltas.get(_c["slug"] + "/" + _v["hash"], set())
-                ),
-            }
-            for _c in codelists
-            for _v in _c["versions"]
-        ]
+
+@app.cell
+def _(df_codelists):
+    df_codelists.groupby("coding_system").count()["name"].sort_values()
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""### Under review/published versions""")
+    return
+
+
+@app.cell
+def _(df_codelist_versions):
+    len(df_codelist_versions)
+    return
+
+
+@app.cell
+def _(df_codelist_versions, df_codelists):
+    df_codelist_versions.merge(
+        df_codelists, left_on="codelist_slug", right_index=True
+    ).groupby("coding_system").count()["name"].sort_values()
+    return
+
+
+@app.cell
+def _(data, pd):
+    df_job = pd.read_csv(
+        data("All.jobs-data-2025-11-10.18_25_26.csv"), index_col="sha"
+    ).rename(columns={"_status": "status"})
+    return (df_job,)
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""## Job data""")
+    return
+
+
+@app.cell
+def _(df_job):
+    len(df_job)
+    return
+
+
+@app.cell
+def _(df_job):
+    df_job.groupby("status").count()["url"].sort_values()
+    return
+
+
+@app.cell
+def _(data, defaultdict, pd):
+    ehrql_codelists = pd.read_json(data("ehrql_codelists.json"))
+    signatures_to_shas = defaultdict(set[str])
+    signatures_to_projects = dict()
+    for _project, _row in ehrql_codelists.iterrows():
+        if not isinstance(_row["projects"], dict):
+            continue
+        for _sha, _signature in _row["projects"].items():
+            signatures_to_shas[_signature].add(_sha)
+            signatures_to_projects[_signature] = _project
+    df_repo_signatures = pd.DataFrame(
+        [{"repo": v, "signature": k} for k, v in signatures_to_projects.items()]
     )
-    return (df_timedeltas_created,)
+    return (
+        df_repo_signatures,
+        ehrql_codelists,
+        signatures_to_projects,
+        signatures_to_shas,
+    )
 
 
-@app.cell
-def _(df_timedeltas_created):
-    df_timedeltas_created
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(
+        r"""
+    ## Repo signatures
+    Unique combinations of variable definitions in a repo
+    """
+    )
     return
 
 
 @app.cell
-def _(df_timedeltas_created):
-    all_delta_days_created = [
-        d.days for ds in df_timedeltas_created.delta.values for d in ds
-    ]
-    return (all_delta_days_created,)
-
-
-@app.cell
-def _(all_delta_days_created, plot):
-    plot.hist(x=all_delta_days_created)[2][0]
+def _(df_repo_signatures):
+    len(df_repo_signatures)
     return
 
 
 @app.cell
-def _(all_delta_days_created, plot):
-    plot.hist(x=[d / 365.0 for d in all_delta_days_created])[2][0]
+def _(df_repo_signatures):
+    # signatures per repo. "Count" is number of repos
+    df_repo_signatures.groupby("repo").count().describe()
     return
 
 
 @app.cell
-def _(all_delta_days_created, plot):
-    plot.ecdf(x=[d / 365.0 for d in all_delta_days_created])
+def _(ehrql_codelists):
+    ehrql_codelists
     return
 
 
 @app.cell
-def _(all_delta_days_created, np):
-    int(np.median(all_delta_days_created))
+def _(
+    df_job,
+    ehrql_codelists,
+    normalised_version_slugs,
+    pd,
+    signatures_to_projects,
+    signatures_to_shas,
+    sys,
+):
+    # link ehrql codelist data and job server data
+    df_variables = pd.DataFrame()  # id, sig, file, name
+    df_jobs_variables = pd.DataFrame()  # sha, var_id
+    df_variables_codelists = pd.DataFrame()  # var_id, codelist_version_slug
+    iter_variable_id = iter(range(1, sys.maxsize))
+    for _signature, _row in ehrql_codelists.iterrows():
+        if not isinstance(_row["signatures"], dict):
+            continue
+        _project = signatures_to_projects[_signature]
+        job_shas = {
+            sha for sha in signatures_to_shas[_signature] if sha in df_job.index
+        }
+        for file, variables in _row["signatures"].items():
+            for name, references in variables.items():
+                variable_id = next(iter_variable_id)
+                df_variables = pd.concat(
+                    [
+                        df_variables,
+                        pd.DataFrame(
+                            [
+                                {
+                                    "variable_id": variable_id,
+                                    "signature": _signature,
+                                    "file": file,
+                                    "name": name,
+                                }
+                            ]
+                        ),
+                    ]
+                )
+                df_jobs_variables = pd.concat(
+                    [
+                        df_jobs_variables,
+                        pd.DataFrame(
+                            [
+                                {"sha": sha, "variable_id": variable_id}
+                                for sha in job_shas
+                            ]
+                        ),
+                    ]
+                )
+                for _definition in references:
+                    if len(_definition) in [2, 3]:
+                        if not _definition[0]:
+                            continue
+                        _codelist_version_slug = normalised_version_slugs.get(
+                            _definition[0].strip("/")
+                        )
+                        if not _codelist_version_slug:
+                            continue
+                        df_variables_codelists = pd.concat(
+                            [
+                                df_variables_codelists,
+                                pd.DataFrame(
+                                    [
+                                        {
+                                            "variable_id": variable_id,
+                                            "codelist_version_slug": _codelist_version_slug,
+                                        }
+                                    ]
+                                ),
+                            ]
+                        )
+    df_variables.set_index("variable_id", inplace=True)
+    return df_jobs_variables, df_variables, df_variables_codelists
+
+
+@app.cell
+def _(df_repo_signatures, df_variables, df_variables_codelists):
+    # Count of projects using codelistversion
+    df_repo_signatures.merge(df_variables.reset_index(), on="signature").merge(
+        df_variables_codelists, on="variable_id"
+    ).groupby("codelist_version_slug")["repo"].nunique().sort_values(ascending=False)
     return
 
 
 @app.cell
-def _(all_delta_days_created, np):
-    int(np.mean(all_delta_days_created))
+def _(
+    df_codelist_versions,
+    df_repo_signatures,
+    df_variables,
+    df_variables_codelists,
+):
+    # Count of projects using codelist
+    df_repo_signatures.merge(df_variables.reset_index(), on="signature").merge(
+        df_variables_codelists, on="variable_id"
+    ).merge(
+        df_codelist_versions, left_on="codelist_version_slug", right_index=True
+    ).groupby("codelist_slug")["repo"].nunique().sort_values(ascending=False)
     return
 
 
 @app.cell
-def _(df_timedeltas_created):
-    df_timedeltas_created
+def _(df_variables, df_variables_codelists):
+    # signatures using codelistversion
+    df_variables.merge(
+        df_variables_codelists, left_index=True, right_on="variable_id"
+    ).groupby("codelist_version_slug").count()["signature"].sort_values(ascending=False)
     return
 
 
 @app.cell
-def _(defaultdict, df_timedeltas_created):
-    coding_system_deltas = defaultdict(list[int])
-    for row in df_timedeltas_created.iterrows():
-        row = row[1]
-        coding_system_deltas[row["coding_system"]].extend(
-            [d.days for d in row["delta"]]
+def _(df_codelist_versions, df_variables, df_variables_codelists):
+    # signatures using codelistversion
+    df_variables.merge(
+        df_variables_codelists, left_index=True, right_on="variable_id"
+    ).merge(
+        df_codelist_versions, left_on="codelist_version_slug", right_index=True
+    ).groupby("codelist_slug").count()["signature"].sort_values(ascending=False)
+    return
+
+
+@app.cell
+def _(df_codelist_versions, df_variables, df_variables_codelists):
+    # Number of versions of a given codelist in use by a variable
+    # signatures using codelistversion
+    df_variables.merge(
+        df_variables_codelists, left_index=True, right_on="variable_id"
+    ).merge(
+        df_codelist_versions, left_on="codelist_version_slug", right_index=True
+    ).groupby("codelist_slug")["codelist_version_slug"].nunique().sort_values(
+        ascending=False
+    )
+    return
+
+
+@app.cell
+def _(df_job, df_jobs_variables, df_variables_codelists):
+    # jobs using codelistversion
+    df_job[df_job.status == "succeeded"].merge(df_jobs_variables, on="sha").merge(
+        df_variables_codelists, on="variable_id"
+    ).groupby("codelist_version_slug")["sha"].nunique().sort_values(ascending=False)
+    return
+
+
+@app.cell
+def _(df_codelist_versions, df_job, df_jobs_variables, df_variables_codelists):
+    # jobs using codelistversion
+    df_job[df_job.status == "succeeded"].merge(df_jobs_variables, on="sha").merge(
+        df_variables_codelists, on="variable_id"
+    ).merge(
+        df_codelist_versions, left_on="codelist_version_slug", right_index=True
+    ).groupby("codelist_slug")["sha"].nunique().sort_values(ascending=False)
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""## Never-used codelist versions (ehrQL)""")
+    return
+
+
+@app.cell
+def _(df_codelist_versions, df_variables_codelists):
+    df_codelist_version_never_used = df_codelist_versions.merge(
+        df_variables_codelists,
+        right_on="codelist_version_slug",
+        left_index=True,
+        how="outer",
+        indicator=True,
+    )
+    df_codelist_version_never_used = df_codelist_version_never_used[
+        df_codelist_version_never_used._merge == "left_only"
+    ][["codelist_version_slug"]].set_index("codelist_version_slug")
+    df_codelist_version_never_used
+    return (df_codelist_version_never_used,)
+
+
+@app.cell
+def _(df_codelist_version_never_used, df_codelist_versions, df_codelists):
+    df_codelist_version_never_used.merge(
+        df_codelist_versions, right_index=True, left_index=True
+    ).merge(df_codelists, left_on="codelist_slug", right_index=True).groupby(
+        "coding_system"
+    ).count()["codelist_slug"].sort_values(ascending=False)
+    return
+
+
+@app.cell
+def _(df_codelist_version_never_used, df_codelist_versions, df_codelists):
+    df_codelist_version_never_used.merge(
+        df_codelist_versions, right_index=True, left_index=True
+    ).merge(df_codelists, left_on="codelist_slug", right_index=True).groupby(
+        "owner"
+    ).count()["codelist_slug"].sort_values(ascending=False)
+    return
+
+
+@app.cell
+def _(mo):
+    mo.md(r"""## Never-used codelist versions (ehrQL or cohort-extractor)""")
+    return
+
+
+@app.cell
+def _(data, df_codelist_version_never_used, normalised_version_slugs, pd):
+    # remove cohortextractor-used codelists
+    cohort_extractor_codelist_versions = pd.read_json(
+        data("cohort_extractor_codelists.json"), typ="series"
+    )
+    all_cohort_extractor_codelist_versions = {
+        c for cs in cohort_extractor_codelist_versions.values for c in cs
+    }
+    all_cohort_extractor_codelist_versions = {
+        _normalised_slug
+        for slug in all_cohort_extractor_codelist_versions
+        if (_normalised_slug := normalised_version_slugs.get(slug.strip("/")))
+    }
+    df_codelist_version_never_used_cohortextractor = df_codelist_version_never_used[
+        ~df_codelist_version_never_used.index.isin(
+            all_cohort_extractor_codelist_versions
         )
-    return (coding_system_deltas,)
+    ]
+    df_codelist_version_never_used_cohortextractor
+    return (df_codelist_version_never_used_cohortextractor,)
 
 
 @app.cell
-def _(coding_system_deltas):
-    coding_system_deltas["bnf"]
+def _(
+    df_codelist_version_never_used_cohortextractor,
+    df_codelist_versions,
+    df_codelists,
+):
+    df_codelist_version_never_used_cohortextractor.merge(
+        df_codelist_versions, right_index=True, left_index=True
+    ).merge(df_codelists, left_on="codelist_slug", right_index=True).groupby(
+        "coding_system"
+    ).count()["codelist_slug"].sort_values(ascending=False)
     return
 
 
 @app.cell
-def _(coding_system_deltas, plot):
-    plot.boxplot(
-        coding_system_deltas.values(), tick_labels=coding_system_deltas.keys()
-    )["boxes"][0]
+def _(
+    df_codelist_version_never_used_cohortextractor,
+    df_codelist_versions,
+    df_codelists,
+):
+    df_codelist_version_never_used_cohortextractor.merge(
+        df_codelist_versions, right_index=True, left_index=True
+    ).merge(df_codelists, left_on="codelist_slug", right_index=True).groupby(
+        "owner"
+    ).count()["codelist_slug"].sort_values(ascending=False)
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""## How out of date are codelists when used?""")
     return
 
 
 @app.cell
+def _(
+    df_codelist_versions,
+    df_codelists,
+    df_job,
+    df_jobs_variables,
+    df_variables_codelists,
+    pd,
+):
+    # calculate time delta between codelist version creation and job execution
+    df_timedelta = (
+        df_codelist_versions.merge(
+            df_variables_codelists, left_index=True, right_on="codelist_version_slug"
+        )
+        .merge(df_jobs_variables, on="variable_id")
+        .merge(
+            df_job[df_job.status == "succeeded"],
+            on="sha",
+            suffixes=["_codelist_version", "_job"],
+        )
+        .merge(
+            df_codelists,
+            left_on="codelist_slug",
+            right_index=True,
+            suffixes=["", "_codelist"],
+        )
+    )
+    df_timedelta["timedelta"] = pd.to_datetime(
+        df_timedelta.created_at_job, format="ISO8601", utc=True
+    ) - pd.to_datetime(
+        df_timedelta.created_at_codelist_version, format="ISO8601", utc=True
+    )
+    df_timedelta["deltadays"] = df_timedelta["timedelta"].apply(lambda x: x.days)
+    return (df_timedelta,)
+
+
+@app.cell
+def _(df_timedelta):
+    df_timedelta["deltadays"].describe()
+    return
+
+
+@app.cell
+def _(df_timedelta):
+    df_timedelta["deltadays"].hist()
+    return
+
+
+@app.cell
+def _(df_timedelta):
+    df_timedelta["deltadays"].apply(lambda x: float(x) / 365).hist()
+    return
+
+
+@app.cell
+def _(df_timedelta, sns):
+    sns.kdeplot(data=df_timedelta, x="deltadays", hue="coding_system")
+    return
+
+
+@app.cell
+def _(df_timedelta, sns):
+    sns.histplot(
+        data=df_timedelta,
+        x="deltadays",
+        hue="coding_system",
+        binwidth=100,
+        y="coding_system",
+    )
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""_N.B: No BNF since BNF codelists can't be used in OpenSAFELY_""")
+    return
+
+
+@app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""## Was there a newer version available at time of use?""")
     return
 
 
 @app.cell
-def _(Counter, codelist_jobs, codelists, datetime, sucessful_job_dates):
-    _newer_available = []
-    for _codelist_slug, _shas in codelist_jobs.items():
-        for _sha in _shas:
-            _run_date = sucessful_job_dates[_sha]
-            for _codelist in codelists:
-                if _codelist_slug and _codelist_slug.strip("/").startswith(
-                    _codelist["slug"]
-                ):
-                    _versions_available_at_job_run = [
-                        _v
-                        for _v in _codelist["versions"]
-                        if datetime.fromisoformat(_v["created_at"]).replace(tzinfo=None)
-                        < _run_date
-                    ]
-                    if not _versions_available_at_job_run:
-                        continue
-                    _newer_codelists = True
-                    for _version in sorted(
-                        _versions_available_at_job_run, key=lambda x: x["created_at"]
-                    ):
-                        if _codelist_slug.strip("/") in [
-                            _version["slug"],
-                            _codelist["slug"] + "/" + _version["hash"],
-                        ]:
-                            _newer_codelists = False
-                        else:
-                            _newer_codelists = True
-                    _newer_available.append(_newer_codelists)
-    Counter(_newer_available)
+def _(df_codelist_versions, df_timedelta):
+    df_newer_available = df_timedelta[
+        [
+            "codelist_version_slug",
+            "codelist_slug",
+            "created_at_codelist_version",
+            "created_at_job",
+            "status_codelist_version",
+            "variable_id",
+            "sha",
+        ]
+    ]
+    df_newer_available = df_newer_available.merge(
+        df_codelist_versions.reset_index(), on="codelist_slug", suffixes=["", "_newer"]
+    )
+    df_newer_available = df_newer_available[
+        (df_newer_available.codelist_version_slug != df_newer_available.slug)
+        & (
+            df_newer_available.created_at_codelist_version
+            < df_newer_available.created_at
+        )
+    ]
+    df_newer_available["newer_available"] = (
+        df_newer_available.created_at_job > df_newer_available.created_at
+    )
+    return (df_newer_available,)
+
+
+@app.cell
+def _(df_newer_available):
+    df_newer_available["job_variable_id"] = (
+        df_newer_available["sha"] + "/" + df_newer_available["variable_id"].astype(str)
+    )
     return
 
 
 @app.cell
-def _(Counter, codelist_jobs, codelists, datetime, sucessful_job_dates):
-    _newer_available = []
-    for _codelist_slug, _shas in codelist_jobs.items():
-        for _sha in _shas:
-            _run_date = sucessful_job_dates[_sha]
-            for _codelist in codelists:
-                if _codelist_slug and _codelist_slug.strip("/").startswith(
-                    _codelist["slug"]
-                ):
-                    _published_versions_available_at_job_run = [
-                        _v
-                        for _v in _codelist["versions"]
-                        if datetime.fromisoformat(_v["created_at"]).replace(tzinfo=None)
-                        < _run_date
-                        and _v["status"] == "published"
-                    ]
-                    if not _published_versions_available_at_job_run:
-                        continue
-                    _newer_codelists = True
-                    for _version in sorted(
-                        _published_versions_available_at_job_run,
-                        key=lambda x: x["created_at"],
-                    ):
-                        if _codelist_slug.strip("/") in [
-                            _version["slug"],
-                            _codelist["slug"] + "/" + _version["hash"],
-                        ]:
-                            _newer_codelists = False
-                        else:
-                            _newer_codelists = True
-                    _newer_available.append(_newer_codelists)
-    Counter(_newer_available)
+def _(df_newer_available):
+    df_newer_available.groupby(["newer_available"])["job_variable_id"].nunique()
     return
 
 
 @app.cell
+def _(df_newer_available):
+    df_newer_available[df_newer_available.newer_available].groupby(["status"])[
+        "job_variable_id"
+    ].nunique()
+    return
+
+
+@app.cell(hide_code=True)
 def _(mo):
     mo.md(
-        """
-    ## How often are 'out of date'* codelists used?
+        r"""
+    ## How often are "out of date"* codelist versions used?
 
-    *_if a new version of the codelist had been created at job run time, would there have been new codes?_
+    _ * if a new version of the codelist had been created at job urn time would there have been new codes? _
 
-    N.B: Not 100% certain of results, uses compatible_releases OCL feature introduced end of 2022, however definitely some cases of where codelists created prior to this feature's introduction have had compatible releases calculated
+    N.B: A bit of uncertainty in these results, uses `compatible_release` feature of OpenCodelists which was introduced at end of 2022.
     """
     )
     return
 
 
 @app.cell
-def _(Path, json):
-    coding_system_release_dates = json.load(
-        Path("data/coding_system_release_dates.json").open()
+def _(data, normalised_version_slugs, pd):
+    coding_system_release_dates = pd.read_json(
+        data("coding_system_release_dates.json"), typ="series"
     )
-
-    # {v.full_slug():sorted([c.valid_from.isoformat() for c in v.compatible_releases.all()]|[v.coding_system_release.valid_from.isoformat()]) for v in CodelistVersion.objects.filter(status__in=[Status.PUBLISHED,Status.UNDER_REVIEW]).filter(searches__isnull=False)}
-    version_compatible_release_dates = json.load(
-        Path("data/version_compat.json").open()
-    )
+    version_compatible_release_dates = {
+        _normalised_slug: v
+        for k, v in pd.read_json(data("version_compat.json"), typ="series").items()
+        if (_normalised_slug := normalised_version_slugs.get(k))
+    }
     return coding_system_release_dates, version_compatible_release_dates
 
 
 @app.cell
-def _(mo, version_compatible_release_dates):
-    mo.md(
-        f"""{len(version_compatible_release_dates)} codelist versions eligible for this analysis (have Searches)"""
-    )
+def _(version_compatible_release_dates):
+    len(version_compatible_release_dates)
     return
 
 
 @app.cell
 def _(
-    codelists,
     coding_system_release_dates,
+    df_codelists,
+    pd,
     version_compatible_release_dates,
 ):
-    # normalise to hash-based slugs for versions
-    normalised_version_slugs = {}
-    for _codelist in codelists:
-        for _version in _codelist["versions"]:
-            normalised_version_slugs[_version["slug"]] = (
-                _codelist["slug"] + "/" + _version["hash"]
-            )
-            normalised_version_slugs[_codelist["slug"] + "/" + _version["hash"]] = (
-                _codelist["slug"] + "/" + _version["hash"]
-            )
-
-    # valid_from date of next coding system release after the last compatible one
-    version_out_of_date_at = {}
-    for _version, _dates in version_compatible_release_dates.items():
-        _last_compat_date = max(_dates)
-        _coding_system = None
-        for _c in codelists:
-            if _version.startswith(_c["slug"]):
-                _coding_system = _c["coding_system"]
+    # find the valid_from date of the *next* coding system release after the latest compatible one
+    version_out_of_date_at = []
+    for (
+        _codelist_version_slug,
+        compatibility_dates,
+    ) in version_compatible_release_dates.items():
+        last_compatible_date = max(compatibility_dates)
+        for _slug, coding_system in df_codelists["coding_system"].items():
+            if _codelist_version_slug.startswith(_slug):
                 break
-        # None == we're already at the latest version
-        _use_before_date = min(
+        best_before_date = min(
             [
                 _d
-                for _d in coding_system_release_dates[_coding_system]
-                if _d > _last_compat_date
+                for _d in coding_system_release_dates[coding_system]
+                if _d > last_compatible_date
             ]
             or [None]
         )
-        version_out_of_date_at[normalised_version_slugs[_version]] = _use_before_date
-    return normalised_version_slugs, version_out_of_date_at
+        version_out_of_date_at.append(
+            {
+                "codelist_version_slug": _codelist_version_slug,
+                "best_before_date": best_before_date,
+            }
+        )
+    df_best_before_date = pd.DataFrame(version_out_of_date_at).set_index(
+        "codelist_version_slug"
+    )  # None == we're already at the latest version  # type: ignore
+    return (df_best_before_date,)
 
 
 @app.cell
-def _(mo, version_out_of_date_at):
+def _(df_best_before_date):
+    # No best before - therefore fully up to date at time of extract
+    df_best_before_date.best_before_date.isnull().value_counts()
+    return
+
+
+@app.cell
+def _(
+    df_best_before_date,
+    df_codelist_versions,
+    df_codelists,
+    df_job,
+    df_jobs_variables,
+    df_variables_codelists,
+    pd,
+):
+    # codelists used after expiry
+    df_used_after_expiry = (
+        df_job[df_job.status == "succeeded"]
+        .merge(df_jobs_variables, left_index=True, right_on="sha")
+        .merge(df_variables_codelists, on="variable_id")
+        .merge(
+            df_codelist_versions,
+            left_on="codelist_version_slug",
+            right_index=True,
+            suffixes=["_job", "codelist_version"],
+        )
+        .merge(df_codelists, left_on="codelist_slug", right_index=True)
+        .merge(df_best_before_date, left_on="codelist_version_slug", right_index=True)
+    )
+    df_used_after_expiry["used_after_expiry"] = pd.to_datetime(
+        df_used_after_expiry.created_at_job, format="ISO8601", utc=True
+    ) > pd.to_datetime(df_used_after_expiry.best_before_date, yearfirst=True, utc=True)
+    return (df_used_after_expiry,)
+
+
+@app.cell
+def _(df_used_after_expiry):
+    df_used_after_expiry.used_after_expiry.value_counts()
+    return
+
+
+@app.cell
+def _(df_used_after_expiry):
+    df_used_after_expiry[df_used_after_expiry.used_after_expiry]
+    return
+
+
+@app.cell
+def _(df_used_after_expiry):
+    df_used_after_expiry.groupby("coding_system").used_after_expiry.value_counts()
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
     mo.md(
-        f"""{len([_k for _k, _v in version_out_of_date_at.items() if not _v])} codelist versions compatible with latest release"""
+        r"""## Can we use version compatibility dates to derive most recent "true" update date for a codelist version"""
     )
     return
 
 
 @app.cell
 def _(
-    Counter,
-    codelist_jobs,
-    datetime,
-    normalised_version_slugs,
-    sucessful_job_dates,
-    version_out_of_date_at,
+    df_codelist_versions,
+    df_codelists,
+    df_job,
+    df_jobs_variables,
+    df_variables_codelists,
+    pd,
+    version_compatible_release_dates,
 ):
-    _used_after_expiry = []
-    _versions_with_expiry_dates = {
-        _k: datetime.fromisoformat(_v).date()
-        if _v
-        else datetime.fromisoformat("2999-12-12").date()
-        for _k, _v in version_out_of_date_at.items()
-    }
-    for _run_codelist_version_slug, _shas in codelist_jobs.items():
-        if not _run_codelist_version_slug:
-            continue
-        _normalised_slug = normalised_version_slugs.get(
-            _run_codelist_version_slug.strip("/")
+    def _derive_true_updated_at(row):
+        compatibility_dates = version_compatible_release_dates.get(
+            row["codelist_version_slug"]
         )
-        if not (_expiry_date := _versions_with_expiry_dates.get(_normalised_slug)):
-            continue
-        for _sha in _shas:
-            _job_date = sucessful_job_dates.get(_sha)
-            if not _job_date:
-                continue
-            _used_after_expiry.append(_job_date.date() > _expiry_date)
-    Counter(_used_after_expiry)
-    return
+        if not compatibility_dates or compatibility_dates == ["1900-01-01"]:
+            return row["updated_at"]
+        return max([cd for cd in compatibility_dates if cd < row["created_at_job"]])
+
+    df_true_updated_at = (
+        df_job[df_job.status == "succeeded"]
+        .merge(df_jobs_variables, left_index=True, right_on="sha")
+        .merge(df_variables_codelists, on="variable_id")
+        .merge(
+            df_codelist_versions,
+            left_on="codelist_version_slug",
+            right_index=True,
+            suffixes=["_job", "_codelist_version"],
+        )
+        .merge(
+            df_codelists,
+            left_on="codelist_slug",
+            right_index=True,
+            suffixes=["", "_codelist"],
+        )
+    )
+
+    df_true_updated_at["true_updated_at"] = df_true_updated_at.apply(
+        lambda x: _derive_true_updated_at(x), axis=1
+    )
+
+    df_true_updated_at["timedelta"] = pd.to_datetime(
+        df_true_updated_at.created_at_job, format="ISO8601", utc=True
+    ) - pd.to_datetime(df_true_updated_at.true_updated_at, format="ISO8601", utc=True)
+    df_true_updated_at["deltadays"] = df_true_updated_at["timedelta"].apply(
+        lambda x: x.days
+    )
+    return (df_true_updated_at,)
 
 
 @app.cell
-def _():
-    # stratify by coding system type
+def _(df_true_updated_at, sns):
+    sns.histplot(df_true_updated_at["deltadays"], binwidth=100)
     return
 
 
-@app.cell
-def _():
-    return
-
-
-@app.cell
-def _():
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(
+        r"""Version compatibility dates are not reliable as of 2025/11/26 - bug found in their calculation which will have to be rectified to enable this analysis."""
+    )
     return
 
 
