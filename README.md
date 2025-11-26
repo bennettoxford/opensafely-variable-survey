@@ -119,6 +119,98 @@ providing stand-ins under `spoofed_data/`:
 Update the CSV or JSON fixtures as new columns or properties are required. The `.csv.gz` and `.arrow`
 files are regenerated from `csv_data.csv` automatically by the main script each time it is run.
 
+### Codelist Extraction
+
+A companion script `ehrql_codelist_extractor.py` extracts `codelist_from_csv()`
+calls for each variable defined in ehrQL datasets. Unlike the main extractor,
+this script uses static AST parsing only (no module execution) to find codelist
+references. It also allows filtering to specific commits in repositories so you
+can extract codelists that were actually used in studies.
+
+#### Execution
+
+```bash
+# Run the full codelist extraction process for the latest commit of each ehrQL repo
+just codelists
+
+# Run with verbose logging
+just codelists --verbose
+
+# Extract codelists from specific repositories
+just codelists opensafely/repo1 opensafely/repo2
+
+# Specify a csv input file with repo/commit pairs (one per line) to run the extraction against
+just codelists --csv All.jobs-data-2025-11-10.18_25_26.csv
+
+# Specify a differnt output file
+just codelists --output my_codelists.json
+
+# Force the update rather than reusing the cached output
+just codelists --force
+```
+
+#### CSV input
+
+If you want to specify particular commits to extract codelists from, you can
+provide a CSV file with two columns: `url` and `sha`. Each row should contain the
+repository URL and the specific commit SHA to extract codelists from. For example:
+
+```csv
+url,sha
+https://github.com/opensafely/example-study,commitsha1
+https://github.com/opensafely/another-study,commitsha2
+```
+
+The filename of the csv can be provided to the script using the `--csv` argument as shown above.
+
+#### Output Format
+
+`ehrql_codelists.json` captures codelist references for each variable. Often, the variables and
+codelists in a study don't change across multiple runs of a study across different commits. To
+avoid duplicating this output we proceed as follows. The output list of variables and associated
+codelists for a given study commit is hashed. We then map the commit sha to this hash. The actual
+detail of the variables and codelists is only stored once per unique hash later on in the output file.
+
+The precise format is as follows:
+
+```json
+{
+  "generated_at": "YYYY-MM-DD HH:MM:SS",
+  "projects": {
+    "opensafely/example-study": {
+      "commit_sha_1": "variables_hash_value_1",
+      "commit_sha_2": "variables_hash_value_2",
+      "commit_sha_3": "variables_hash_value_1",
+      ...
+    },
+    ...
+  },
+  "signatures": {
+    "variables_hash_value_1": {
+      "analysis/dataset.py": {
+        "variable_name_1": [
+          ["codelist_file.csv", "column_name=code", "another_arg=value"],
+          ["another_codelist_file.csv"]
+        ],
+        "variable_name_2": []
+      },
+      "another_file.py": {
+        "variable_name_3": [
+          ["codelist_file.csv"]
+        ]
+      }
+    },
+    "variables_hash_value_2": {
+      ...
+    }
+  }
+}
+```
+
+#### Notes
+
+The current approach finds most codelists but isn't perfect. An alternative would be to parse the files to find the ehrQL variables first, then re-parse to find codelists only for those variables. We could also use the \_qm_node property of the parsed ehrQL dataset to find codelist references. The complication there is that which the \_qm_node keeps track that a codelist was used, it only retains the list of codes and not the name, so a reverse lookup would be needed to find which codelist produced those codes. This would be more complex, and might still not be complete, but could be more accurate.
+
 ### Planned Improvements
 
 - [ ] Currently this is just for patient-level datasets. Add support:

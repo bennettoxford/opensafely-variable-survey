@@ -7,6 +7,7 @@
 **/__marimo__
 
 .ehrql_repo_cache/
+.project_yaml_cache.json
 ehrql_qm_dump.json
 ehrql_qm_full_dump.json
 

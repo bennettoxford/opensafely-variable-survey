@@ -1,10 +1,12 @@
 import base64
 import csv
+import hashlib
 import json
 import pathlib
 import re
 import subprocess
 import sys
+import time
 
 import yaml
 
@@ -14,11 +16,64 @@ GH_API_HEADERS = [
     "X-GitHub-Api-Version: 2022-11-28",
 ]
 
+# Global cache for project.yaml parsing
+# Maps content hash -> list of dataset files
+_PROJECT_YAML_CACHE: dict[str, list[str]] = {}
+_PROJECT_YAML_CACHE_FILE = pathlib.Path(".project_yaml_cache.json")
+_PROJECT_YAML_CACHE_MODIFIED = False
+
 
 class GitHubError(RuntimeError):
     """Generic error for GitHub CLI interactions."""
 
     pass
+
+
+def _load_project_yaml_cache() -> None:
+    """Load the project.yaml parsing cache from disk."""
+    global _PROJECT_YAML_CACHE, _PROJECT_YAML_CACHE_MODIFIED
+
+    if _PROJECT_YAML_CACHE_FILE.exists():
+        try:
+            with open(_PROJECT_YAML_CACHE_FILE, encoding="utf-8") as f:
+                _PROJECT_YAML_CACHE = json.load(f)
+        except (json.JSONDecodeError, OSError):
+            # If cache is corrupted, start fresh
+            _PROJECT_YAML_CACHE = {}
+    _PROJECT_YAML_CACHE_MODIFIED = False
+
+
+def _save_project_yaml_cache() -> None:
+    """Save the project.yaml parsing cache to disk if modified."""
+    global _PROJECT_YAML_CACHE_MODIFIED
+
+    if _PROJECT_YAML_CACHE_MODIFIED:
+        try:
+            with open(_PROJECT_YAML_CACHE_FILE, "w", encoding="utf-8") as f:
+                json.dump(_PROJECT_YAML_CACHE, f)
+            _PROJECT_YAML_CACHE_MODIFIED = False
+        except OSError:
+            # Ignore save errors - cache is just an optimization
+            pass
+
+
+def _clear_project_yaml_cache() -> None:
+    """Clear the project.yaml parsing cache."""
+    global _PROJECT_YAML_CACHE, _PROJECT_YAML_CACHE_MODIFIED
+
+    _PROJECT_YAML_CACHE = {}
+    _PROJECT_YAML_CACHE_MODIFIED = False
+
+    if _PROJECT_YAML_CACHE_FILE.exists():
+        try:
+            _PROJECT_YAML_CACHE_FILE.unlink()
+        except OSError:
+            pass
+
+
+def _hash_content(content: str) -> str:
+    """Create a hash of content for cache lookup."""
+    return hashlib.sha256(content.encode("utf-8")).hexdigest()
 
 
 def run_gh(args: list[str], expect_json: bool = True) -> dict | list | str:
@@ -76,14 +131,28 @@ def parse_project_yaml(repo_root: pathlib.Path) -> list[str]:
     """Extract dataset definition file paths from project.yaml.
 
     Returns list of relative paths to files that generate datasets.
+    Uses caching based on file content hash to speed up repeated parsing.
     """
+    global _PROJECT_YAML_CACHE, _PROJECT_YAML_CACHE_MODIFIED
+
     try:
         content = (repo_root / "project.yaml").read_text(encoding="utf-8")
+
+        # Check cache first
+        content_hash = _hash_content(content)
+        if content_hash in _PROJECT_YAML_CACHE:
+            return _PROJECT_YAML_CACHE[content_hash]
+
+        # Cache miss - do the parsing
         data = yaml.safe_load(content)
 
         dataset_files = set()
         if not data:
-            return list(dataset_files)
+            result = list(dataset_files)
+            _PROJECT_YAML_CACHE[content_hash] = result
+            _PROJECT_YAML_CACHE_MODIFIED = True
+            return result
+
         actions = data.get("actions", {})
 
         for action_name, action_config in actions.items():
@@ -107,7 +176,11 @@ def parse_project_yaml(repo_root: pathlib.Path) -> list[str]:
                     )
                     sys.exit(1)
 
-        return list(dataset_files)
+        result = list(dataset_files)
+        # Update cache
+        _PROJECT_YAML_CACHE[content_hash] = result
+        _PROJECT_YAML_CACHE_MODIFIED = True
+        return result
     except (GitHubError, yaml.YAMLError, KeyError) as _:
         return []
 
@@ -198,6 +271,51 @@ def group_items_by_repo(items: list[dict]) -> dict:
     return grouped
 
 
+def get_remote_head_shas(repos: list[str], verbose: bool = False) -> dict[str, str]:
+    """Get the current HEAD SHA for multiple repos via GitHub GraphQL API.
+
+    This is much faster than doing git fetch for each repo individually.
+    Returns dict mapping repo_full_name -> HEAD SHA.
+    """
+    if not repos:
+        return {}
+
+    # Build GraphQL query for all repos at once
+    # Format: repo1: repository(owner: "opensafely", name: "repo1") { defaultBranchRef { target { oid } } }
+    repo_queries = []
+    repo_aliases = {}
+
+    for i, repo_full_name in enumerate(repos):
+        owner, repo_name = repo_full_name.split("/", 1)
+        alias = f"repo{i}"
+        repo_aliases[alias] = repo_full_name
+        repo_queries.append(
+            f'{alias}: repository(owner: "{owner}", name: "{repo_name}") {{ defaultBranchRef {{ target {{ oid }} }} }}'
+        )
+
+    query = "query { " + " ".join(repo_queries) + " }"
+
+    try:
+        result = run_gh(["api", "graphql", "-f", f"query={query}"])
+
+        head_shas = {}
+        if isinstance(result, dict) and "data" in result:
+            for alias, repo_full_name in repo_aliases.items():
+                repo_data = result["data"].get(alias)
+                if repo_data and repo_data.get("defaultBranchRef"):
+                    sha = repo_data["defaultBranchRef"]["target"]["oid"]
+                    head_shas[repo_full_name] = sha
+
+        return head_shas
+    except GitHubError as e:
+        if verbose:
+            print(
+                f"Warning: Failed to fetch remote HEADs via GraphQL: {e}",
+                file=sys.stderr,
+            )
+        return {}
+
+
 def clone_repos(
     all_repos: tuple[str, str],
     repos: list[str],
@@ -210,7 +328,7 @@ def clone_repos(
     For each repo:
     - Creates a bare clone in {repo_name}/ (or updates if exists)
     - Creates worktrees for each SHA in {repo_name}-{sha}/
-    - Fetches latest from origin to ensure main is up-to-date
+    - Fetches latest from origin only if local HEAD differs from remote
 
     repos: tuple of (full_repo_name, ref_sha)
     Returns list of tuples (repo_full_name, ref_sha, local_path).
@@ -228,6 +346,14 @@ def clone_repos(
             repo_sha_map[repo_full_name] = []
         repo_sha_map[repo_full_name].append(ref_sha)
 
+    # Get remote HEAD SHAs for all repos in one batch API call
+    print(
+        f"{time.strftime('%Y-%m-%d %H:%M:%S')} - Getting remote HEAD SHAs for ehrQL repos"
+    )
+    remote_heads = get_remote_head_shas(list(repo_sha_map.keys()), verbose=verbose)
+    print(
+        f"{time.strftime('%Y-%m-%d %H:%M:%S')} - Completed getting remote HEAD SHAs for ehrQL repos"
+    )
     local_repos = []
 
     for repo_full_name, shas in repo_sha_map.items():
@@ -240,8 +366,17 @@ def clone_repos(
                 file=sys.stderr,
             )
 
+        remote_head_sha = remote_heads.get(repo_full_name)
+        print(f"{time.strftime('%Y-%m-%d %H:%M:%S')} - Cloning {repo_full_name}")
         cloned_repos = _clone_with_worktrees(
-            repo_full_name, owner, repo_name, shas, cache_dir, silent, verbose
+            repo_full_name,
+            owner,
+            repo_name,
+            shas,
+            cache_dir,
+            remote_head_sha,
+            silent,
+            verbose,
         )
         local_repos.extend(cloned_repos)
 
@@ -254,13 +389,17 @@ def _clone_with_worktrees(
     repo_name: str,
     shas: list[str],
     cache_dir: pathlib.Path,
+    remote_head_sha: str | None,
     silent: bool,
     verbose: bool,
 ) -> list[tuple[str, str, pathlib.Path]]:
     """Clone a repo as bare and create worktrees for each SHA.
 
     On first run: creates bare clone
-    On subsequent runs: fetches latest from origin to update main
+    On subsequent runs: only fetches if remote HEAD differs from local HEAD
+
+    Args:
+        remote_head_sha: The current HEAD SHA from GitHub API (if available)
 
     Returns list of tuples (repo_full_name, sha, worktree_path).
     """
@@ -268,7 +407,7 @@ def _clone_with_worktrees(
     bare_repo_dir = cache_dir / repo_name
     clone_url = f"https://github.com/{owner}/{repo_name}.git"
 
-    # Do bare clone if not already cached, otherwise fetch updates
+    # Do bare clone if not already cached, otherwise check if fetch needed
     if not bare_repo_dir.exists():
         cmd = ["git", "clone", "--bare", clone_url, str(bare_repo_dir)]
 
@@ -287,21 +426,44 @@ def _clone_with_worktrees(
                 )
             return []
     else:
-        # Repo exists, fetch latest to ensure we have all refs
-        if verbose:
-            print(
-                f"..Updating bare repo at {bare_repo_dir} (fetching latest)",
-                file=sys.stderr,
-            )
+        # Repo exists, check if we need to fetch
+        # If we have the remote HEAD SHA, check if its worktree exists
+        needs_fetch = False
 
-        fetch_proc = subprocess.run(
-            ["git", "--git-dir", str(bare_repo_dir), "fetch", "origin"],
-            capture_output=True,
-            text=True,
-        )
-        if fetch_proc.returncode != 0 and not silent:
+        if remote_head_sha:
+            # Check if worktree for remote HEAD exists - if so, we're up to date
+            remote_head_worktree = cache_dir / f"{repo_name}-{remote_head_sha[:8]}"
+            if not remote_head_worktree.exists():
+                # Remote HEAD worktree doesn't exist, need to fetch
+                needs_fetch = True
+                if verbose:
+                    print(
+                        "..Remote HEAD worktree not found, fetching updates",
+                        file=sys.stderr,
+                    )
+        else:
+            # No remote HEAD info from API, fall back to fetch (rare case)
+            needs_fetch = True
+            if verbose:
+                print(
+                    "..No remote HEAD info available, fetching to be safe",
+                    file=sys.stderr,
+                )
+
+        if needs_fetch:
+            fetch_proc = subprocess.run(
+                ["git", "--git-dir", str(bare_repo_dir), "fetch", "origin"],
+                capture_output=True,
+                text=True,
+            )
+            if fetch_proc.returncode != 0 and not silent:
+                print(
+                    f"..Warning: fetch failed for {repo_full_name}: {fetch_proc.stderr.strip()}",
+                    file=sys.stderr,
+                )
+        elif verbose:
             print(
-                f"..Warning: fetch failed for {repo_full_name}: {fetch_proc.stderr.strip()}",
+                "..Remote HEAD worktree exists, skipping fetch",
                 file=sys.stderr,
             )
 
@@ -469,6 +631,7 @@ def clone_ehrql_repos(
                 )
             print("=" * 80 + "\n", file=sys.stderr)
 
+    print(f"{time.strftime('%Y-%m-%d %H:%M:%S')} - Cloning ehrQL repos")
     local_ehrql_repos = clone_repos(
         all_repos_shas, repos, cache_dir, silent=silent, verbose=verbose
     )
@@ -479,12 +642,25 @@ def get_dataset_files(
     local_repos: list[tuple[str, str, pathlib.Path]],
     silent: bool = False,
     verbose: bool = False,
+    force: bool = False,
 ) -> dict[str, (str, list[str], pathlib.Path)]:
     """Get dataset definition files from local cloned repos.
 
     Note: When multiple SHAs exist for the same repo, we use a composite key
     "repo@sha" to distinguish them.
+
+    Args:
+        local_repos: List of (repo_full_name, sha, local_path) tuples
+        silent: Suppress output
+        verbose: Verbose output
+        force: If True, clear cache and force re-parsing
     """
+    # Load cache on first call, or clear it if force=True
+    if force:
+        _clear_project_yaml_cache()
+    elif not _PROJECT_YAML_CACHE:
+        _load_project_yaml_cache()
+
     all_dataset_files: dict[str, (str, list[str], pathlib.Path)] = {}
     for repo_full, head_sha, repo_local_dir in local_repos:
         dataset_files = parse_project_yaml(repo_local_dir)
@@ -508,4 +684,8 @@ def get_dataset_files(
                     "..No ehrql generate_dataset commands found in project.yaml",
                     file=sys.stderr,
                 )
+
+    # Save cache if modified
+    _save_project_yaml_cache()
+
     return all_dataset_files
