@@ -1455,10 +1455,10 @@ class CodelistTracer:
         ast_index: ASTIndex,
         depth: int,
     ) -> list[CodelistCall]:
-        """Trace an attribute of a locally-defined class.
+        """Trace an attribute of a locally-defined class or instance.
 
         Args:
-            class_name: Name of the local class
+            class_name: Name of the local class OR variable that's an instance
             attr_name: Attribute name to find
             tree: AST tree
             import_collector: Import information
@@ -1469,6 +1469,26 @@ class CodelistTracer:
         Returns:
             List of CodelistCall objects
         """
+        # First check if class_name is a variable assigned to a class instance
+        if class_name in ast_index.var_assignments:
+            for assign in ast_index.var_assignments[class_name]:
+                # Check if it's assigned from a class instantiation
+                if isinstance(assign.value, ast.Call) and isinstance(
+                    assign.value.func, ast.Name
+                ):
+                    actual_class_name = assign.value.func.id
+                    class_def = ast_index.class_defs.get(actual_class_name)
+                    if class_def:
+                        return self._find_class_attribute_definition(
+                            class_def,
+                            attr_name,
+                            tree,
+                            import_collector,
+                            file_path,
+                            ast_index,
+                            depth,
+                        )
+
         # Use index for O(1) class lookup
         class_def = ast_index.class_defs.get(class_name)
         if class_def:
@@ -2148,6 +2168,7 @@ class VariableExtractor:
 
         Looks for patterns like:
             my_dict = dict(key1=value1, key2=value2)
+            my_dict = {"key1": value1, "key2": value2}
         """
         for node in ast.walk(tree):
             if (
@@ -2168,6 +2189,42 @@ class VariableExtractor:
                         if keyword.arg:  # keyword.arg is the key name
                             result[keyword.arg] = keyword.value
                     return result
+                # Check if RHS is a dict literal
+                elif isinstance(node.value, ast.Dict):
+                    result = {}
+                    for key_node, value_node in zip(node.value.keys, node.value.values):
+                        # Only handle string literal keys
+                        if isinstance(key_node, ast.Constant) and isinstance(
+                            key_node.value, str
+                        ):
+                            result[key_node.value] = value_node
+                    return result if result else None
+
+        return None
+
+    def _find_list_literal_values(
+        self, tree: ast.AST, list_name: str
+    ) -> list[str] | None:
+        """Find a list definition and return its string values.
+
+        Looks for patterns like:
+            my_list = ["value1", "value2", "value3"]
+        """
+        for node in ast.walk(tree):
+            if (
+                isinstance(node, ast.Assign)
+                and len(node.targets) == 1
+                and isinstance(node.targets[0], ast.Name)
+                and node.targets[0].id == list_name
+            ):
+                # Check if RHS is a list literal
+                if isinstance(node.value, ast.List):
+                    result = []
+                    for elt in node.value.elts:
+                        # Only handle string literal values
+                        if isinstance(elt, ast.Constant) and isinstance(elt.value, str):
+                            result.append(elt.value)
+                    return result if result else None
 
         return None
 
@@ -3404,6 +3461,1254 @@ class VariableExtractor:
                 result.append(f"{key}=<dynamic>")
 
         return tuple(result)
+
+    def _ast_uses_name(self, node: ast.AST, name: str) -> bool:
+        """Check if an AST node uses a specific variable name."""
+        for child in ast.walk(node):
+            if isinstance(child, ast.Name) and child.id == name:
+                return True
+        return False
+
+    def extract_codelist_calls_alt(self) -> dict[str, list[tuple[str | None, ...]]]:
+        """Alternate extractor for codelist_from_csv calls.
+
+        Uses the same high-level discovery flow as extract():
+        - Find dataset creator functions and scan them
+        - Scan module-level dataset operations
+        - Scan standalone helpers called at module level that take the dataset
+
+        For every dataset operation found, trace the defining expression using
+        CodelistTracer to collect codelist_from_csv calls.
+
+        Returns:
+            Dict mapping variable_name -> list of codelist parameter tuples
+        """
+        results: dict[str, list[tuple[str | None, ...]]] = {}
+
+        def add_calls(var_name: str, calls: list[CodelistCall]) -> None:
+            if not calls:
+                return
+            if var_name not in results:
+                results[var_name] = []
+            for c in calls:
+                results[var_name].append(self._codelist_call_to_tuple(c))
+
+        try:
+            with open(self.file_path, encoding="utf-8") as f:
+                source = f.read()
+            tree = ast.parse(source, filename=str(self.file_path))
+        except Exception:
+            return {}
+
+        import_collector = ImportCollector()
+        import_collector.collect(tree)
+        import_collector.resolve_star_imports(self.module_resolver)
+
+        tracer = self.codelist_tracer
+
+        # Helpers to scan nodes for dataset operations and trace expressions
+        def trace_from_assign_like(
+            dataset_name: str,
+            node: ast.Assign,
+            owning_tree: ast.AST,
+            owning_file: pathlib.Path,
+        ) -> None:
+            for target in node.targets:
+                # dataset.attr = expr
+                if (
+                    isinstance(target, ast.Attribute)
+                    and isinstance(target.value, ast.Name)
+                    and target.value.id == dataset_name
+                ):
+                    var_name = target.attr
+                    calls = tracer.trace_expression_for_codelists(
+                        node.value, owning_tree, import_collector, owning_file
+                    )
+                    add_calls(var_name, calls)
+                # dataset["name"] = expr
+                elif (
+                    isinstance(target, ast.Subscript)
+                    and isinstance(target.value, ast.Name)
+                    and target.value.id == dataset_name
+                ):
+                    key = getattr(target, "slice", None)
+                    if isinstance(key, ast.Constant) and isinstance(key.value, str):
+                        var_name = key.value
+                        calls = tracer.trace_expression_for_codelists(
+                            node.value, owning_tree, import_collector, owning_file
+                        )
+                        add_calls(var_name, calls)
+
+        def trace_from_call_like(
+            dataset_name: str,
+            node: ast.Call,
+            owning_tree: ast.AST,
+            owning_file: pathlib.Path,
+        ) -> None:
+            # dataset.add_column(name, value)
+            if (
+                isinstance(node.func, ast.Attribute)
+                and isinstance(node.func.value, ast.Name)
+                and node.func.value.id == dataset_name
+                and node.func.attr == "add_column"
+                and len(node.args) >= 2
+            ):
+                name_arg, value_arg = node.args[0], node.args[1]
+                if isinstance(name_arg, ast.Constant) and isinstance(
+                    name_arg.value, str
+                ):
+                    var_name = name_arg.value
+                    calls = tracer.trace_expression_for_codelists(
+                        value_arg, owning_tree, import_collector, owning_file
+                    )
+                    add_calls(var_name, calls)
+
+            # setattr(dataset, name, value)
+            if (
+                isinstance(node.func, ast.Name)
+                and node.func.id == "setattr"
+                and len(node.args) >= 3
+            ):
+                obj, name_arg, value_arg = node.args[0], node.args[1], node.args[2]
+                if isinstance(obj, ast.Name) and obj.id == dataset_name:
+                    if isinstance(name_arg, ast.Constant) and isinstance(
+                        name_arg.value, str
+                    ):
+                        var_name = name_arg.value
+                        calls = tracer.trace_expression_for_codelists(
+                            value_arg, owning_tree, import_collector, owning_file
+                        )
+                        add_calls(var_name, calls)
+
+        def scan_getattr_loop_pattern(
+            scope_node: ast.AST,
+            dataset_name: str,
+            lookup_tree: ast.AST,
+        ) -> None:
+            """Scan a scope for loops with getattr codelist pattern.
+
+            Pattern:
+                for disease in diseases:
+                    disease_codelist = getattr(codelists, f"{disease}_snomed")
+                    dataset.add_column(f"{disease}_count", func(disease_codelist))
+
+            Also handles nested loops with if/elif branches where different branches
+            assign to the same variable name with different getattr patterns.
+            """
+
+            def find_getattr_in_scope(
+                scope: list[ast.stmt], var_name: str, loop_var_name: str
+            ) -> ast.JoinedStr | None:
+                """Find getattr pattern assigning to var_name within a scope."""
+                for stmt in scope:
+                    if isinstance(stmt, ast.Assign) and len(stmt.targets) == 1:
+                        target = stmt.targets[0]
+                        if isinstance(target, ast.Name) and target.id == var_name:
+                            if isinstance(stmt.value, ast.Call):
+                                call = stmt.value
+                                if (
+                                    isinstance(call.func, ast.Name)
+                                    and call.func.id == "getattr"
+                                    and len(call.args) >= 2
+                                ):
+                                    second_arg = call.args[1]
+                                    if isinstance(second_arg, ast.JoinedStr):
+                                        uses_loop_var = any(
+                                            isinstance(fval, ast.FormattedValue)
+                                            and isinstance(fval.value, ast.Name)
+                                            and fval.value.id == loop_var_name
+                                            for fval in second_arg.values
+                                        )
+                                        if uses_loop_var:
+                                            return second_arg
+                    # Recurse into nested If statements
+                    if isinstance(stmt, ast.If):
+                        result = find_getattr_in_scope(
+                            stmt.body, var_name, loop_var_name
+                        )
+                        if result:
+                            return result
+                        result = find_getattr_in_scope(
+                            stmt.orelse, var_name, loop_var_name
+                        )
+                        if result:
+                            return result
+                    # Recurse into nested For loops
+                    if isinstance(stmt, ast.For):
+                        result = find_getattr_in_scope(
+                            stmt.body, var_name, loop_var_name
+                        )
+                        if result:
+                            return result
+                return None
+
+            def find_containing_branch(
+                stmts: list[ast.stmt], target_node: ast.AST
+            ) -> list[ast.stmt] | None:
+                """Find the branch (list of statements) that contains target_node."""
+                for stmt in stmts:
+                    # Check if this statement IS the target
+                    if stmt is target_node:
+                        return stmts
+                    # Check children
+                    for child in ast.walk(stmt):
+                        if child is target_node:
+                            # Target is somewhere in this statement
+                            # If it's an If, find which branch
+                            if isinstance(stmt, ast.If):
+                                result = find_containing_branch(stmt.body, target_node)
+                                if result is not None:
+                                    return result
+                                result = find_containing_branch(
+                                    stmt.orelse, target_node
+                                )
+                                if result is not None:
+                                    return result
+                            elif isinstance(stmt, ast.For):
+                                result = find_containing_branch(stmt.body, target_node)
+                                if result is not None:
+                                    return result
+                            # Found in this stmt but not a branch-able node
+                            return stmts
+                return None
+
+            # Find For loops in the scope
+            for_loops = []
+            if isinstance(scope_node, ast.Module):
+                for_loops = [
+                    n
+                    for n in ast.iter_child_nodes(scope_node)
+                    if isinstance(n, ast.For)
+                ]
+            else:
+                # For function bodies, look at direct children first, then walk
+                for_loops = [n for n in ast.walk(scope_node) if isinstance(n, ast.For)]
+
+            for loop_node in for_loops:
+                # Check for simple Name iteration (for x in list_name)
+                if not isinstance(loop_node.iter, ast.Name):
+                    continue
+                list_name = loop_node.iter.id
+
+                # Get loop variable
+                if not isinstance(loop_node.target, ast.Name):
+                    continue
+                loop_var_name = loop_node.target.id
+
+                # Find the list definition - check both lookup_tree (main file) and scope
+                list_values = self._find_list_literal_values(lookup_tree, list_name)
+                if not list_values:
+                    list_values = self._find_list_literal_values(scope_node, list_name)
+                if not list_values:
+                    continue
+
+                # For each value in the list, simulate the loop
+                for list_val in list_values:
+                    # Find all add_column calls in the loop
+                    for loop_child in ast.walk(loop_node):
+                        if not isinstance(loop_child, ast.Call):
+                            continue
+
+                        if not (
+                            isinstance(loop_child.func, ast.Attribute)
+                            and isinstance(loop_child.func.value, ast.Name)
+                            and loop_child.func.value.id == dataset_name
+                            and loop_child.func.attr == "add_column"
+                            and len(loop_child.args) >= 2
+                        ):
+                            continue
+
+                        name_arg = loop_child.args[0]
+                        value_arg = loop_child.args[1]
+
+                        if not isinstance(name_arg, ast.JoinedStr):
+                            continue
+
+                        # Resolve variable name
+                        var_name_parts = []
+                        resolvable = True
+                        for fval in name_arg.values:
+                            if isinstance(fval, ast.Constant):
+                                var_name_parts.append(str(fval.value))
+                            elif isinstance(fval, ast.FormattedValue) and isinstance(
+                                fval.value, ast.Name
+                            ):
+                                if fval.value.id == loop_var_name:
+                                    var_name_parts.append(list_val)
+                                else:
+                                    resolvable = False
+                                    break
+                            else:
+                                resolvable = False
+                                break
+
+                        if not resolvable:
+                            continue
+
+                        resolved_var_name = "".join(var_name_parts)
+
+                        # Find which variables are used in value_arg
+                        used_vars = set()
+                        for node in ast.walk(value_arg):
+                            if isinstance(node, ast.Name):
+                                used_vars.add(node.id)
+
+                        # For each used variable, try to find a getattr pattern in the same branch
+                        for used_var in used_vars:
+                            # Find the branch containing this add_column call
+                            branch = find_containing_branch(loop_node.body, loop_child)
+                            if branch is None:
+                                branch = loop_node.body
+
+                            # Look for getattr assignment to used_var in this branch
+                            fstring_pattern = find_getattr_in_scope(
+                                branch, used_var, loop_var_name
+                            )
+                            if fstring_pattern is None:
+                                continue
+
+                            # Resolve the codelist attribute name
+                            attr_name_parts = []
+                            for fval in fstring_pattern.values:
+                                if isinstance(fval, ast.Constant):
+                                    attr_name_parts.append(str(fval.value))
+                                elif isinstance(
+                                    fval, ast.FormattedValue
+                                ) and isinstance(fval.value, ast.Name):
+                                    if fval.value.id == loop_var_name:
+                                        attr_name_parts.append(list_val)
+                            resolved_attr_name = "".join(attr_name_parts)
+
+                            # Get the module from the getattr call by searching in the branch
+                            getattr_call = None
+                            for stmt in branch:
+                                if (
+                                    isinstance(stmt, ast.Assign)
+                                    and len(stmt.targets) == 1
+                                    and isinstance(stmt.targets[0], ast.Name)
+                                    and stmt.targets[0].id == used_var
+                                    and isinstance(stmt.value, ast.Call)
+                                    and isinstance(stmt.value.func, ast.Name)
+                                    and stmt.value.func.id == "getattr"
+                                ):
+                                    getattr_call = stmt.value
+                                    break
+                                # Also check inside If statements in the branch
+                                if isinstance(stmt, ast.If):
+                                    for if_stmt in stmt.body + stmt.orelse:
+                                        if (
+                                            isinstance(if_stmt, ast.Assign)
+                                            and len(if_stmt.targets) == 1
+                                            and isinstance(if_stmt.targets[0], ast.Name)
+                                            and if_stmt.targets[0].id == used_var
+                                            and isinstance(if_stmt.value, ast.Call)
+                                            and isinstance(if_stmt.value.func, ast.Name)
+                                            and if_stmt.value.func.id == "getattr"
+                                        ):
+                                            getattr_call = if_stmt.value
+                                            break
+                                    if getattr_call:
+                                        break
+
+                            if getattr_call and len(getattr_call.args) >= 1:
+                                module_node = getattr_call.args[0]
+                                if isinstance(module_node, ast.Name):
+                                    module_name = module_node.id
+                                    if module_name in import_collector.imported_modules:
+                                        actual_module, _ = (
+                                            import_collector.imported_modules[
+                                                module_name
+                                            ]
+                                        )
+                                        calls = tracer._trace_imported_name(
+                                            actual_module,
+                                            resolved_attr_name,
+                                            import_collector,
+                                            0,
+                                        )
+                                        add_calls(resolved_var_name, calls)
+                                        break
+
+        def scan_function_body(
+            func_def: ast.FunctionDef, dataset_name: str, owning_file: pathlib.Path
+        ) -> None:
+            for n in ast.walk(func_def):
+                if isinstance(n, ast.Assign):
+                    trace_from_assign_like(dataset_name, n, tree, owning_file)
+                elif isinstance(n, ast.Call):
+                    trace_from_call_like(dataset_name, n, tree, owning_file)
+            # Also scan for getattr loop patterns inside the function
+            scan_getattr_loop_pattern(func_def, dataset_name, tree)
+
+        # Pass 1: dataset = creator_function(...); scan that function
+        for node in ast.walk(tree):
+            if not isinstance(node, ast.Assign):
+                continue
+            for target in node.targets:
+                if not (isinstance(target, ast.Name) and target.id == "dataset"):
+                    continue
+                if not isinstance(node.value, ast.Call) or not isinstance(
+                    node.value.func, ast.Name
+                ):
+                    continue
+                func_name = node.value.func.id
+                if func_name == "create_dataset":
+                    continue
+                # Local function
+                if func_name in import_collector.function_defs:
+                    scan_function_body(
+                        import_collector.function_defs[func_name],
+                        "dataset",
+                        self.file_path,
+                    )
+                # Imported function
+                elif func_name in import_collector.imported_modules:
+                    module_name, original = import_collector.imported_modules[func_name]
+                    target_name = original or func_name
+                    for module_file in self.module_resolver.find_module_file(
+                        module_name
+                    ):
+                        if not module_file.exists():
+                            continue
+                        try:
+                            module_tree = ast.parse(
+                                module_file.read_text(encoding="utf-8"),
+                                filename=str(module_file),
+                            )
+                        except Exception:
+                            continue
+                        for fn in ast.walk(module_tree):
+                            if (
+                                isinstance(fn, ast.FunctionDef)
+                                and fn.name == target_name
+                            ):
+                                # Inside a creator-like helper we assume local name is 'dataset'
+                                for n in ast.walk(fn):
+                                    if isinstance(n, ast.Assign):
+                                        trace_from_assign_like(
+                                            "dataset", n, module_tree, module_file
+                                        )
+                                    elif isinstance(n, ast.Call):
+                                        trace_from_call_like(
+                                            "dataset", n, module_tree, module_file
+                                        )
+                                break
+
+        # Pass 2: Module-level direct dataset operations
+        for top in ast.iter_child_nodes(tree):
+            if isinstance(top, ast.FunctionDef):
+                continue
+            for n in ast.walk(top):
+                if isinstance(n, ast.Assign):
+                    trace_from_assign_like("dataset", n, tree, self.file_path)
+                elif isinstance(n, ast.Call):
+                    trace_from_call_like("dataset", n, tree, self.file_path)
+
+        # Pass 3: Standalone helper function calls at module level with dataset arg
+        for n in ast.iter_child_nodes(tree):
+            if isinstance(n, ast.Call):
+                # helper(dataset, ...)
+                if (
+                    isinstance(n.func, ast.Name)
+                    and n.func.id in import_collector.function_defs
+                ):
+                    func_def = import_collector.function_defs[n.func.id]
+                    ds_idx = self.function_analyzer.find_dataset_param_index(
+                        func_def, n
+                    )
+                    if ds_idx is not None and ds_idx < len(func_def.args.args):
+                        ds_param = func_def.args.args[ds_idx].arg
+                        scan_function_body(func_def, ds_param, self.file_path)
+                # module.helper(dataset, ...)
+                elif isinstance(n.func, ast.Attribute) and isinstance(
+                    n.func.value, ast.Name
+                ):
+                    mod_alias = n.func.value.id
+                    func_name = n.func.attr
+                    if mod_alias in import_collector.imported_modules:
+                        module_name, _ = import_collector.imported_modules[mod_alias]
+                        for module_file in self.module_resolver.find_module_file(
+                            module_name
+                        ):
+                            if not module_file.exists():
+                                continue
+                            try:
+                                module_src = module_file.read_text(encoding="utf-8")
+                                module_tree = ast.parse(
+                                    module_src, filename=str(module_file)
+                                )
+                            except Exception:
+                                continue
+                            for fn in ast.walk(module_tree):
+                                if (
+                                    isinstance(fn, ast.FunctionDef)
+                                    and fn.name == func_name
+                                ):
+                                    ds_idx = (
+                                        self.function_analyzer.find_dataset_param_index(
+                                            fn, n
+                                        )
+                                    )
+                                    if ds_idx is not None and ds_idx < len(
+                                        fn.args.args
+                                    ):
+                                        ds_param = fn.args.args[ds_idx].arg
+                                        # Use module_tree as owning tree and module_file as file path
+                                        for sub in ast.walk(fn):
+                                            if isinstance(sub, ast.Assign):
+                                                trace_from_assign_like(
+                                                    ds_param,
+                                                    sub,
+                                                    module_tree,
+                                                    module_file,
+                                                )
+                                            elif isinstance(sub, ast.Call):
+                                                trace_from_call_like(
+                                                    ds_param,
+                                                    sub,
+                                                    module_tree,
+                                                    module_file,
+                                                )
+                                    break
+
+        # Pass 4: Loop-based dynamic variables with dict iteration
+        # Pattern: for key, value in dict.items(): dataset.add_column(f"{key}_suffix", expr_using_value)
+        # Also handles nested range() loops:
+        #   for key, value in dict.items():
+        #       for i in range(N):
+        #           dataset.add_column(f"{key}_status{i}", expr)
+        for node in ast.iter_child_nodes(tree):
+            if not isinstance(node, ast.For):
+                continue
+
+            # Check for dict.items() pattern
+            if not (
+                isinstance(node.iter, ast.Call)
+                and isinstance(node.iter.func, ast.Attribute)
+                and node.iter.func.attr == "items"
+            ):
+                continue
+
+            # Get the dict name
+            if not isinstance(node.iter.func.value, ast.Name):
+                continue
+            dict_name = node.iter.func.value.id
+
+            # Get loop variables (key, value)
+            if not isinstance(node.target, ast.Tuple) or len(node.target.elts) < 2:
+                continue
+            key_var = node.target.elts[0]
+            value_var = node.target.elts[1]
+            if not isinstance(key_var, ast.Name) or not isinstance(value_var, ast.Name):
+                continue
+            key_var_name = key_var.id
+            # value_var.id is the loop variable for dict values (not used in f-string resolution)
+
+            # Find the dict definition
+            dict_definition = self._find_dict_definition(tree, dict_name)
+            if not dict_definition:
+                continue
+
+            # Find nested range() loops in the dict.items() loop body
+            nested_range_loops: list[
+                tuple[str, int]
+            ] = []  # [(range_var_name, range_end), ...]
+            for child in node.body:
+                if isinstance(child, ast.For):
+                    # Check for range(N) pattern
+                    if (
+                        isinstance(child.iter, ast.Call)
+                        and isinstance(child.iter.func, ast.Name)
+                        and child.iter.func.id == "range"
+                        and len(child.iter.args) >= 1
+                    ):
+                        range_arg = child.iter.args[0]
+                        if isinstance(range_arg, ast.Constant) and isinstance(
+                            range_arg.value, int
+                        ):
+                            range_end = range_arg.value
+                            if isinstance(child.target, ast.Name):
+                                range_var_name = child.target.id
+                                nested_range_loops.append((range_var_name, range_end))
+
+            # For each (key, value) in the dict, simulate the loop iteration
+            for dict_key_name, dict_value_node in dict_definition.items():
+                # Look for dataset.add_column calls in the loop body
+                for loop_child in ast.walk(node):
+                    if not isinstance(loop_child, ast.Call):
+                        continue
+
+                    # Check for dataset.add_column(f"{key_var}_...", expr)
+                    if not (
+                        isinstance(loop_child.func, ast.Attribute)
+                        and isinstance(loop_child.func.value, ast.Name)
+                        and loop_child.func.value.id == "dataset"
+                        and loop_child.func.attr == "add_column"
+                        and len(loop_child.args) >= 2
+                    ):
+                        continue
+
+                    name_arg = loop_child.args[0]
+                    # value_arg (loop_child.args[1]) is traced via dict_value_node
+
+                    # Check if name_arg is an f-string containing the key variable
+                    if not isinstance(name_arg, ast.JoinedStr):
+                        continue
+
+                    # Check if this f-string contains both dict key and a range variable
+                    fstring_vars: dict[str, str] = {}  # var_name -> placeholder
+                    resolvable = True
+                    uses_key_var = False
+
+                    for fval in name_arg.values:
+                        if isinstance(fval, ast.FormattedValue) and isinstance(
+                            fval.value, ast.Name
+                        ):
+                            var_id = fval.value.id
+                            if var_id == key_var_name:
+                                uses_key_var = True
+                                fstring_vars[var_id] = "KEY"
+                            elif any(
+                                var_id == rv_name for rv_name, _ in nested_range_loops
+                            ):
+                                fstring_vars[var_id] = "RANGE"
+                            else:
+                                # Unknown variable in f-string, can't resolve
+                                resolvable = False
+                                break
+
+                    if not resolvable or not uses_key_var:
+                        continue
+
+                    # Check if the f-string uses a range variable
+                    range_var_in_fstring = None
+                    range_end_for_fstring = None
+                    for var_id, placeholder in fstring_vars.items():
+                        if placeholder == "RANGE":
+                            range_var_in_fstring = var_id
+                            # Find the corresponding range end
+                            for rv_name, rv_end in nested_range_loops:
+                                if rv_name == var_id:
+                                    range_end_for_fstring = rv_end
+                                    break
+                            break
+
+                    # Generate variable names
+                    if range_var_in_fstring and range_end_for_fstring is not None:
+                        # Nested range loop: generate variable for each range value
+                        for range_val in range(range_end_for_fstring):
+                            var_name_parts = []
+                            for fval in name_arg.values:
+                                if isinstance(fval, ast.Constant):
+                                    var_name_parts.append(str(fval.value))
+                                elif isinstance(
+                                    fval, ast.FormattedValue
+                                ) and isinstance(fval.value, ast.Name):
+                                    var_id = fval.value.id
+                                    if var_id == key_var_name:
+                                        var_name_parts.append(dict_key_name)
+                                    elif var_id == range_var_in_fstring:
+                                        var_name_parts.append(str(range_val))
+
+                            resolved_var_name = "".join(var_name_parts)
+
+                            # Trace from the dict value node - this is a Name node
+                            # referencing a variable (e.g., selected_medications_pre)
+                            # that uses codelists in its definition
+                            calls = tracer.trace_expression_for_codelists(
+                                dict_value_node,
+                                tree,
+                                import_collector,
+                                self.file_path,
+                            )
+                            add_calls(resolved_var_name, calls)
+                    else:
+                        # Simple case: just dict key variable, no nested range
+                        var_name_parts = []
+                        for fval in name_arg.values:
+                            if isinstance(fval, ast.Constant):
+                                var_name_parts.append(str(fval.value))
+                            elif isinstance(fval, ast.FormattedValue) and isinstance(
+                                fval.value, ast.Name
+                            ):
+                                if fval.value.id == key_var_name:
+                                    var_name_parts.append(dict_key_name)
+                                else:
+                                    # Can't resolve this variable
+                                    break
+                        else:
+                            resolved_var_name = "".join(var_name_parts)
+                            calls = tracer.trace_expression_for_codelists(
+                                dict_value_node,
+                                tree,
+                                import_collector,
+                                self.file_path,
+                            )
+                            add_calls(resolved_var_name, calls)
+
+        # Pass 5: Loop over list with getattr pattern for dynamic codelist access
+        # Use the branch-aware scan_getattr_loop_pattern helper which handles
+        # nested if/elif branches correctly
+        scan_getattr_loop_pattern(tree, "dataset", tree)
+
+        # Pass 6: Variables that reference other dataset variables via getattr(dataset, f"...")
+        # Pattern:
+        #   dataset.add_column(f"{disease}_inc_date",
+        #       minimum_of(
+        #           getattr(dataset, f"{disease}_prim_date", None),
+        #           getattr(dataset, f"{disease}_sec_date", None)
+        #       )
+        #   )
+        # The _inc_date variable should inherit codelists from _prim_date and _sec_date
+        for node in ast.iter_child_nodes(tree):
+            if not isinstance(node, ast.For):
+                continue
+
+            # Check for simple Name iteration (for x in list_name)
+            if not isinstance(node.iter, ast.Name):
+                continue
+            list_name = node.iter.id
+
+            # Get loop variable
+            if not isinstance(node.target, ast.Name):
+                continue
+            loop_var_name = node.target.id
+
+            # Find the list definition
+            list_values = self._find_list_literal_values(tree, list_name)
+            if not list_values:
+                continue
+
+            # For each value in the list, find add_column calls that use getattr(dataset, ...)
+            for list_val in list_values:
+                for loop_child in ast.walk(node):
+                    if not isinstance(loop_child, ast.Call):
+                        continue
+
+                    if not (
+                        isinstance(loop_child.func, ast.Attribute)
+                        and isinstance(loop_child.func.value, ast.Name)
+                        and loop_child.func.value.id == "dataset"
+                        and loop_child.func.attr == "add_column"
+                        and len(loop_child.args) >= 2
+                    ):
+                        continue
+
+                    name_arg = loop_child.args[0]
+                    value_arg = loop_child.args[1]
+
+                    # Resolve variable name
+                    if not isinstance(name_arg, ast.JoinedStr):
+                        continue
+
+                    var_name_parts = []
+                    resolvable = True
+                    for fval in name_arg.values:
+                        if isinstance(fval, ast.Constant):
+                            var_name_parts.append(str(fval.value))
+                        elif isinstance(fval, ast.FormattedValue) and isinstance(
+                            fval.value, ast.Name
+                        ):
+                            if fval.value.id == loop_var_name:
+                                var_name_parts.append(list_val)
+                            else:
+                                resolvable = False
+                                break
+                        else:
+                            resolvable = False
+                            break
+
+                    if not resolvable:
+                        continue
+
+                    resolved_var_name = "".join(var_name_parts)
+
+                    # Find all getattr(dataset, f"...") calls in value_arg
+                    for call_node in ast.walk(value_arg):
+                        if not isinstance(call_node, ast.Call):
+                            continue
+                        if not (
+                            isinstance(call_node.func, ast.Name)
+                            and call_node.func.id == "getattr"
+                            and len(call_node.args) >= 2
+                        ):
+                            continue
+
+                        # Check if first arg is 'dataset'
+                        first_arg = call_node.args[0]
+                        if not (
+                            isinstance(first_arg, ast.Name)
+                            and first_arg.id == "dataset"
+                        ):
+                            continue
+
+                        # Resolve the second arg (the attribute name)
+                        second_arg = call_node.args[1]
+                        if isinstance(second_arg, ast.JoinedStr):
+                            ref_name_parts = []
+                            ref_resolvable = True
+                            for fval in second_arg.values:
+                                if isinstance(fval, ast.Constant):
+                                    ref_name_parts.append(str(fval.value))
+                                elif isinstance(
+                                    fval, ast.FormattedValue
+                                ) and isinstance(fval.value, ast.Name):
+                                    if fval.value.id == loop_var_name:
+                                        ref_name_parts.append(list_val)
+                                    else:
+                                        ref_resolvable = False
+                                        break
+                                else:
+                                    ref_resolvable = False
+                                    break
+
+                            if ref_resolvable:
+                                referenced_var = "".join(ref_name_parts)
+                                # Inherit codelists from the referenced variable
+                                if referenced_var in results:
+                                    for codelist_call in results[referenced_var]:
+                                        add_calls(
+                                            resolved_var_name,
+                                            [
+                                                CodelistCall(
+                                                    args=codelist_call[
+                                                        : -len(
+                                                            [
+                                                                k
+                                                                for k in codelist_call
+                                                                if "=" in str(k)
+                                                            ]
+                                                        )
+                                                    ]
+                                                    if any(
+                                                        "=" in str(k)
+                                                        for k in codelist_call
+                                                    )
+                                                    else codelist_call,
+                                                    kwargs={
+                                                        k.split("=")[0]: k.split("=")[1]
+                                                        for k in codelist_call
+                                                        if isinstance(k, str)
+                                                        and "=" in k
+                                                    },
+                                                )
+                                            ],
+                                        )
+
+        # Pass 7: Loop with local dict intermediates for codelist storage
+        # Pattern from disease_incidence/analysis/dataset_definition.py:
+        #   for disease in diseases:
+        #       snomed_inc_date = {}
+        #       if hasattr(codelists, f"{disease}_snomed"):
+        #           disease_codelist = getattr(codelists, f"{disease}_snomed")
+        #           snomed_inc_date[f"{disease}_snomed_inc_date"] = first_code(disease_codelist).date
+        #       dataset.add_column(f"{disease}_inc_date",
+        #           minimum_of(snomed_inc_date[f"{disease}_snomed_inc_date"], ...))
+        #
+        # This pass:
+        # 1. Finds dict subscript assignments: dict_var[f"key"] = expr
+        # 2. Traces the expression for codelists (looking for getattr(codelists, ...) in scope)
+        # 3. When add_column references dict_var[f"key"], inherits codelists from that entry
+        for node in ast.iter_child_nodes(tree):
+            if not isinstance(node, ast.For):
+                continue
+
+            # Check for simple Name iteration (for x in list_name)
+            if not isinstance(node.iter, ast.Name):
+                continue
+            list_name = node.iter.id
+
+            # Get loop variable
+            if not isinstance(node.target, ast.Name):
+                continue
+            loop_var_name = node.target.id
+
+            # Find the list definition
+            list_values = self._find_list_literal_values(tree, list_name)
+            if not list_values:
+                continue
+
+            # For each list value, collect dict assignments and their codelists
+            for list_val in list_values:
+                # Track dict subscript assignments: {(dict_name, resolved_key): [CodelistCall, ...]}
+                dict_subscript_codelists: dict[tuple[str, str], list[CodelistCall]] = {}
+
+                # First pass: find all dict subscript assignments in the loop
+                for loop_stmt in ast.walk(node):
+                    if not isinstance(loop_stmt, ast.Assign):
+                        continue
+                    if len(loop_stmt.targets) != 1:
+                        continue
+                    target = loop_stmt.targets[0]
+
+                    # Check for dict[f"key"] = expr pattern
+                    if not isinstance(target, ast.Subscript):
+                        continue
+                    if not isinstance(target.value, ast.Name):
+                        continue
+
+                    dict_name = target.value.id
+                    key_node = target.slice
+
+                    # Resolve the key if it's an f-string
+                    if isinstance(key_node, ast.JoinedStr):
+                        key_parts = []
+                        resolvable = True
+                        for fval in key_node.values:
+                            if isinstance(fval, ast.Constant):
+                                key_parts.append(str(fval.value))
+                            elif isinstance(fval, ast.FormattedValue) and isinstance(
+                                fval.value, ast.Name
+                            ):
+                                if fval.value.id == loop_var_name:
+                                    key_parts.append(list_val)
+                                else:
+                                    resolvable = False
+                                    break
+                            else:
+                                resolvable = False
+                                break
+
+                        if not resolvable:
+                            continue
+
+                        resolved_key = "".join(key_parts)
+                    elif isinstance(key_node, ast.Constant) and isinstance(
+                        key_node.value, str
+                    ):
+                        resolved_key = key_node.value
+                    else:
+                        continue
+
+                    # Look for getattr(codelists, ...) in the containing branch
+                    # to find the codelist being used
+                    def find_getattr_codelists_in_branch(
+                        stmts: list[ast.stmt], target_assign: ast.Assign
+                    ) -> list[CodelistCall]:
+                        """Find getattr(codelists, ...) calls in the same branch as target_assign."""
+                        calls_found: list[CodelistCall] = []
+
+                        # Find the branch containing target_assign
+                        def find_branch(
+                            stmts_list: list[ast.stmt],
+                        ) -> list[ast.stmt] | None:
+                            for stmt in stmts_list:
+                                if stmt is target_assign:
+                                    return stmts_list
+                                if isinstance(stmt, ast.If):
+                                    result = find_branch(stmt.body)
+                                    if result is not None:
+                                        return result
+                                    result = find_branch(stmt.orelse)
+                                    if result is not None:
+                                        return result
+                                elif isinstance(stmt, ast.For):
+                                    result = find_branch(stmt.body)
+                                    if result is not None:
+                                        return result
+                            return None
+
+                        branch = find_branch(stmts)
+                        if branch is None:
+                            return calls_found
+
+                        # Look for getattr assignments in this branch
+                        for stmt in branch:
+                            if not isinstance(stmt, ast.Assign):
+                                continue
+                            if len(stmt.targets) != 1:
+                                continue
+                            if not isinstance(stmt.targets[0], ast.Name):
+                                continue
+
+                            # Check if this is a getattr(codelists, f"...") call
+                            if isinstance(stmt.value, ast.Call):
+                                call = stmt.value
+                                if (
+                                    isinstance(call.func, ast.Name)
+                                    and call.func.id == "getattr"
+                                    and len(call.args) >= 2
+                                ):
+                                    first_arg = call.args[0]
+                                    second_arg = call.args[1]
+
+                                    # Check if first arg is 'codelists' module
+                                    if isinstance(first_arg, ast.Name):
+                                        module_name = first_arg.id
+                                        if (
+                                            module_name
+                                            in import_collector.imported_modules
+                                        ):
+                                            # Resolve the codelist attribute name
+                                            if isinstance(second_arg, ast.JoinedStr):
+                                                attr_parts = []
+                                                for fval in second_arg.values:
+                                                    if isinstance(fval, ast.Constant):
+                                                        attr_parts.append(
+                                                            str(fval.value)
+                                                        )
+                                                    elif isinstance(
+                                                        fval, ast.FormattedValue
+                                                    ) and isinstance(
+                                                        fval.value, ast.Name
+                                                    ):
+                                                        if (
+                                                            fval.value.id
+                                                            == loop_var_name
+                                                        ):
+                                                            attr_parts.append(list_val)
+
+                                                resolved_attr = "".join(attr_parts)
+                                                actual_module, _ = (
+                                                    import_collector.imported_modules[
+                                                        module_name
+                                                    ]
+                                                )
+                                                traced_calls = (
+                                                    tracer._trace_imported_name(
+                                                        actual_module,
+                                                        resolved_attr,
+                                                        import_collector,
+                                                        0,
+                                                    )
+                                                )
+                                                calls_found.extend(traced_calls)
+
+                        return calls_found
+
+                    # Find codelists in the containing branch
+                    branch_codelists = find_getattr_codelists_in_branch(
+                        node.body, loop_stmt
+                    )
+                    if branch_codelists:
+                        dict_subscript_codelists[(dict_name, resolved_key)] = (
+                            branch_codelists
+                        )
+
+                # Second pass: find add_column calls that reference dict subscripts
+                for loop_child in ast.walk(node):
+                    if not isinstance(loop_child, ast.Call):
+                        continue
+
+                    if not (
+                        isinstance(loop_child.func, ast.Attribute)
+                        and isinstance(loop_child.func.value, ast.Name)
+                        and loop_child.func.value.id == "dataset"
+                        and loop_child.func.attr == "add_column"
+                        and len(loop_child.args) >= 2
+                    ):
+                        continue
+
+                    name_arg = loop_child.args[0]
+                    value_arg = loop_child.args[1]
+
+                    # Resolve variable name
+                    if not isinstance(name_arg, ast.JoinedStr):
+                        continue
+
+                    var_name_parts = []
+                    resolvable = True
+                    for fval in name_arg.values:
+                        if isinstance(fval, ast.Constant):
+                            var_name_parts.append(str(fval.value))
+                        elif isinstance(fval, ast.FormattedValue) and isinstance(
+                            fval.value, ast.Name
+                        ):
+                            if fval.value.id == loop_var_name:
+                                var_name_parts.append(list_val)
+                            else:
+                                resolvable = False
+                                break
+                        else:
+                            resolvable = False
+                            break
+
+                    if not resolvable:
+                        continue
+
+                    resolved_var_name = "".join(var_name_parts)
+
+                    # Find dict subscript references in value_arg
+                    for sub_node in ast.walk(value_arg):
+                        if not isinstance(sub_node, ast.Subscript):
+                            continue
+                        if not isinstance(sub_node.value, ast.Name):
+                            continue
+
+                        ref_dict_name = sub_node.value.id
+                        ref_key_node = sub_node.slice
+
+                        # Resolve the referenced key
+                        if isinstance(ref_key_node, ast.JoinedStr):
+                            ref_key_parts = []
+                            ref_resolvable = True
+                            for fval in ref_key_node.values:
+                                if isinstance(fval, ast.Constant):
+                                    ref_key_parts.append(str(fval.value))
+                                elif isinstance(
+                                    fval, ast.FormattedValue
+                                ) and isinstance(fval.value, ast.Name):
+                                    if fval.value.id == loop_var_name:
+                                        ref_key_parts.append(list_val)
+                                    else:
+                                        ref_resolvable = False
+                                        break
+                                else:
+                                    ref_resolvable = False
+                                    break
+
+                            if not ref_resolvable:
+                                continue
+
+                            resolved_ref_key = "".join(ref_key_parts)
+                        elif isinstance(ref_key_node, ast.Constant) and isinstance(
+                            ref_key_node.value, str
+                        ):
+                            resolved_ref_key = ref_key_node.value
+                        else:
+                            continue
+
+                        # Look up codelists for this dict reference
+                        lookup_key = (ref_dict_name, resolved_ref_key)
+                        if lookup_key in dict_subscript_codelists:
+                            add_calls(
+                                resolved_var_name,
+                                dict_subscript_codelists[lookup_key],
+                            )
+
+        # Pass 8: Propagate codelists to variables that reference other dataset variables
+        # via getattr(dataset, f"...") - must run after Pass 7 populates results
+        # This is a second iteration of Pass 6 logic to handle cases where
+        # the referenced variable was added by Pass 7
+        for node in ast.iter_child_nodes(tree):
+            if not isinstance(node, ast.For):
+                continue
+
+            if not isinstance(node.iter, ast.Name):
+                continue
+            list_name = node.iter.id
+
+            if not isinstance(node.target, ast.Name):
+                continue
+            loop_var_name = node.target.id
+
+            list_values = self._find_list_literal_values(tree, list_name)
+            if not list_values:
+                continue
+
+            for list_val in list_values:
+                for loop_child in ast.walk(node):
+                    if not isinstance(loop_child, ast.Call):
+                        continue
+
+                    if not (
+                        isinstance(loop_child.func, ast.Attribute)
+                        and isinstance(loop_child.func.value, ast.Name)
+                        and loop_child.func.value.id == "dataset"
+                        and loop_child.func.attr == "add_column"
+                        and len(loop_child.args) >= 2
+                    ):
+                        continue
+
+                    name_arg = loop_child.args[0]
+                    value_arg = loop_child.args[1]
+
+                    if not isinstance(name_arg, ast.JoinedStr):
+                        continue
+
+                    var_name_parts = []
+                    resolvable = True
+                    for fval in name_arg.values:
+                        if isinstance(fval, ast.Constant):
+                            var_name_parts.append(str(fval.value))
+                        elif isinstance(fval, ast.FormattedValue) and isinstance(
+                            fval.value, ast.Name
+                        ):
+                            if fval.value.id == loop_var_name:
+                                var_name_parts.append(list_val)
+                            else:
+                                resolvable = False
+                                break
+                        else:
+                            resolvable = False
+                            break
+
+                    if not resolvable:
+                        continue
+
+                    resolved_var_name = "".join(var_name_parts)
+
+                    # Find all getattr(dataset, f"...") calls in value_arg
+                    for call_node in ast.walk(value_arg):
+                        if not isinstance(call_node, ast.Call):
+                            continue
+                        if not (
+                            isinstance(call_node.func, ast.Name)
+                            and call_node.func.id == "getattr"
+                            and len(call_node.args) >= 2
+                        ):
+                            continue
+
+                        first_arg = call_node.args[0]
+                        if not (
+                            isinstance(first_arg, ast.Name)
+                            and first_arg.id == "dataset"
+                        ):
+                            continue
+
+                        second_arg = call_node.args[1]
+                        if isinstance(second_arg, ast.JoinedStr):
+                            ref_name_parts = []
+                            ref_resolvable = True
+                            for fval in second_arg.values:
+                                if isinstance(fval, ast.Constant):
+                                    ref_name_parts.append(str(fval.value))
+                                elif isinstance(
+                                    fval, ast.FormattedValue
+                                ) and isinstance(fval.value, ast.Name):
+                                    if fval.value.id == loop_var_name:
+                                        ref_name_parts.append(list_val)
+                                    else:
+                                        ref_resolvable = False
+                                        break
+                                else:
+                                    ref_resolvable = False
+                                    break
+
+                            if ref_resolvable:
+                                referenced_var = "".join(ref_name_parts)
+                                # Inherit codelists from the referenced variable
+                                if referenced_var in results:
+                                    for codelist_call in results[referenced_var]:
+                                        add_calls(
+                                            resolved_var_name,
+                                            [
+                                                CodelistCall(
+                                                    args=codelist_call[
+                                                        : -len(
+                                                            [
+                                                                k
+                                                                for k in codelist_call
+                                                                if "=" in str(k)
+                                                            ]
+                                                        )
+                                                    ]
+                                                    if any(
+                                                        "=" in str(k)
+                                                        for k in codelist_call
+                                                    )
+                                                    else codelist_call,
+                                                    kwargs={
+                                                        k.split("=")[0]: k.split("=")[1]
+                                                        for k in codelist_call
+                                                        if isinstance(k, str)
+                                                        and "=" in k
+                                                    },
+                                                )
+                                            ],
+                                        )
+
+        return results
 
 
 def extract_variable_line_numbers(

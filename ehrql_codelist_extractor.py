@@ -22,7 +22,10 @@ from parsing.ehrql_github_helpers import (
     clone_ehrql_repos,
     get_dataset_files,
 )
-from parsing.ehrql_variable_extractor import extract_variable_codelists
+from parsing.ehrql_variable_extractor import (
+    VariableExtractor,
+    extract_variable_codelists,
+)
 
 
 def normalize_path(p: str) -> str:
@@ -246,6 +249,7 @@ def collect_codelists(
     verbose: bool = False,
     csv_path: pathlib.Path | None = None,
     force: bool = False,
+    use_alt_extractor: bool = False,
 ) -> None:
     """Collect codelist_from_csv calls for all variables across repositories.
 
@@ -256,6 +260,7 @@ def collect_codelists(
         verbose: Verbose progress output to stderr
         csv_path: Optional path to jobs CSV file for repo/SHA combinations
         force: If True, recalculate all results; if False, reuse existing results from output file
+        use_alt_extractor: If True, use extract_codelist_calls_alt method instead of default
     """
     initial_start_time = time.time()
     cache_dir = pathlib.Path(".ehrql_repo_cache")
@@ -394,9 +399,13 @@ def collect_codelists(
 
             try:
                 # Extract codelist calls for all variables in this file
-                variable_codelists = extract_variable_codelists(
-                    abs_path, resolved_repo_root
-                )
+                if use_alt_extractor:
+                    extractor = VariableExtractor(abs_path, resolved_repo_root)
+                    variable_codelists = extractor.extract_codelist_calls_alt()
+                else:
+                    variable_codelists = extract_variable_codelists(
+                        abs_path, resolved_repo_root
+                    )
 
                 if variable_codelists:
                     # Convert to JSON-serializable format and replace paths with URLs
@@ -504,10 +513,41 @@ def collect_codelists(
     with open(output, "w", encoding="utf-8") as f:
         json.dump(json_data, f, indent=2, ensure_ascii=False, sort_keys=True)
 
+    # Write a second JSON file without signature deduplication for easier inspection
+    # Structure: repo_name > commit_sha > file_name > variable > codelists
+    max_output = output.replace(".json", "_max.json")
+    max_json_data: dict[str, dict[str, dict[str, dict[str, list]]]] = {}
+
+    for repo_name in sorted(out_map.keys()):
+        sha_dict = out_map[repo_name]
+        max_json_data[repo_name] = {}
+        for sha in sorted(sha_dict.keys()):
+            files_data = sha_dict[sha]
+            sorted_files = {}
+            for file_path in sorted(files_data.keys()):
+                file_vars = files_data[file_path]
+                sorted_files[file_path] = {
+                    var_name: file_vars[var_name]
+                    for var_name in sorted(file_vars.keys())
+                }
+            max_json_data[repo_name][sha] = sorted_files
+
+    with open(max_output, "w", encoding="utf-8") as f:
+        json.dump(
+            {
+                "generated_at": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                "projects": max_json_data,
+            },
+            f,
+            indent=2,
+            ensure_ascii=False,
+            sort_keys=True,
+        )
+
     if not silent:
         write_duration = time.time() - write_start_time
         print(
-            f"\nWrote output file in {write_duration:.1f}s",
+            f"\nWrote output files in {write_duration:.1f}s",
             file=sys.stderr,
         )
 
@@ -534,6 +574,7 @@ def collect_codelists(
             f"across {len(projects)} repos",
             file=sys.stderr,
         )
+        print(f"Also wrote {max_output} (without deduplication)", file=sys.stderr)
 
         total_duration = time.time() - initial_start_time
         print(
@@ -582,6 +623,11 @@ def parse_args(argv: list[str]) -> argparse.Namespace:
         help="Force recalculation of all results, ignoring cached data from previous runs",
     )
     p.add_argument(
+        "--use-alt-extractor",
+        action="store_true",
+        help="Use alternate codelist extraction method (extract_codelist_calls_alt)",
+    )
+    p.add_argument(
         "repos",
         nargs="*",
         help="Optional list of repo names to process (e.g., opensafely/repo1 opensafely/repo2)",
@@ -601,6 +647,7 @@ def main(argv: list[str] | None = None) -> int:
             verbose=args.verbose,
             csv_path=args.csv,
             force=args.force,
+            use_alt_extractor=args.use_alt_extractor,
         )
         return 0
     except Exception as e:
