@@ -8,3 +8,4 @@ dotenv
 marimo
 nltk
 scipy
+seaborn
