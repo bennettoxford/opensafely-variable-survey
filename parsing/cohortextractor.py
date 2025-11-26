@@ -1,6 +1,5 @@
 import ast
 from traceback import format_exception
-from typing import Optional
 
 
 def get_study_variables(
@@ -21,7 +20,7 @@ def get_study_variables(
         return ([], format_exception(e))
 
 
-def _parse_study_definition(study_definition: str) -> Optional[ast.Call]:
+def _parse_study_definition(study_definition: str) -> ast.Call | None:
     tree = ast.parse(study_definition)
     for stmt in [stmt for stmt in tree.body if isinstance(stmt, ast.Assign)]:
         if (

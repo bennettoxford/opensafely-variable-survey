@@ -15,7 +15,7 @@ The main entry point for cohort-extractor related code in this repository is `ma
 This requires a suitable GitHub Personal Access Token (PAT),
 more information on this is available in the [Developer Documentation](#developer-docs).
 
-`just run notebooks` will start a local Marimo notebook server,
+`just run notebook` will start a local Marimo notebook server,
 from which the `names.py` and `definitions.py` notebooks can be accessed.
 These notebooks contain the analysis of variable names and definitions performed as part of this work,
 and can be used a starting point for any desired future analysis.
