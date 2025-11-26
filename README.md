@@ -218,11 +218,11 @@ The current approach finds most codelists but isn't perfect. An alternative woul
   - [ ] for measures.
 - [ ] Ignore unmodified template studies that only define a `sex` variable.
 - [ ] Improve stack traces so errors reference the original dataset source line.
-- [ ] Increase line-number coverage for variable assignments.
-  - [ ] Sometimes the line number is for a different file, so the output should be the filename and line number.
-  - [ ] Still some variables have no line number at all.
+- [x] Increase line-number coverage for variable assignments.
+  - [x] Sometimes the line number is for a different file, so the output should be the filename and line number.
+  - [x] Still some variables have no line number at all.
 - [ ] Improve the fuzzy matching:
-  - [ ] `where()` followed by `sort_by()` result in the same things, but the current variant analysis treats these as different things
+  - [x] `where()` followed by `sort_by()` result in the same things, but the current variant analysis treats these as different things
   - [ ] Multiple `where()` commands can be chained together. Two variables that only differ in the order of the `where()` statements currently show as different things
 
 ## Developer docs
