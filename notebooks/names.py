@@ -65,8 +65,8 @@ def _(flattened, pd):
 
 
 @app.cell
-def _(df, mo):
-    mo.md(text=f"Number of repos:{len(df.repo.unique())}")
+def _(flattened):
+    len(flattened)
     return
 
 

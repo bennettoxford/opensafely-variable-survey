@@ -20,9 +20,15 @@ def _():
 
 @app.cell
 def _(json):
-    with open("ehrql_variables.json") as f:
+    with open("data/ehrql_variables.json") as f:
         variables = json.load(f)
     return (variables,)
+
+
+@app.cell
+def _(variables):
+    variables
+    return
 
 
 @app.cell

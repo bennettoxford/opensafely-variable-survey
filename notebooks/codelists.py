@@ -67,6 +67,12 @@ def _(codelists, mo):
 
 
 @app.cell
+def _(Counter, codelists):
+    Counter([_v["status"] for _c in codelists for _v in _c["versions"]])
+    return
+
+
+@app.cell
 def _(codelists, mo):
     mo.md(
         f"""Total number of published/under review codelist versions: {sum([len(codelist["versions"]) for codelist in codelists])}"""
@@ -109,19 +115,49 @@ def _(
     # link ehrl codelist data and job server data to count codelist usage by job
     codelist_projects = defaultdict(set[str])
     codelist_variables = defaultdict(int)
+    unique_variables = set()
+    unique_codelist_variables = set()
     codelist_jobs = defaultdict(set[str])
     for _signature, _files in ehrql_codelists["signatures"].items():
         _project = signatures_to_projects[_signature]
         _shas = {_sha for _sha in signatures_to_shas[_signature] if _sha in job_shas}
         for _file, _variables in _files.items():
             for _name, _codelists in _variables.items():
+                unique_variables.add(frozenset([_project, _file, _name]))
                 for _definition in _codelists:
-                    if len(_definition) == 2:
+                    if len(_definition) in [2, 3]:
+                        unique_codelist_variables.add(
+                            frozenset([_project, _file, _name])
+                        )
                         _codelist = _definition[0]
                         codelist_variables[_codelist] += 1
                         codelist_projects[_codelist].add(_project)
                         codelist_jobs[_codelist] |= _shas
-    return codelist_jobs, codelist_projects, codelist_variables
+    return (
+        codelist_jobs,
+        codelist_projects,
+        codelist_variables,
+        unique_codelist_variables,
+        unique_variables,
+    )
+
+
+@app.cell
+def _(codelist_variables):
+    sum(codelist_variables.values())
+    return
+
+
+@app.cell
+def _(unique_variables):
+    len(unique_variables)
+    return
+
+
+@app.cell
+def _(unique_codelist_variables):
+    len(unique_codelist_variables)
+    return
 
 
 @app.cell
@@ -152,7 +188,7 @@ def _(mo):
 
 @app.cell
 def _(codelist_jobs, pd, successful_job_shas):
-    pd.DataFrame(
+    df_successful_jobs = pd.DataFrame(
         [
             {
                 "codelist_version_slug": _k,
@@ -163,6 +199,13 @@ def _(codelist_jobs, pd, successful_job_shas):
             for _k, _v in codelist_jobs.items()
         ]
     )
+    df_successful_jobs
+    return (df_successful_jobs,)
+
+
+@app.cell
+def _(df_successful_jobs):
+    df_successful_jobs.count_variables_X_successful_jobs_using_codelist.sum()
     return
 
 
@@ -257,7 +300,7 @@ def _(codelist_jobs, codelists, mo, pd):
                 }
             )
     never_used = pd.DataFrame(_never_used)
-    mo.md("## Never-used codelist versions:")
+    mo.md("## Never-used codelist versions (ehrQL):")
     return ever_used_slugs, never_used
 
 
@@ -278,7 +321,7 @@ def _(never_used):
 @app.cell
 def _(never_used):
     never_used.groupby("owner").count()["name"].rename(
-        "never_used_codelistversion_count"
+        "never_used_codelist_version_count"
     )
     return
 
@@ -375,6 +418,22 @@ def _(never_used_codelists_cohortextractor):
 
 
 @app.cell
+def _(never_used_codelists_cohortextractor):
+    never_used_codelists_cohortextractor.groupby(["coding_system", "owner"]).count()[
+        "name"
+    ].rename("never_used_codelist_count")
+    return
+
+
+@app.cell
+def _(never_used_codelists_cohortextractor):
+    never_used_codelists_cohortextractor[
+        never_used_codelists_cohortextractor.coding_system == "icd10"
+    ].groupby("owner").count()["name"].rename("never_used_codelist_count")
+    return
+
+
+@app.cell
 def _(mo):
     mo.md("""## Most popular codelists (across all versions)""")
     return
@@ -414,8 +473,15 @@ def _(codelist_projects, defaultdict, pd):
                 "count_projects_with_variable_using_codelist": _v,
             }
             for _k, _v in _codelist_project_counts.items()
+            if _k != "codelists"
         ]
     )
+    return
+
+
+@app.cell
+def _(Counter, codelists):
+    Counter([_v["creation_method"] for _c in codelists for _v in _c["versions"]])
     return
 
 
@@ -545,12 +611,14 @@ def _(codelist_jobs, codelists, datetime, pd, sucessful_job_dates):
 
 @app.cell
 def _(df_timedeltas_created):
+    df_timedeltas_created
+    return
+
+
+@app.cell
+def _(df_timedeltas_created):
     all_delta_days_created = [
-        d.days
-        for ds in df_timedeltas_created[
-            df_timedeltas_created.delta.apply(len) > 0
-        ].delta.values
-        for d in ds
+        d.days for ds in df_timedeltas_created.delta.values for d in ds
     ]
     return (all_delta_days_created,)
 
@@ -582,6 +650,37 @@ def _(all_delta_days_created, np):
 @app.cell
 def _(all_delta_days_created, np):
     int(np.mean(all_delta_days_created))
+    return
+
+
+@app.cell
+def _(df_timedeltas_created):
+    df_timedeltas_created
+    return
+
+
+@app.cell
+def _(defaultdict, df_timedeltas_created):
+    coding_system_deltas = defaultdict(list[int])
+    for row in df_timedeltas_created.iterrows():
+        row = row[1]
+        coding_system_deltas[row["coding_system"]].extend(
+            [d.days for d in row["delta"]]
+        )
+    return (coding_system_deltas,)
+
+
+@app.cell
+def _(coding_system_deltas):
+    coding_system_deltas["bnf"]
+    return
+
+
+@app.cell
+def _(coding_system_deltas, plot):
+    plot.boxplot(
+        coding_system_deltas.values(), tick_labels=coding_system_deltas.keys()
+    )["boxes"][0]
     return
 
 
@@ -755,8 +854,9 @@ def _(
     _used_after_expiry = []
     _versions_with_expiry_dates = {
         _k: datetime.fromisoformat(_v).date()
-        for _k, _v in version_out_of_date_at.items()
         if _v
+        else datetime.fromisoformat("2999-12-12").date()
+        for _k, _v in version_out_of_date_at.items()
     }
     for _run_codelist_version_slug, _shas in codelist_jobs.items():
         if not _run_codelist_version_slug:
@@ -772,6 +872,17 @@ def _(
                 continue
             _used_after_expiry.append(_job_date.date() > _expiry_date)
     Counter(_used_after_expiry)
+    return
+
+
+@app.cell
+def _():
+    # stratify by coding system type
+    return
+
+
+@app.cell
+def _():
     return
 
 
