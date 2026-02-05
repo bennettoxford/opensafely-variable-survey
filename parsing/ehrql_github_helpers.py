@@ -224,9 +224,10 @@ def parse_jobs_csv(csv_path: pathlib.Path) -> dict[str, list[str]]:
     return {repo: sorted(shas) for repo, shas in sorted(repo_shas.items())}
 
 
-def get_all_repos_with_shas_graphql() -> dict[str, str]:
-    """Fetch all repos in opensafely org with their HEAD SHAs using GraphQL
-    with pagination.
+def get_all_repos_with_shas_graphql(
+    repo_filter: list[str] | None = None,
+) -> dict[str, str]:
+    """Fetch repos in opensafely org with their HEAD SHAs using GraphQL with pagination.
 
     This is much faster than REST API as it gets all repos and SHAs in ~4 calls
     instead of 1+n where n is the number of repos. This is because there is no single
@@ -234,12 +235,69 @@ def get_all_repos_with_shas_graphql() -> dict[str, str]:
     get all the repos in an org, then individual calls for each repo to get the default
     branch SHA.
 
-    Returns dict of {repo_full_name: sha} e.g. {'covid-project': 'abc123...'}
+    Args:
+        repo_filter: Optional list of repo names to fetch (e.g., ['repo1', 'repo2']).
+                    If provided, only these repos are fetched (much faster).
+                    If None, all repos in the org are fetched.
+
+    Returns dict of {repo_name: sha} e.g. {'covid-project': 'abc123...'}
     """
     repos_with_shas: dict[str, str] = {}
-    after_cursor = None
 
-    query = """
+    if repo_filter:
+        # Fast path: fetch specific repos by name
+        # Build query to fetch each repo individually
+        repo_queries = []
+        for i, repo_name in enumerate(repo_filter):
+            alias = f"repo{i}"
+            repo_queries.append(
+                f'{alias}: repository(owner: "opensafely", name: "{repo_name.replace("opensafely/", "")}") {{ defaultBranchRef {{ target {{ ... on Commit {{ oid }} }} }} }}'
+            )
+
+        query = "query { " + " ".join(repo_queries) + " }"
+
+        try:
+            print(
+                f"Fetching {len(repo_filter)} specific repos via GraphQL...",
+                file=sys.stderr,
+            )
+            result = subprocess.run(
+                ["gh", "api", "graphql", "-f", f"query={query}"],
+                capture_output=True,
+                text=True,
+                timeout=30,
+                check=False,
+            )
+            data = json.loads(result.stdout)
+
+            if "errors" in data:
+                raise GitHubError(f"GraphQL error: {data['errors']}")
+
+            for i, repo_name in enumerate(repo_filter):
+                alias = f"repo{i}"
+                repo_data = data.get("data", {}).get(alias)
+                if (
+                    repo_data
+                    and repo_data.get("defaultBranchRef")
+                    and repo_data["defaultBranchRef"].get("target")
+                ):
+                    oid = repo_data["defaultBranchRef"]["target"]["oid"]
+                    repos_with_shas[repo_name.replace("opensafely/", "")] = oid
+                else:
+                    if repo_data is None:
+                        print(
+                            f"  Warning: Repo '{repo_name}' not found in opensafely org",
+                            file=sys.stderr,
+                        )
+
+            print(f"  Got {len(repos_with_shas)} repos", file=sys.stderr)
+        except Exception as e:
+            raise GitHubError(f"Failed to fetch specific repos via GraphQL: {e}") from e
+    else:
+        # Slow path: fetch all repos with pagination
+        after_cursor = None
+
+        query = """
 query($org: String!, $first: Int!, $after: String) {
   organization(login: $org) {
     repositories(first: $first, after: $after, privacy: PUBLIC) {
@@ -262,61 +320,68 @@ query($org: String!, $first: Int!, $after: String) {
 }
 """
 
-    while True:
-        cmd = [
-            "gh",
-            "api",
-            "graphql",
-            "-f",
-            f"query={query}",
-            "-f",
-            "org=opensafely",
-            "-F",
-            "first=100",
-        ]
+        while True:
+            cmd = [
+                "gh",
+                "api",
+                "graphql",
+                "-f",
+                f"query={query}",
+                "-f",
+                "org=opensafely",
+                "-F",
+                "first=100",
+            ]
 
-        if after_cursor:
-            cmd.extend(["-f", f"after={after_cursor}"])
+            if after_cursor:
+                cmd.extend(["-f", f"after={after_cursor}"])
 
-        try:
-            print("Fetching 100 repos via GraphQL...", file=sys.stderr)
-            result = subprocess.run(
-                cmd, capture_output=True, text=True, timeout=30, check=False
-            )
-            data = json.loads(result.stdout)
-            print(
-                f"Received data for {len(data.get('data', {}).get('organization', {}).get('repositories', {}).get('nodes', []))} repos",
-                file=sys.stderr,
-            )
-            if "errors" in data:
-                raise GitHubError(f"GraphQL error: {data['errors']}")
+            try:
+                print("Fetching 100 repos via GraphQL...", file=sys.stderr)
+                result = subprocess.run(
+                    cmd, capture_output=True, text=True, timeout=30, check=False
+                )
+                data = json.loads(result.stdout)
+                print(
+                    f"Received data for {len(data.get('data', {}).get('organization', {}).get('repositories', {}).get('nodes', []))} repos",
+                    file=sys.stderr,
+                )
+                if "errors" in data:
+                    raise GitHubError(f"GraphQL error: {data['errors']}")
 
-            repos = data["data"]["organization"]["repositories"]
-            for node in repos["nodes"]:
-                if node.get("defaultBranchRef") and node["defaultBranchRef"].get(
-                    "target"
-                ):
-                    oid = node["defaultBranchRef"]["target"]["oid"]
-                    repos_with_shas[node["name"]] = oid
+                repos = data["data"]["organization"]["repositories"]
+                for node in repos["nodes"]:
+                    if node.get("defaultBranchRef") and node["defaultBranchRef"].get(
+                        "target"
+                    ):
+                        oid = node["defaultBranchRef"]["target"]["oid"]
+                        repos_with_shas[node["name"]] = oid
 
-            if not repos["pageInfo"]["hasNextPage"]:
-                break
+                if not repos["pageInfo"]["hasNextPage"]:
+                    break
 
-            after_cursor = repos["pageInfo"]["endCursor"]
-        except Exception as e:
-            raise GitHubError(f"Failed to fetch repos via GraphQL: {e}") from e
+                after_cursor = repos["pageInfo"]["endCursor"]
+            except Exception as e:
+                raise GitHubError(f"Failed to fetch repos via GraphQL: {e}") from e
 
     return repos_with_shas
 
 
-def project_yaml_search(verbose: bool = False) -> list[dict]:
+def project_yaml_search(
+    verbose: bool = False, repos: list[str] | None = None
+) -> list[dict]:
     """Search for project.yaml files with ehrql content.
 
     This approach:
-    1. Gets all opensafely org repos and their HEAD SHAs via GraphQL
+    1. Gets all opensafely org repos and their HEAD SHAs via GraphQL (or specific repos if provided)
     2. Checks cache index first (ehrql_repos_index.json)
     3. For uncached repos, shallow clones them to .ehrql_repo_cache/{repo_name}-{sha}/
     4. Searches locally for project.yaml files containing 'ehrql'
+
+    Args:
+        verbose: Print detailed logging
+        repos: Optional list of specific repo names to search (e.g., ['repo1', 'repo2']).
+               If None, searches all repos in opensafely org.
 
     Returns list of dicts with 'repo_full_name' and 'sha' keys.
     """
@@ -336,7 +401,8 @@ def project_yaml_search(verbose: bool = False) -> list[dict]:
         print("Fetching all repos and HEAD SHAs via GraphQL...", file=sys.stderr)
 
     # Use GraphQL to get all repos with SHAs in ~4 calls instead of 300+
-    repos_with_shas = get_all_repos_with_shas_graphql()
+    # Pass repo_filter if specific repos were requested
+    repos_with_shas = get_all_repos_with_shas_graphql(repo_filter=repos)
 
     if verbose:
         print(f"Found {len(repos_with_shas)} repos in opensafely org", file=sys.stderr)
@@ -810,7 +876,10 @@ def clone_ehrql_repos(
         List of tuples (repo_full_name, sha, local_path) for each repo/SHA combination
     """
     # Always start with GitHub API search
-    project_yaml_files = project_yaml_search(verbose=verbose)
+    # Pass the repos parameter to only search specific repos if provided
+    project_yaml_files = project_yaml_search(
+        verbose=verbose, repos=repos if repos else None
+    )
     ehrql_repos = group_items_by_repo(project_yaml_files)
 
     if not silent:
