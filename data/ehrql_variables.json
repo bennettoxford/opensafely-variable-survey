@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-02-05 08:27:10",
+  "generated_at": "2026-02-05 11:28:52",
   "projects": {
     "opensafely/ACT-PharmacyFirst-Protocol2-healthcare-usage": {
       "files": {
@@ -8329,27 +8329,176 @@
     },
     "opensafely/disparities-comparison": {
       "files": {
-        "analysis/dataset_definition_flow_chart.py": [
+        "analysis/dataset_definition.py": [
           [
-            "birth_date",
-            "DatePatientSeries",
-            188,
-            "e099149c724d935f",
-            "e099149c724d935f"
+            "age",
+            "IntPatientSeries",
+            225,
+            "6336e4e377566453",
+            "6336e4e377566453"
           ],
+          [
+            "death_date",
+            "DatePatientSeries",
+            230,
+            "94862d7bb6ddca3b",
+            "94862d7bb6ddca3b"
+          ],
+          [
+            "deregistration_date",
+            "DatePatientSeries",
+            272,
+            "9cd83e0c9aa195bf",
+            "9cd83e0c9aa195bf"
+          ],
+          [
+            "flu_los",
+            "IntPatientSeries",
+            461,
+            "111da2bbaa1151c6",
+            "30664a5c175ee8f0"
+          ],
+          [
+            "flu_los_second",
+            "IntPatientSeries",
+            480,
+            "af9374375a0768b0",
+            "554b578d2c15e556"
+          ],
+          [
+            "flu_primary_date",
+            "DatePatientSeries",
+            433,
+            "48922897d7602745",
+            "1d690effb9428e7d"
+          ],
+          [
+            "flu_primary_second_date",
+            "DatePatientSeries",
+            438,
+            "adba6a2845ee79eb",
+            "4d7e4167a1b1e634"
+          ],
+          [
+            "flu_secondary_date",
+            "DatePatientSeries",
+            448,
+            "7731f4b14c4adf25",
+            "b5143fe8c12f221b"
+          ],
+          [
+            "flu_secondary_second_date",
+            "DatePatientSeries",
+            466,
+            "348de0dfaadea50f",
+            "89dc6c5b4e18636d"
+          ],
+          [
+            "imd_rounded",
+            "IntPatientSeries",
+            246,
+            "1f0048e02a72719e",
+            "1f0048e02a72719e"
+          ],
+          [
+            "latest_ethnicity_group",
+            "StrPatientSeries",
+            233,
+            "a1b9484e1c563405",
+            "6fa6c91ec5ce985c"
+          ],
+          [
+            "patient_end_date",
+            "DatePatientSeries",
+            104,
+            "ab1338bbf7e2f078",
+            "ab1338bbf7e2f078"
+          ],
+          [
+            "patient_index_date",
+            "DatePatientSeries",
+            103,
+            "33c8781efc1080f7",
+            "33c8781efc1080f7"
+          ],
+          [
+            "registered",
+            "BoolPatientSeries",
+            220,
+            "b17e9c2f4789b4e6",
+            "b17e9c2f4789b4e6"
+          ],
+          [
+            "rsv_los",
+            "IntPatientSeries",
+            404,
+            "6214a1820f9e4673",
+            "30664a5c175ee8f0"
+          ],
+          [
+            "rsv_los_second",
+            "IntPatientSeries",
+            423,
+            "5b800ef6125116a7",
+            "554b578d2c15e556"
+          ],
+          [
+            "rsv_primary_date",
+            "DatePatientSeries",
+            350,
+            "4ef64ada42668ba9",
+            "1d690effb9428e7d"
+          ],
+          [
+            "rsv_primary_second_date",
+            "DatePatientSeries",
+            360,
+            "1922a21a905409e1",
+            "4d7e4167a1b1e634"
+          ],
+          [
+            "rsv_secondary_date",
+            "DatePatientSeries",
+            391,
+            "6f3e3f686a6a9e82",
+            "b5143fe8c12f221b"
+          ],
+          [
+            "rsv_secondary_second_date",
+            "DatePatientSeries",
+            409,
+            "a0e451af7e4da93e",
+            "89dc6c5b4e18636d"
+          ],
+          [
+            "rural_urban_classification",
+            "IntPatientSeries",
+            249,
+            "271628d3e31d84a2",
+            "271628d3e31d84a2"
+          ],
+          [
+            "sex",
+            "StrPatientSeries",
+            221,
+            "a0751b8b98a9ec41",
+            "a0751b8b98a9ec41"
+          ]
+        ],
+        "analysis/dataset_definition_flow_chart.py": [
           [
             "care_home",
             "BoolPatientSeries",
             182,
-            "5ae2e2ff4f2b5891",
-            "ba99edbb32cd05ad"
+            "77a960a3cb5df5a5",
+            "77fc16679f94b816"
           ],
           [
             "has_imd",
             "BoolPatientSeries",
             152,
-            "2167bbc729a118b5",
-            "2167bbc729a118b5"
+            "7d756bdbbd95c068",
+            "7d756bdbbd95c068"
           ],
           [
             "is_female_or_male",
@@ -8359,46 +8508,25 @@
             "f62e4997dd512d32"
           ],
           [
-            "mother_id",
-            "IntPatientSeries",
-            187,
-            "6ee452dcc40ff0d1",
-            "6ee452dcc40ff0d1"
-          ],
-          [
             "patient_end_date",
             "DatePatientSeries",
             87,
-            "2be61ffb8c7695dd",
-            "2be61ffb8c7695dd"
+            "ab1338bbf7e2f078",
+            "ab1338bbf7e2f078"
           ],
           [
             "patient_index_date",
             "DatePatientSeries",
             86,
-            "3e2e3990044f0f70",
-            "3e2e3990044f0f70"
+            "33c8781efc1080f7",
+            "33c8781efc1080f7"
           ],
           [
             "registered",
             "BoolPatientSeries",
             148,
-            "a556c576cdae6d1c",
-            "a556c576cdae6d1c"
-          ],
-          [
-            "risk_group_infants",
-            "BoolPatientSeries",
-            164,
-            "fd4d4e6770528666",
-            "81fc5c094fcb0fb2"
-          ],
-          [
-            "severe_immunodeficiency",
-            "BoolPatientSeries",
-            158,
-            "bf31c2b9a6cfc22b",
-            "d22677123ea90628"
+            "b17e9c2f4789b4e6",
+            "b17e9c2f4789b4e6"
           ]
         ],
         "analysis/dataset_definition_flow_chart_mothers.py": [
@@ -8408,6 +8536,80 @@
             49,
             "76501c58149fa1af",
             "76501c58149fa1af"
+          ]
+        ],
+        "analysis/dataset_definition_household.py": [
+          [
+            "age",
+            "IntPatientSeries",
+            36,
+            "515d5d26c6826fc5",
+            "515d5d26c6826fc5"
+          ],
+          [
+            "household_pseudo_id",
+            "IntPatientSeries",
+            30,
+            "480c9bf6b3e0bad8",
+            "480c9bf6b3e0bad8"
+          ],
+          [
+            "household_size",
+            "IntPatientSeries",
+            33,
+            "f478499afedca73b",
+            "f478499afedca73b"
+          ],
+          [
+            "rural_urban_classification",
+            "IntPatientSeries",
+            39,
+            "256d8b01df48c82e",
+            "256d8b01df48c82e"
+          ]
+        ],
+        "analysis/dataset_definition_mothers.py": [
+          [
+            "maternal_age",
+            "IntPatientSeries",
+            72,
+            "4a62a1928b69bf3d",
+            "4a62a1928b69bf3d"
+          ],
+          [
+            "maternal_drinking",
+            "BoolPatientSeries",
+            96,
+            "734d086d141bcd76",
+            "a472d179b044677f"
+          ],
+          [
+            "maternal_drug_usage",
+            "BoolPatientSeries",
+            99,
+            "77a18788b37fc3c8",
+            "a472d179b044677f"
+          ],
+          [
+            "maternal_flu_vaccination",
+            "BoolPatientSeries",
+            111,
+            "b814cfdd0a497cd8",
+            "481c535723e9243a"
+          ],
+          [
+            "maternal_pertussis_vaccination",
+            "BoolPatientSeries",
+            104,
+            "0e3e4e4041d60305",
+            "481c535723e9243a"
+          ],
+          [
+            "maternal_smoking_status",
+            "StrPatientSeries",
+            85,
+            "51a6fa511d81ed3f",
+            "ded9d80ceae0e5b7"
           ]
         ]
       },
