@@ -568,15 +568,15 @@ def get_runtime_dataset_variables(
         # bare module names like `from codelists import X`. Many OpenSafely repos keep
         # analysis scripts in a subfolder (e.g. analysis/). Adding that folder directly
         # mirrors running the script from within that directory.
+        # In fact let's keep on adding to the path until we get to the cache root
         parent_dir = abs_path.parent
-        if str(parent_dir) in sys.path:
-            sys.path.remove(str(parent_dir))
-        sys.path.insert(0, str(parent_dir))  # Insert at position 0, not append
-
-        parent_parent_dir = parent_dir.parent
-        if str(parent_parent_dir) in sys.path:
-            sys.path.remove(str(parent_parent_dir))
-        sys.path.insert(1, str(parent_parent_dir))  # Position 1, after parent dir
+        index = 0
+        while parent_dir.name != CACHE_DIR:
+            if str(parent_dir) in sys.path:
+                sys.path.remove(str(parent_dir))
+            sys.path.insert(index, str(parent_dir))
+            index += 1
+            parent_dir = parent_dir.parent
 
         # Change working directory to repo root so that codelist_from_csv() calls
         # with relative paths (e.g., "codelists/foo.csv") resolve correctly.
@@ -639,7 +639,15 @@ def get_runtime_dataset_variables(
                                             variable_name=var_name,
                                             series_type=series.__class__.__name__,
                                             line_no=line_no,
-                                            qm_node=compact_qm_node(series._qm_node),
+                                            qm_node=compact_qm_node(
+                                                series._qm_node,
+                                                max_depth=50
+                                                if repo_name
+                                                in [
+                                                    "opensafely/polypharmacy-deprescribing-dementia",
+                                                ]
+                                                else None,
+                                            ),
                                         )
                                     )
 
@@ -772,6 +780,9 @@ def reset_modules_to_snapshot() -> None:
             pass
 
 
+CACHE_DIR = ".ehrql_repo_cache"
+
+
 def collect(
     output: str,
     repos: list[str] | None,
@@ -780,7 +791,7 @@ def collect(
     include_full_qm_node_dump: bool = False,
 ) -> None:
     initial_start_time = time.time()
-    cache_dir = pathlib.Path(".ehrql_repo_cache")
+    cache_dir = pathlib.Path(CACHE_DIR)
     cache_dir.mkdir(exist_ok=True)
 
     local_repos = clone_ehrql_repos(repos, cache_dir, silent=silent, verbose=verbose)
