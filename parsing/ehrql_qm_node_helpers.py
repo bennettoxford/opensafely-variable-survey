@@ -145,9 +145,26 @@ def _stringify_value(value):
         return str(value)
 
 
-def compact_qm_node(qm_node: qm.Node, _normalized: bool = False) -> str:
+MAX_QM_DEPTH = 200  # Maximum recursion depth for compact_qm_node
+
+
+def compact_qm_node(
+    qm_node: qm.Node,
+    max_depth: int = MAX_QM_DEPTH,
+    _normalized: bool = False,
+    _depth: int = 0,
+) -> str:
     # Navigate all dataclass fields of each node recursively
     # When encountering a SelectTable, replace it entirely with the string from the table name
+    #
+    # Depth limit: Complex ehrQL expressions (e.g., loops with += operators)
+    # can create very deep QM node trees that cause hangs. When we hit the depth
+    # limit, we return a simplified string representation.
+    max_depth = max_depth if max_depth is not None else MAX_QM_DEPTH
+    if _depth > max_depth:
+        # Return a simplified representation to avoid infinite recursion
+        return f"<{qm_node.__class__.__name__}:depth-exceeded>"
+
     try:
         # Handle sets of nodes (e.g., Domain sets)
         if isinstance(qm_node, set):
@@ -156,7 +173,10 @@ def compact_qm_node(qm_node: qm.Node, _normalized: bool = False) -> str:
             return (
                 "{"
                 + ", ".join(
-                    compact_qm_node(node, _normalized=True) for node in sorted_nodes
+                    compact_qm_node(
+                        node, max_depth=max_depth, _normalized=True, _depth=_depth + 1
+                    )
+                    for node in sorted_nodes
                 )
                 + "}"
             )
@@ -200,12 +220,33 @@ def compact_qm_node(qm_node: qm.Node, _normalized: bool = False) -> str:
                     else:
                         return [node]
 
+                # # Use a limit to prevent extremely deep chains from causing hangs
+                # def flatten_op(node, op_type, remaining_depth=max_depth):
+                #     """Recursively flatten chains of the same commutative operation."""
+                #     if remaining_depth <= 0:
+                #         return [node]
+                #     if (
+                #         isinstance(node, qm.Node)
+                #         and node.__class__.__name__ == op_type
+                #         and hasattr(node, "lhs")
+                #         and hasattr(node, "rhs")
+                #     ):
+                #         # Recursively flatten both sides
+                #         return flatten_op(
+                #             node.lhs, op_type, remaining_depth - 1
+                #         ) + flatten_op(node.rhs, op_type, remaining_depth - 1)
+                #     else:
+                #         return [node]
+
                 # Flatten the chain into a list of operands
                 operands = flatten_op(qm_node, op_name)
 
                 # Compact each operand and sort them
                 operand_strs = [
-                    compact_qm_node(op, _normalized=True) for op in operands
+                    compact_qm_node(
+                        op, max_depth=max_depth, _normalized=True, _depth=_depth + 1
+                    )
+                    for op in operands
                 ]
                 operand_strs.sort()
 
@@ -222,18 +263,33 @@ def compact_qm_node(qm_node: qm.Node, _normalized: bool = False) -> str:
             for field_name in list(qm_node.__dataclass_fields__):
                 field_value = getattr(qm_node, field_name)
                 if isinstance(field_value, qm.Node):
-                    fields[field_name] = compact_qm_node(field_value, _normalized=True)
+                    fields[field_name] = compact_qm_node(
+                        field_value,
+                        max_depth=max_depth,
+                        _normalized=True,
+                        _depth=_depth + 1,
+                    )
                 elif field_name == "cases" and isinstance(field_value, dict):
                     # Sort cases by canonicalized key string for determinism
                     # Compute key strings once and cache them to avoid redundant computation
                     key_strs = []
                     for k, v in field_value.items():
                         if isinstance(k, qm.Node):
-                            k_str = compact_qm_node(k, _normalized=True)
+                            k_str = compact_qm_node(
+                                k,
+                                max_depth=max_depth,
+                                _normalized=True,
+                                _depth=_depth + 1,
+                            )
                         else:
                             k_str = str(k)
                         if isinstance(v, qm.Node):
-                            v_str = compact_qm_node(v, _normalized=True)
+                            v_str = compact_qm_node(
+                                v,
+                                max_depth=max_depth,
+                                _normalized=True,
+                                _depth=_depth + 1,
+                            )
                         else:
                             v_str = _stringify_value(v)
                         key_strs.append((k_str, v_str))
@@ -248,7 +304,12 @@ def compact_qm_node(qm_node: qm.Node, _normalized: bool = False) -> str:
                     # If list of Nodes, preserve order and compact each.
                     if all(isinstance(item, qm.Node) for item in field_value):
                         parts = [
-                            compact_qm_node(item, _normalized=True)
+                            compact_qm_node(
+                                item,
+                                max_depth=max_depth,
+                                _normalized=True,
+                                _depth=_depth + 1,
+                            )
                             for item in field_value
                         ]
                     else:
@@ -267,7 +328,12 @@ def compact_qm_node(qm_node: qm.Node, _normalized: bool = False) -> str:
                     # Apply the same determinism to tuples of scalars
                     if all(isinstance(item, qm.Node) for item in field_value):
                         parts = [
-                            compact_qm_node(item, _normalized=True)
+                            compact_qm_node(
+                                item,
+                                max_depth=max_depth,
+                                _normalized=True,
+                                _depth=_depth + 1,
+                            )
                             for item in field_value
                         ]
                     else:
@@ -288,7 +354,12 @@ def compact_qm_node(qm_node: qm.Node, _normalized: bool = False) -> str:
                         "{"
                         + ", ".join(
                             [
-                                compact_qm_node(item, _normalized=True)
+                                compact_qm_node(
+                                    item,
+                                    max_depth=max_depth,
+                                    _normalized=True,
+                                    _depth=_depth + 1,
+                                )
                                 if isinstance(item, qm.Node)
                                 else _stringify_value(item)
                                 for item in sorted_items

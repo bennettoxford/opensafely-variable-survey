@@ -599,7 +599,7 @@ def parse_args(argv: list[str]) -> argparse.Namespace:
     )
     p.add_argument(
         "--output",
-        default="ehrql_codelists.json",
+        default="data/ehrql_codelists.json",
         help="Output JSON file path (default: ehrql_codelists.json)",
     )
     p.add_argument(

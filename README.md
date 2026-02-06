@@ -149,6 +149,106 @@ just codelists --output my_codelists.json
 just codelists --force
 ```
 
+#### Refreshing the data
+
+**NB for the periodic refreshes of this data you need to do the following:**
+
+1. Update the `rsi-codelists-analysis.json`
+
+```bash
+# Assumes starting from this directory
+curr_dir=$(pwd)
+
+# Goto opencodelists repo
+cd <path-to-opencodelists-repo>
+
+# Checkout branch
+git checkout Jongmassey/dump-rsi-json
+
+# Get latest backup of prod db (can't use sanitised)
+scp dokku3:/var/lib/dokku/data/storage/opencodelists/backup/db/latest-db.sqlite3.zst .
+zstd -d latest-db.sqlite3.zst -o latest-db.sqlite3
+
+# Run script to dump rsi json
+. .venv/bin/activate # avoid running in the wrong python environment
+DATABASE_URL=sqlite:///latest-db.sqlite3 just manage runscript dump_rsi_json
+
+# Move the output back to this repo
+cp rsi-codelists-analysis.json $curr_dir/data/rsi-codelists-analysis.json
+
+# Cleanup the ocl directory
+rm rsi-codelists-analysis.json
+rm latest-db.sqlite3
+rm latest-db.sqlite3.zst
+git checkout main
+
+# Return here
+cd $curr_dir
+. .venv/bin/activate # back to the python environment for this repo
+```
+
+2. Update the all jobs data csv
+
+```bash
+# ASSUMES YOU ARE USING THE DOCKER VERSION OF POSTGRES IN THE JOB-SERVER REPO
+# IF NOT THEN CHECK OUT THE DEVELOPERS DOC IN THE JOB-SERVER REPO
+
+# Assumes starting from this directory
+curr_dir=$(pwd)
+
+# Goto job-server repo
+cd <path-to-job-server-repo>
+
+# [Restore](https://github.com/opensafely-core/job-server/blob/main/DEVELOPERS.md#restoring-backups) a new copy of the job-server database dump. Currently this is:
+. .venv/bin/activate # avoid running in the wrong python environment
+scp dokku4:/var/lib/dokku/data/storage/job-server/jobserver.dump jobserver.dump
+just docker/restore-db jobserver.dump
+
+# Execute query to get the csv data
+just docker/exec db "psql -U user -d jobserver -c \"\copy (select r.url, jr.sha, to_char(date_trunc('second', jr.created_at) AT TIME ZONE 'Europe/London', 'YYYY-MM-DD HH24:MI:SS') as created_at, jr._status from jobserver_workspace w join jobserver_repo r on w.repo_id = r.id join jobserver_jobrequest jr on jr.workspace_id = w.id order by r.url, jr.created_at, jr.sha) to stdout with csv header\" > all_jobs.csv"
+
+# Move the output back to this repo
+cp docker/all_jobs.csv $curr_dir/data/
+
+# Cleanup the job-server directory
+rm docker/all_jobs.csv
+
+# Return here
+cd $curr_dir
+. .venv/bin/activate # back to the python environment for this repo
+
+```
+
+3. Rerun the script
+
+```bash
+just codelists --csv data/all_jobs.csv
+```
+
+4. Copy to the rsi-prototypes repo and update the tool
+
+```bash
+# Assuming you are in this directory and have the rsi-prototypes repo checked out at the same level as this one
+rsi_dir="../rsi-prototypes"
+cp data/ehrql_codelists.json $rsi_dir/scripts/data-processing/codelist-explorer/ehrql_codelists.json
+cp data/rsi-codelists-analysis.json $rsi_dir/scripts/data-processing/codelist-explorer/rsi-codelists-analysis.json
+cp data/all_jobs.csv $rsi_dir/scripts/data-processing/codelist-explorer/all_jobs.csv
+
+# Then process the files as follows
+cd $rsi_dir
+. .venv/bin/activate # activate the python environment for the rsi-prototypes repo
+python scripts/data-processing/codelist-explorer/preprocess.py
+
+# Should cause codelist-explorer-data.json and .json.br to be updated
+# Optionally test locally with
+just run # then open localhost:5000
+
+# Deploy by committing the changes to the rsi-prototypes repo and pushing to the main branch, which should trigger the digital ocean deployment
+cd $curr_dir
+. .venv/bin/activate # back to the python environment for this repo
+
+```
+
 #### CSV input
 
 If you want to specify particular commits to extract codelists from, you can

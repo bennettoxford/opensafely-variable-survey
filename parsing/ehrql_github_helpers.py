@@ -224,33 +224,347 @@ def parse_jobs_csv(csv_path: pathlib.Path) -> dict[str, list[str]]:
     return {repo: sorted(shas) for repo, shas in sorted(repo_shas.items())}
 
 
-def project_yaml_search(verbose: bool = False) -> list[dict]:
-    """Search GitHub for project.yaml files in opensafely ehrql repos."""
-    query = "org:opensafely+ehrql+filename:project.yaml"
+def get_all_repos_with_shas_graphql(
+    repo_filter: list[str] | None = None,
+) -> dict[str, str]:
+    """Fetch repos in opensafely org with their HEAD SHAs using GraphQL with pagination.
+
+    This is much faster than REST API as it gets all repos and SHAs in ~4 calls
+    instead of 1+n where n is the number of repos. This is because there is no single
+    call to the REST API that gets all the SHAs. The fastest is one paginated query to
+    get all the repos in an org, then individual calls for each repo to get the default
+    branch SHA.
+
+    Args:
+        repo_filter: Optional list of repo names to fetch (e.g., ['repo1', 'repo2']).
+                    If provided, only these repos are fetched (much faster).
+                    If None, all repos in the org are fetched.
+
+    Returns dict of {repo_name: sha} e.g. {'covid-project': 'abc123...'}
+    """
+    repos_with_shas: dict[str, str] = {}
+
+    if repo_filter:
+        # Fast path: fetch specific repos by name
+        # Build query to fetch each repo individually
+        repo_queries = []
+        for i, repo_name in enumerate(repo_filter):
+            alias = f"repo{i}"
+            repo_queries.append(
+                f'{alias}: repository(owner: "opensafely", name: "{repo_name.replace("opensafely/", "")}") {{ defaultBranchRef {{ target {{ ... on Commit {{ oid }} }} }} }}'
+            )
+
+        query = "query { " + " ".join(repo_queries) + " }"
+
+        try:
+            print(
+                f"Fetching {len(repo_filter)} specific repos via GraphQL...",
+                file=sys.stderr,
+            )
+            result = subprocess.run(
+                ["gh", "api", "graphql", "-f", f"query={query}"],
+                capture_output=True,
+                text=True,
+                timeout=30,
+                check=False,
+            )
+            data = json.loads(result.stdout)
+
+            if "errors" in data:
+                raise GitHubError(f"GraphQL error: {data['errors']}")
+
+            for i, repo_name in enumerate(repo_filter):
+                alias = f"repo{i}"
+                repo_data = data.get("data", {}).get(alias)
+                if (
+                    repo_data
+                    and repo_data.get("defaultBranchRef")
+                    and repo_data["defaultBranchRef"].get("target")
+                ):
+                    oid = repo_data["defaultBranchRef"]["target"]["oid"]
+                    repos_with_shas[repo_name.replace("opensafely/", "")] = oid
+                else:
+                    if repo_data is None:
+                        print(
+                            f"  Warning: Repo '{repo_name}' not found in opensafely org",
+                            file=sys.stderr,
+                        )
+
+            print(f"  Got {len(repos_with_shas)} repos", file=sys.stderr)
+        except Exception as e:
+            raise GitHubError(f"Failed to fetch specific repos via GraphQL: {e}") from e
+    else:
+        # Slow path: fetch all repos with pagination
+        after_cursor = None
+
+        query = """
+query($org: String!, $first: Int!, $after: String) {
+  organization(login: $org) {
+    repositories(first: $first, after: $after, privacy: PUBLIC) {
+      nodes {
+        name
+        defaultBranchRef {
+          target {
+            ... on Commit {
+              oid
+            }
+          }
+        }
+      }
+      pageInfo {
+        hasNextPage
+        endCursor
+      }
+    }
+  }
+}
+"""
+
+        while True:
+            cmd = [
+                "gh",
+                "api",
+                "graphql",
+                "-f",
+                f"query={query}",
+                "-f",
+                "org=opensafely",
+                "-F",
+                "first=100",
+            ]
+
+            if after_cursor:
+                cmd.extend(["-f", f"after={after_cursor}"])
+
+            try:
+                print("Fetching 100 repos via GraphQL...", file=sys.stderr)
+                result = subprocess.run(
+                    cmd, capture_output=True, text=True, timeout=30, check=False
+                )
+                data = json.loads(result.stdout)
+                print(
+                    f"Received data for {len(data.get('data', {}).get('organization', {}).get('repositories', {}).get('nodes', []))} repos",
+                    file=sys.stderr,
+                )
+                if "errors" in data:
+                    raise GitHubError(f"GraphQL error: {data['errors']}")
+
+                repos = data["data"]["organization"]["repositories"]
+                for node in repos["nodes"]:
+                    if node.get("defaultBranchRef") and node["defaultBranchRef"].get(
+                        "target"
+                    ):
+                        oid = node["defaultBranchRef"]["target"]["oid"]
+                        repos_with_shas[node["name"]] = oid
+
+                if not repos["pageInfo"]["hasNextPage"]:
+                    break
+
+                after_cursor = repos["pageInfo"]["endCursor"]
+            except Exception as e:
+                raise GitHubError(f"Failed to fetch repos via GraphQL: {e}") from e
+
+    return repos_with_shas
+
+
+def project_yaml_search(
+    verbose: bool = False, repos: list[str] | None = None
+) -> list[dict]:
+    """Search for project.yaml files with ehrql content.
+
+    This approach:
+    1. Gets all opensafely org repos and their HEAD SHAs via GraphQL (or specific repos if provided)
+    2. Checks cache index first (ehrql_repos_index.json)
+    3. For uncached repos, shallow clones them to .ehrql_repo_cache/{repo_name}-{sha}/
+    4. Searches locally for project.yaml files containing 'ehrql'
+
+    Args:
+        verbose: Print detailed logging
+        repos: Optional list of specific repo names to search (e.g., ['repo1', 'repo2']).
+               If None, searches all repos in opensafely org.
+
+    Returns list of dicts with 'repo_full_name' and 'sha' keys.
+    """
+    cache_dir = pathlib.Path(".ehrql_repo_cache")
+    cache_dir.mkdir(exist_ok=True)
+
+    # Fast cache: stores {repo_name: {"has_ehrql": bool, "sha": str, "no_project_yaml": bool}}
+    cache_index_file = cache_dir / "ehrql_repos_index.json"
+    cache_index: dict = {}
+    if cache_index_file.exists():
+        try:
+            cache_index = json.load(cache_index_file.open())
+        except Exception:
+            cache_index = {}
+
+    if verbose:
+        print("Fetching all repos and HEAD SHAs via GraphQL...", file=sys.stderr)
+
+    # Use GraphQL to get all repos with SHAs in ~4 calls instead of 300+
+    # Pass repo_filter if specific repos were requested
+    repos_with_shas = get_all_repos_with_shas_graphql(repo_filter=repos)
+
+    if verbose:
+        print(f"Found {len(repos_with_shas)} repos in opensafely org", file=sys.stderr)
+
     items: list[dict] = []
-    page = 1
-    while True:
-        header_args: list[str] = []
-        for h in GH_API_HEADERS:
-            header_args.extend(["-H", h])
-        path_with_query = f"/search/code?q={query}&per_page=100&page={page}"
-        result = run_gh(["api", *header_args, path_with_query])
-        batch = result.get("items", []) if isinstance(result, dict) else []
-        for it in batch:
-            repo = it.get("repository", {})
-            full_name = repo.get("full_name")
-            if repo["private"]:
+    cloned_count = 0
+    cached_count = 0
+    no_project_yaml_count = 0
+    index_hits = 0
+    cache_updated = False
+
+    # For each repo, check cache index first, then clone if needed
+    for i, repo_name in enumerate(repos_with_shas.keys()):
+        repo_full_name = f"opensafely/{repo_name}"
+        head_sha = repos_with_shas[repo_name]
+
+        if (i + 1) % 20 == 0:
+            print(
+                f"  Checked {i + 1}/{len(repos_with_shas)} repos (index hits: {index_hits}, cached: {cached_count}, cloned: {cloned_count}, no project.yaml: {no_project_yaml_count}, ehrql found: {len(items)})",
+                file=sys.stderr,
+            )
+
+        try:
+            # Fast path: check index first
+            if repo_name in cache_index:
+                entry = cache_index[repo_name]
+                index_hits += 1
+
+                if entry.get("no_project_yaml"):
+                    no_project_yaml_count += 1
+                    continue
+
+                if entry.get("has_ehrql"):
+                    items.append(
+                        {
+                            "repo_full_name": repo_full_name,
+                            "sha": entry.get("sha", ""),
+                        }
+                    )
+                    cached_count += 1
+                    continue
+                else:
+                    # In index but no ehrql
+                    continue
+
+            # Use the same cache naming as clone_ehrql_repos: {repo_name}-{first_8_chars_of_sha}
+            cache_key = f"{repo_name}-{head_sha[:8]}"
+            repo_cache_dir = cache_dir / cache_key
+
+            # Check if we already have project.yaml for this SHA
+            project_yaml_path = repo_cache_dir / "project.yaml"
+
+            if not project_yaml_path.exists():
+                # Check if the directory exists (might be cloned but no project.yaml)
+                if repo_cache_dir.exists():
+                    no_project_yaml_count += 1
+                    if verbose:
+                        print(
+                            f"  {repo_full_name}: cached but no project.yaml",
+                            file=sys.stderr,
+                        )
+                    continue
+
+                # Need to clone
+                cloned_count += 1
+                print(f"  Cloning {repo_full_name}@{head_sha[:8]}...", file=sys.stderr)
+
+                # Full shallow clone (with working tree)
+                result = subprocess.run(
+                    [
+                        "git",
+                        "clone",
+                        "--depth",
+                        "1",
+                        f"https://github.com/{repo_full_name}.git",
+                        str(repo_cache_dir),
+                    ],
+                    capture_output=True,
+                    check=False,
+                    timeout=30,
+                )
+
+                if result.returncode != 0:
+                    print(
+                        f"  Failed to clone {repo_full_name}: {result.stderr.decode()[:100]}",
+                        file=sys.stderr,
+                    )
+                    continue
+
+                # After cloning, check again for project.yaml
+                if not project_yaml_path.exists():
+                    no_project_yaml_count += 1
+                    if verbose:
+                        print(
+                            f"  {repo_full_name}: cloned but no project.yaml",
+                            file=sys.stderr,
+                        )
+                    continue
+            else:
+                cached_count += 1
+
+            # Check for project.yaml with ehrql content
+            if project_yaml_path.exists():
+                try:
+                    content = project_yaml_path.read_text(encoding="utf-8")
+                    if "ehrql" in content.lower():
+                        items.append(
+                            {
+                                "repo_full_name": repo_full_name,
+                                "sha": head_sha,
+                            }
+                        )
+
+                        # Update index
+                        cache_index[repo_name] = {
+                            "has_ehrql": True,
+                            "sha": head_sha,
+                            "no_project_yaml": False,
+                        }
+                        cache_updated = True
+
+                        if verbose:
+                            print(f"  Found ehrql in {repo_full_name}", file=sys.stderr)
+                    else:
+                        # Has project.yaml but no ehrql
+                        cache_index[repo_name] = {
+                            "has_ehrql": False,
+                            "sha": head_sha,
+                            "no_project_yaml": False,
+                        }
+                        cache_updated = True
+                except Exception as e:
+                    if verbose:
+                        print(
+                            f"  Error reading {project_yaml_path}: {e}", file=sys.stderr
+                        )
+            else:
+                # No project.yaml
+                cache_index[repo_name] = {
+                    "has_ehrql": False,
+                    "sha": head_sha,
+                    "no_project_yaml": True,
+                }
+                cache_updated = True
                 if verbose:
-                    print(f"Skipping private repo {full_name}")
-                continue
-            if full_name:
-                it["repo_full_name"] = full_name
-                items.append(it)
-        if len(batch) < 100:
-            break
-        page += 1
-        if page > 10:  # safety guard (100 * 10 = 1000 limit)
-            break
+                    print(
+                        f"  No project.yaml found in {repo_full_name}", file=sys.stderr
+                    )
+        except subprocess.TimeoutExpired:
+            if verbose:
+                print(f"  Timeout checking {repo_full_name}", file=sys.stderr)
+        except Exception as e:
+            if verbose:
+                print(f"  Error processing {repo_full_name}: {e}", file=sys.stderr)
+
+    # Save updated cache index
+    if cache_updated:
+        try:
+            json.dump(cache_index, cache_index_file.open("w"), indent=2)
+        except Exception:
+            pass
+
     return items
 
 
@@ -258,8 +572,8 @@ def group_items_by_repo(items: list[dict]) -> dict:
     grouped: dict = {}
     for it in items:
         repo = it.get("repo_full_name")
-        head_sha = it.get("html_url").split("/")[6]
-        if not repo:
+        head_sha = it.get("sha")
+        if not repo or not head_sha:
             continue
         # Add key of repo and value of sha. If it already exists, log if different
         existing = grouped.get(repo, None)
@@ -561,21 +875,13 @@ def clone_ehrql_repos(
     Returns:
         List of tuples (repo_full_name, sha, local_path) for each repo/SHA combination
     """
-    # Always start with GitHub API search
-    project_yaml_files = project_yaml_search(verbose=verbose)
-    ehrql_repos = group_items_by_repo(project_yaml_files)
-
-    if not silent:
-        print(
-            f"Found {len(project_yaml_files)} project.yaml files in {len(ehrql_repos)} opensafely ehrql repos",
-            file=sys.stderr,
-        )
-
-    # Start with GitHub API results (latest commit for each repo)
-    all_repos_shas = list(ehrql_repos.items())
-
-    # If CSV provided, add additional SHAs for repos in the GitHub search
+    # If CSV provided, ensure it exists and use only the SHAs from CSV (skip GitHub search)
     if csv_path:
+        csv_path = pathlib.Path(csv_path)
+        if not csv_path.exists():
+            # Fail fast so callers (CLI) can report the error immediately
+            raise FileNotFoundError(f"CSV file not found: {csv_path}")
+
         csv_repo_shas = parse_jobs_csv(csv_path)
 
         if not silent:
@@ -586,50 +892,33 @@ def clone_ehrql_repos(
                 file=sys.stderr,
             )
 
-        # Track repos in CSV but not in GitHub search
-        csv_only_repos = []
-
-        # Add additional SHAs from CSV for repos that are in the GitHub search
-        added_shas_count = 0
+        # Use all repo/SHA combinations from CSV
+        all_repos_shas = []
         for repo_name, csv_shas in csv_repo_shas.items():
-            if repo_name in ehrql_repos:
-                # This repo is in GitHub search - add any additional SHAs from CSV
-                github_sha = ehrql_repos[repo_name]
-                for csv_sha in csv_shas:
-                    if csv_sha != github_sha:
-                        all_repos_shas.append((repo_name, csv_sha))
-                        added_shas_count += 1
-            else:
-                # This repo is in CSV but not in GitHub search
-                csv_only_repos.append((repo_name, len(csv_shas)))
+            for csv_sha in csv_shas:
+                all_repos_shas.append((repo_name, csv_sha))
 
-        if not silent and added_shas_count > 0:
+        if not silent:
             print(
-                f"Added {added_shas_count} additional SHAs from CSV for repos in GitHub search",
+                f"Will process all {len(all_repos_shas)} repo/SHA combinations from CSV",
+                file=sys.stderr,
+            )
+    else:
+        # No CSV - use GitHub API search to get latest commits
+        # Pass the repos parameter to only search specific repos if provided
+        project_yaml_files = project_yaml_search(
+            verbose=verbose, repos=repos if repos else None
+        )
+        ehrql_repos = group_items_by_repo(project_yaml_files)
+
+        if not silent:
+            print(
+                f"Found {len(project_yaml_files)} project.yaml files in {len(ehrql_repos)} opensafely ehrql repos",
                 file=sys.stderr,
             )
 
-        # Report repos in CSV but not in GitHub search
-        if csv_only_repos and not silent:
-            print("\n" + "=" * 80, file=sys.stderr)
-            print("REPOS IN CSV BUT NOT IN GITHUB SEARCH", file=sys.stderr)
-            print("=" * 80, file=sys.stderr)
-            print(
-                f"\nTotal: {len(csv_only_repos)} repos in CSV were not found in GitHub ehrQL search",
-                file=sys.stderr,
-            )
-            print("(These will NOT be cloned or processed)", file=sys.stderr)
-            print("\nRepos:", file=sys.stderr)
-            print("-" * 80, file=sys.stderr)
-            print_limit = 10
-            for repo, sha_count in sorted(csv_only_repos)[:print_limit]:
-                print(f"  {repo} ({sha_count} SHA(s) in CSV)", file=sys.stderr)
-            if len(csv_only_repos) > print_limit:
-                print(
-                    f"\n  ... and {len(csv_only_repos) - print_limit} more",
-                    file=sys.stderr,
-                )
-            print("=" * 80 + "\n", file=sys.stderr)
+        # Start with GitHub API results (latest commit for each repo)
+        all_repos_shas = list(ehrql_repos.items())
 
     print(f"{time.strftime('%Y-%m-%d %H:%M:%S')} - Cloning ehrQL repos")
     local_ehrql_repos = clone_repos(

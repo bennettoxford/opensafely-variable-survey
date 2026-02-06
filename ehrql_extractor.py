@@ -42,7 +42,7 @@ def convert_spoofed_data(verbose: bool = False) -> int:
     input_path = data_dir / "csv_data.csv"
 
     if verbose:
-        print("Creating a .csv.gz and .arrow file from spoofed_data.csv...")
+        print("Creating a .csv.gz and .arrow file from spoofed_data/csv_data.csv...")
         print(f"Reading CSV from {input_path}")
     df = pd.read_csv(input_path)
 
@@ -418,6 +418,29 @@ def setup_spoofs(silent: bool = False, verbose: bool = False) -> None:
 
     pathlib.Path.is_file = spoofed_is_file
 
+    # Also spoof Path.exists() for CSV files - ehrql's codelist_from_csv uses this
+    original_exists = pathlib.Path.exists
+
+    def spoofed_exists(self):
+        path_str = str(self)
+        if (
+            path_str.endswith(".csv")
+            or path_str.endswith(".csv.gz")
+            or path_str.endswith(".arrow")
+        ):
+            if verbose:
+                print(
+                    f"..Spoofing exists() check for {path_str} -> True",
+                    file=sys.stderr,
+                )
+            return True
+        try:
+            return original_exists(self)
+        except (OSError, FileNotFoundError):
+            return False
+
+    pathlib.Path.exists = spoofed_exists
+
     # Monkey-patch Dataset class to redirect configure_dummy_dataset to configure_dummy_data
     # This handles cases where older code uses the deprecated method name
     Dataset = getattr(ehrql_mod, "Dataset", None)
@@ -545,15 +568,15 @@ def get_runtime_dataset_variables(
         # bare module names like `from codelists import X`. Many OpenSafely repos keep
         # analysis scripts in a subfolder (e.g. analysis/). Adding that folder directly
         # mirrors running the script from within that directory.
+        # In fact let's keep on adding to the path until we get to the cache root
         parent_dir = abs_path.parent
-        if str(parent_dir) in sys.path:
-            sys.path.remove(str(parent_dir))
-        sys.path.insert(0, str(parent_dir))  # Insert at position 0, not append
-
-        parent_parent_dir = parent_dir.parent
-        if str(parent_parent_dir) in sys.path:
-            sys.path.remove(str(parent_parent_dir))
-        sys.path.insert(1, str(parent_parent_dir))  # Position 1, after parent dir
+        index = 0
+        while parent_dir.name != CACHE_DIR:
+            if str(parent_dir) in sys.path:
+                sys.path.remove(str(parent_dir))
+            sys.path.insert(index, str(parent_dir))
+            index += 1
+            parent_dir = parent_dir.parent
 
         # Change working directory to repo root so that codelist_from_csv() calls
         # with relative paths (e.g., "codelists/foo.csv") resolve correctly.
@@ -616,7 +639,15 @@ def get_runtime_dataset_variables(
                                             variable_name=var_name,
                                             series_type=series.__class__.__name__,
                                             line_no=line_no,
-                                            qm_node=compact_qm_node(series._qm_node),
+                                            qm_node=compact_qm_node(
+                                                series._qm_node,
+                                                max_depth=50
+                                                if repo_name
+                                                in [
+                                                    "opensafely/polypharmacy-deprescribing-dementia",
+                                                ]
+                                                else None,
+                                            ),
                                         )
                                     )
 
@@ -682,7 +713,7 @@ def get_runtime_dataset_variables(
                         print(
                             f"\n  [KeyError] The dataset file might be trying to access a {e} property "
                             f"from a JSON file. The origin is:\n             {trace}\n"
-                            "             Consider adding the property to spoofed_data.json.\n",
+                            "             Consider adding the property to spoofed_data/json_data.json.\n",
                             file=sys.stderr,
                         )
             except Exception as e:  # pragma: no cover
@@ -749,6 +780,9 @@ def reset_modules_to_snapshot() -> None:
             pass
 
 
+CACHE_DIR = ".ehrql_repo_cache"
+
+
 def collect(
     output: str,
     repos: list[str] | None,
@@ -757,7 +791,7 @@ def collect(
     include_full_qm_node_dump: bool = False,
 ) -> None:
     initial_start_time = time.time()
-    cache_dir = pathlib.Path(".ehrql_repo_cache")
+    cache_dir = pathlib.Path(CACHE_DIR)
     cache_dir.mkdir(exist_ok=True)
 
     local_repos = clone_ehrql_repos(repos, cache_dir, silent=silent, verbose=verbose)
@@ -911,7 +945,7 @@ def parse_args(argv: list[str]) -> argparse.Namespace:
         description="Collect ehrql dataset variable definitions across the GitHub opensafely org"
     )
     p.add_argument(
-        "--output", default="ehrql_variables.json", help="Output JSON file path"
+        "--output", default="data/ehrql_variables.json", help="Output JSON file path"
     )
     p.add_argument(
         "--silent",
