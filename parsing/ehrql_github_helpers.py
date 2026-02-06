@@ -875,24 +875,13 @@ def clone_ehrql_repos(
     Returns:
         List of tuples (repo_full_name, sha, local_path) for each repo/SHA combination
     """
-    # Always start with GitHub API search
-    # Pass the repos parameter to only search specific repos if provided
-    project_yaml_files = project_yaml_search(
-        verbose=verbose, repos=repos if repos else None
-    )
-    ehrql_repos = group_items_by_repo(project_yaml_files)
-
-    if not silent:
-        print(
-            f"Found {len(project_yaml_files)} project.yaml files in {len(ehrql_repos)} opensafely ehrql repos",
-            file=sys.stderr,
-        )
-
-    # Start with GitHub API results (latest commit for each repo)
-    all_repos_shas = list(ehrql_repos.items())
-
-    # If CSV provided, add additional SHAs for repos in the GitHub search
+    # If CSV provided, ensure it exists and use only the SHAs from CSV (skip GitHub search)
     if csv_path:
+        csv_path = pathlib.Path(csv_path)
+        if not csv_path.exists():
+            # Fail fast so callers (CLI) can report the error immediately
+            raise FileNotFoundError(f"CSV file not found: {csv_path}")
+
         csv_repo_shas = parse_jobs_csv(csv_path)
 
         if not silent:
@@ -903,50 +892,33 @@ def clone_ehrql_repos(
                 file=sys.stderr,
             )
 
-        # Track repos in CSV but not in GitHub search
-        csv_only_repos = []
-
-        # Add additional SHAs from CSV for repos that are in the GitHub search
-        added_shas_count = 0
+        # Use all repo/SHA combinations from CSV
+        all_repos_shas = []
         for repo_name, csv_shas in csv_repo_shas.items():
-            if repo_name in ehrql_repos:
-                # This repo is in GitHub search - add any additional SHAs from CSV
-                github_sha = ehrql_repos[repo_name]
-                for csv_sha in csv_shas:
-                    if csv_sha != github_sha:
-                        all_repos_shas.append((repo_name, csv_sha))
-                        added_shas_count += 1
-            else:
-                # This repo is in CSV but not in GitHub search
-                csv_only_repos.append((repo_name, len(csv_shas)))
+            for csv_sha in csv_shas:
+                all_repos_shas.append((repo_name, csv_sha))
 
-        if not silent and added_shas_count > 0:
+        if not silent:
             print(
-                f"Added {added_shas_count} additional SHAs from CSV for repos in GitHub search",
+                f"Will process all {len(all_repos_shas)} repo/SHA combinations from CSV",
+                file=sys.stderr,
+            )
+    else:
+        # No CSV - use GitHub API search to get latest commits
+        # Pass the repos parameter to only search specific repos if provided
+        project_yaml_files = project_yaml_search(
+            verbose=verbose, repos=repos if repos else None
+        )
+        ehrql_repos = group_items_by_repo(project_yaml_files)
+
+        if not silent:
+            print(
+                f"Found {len(project_yaml_files)} project.yaml files in {len(ehrql_repos)} opensafely ehrql repos",
                 file=sys.stderr,
             )
 
-        # Report repos in CSV but not in GitHub search
-        if csv_only_repos and not silent:
-            print("\n" + "=" * 80, file=sys.stderr)
-            print("REPOS IN CSV BUT NOT IN GITHUB SEARCH", file=sys.stderr)
-            print("=" * 80, file=sys.stderr)
-            print(
-                f"\nTotal: {len(csv_only_repos)} repos in CSV were not found in GitHub ehrQL search",
-                file=sys.stderr,
-            )
-            print("(These will NOT be cloned or processed)", file=sys.stderr)
-            print("\nRepos:", file=sys.stderr)
-            print("-" * 80, file=sys.stderr)
-            print_limit = 10
-            for repo, sha_count in sorted(csv_only_repos)[:print_limit]:
-                print(f"  {repo} ({sha_count} SHA(s) in CSV)", file=sys.stderr)
-            if len(csv_only_repos) > print_limit:
-                print(
-                    f"\n  ... and {len(csv_only_repos) - print_limit} more",
-                    file=sys.stderr,
-                )
-            print("=" * 80 + "\n", file=sys.stderr)
+        # Start with GitHub API results (latest commit for each repo)
+        all_repos_shas = list(ehrql_repos.items())
 
     print(f"{time.strftime('%Y-%m-%d %H:%M:%S')} - Cloning ehrQL repos")
     local_ehrql_repos = clone_repos(
