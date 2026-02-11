@@ -24439,6 +24439,12 @@
     "analysis/dataset_definition/dataset_definition_unvax.py",
     "analysis/dataset_definition/dataset_definition_vax.py"
   ],
+  "opensafely/post-covid-cvd@3619dd6fc30e49445b60f019b54c73955c6a5126": [
+    "analysis/dataset_definition/dataset_definition_dates.py",
+    "analysis/dataset_definition/dataset_definition_prevax.py",
+    "analysis/dataset_definition/dataset_definition_unvax.py",
+    "analysis/dataset_definition/dataset_definition_vax.py"
+  ],
   "opensafely/post-covid-cvd@3c21f488fce8a2512d2ecef4e50d8e43076bab57": [
     "analysis/dataset_definition/dataset_definition_dates.py",
     "analysis/dataset_definition/dataset_definition_prevax.py",
@@ -25907,6 +25913,12 @@
     "analysis/dataset_definition/dataset_definition_vax.py"
   ],
   "opensafely/post-covid-respiratory@f43f03666f2cfdd35372cdc16c8545eb119552b4": [
+    "analysis/dataset_definition/dataset_definition_dates.py",
+    "analysis/dataset_definition/dataset_definition_prevax.py",
+    "analysis/dataset_definition/dataset_definition_unvax.py",
+    "analysis/dataset_definition/dataset_definition_vax.py"
+  ],
+  "opensafely/post-covid-respiratory@f587d646d4afc47f1a24955adc595f434240a027": [
     "analysis/dataset_definition/dataset_definition_dates.py",
     "analysis/dataset_definition/dataset_definition_prevax.py",
     "analysis/dataset_definition/dataset_definition_unvax.py",

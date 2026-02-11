@@ -156,11 +156,11 @@ just codelists --force
 1. Update the `rsi-codelists-analysis.json`
 
 ```bash
-# Assumes starting from this directory
+# Assumes starting from this directory and that the opencodelists repo is checked out at the same level as this one
 curr_dir=$(pwd)
-
+ocl_dir="../opencodelists"
 # Goto opencodelists repo
-cd <path-to-opencodelists-repo>
+cd $ocl_dir
 
 # Checkout branch
 git checkout Jongmassey/dump-rsi-json
@@ -193,11 +193,12 @@ cd $curr_dir
 # ASSUMES YOU ARE USING THE DOCKER VERSION OF POSTGRES IN THE JOB-SERVER REPO
 # IF NOT THEN CHECK OUT THE DEVELOPERS DOC IN THE JOB-SERVER REPO
 
-# Assumes starting from this directory
+# Assumes starting from this directory and that the job-server repo is checked out at the same level as this one
 curr_dir=$(pwd)
+job_server_dir="../job-server"
 
 # Goto job-server repo
-cd <path-to-job-server-repo>
+cd $job_server_dir
 
 # [Restore](https://github.com/opensafely-core/job-server/blob/main/DEVELOPERS.md#restoring-backups) a new copy of the job-server database dump. Currently this is:
 . .venv/bin/activate # avoid running in the wrong python environment
