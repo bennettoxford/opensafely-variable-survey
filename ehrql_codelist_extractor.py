@@ -19,8 +19,9 @@ import sys
 import time
 
 from parsing.ehrql_github_helpers import (
-    clone_ehrql_repos,
+    clone_repos,
     get_dataset_files,
+    get_target_repos_and_shas,
 )
 from parsing.ehrql_variable_extractor import (
     VariableExtractor,
@@ -299,11 +300,54 @@ def collect_codelists(
                 )
             existing_data = {}
 
-    # Clone repos and find dataset files
-    print(f"{time.strftime('%Y-%m-%d %H:%M:%S')} - Cloning ehrQL repos")
-    local_repos = clone_ehrql_repos(
-        repos, cache_dir, silent=silent, verbose=verbose, csv_path=csv_path
+    # Get target repos and SHAs (from CSV or GitHub API)
+    print(f"{time.strftime('%Y-%m-%d %H:%M:%S')} - Getting target repos and SHAs")
+    target_repos_shas = get_target_repos_and_shas(
+        repos=repos if repos else None,
+        csv_path=csv_path,
+        silent=silent,
+        verbose=verbose,
     )
+
+    # Filter out repos/SHAs that are already cached or have no dataset files
+    uncached_repos_shas = []
+    skipped_no_files = 0
+    for repo, sha, list_of_files in target_repos_shas:
+        # Skip if we already have results
+        if repo in existing_data and sha in existing_data[repo]:
+            continue
+        # Skip if project_yaml_cache shows this repo@SHA has no dataset files
+        if list_of_files is not None and len(list_of_files) == 0:
+            skipped_no_files += 1
+            continue
+        # Need to clone this one
+        uncached_repos_shas.append((repo, sha))
+
+    # Report cache filtering
+    cached_shas = len(target_repos_shas) - len(uncached_repos_shas) - skipped_no_files
+    if not silent:
+        print(
+            f"Cache filtering: {len(target_repos_shas)} SHAs requested, "
+            f"{cached_shas} in output cache, {skipped_no_files} have no files, "
+            f"{len(uncached_repos_shas)} to clone",
+            file=sys.stderr,
+        )
+
+    # Only clone uncached repos
+    print(f"{time.strftime('%Y-%m-%d %H:%M:%S')} - Cloning uncached ehrQL repos")
+    if uncached_repos_shas:
+        local_repos = clone_repos(
+            uncached_repos_shas,
+            repos if repos else None,
+            cache_dir,
+            silent=silent,
+            verbose=verbose,
+        )
+    else:
+        if not silent:
+            print("No uncached repos to clone", file=sys.stderr)
+        local_repos = []
+
     print(f"{time.strftime('%Y-%m-%d %H:%M:%S')} - Getting dataset files")
     all_dataset_files = get_dataset_files(
         local_repos, silent=silent, verbose=verbose, force=force
@@ -322,6 +366,20 @@ def collect_codelists(
     cached_count = 0
     processed_count = 0
 
+    # First, add all cached results directly to out_map
+    for repo_name, sha_dict in existing_data.items():
+        if repo_name not in out_map:
+            out_map[repo_name] = {}
+        for sha, files_data in sha_dict.items():
+            out_map[repo_name][sha] = files_data
+            cached_count += 1
+
+    if not silent and cached_count > 0:
+        print(
+            f"\nAdded {cached_count} cached repo/SHA results to output",
+            file=sys.stderr,
+        )
+
     total_shas = len(all_dataset_files)
     # Count unique repos (strip @sha suffix from composite keys)
     unique_repos = set(
@@ -337,22 +395,9 @@ def collect_codelists(
         # Extract repo name (without @sha suffix)
         repo_name = repo_key.split("@")[0] if "@" in repo_key else repo_key
 
-        # Check if we can use cached result
-        if repo_name in existing_data and head_sha in existing_data[repo_name]:
-            if not silent:
-                print(
-                    f"\nUsing cached result for {repo_key} ({current_sha_index}/{total_shas} SHAs)",
-                    file=sys.stderr,
-                )
-            if repo_name not in out_map:
-                out_map[repo_name] = {}
-            out_map[repo_name][head_sha] = existing_data[repo_name][head_sha]
-            cached_count += 1
-            continue
-
         if not silent:
             print(
-                f"\nProcessing {repo_key} with {len(files)} dataset files... ({current_sha_index}/{total_shas} SHAs, for {total_repos} repos)",
+                f"\nProcessing {repo_key} with {len(files)} dataset files... ({current_sha_index}/{total_shas} uncached SHAs, for {total_repos} repos)",
                 file=sys.stderr,
             )
 
@@ -512,6 +557,7 @@ def collect_codelists(
 
     with open(output, "w", encoding="utf-8") as f:
         json.dump(json_data, f, indent=2, ensure_ascii=False, sort_keys=True)
+        f.write("\n")  # Ensure file ends with newline
 
     # Write a second JSON file without signature deduplication for easier inspection
     # Structure: repo_name > commit_sha > file_name > variable > codelists
@@ -543,6 +589,7 @@ def collect_codelists(
             ensure_ascii=False,
             sort_keys=True,
         )
+        f.write("\n")  # Ensure file ends with newline
 
     if not silent:
         write_duration = time.time() - write_start_time
