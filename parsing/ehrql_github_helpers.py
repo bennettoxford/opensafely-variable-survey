@@ -1,6 +1,5 @@
 import base64
 import csv
-import hashlib
 import json
 import pathlib
 import re
@@ -9,6 +8,7 @@ import sys
 import time
 
 import yaml
+from tqdm import tqdm
 
 
 GH_API_HEADERS = [
@@ -43,37 +43,48 @@ def _load_project_yaml_cache() -> None:
     _PROJECT_YAML_CACHE_MODIFIED = False
 
 
+def _cache_key(repo: str, sha: str) -> str:
+    return f"{repo}@{sha}"
+
+
+def is_cached(cache_key: str) -> bool:
+    return cache_key in _PROJECT_YAML_CACHE
+
+
+def _get_cached_value(cache_key: str) -> list[str]:
+    return _PROJECT_YAML_CACHE.get(cache_key, None)
+
+
 def _save_project_yaml_cache() -> None:
-    """Save the project.yaml parsing cache to disk if modified."""
+    """Save the project.yaml parsing cache to disk if modified.
+
+    Always merges with existing cache file to preserve entries from other runs.
+    """
     global _PROJECT_YAML_CACHE_MODIFIED
 
     if _PROJECT_YAML_CACHE_MODIFIED:
         try:
+            # Load existing cache file if it exists
+            existing_cache = {}
+            if _PROJECT_YAML_CACHE_FILE.exists():
+                try:
+                    with open(_PROJECT_YAML_CACHE_FILE, encoding="utf-8") as f:
+                        existing_cache = json.load(f)
+                except (json.JSONDecodeError, OSError):
+                    # If cache is corrupted, start with empty dict
+                    existing_cache = {}
+
+            # Merge current cache into existing cache
+            existing_cache.update(_PROJECT_YAML_CACHE)
+
+            # Write merged cache
             with open(_PROJECT_YAML_CACHE_FILE, "w", encoding="utf-8") as f:
-                json.dump(_PROJECT_YAML_CACHE, f)
+                json.dump(existing_cache, f, indent=2, sort_keys=True)
+                f.write("\n")  # Ensure file ends with newline
             _PROJECT_YAML_CACHE_MODIFIED = False
         except OSError:
             # Ignore save errors - cache is just an optimization
             pass
-
-
-def _clear_project_yaml_cache() -> None:
-    """Clear the project.yaml parsing cache."""
-    global _PROJECT_YAML_CACHE, _PROJECT_YAML_CACHE_MODIFIED
-
-    _PROJECT_YAML_CACHE = {}
-    _PROJECT_YAML_CACHE_MODIFIED = False
-
-    if _PROJECT_YAML_CACHE_FILE.exists():
-        try:
-            _PROJECT_YAML_CACHE_FILE.unlink()
-        except OSError:
-            pass
-
-
-def _hash_content(content: str) -> str:
-    """Create a hash of content for cache lookup."""
-    return hashlib.sha256(content.encode("utf-8")).hexdigest()
 
 
 def run_gh(args: list[str], expect_json: bool = True) -> dict | list | str:
@@ -127,35 +138,42 @@ def fetch_file_content(owner: str, repo: str, path: str, ref: str) -> tuple[str,
     return content, data.get("sha", "")
 
 
-def parse_project_yaml(repo_root: pathlib.Path) -> list[str]:
+def parse_project_yaml(
+    repo_root: pathlib.Path, repo_full_name: str, sha: str, force: bool = False
+) -> list[str]:
     """Extract dataset definition file paths from project.yaml.
 
+    Args:
+        repo_root: Path to repo root
+        repo_full_name: Full repo name (e.g., 'opensafely/repo-name')
+        sha: Commit SHA
+        force: If True, skip cache lookup and force re-parsing
+
     Returns list of relative paths to files that generate datasets.
-    Uses caching based on file content hash to speed up repeated parsing.
+    Uses caching based on repo@SHA to ensure cache is additive.
     """
     global _PROJECT_YAML_CACHE, _PROJECT_YAML_CACHE_MODIFIED
 
     try:
         content = (repo_root / "project.yaml").read_text(encoding="utf-8")
 
-        # Check cache first
-        content_hash = _hash_content(content)
-        if content_hash in _PROJECT_YAML_CACHE:
-            return _PROJECT_YAML_CACHE[content_hash]
+        cache_key = _cache_key(repo_full_name, sha)
+        if not force and is_cached(cache_key):
+            return _get_cached_value(cache_key)
 
         # Cache miss - do the parsing
         data = yaml.safe_load(content)
 
         dataset_files = set()
         if not data:
-            result = list(dataset_files)
-            _PROJECT_YAML_CACHE[content_hash] = result
+            result = []
+            _PROJECT_YAML_CACHE[cache_key] = result
             _PROJECT_YAML_CACHE_MODIFIED = True
             return result
 
         actions = data.get("actions", {})
 
-        for action_name, action_config in actions.items():
+        for _, action_config in actions.items():
             # Look for generate_dataset commands
             run_command = action_config.get("run", "")
             if "generate-dataset" in run_command or "generate_dataset" in run_command:
@@ -176,9 +194,10 @@ def parse_project_yaml(repo_root: pathlib.Path) -> list[str]:
                     )
                     sys.exit(1)
 
-        result = list(dataset_files)
-        # Update cache
-        _PROJECT_YAML_CACHE[content_hash] = result
+        # sort the result for deterministic output and convert to list
+        result = sorted(dataset_files)
+        # Update cache with repo@SHA key
+        _PROJECT_YAML_CACHE[cache_key] = result
         _PROJECT_YAML_CACHE_MODIFIED = True
         return result
     except (GitHubError, yaml.YAMLError, KeyError) as _:
@@ -717,6 +736,8 @@ def _clone_with_worktrees(
 
     Returns list of tuples (repo_full_name, sha, worktree_path).
     """
+    global _PROJECT_YAML_CACHE, _PROJECT_YAML_CACHE_MODIFIED
+
     # Main bare repo directory (no suffix, just the repo name)
     bare_repo_dir = cache_dir / repo_name
     clone_url = f"https://github.com/{owner}/{repo_name}.git"
@@ -810,11 +831,25 @@ def _clone_with_worktrees(
                 )
 
                 if fetch_commit_proc.returncode != 0:
-                    if not silent:
-                        print(
-                            f"..Cannot fetch {sha[:8]}: {fetch_commit_proc.stderr.strip()}",
-                            file=sys.stderr,
-                        )
+                    # Check if this is a "commit doesn't exist" error
+                    error_msg = fetch_commit_proc.stderr.strip()
+                    if "not our ref" in error_msg:
+                        # This commit no longer exists on the remote
+                        # Add to cache so we skip it in future runs
+                        cache_key = _cache_key(repo_full_name, sha)
+                        _PROJECT_YAML_CACHE[cache_key] = []
+                        _PROJECT_YAML_CACHE_MODIFIED = True
+                        if not silent:
+                            print(
+                                f"..Commit {sha[:8]} no longer exists on remote. Caching to skip in future.",
+                                file=sys.stderr,
+                            )
+                    else:
+                        if not silent:
+                            print(
+                                f"..Cannot fetch {sha[:8]}: {error_msg}",
+                                file=sys.stderr,
+                            )
                     continue
 
             # Create worktree at this SHA
@@ -848,38 +883,39 @@ def _clone_with_worktrees(
 
         local_repos.append((repo_full_name, sha, worktree_dir))
 
+    # Save cache if it was modified by caching permanent fetch errors
+    if _PROJECT_YAML_CACHE_MODIFIED:
+        _save_project_yaml_cache()
+
     return local_repos
 
 
-def clone_ehrql_repos(
-    repos: list[str],
-    cache_dir: pathlib.Path,
+def get_target_repos_and_shas(
+    repos: list[str] | None,
+    csv_path: pathlib.Path | None = None,
     silent: bool = False,
     verbose: bool = False,
-    csv_path: pathlib.Path | None = None,
-):
-    """Clone ehrQL repos from GitHub API search, with optional additional SHAs from CSV.
+) -> list[tuple[str, str, list[str]]]:
+    """Get the list of (repo_full_name, sha, <list_of_files>) tuples to process.
 
-    Priority:
-    1. Always clone latest commit from GitHub API search for each repo
-    2. If CSV provided, also clone any additional SHAs for repos found in GitHub search
-    3. Report (but don't clone) repos that are in CSV but not in GitHub search
+    This determines which repos and SHAs should be processed based on:
+    - CSV file if provided (takes priority)
+    - GitHub API search for latest commits if no CSV provided
 
     Args:
-        repos: Optional list of specific repos to include
-        cache_dir: Directory for caching cloned repos
+        repos: Optional list of specific repo names to include
+        csv_path: Optional path to jobs CSV file with repo/SHA pairs
         silent: Suppress output
         verbose: Verbose output
-        csv_path: Optional path to jobs CSV file for additional SHAs
 
     Returns:
-        List of tuples (repo_full_name, sha, local_path) for each repo/SHA combination
+        List of (repo_full_name, sha, <list_of_files>) tuples to process
     """
-    # If CSV provided, ensure it exists and use only the SHAs from CSV (skip GitHub search)
+    _load_project_yaml_cache()
+
     if csv_path:
         csv_path = pathlib.Path(csv_path)
         if not csv_path.exists():
-            # Fail fast so callers (CLI) can report the error immediately
             raise FileNotFoundError(f"CSV file not found: {csv_path}")
 
         csv_repo_shas = parse_jobs_csv(csv_path)
@@ -917,8 +953,47 @@ def clone_ehrql_repos(
                 file=sys.stderr,
             )
 
-        # Start with GitHub API results (latest commit for each repo)
+        # Use GitHub API results (latest commit for each repo)
         all_repos_shas = list(ehrql_repos.items())
+
+    # Add the list of files
+    all_repos_shas = [
+        (repo, sha, _get_cached_value(_cache_key(repo, sha)))
+        for repo, sha in all_repos_shas
+    ]
+
+    return all_repos_shas
+
+
+def clone_ehrql_repos(
+    repos: list[str],
+    cache_dir: pathlib.Path,
+    silent: bool = False,
+    verbose: bool = False,
+    csv_path: pathlib.Path | None = None,
+):
+    """Clone ehrQL repos from GitHub API search, with optional additional SHAs from CSV.
+
+    Priority:
+    1. Always clone latest commit from GitHub API search for each repo
+    2. If CSV provided, also clone any additional SHAs for repos found in GitHub search
+    3. Report (but don't clone) repos that are in CSV but not in GitHub search
+
+    Args:
+        repos: Optional list of specific repos to include
+        cache_dir: Directory for caching cloned repos
+        silent: Suppress output
+        verbose: Verbose output
+        csv_path: Optional path to jobs CSV file for additional SHAs
+
+    Returns:
+        List of tuples (repo_full_name, sha, local_path) for each repo/SHA combination
+    """
+    # Get target repos and SHAs (from CSV or GitHub API)
+    # Get target repos and SHAs (from CSV or GitHub API)
+    all_repos_shas = get_target_repos_and_shas(
+        repos=repos, csv_path=csv_path, silent=silent, verbose=verbose
+    )
 
     print(f"{time.strftime('%Y-%m-%d %H:%M:%S')} - Cloning ehrQL repos")
     local_ehrql_repos = clone_repos(
@@ -942,34 +1017,41 @@ def get_dataset_files(
         local_repos: List of (repo_full_name, sha, local_path) tuples
         silent: Suppress output
         verbose: Verbose output
-        force: If True, clear cache and force re-parsing
+        force: If True, skip cache lookups but preserve existing entries when saving
     """
-    # Load cache on first call, or clear it if force=True
-    if force:
-        _clear_project_yaml_cache()
-    elif not _PROJECT_YAML_CACHE:
+    # Load cache on first call
+    if not _PROJECT_YAML_CACHE:
         _load_project_yaml_cache()
 
     all_dataset_files: dict[str, (str, list[str], pathlib.Path)] = {}
-    for repo_full, head_sha, repo_local_dir in local_repos:
-        dataset_files = parse_project_yaml(repo_local_dir)
+    repo_iter = tqdm(
+        local_repos,
+        desc="Parsing project.yaml",
+        unit="repo",
+        dynamic_ncols=True,
+        disable=silent,
+    )
+    for repo_full, head_sha, repo_local_dir in repo_iter:
+        dataset_files = parse_project_yaml(
+            repo_local_dir, repo_full, head_sha, force=force
+        )
 
         if dataset_files:
             # Use composite key "repo@sha" to support multiple SHAs per repo
-            composite_key = f"{repo_full}@{head_sha}"
+            composite_key = _cache_key(repo_full, head_sha)
             all_dataset_files[composite_key] = (
                 head_sha,
                 dataset_files,
                 repo_local_dir,
             )
-            if verbose:
-                print(
+            if verbose and not silent:
+                tqdm.write(
                     f"..Found {len(dataset_files)} dataset files in project.yaml: {dataset_files}",
                     file=sys.stderr,
                 )
         else:
-            if verbose:
-                print(
+            if verbose and not silent:
+                tqdm.write(
                     "..No ehrql generate_dataset commands found in project.yaml",
                     file=sys.stderr,
                 )

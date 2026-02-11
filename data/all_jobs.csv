@@ -9008,7 +9008,8 @@ https://github.com/opensafely/covid-vaccine-history,eea5df6dd781c6bc9bdd4ed090c3
 https://github.com/opensafely/covid-vaccine-history,747ca1cb7dc5bb3902368502ece91bc18698431b,2026-01-30 15:57:13,failed
 https://github.com/opensafely/covid-vaccine-history,747ca1cb7dc5bb3902368502ece91bc18698431b,2026-02-03 07:51:29,failed
 https://github.com/opensafely/covid-vaccine-history,747ca1cb7dc5bb3902368502ece91bc18698431b,2026-02-04 15:41:41,failed
-https://github.com/opensafely/covid-vaccine-history,125fb0e7a3acdc75e003e128be570efabc87c3a3,2026-02-06 09:15:05,running
+https://github.com/opensafely/covid-vaccine-history,125fb0e7a3acdc75e003e128be570efabc87c3a3,2026-02-06 09:15:05,failed
+https://github.com/opensafely/covid-vaccine-history,fa6af18ee7da704a4a5cc54cf0ab9e7a894478c6,2026-02-09 10:18:30,running
 https://github.com/opensafely/covid-vaccine-neuro-research,6806adcf9ff392f61d902fc98a298c2a3f07aec4,2021-08-13 13:54:55,succeeded
 https://github.com/opensafely/covid-vaccine-neuro-research,cad80aaf03bc19d6952b7df3bb2f7bd80e286104,2021-08-25 13:07:39,failed
 https://github.com/opensafely/covid-vaccine-neuro-research,77add8ac0c130a363c64ad729b8eee7b8daa9a30,2021-08-25 16:21:33,failed
@@ -12877,6 +12878,7 @@ https://github.com/opensafely/inflammatory_rheum,997e33975b5615ce3a0f52b84300f4c
 https://github.com/opensafely/inflammatory_rheum,452f361cdd9180793865c74d3c8934df978b8e26,2025-09-24 21:21:18,succeeded
 https://github.com/opensafely/inflammatory_rheum,b0077c08f8c82955c3ff22f70e32c37cd3fbcb7c,2025-11-20 21:16:05,failed
 https://github.com/opensafely/inflammatory_rheum,b74162a887a0cf5f8ab27919a342c45fb0fa9fa4,2025-12-08 22:36:15,succeeded
+https://github.com/opensafely/inflammatory_rheum,a78b321f47a6c8e99d93c6c3af376bc2b68b505e,2026-02-07 21:01:10,succeeded
 https://github.com/opensafely/interactive,02ppFpIUxRztuk8E7CLkZn,2022-05-13 13:47:35,failed
 https://github.com/opensafely/interactive,bcd1011adb15768cd512281c6dac6d14bf4b641c,2022-05-13 16:36:02,failed
 https://github.com/opensafely/interactive,bcd1011adb15768cd512281c6dac6d14bf4b641c,2022-05-13 16:39:55,failed
@@ -14780,7 +14782,7 @@ https://github.com/opensafely/MH_pandemic,0eaec456b9bda789681da18812ed1b43b65254
 https://github.com/opensafely/MH_pandemic,edc9619e34e1e751886bb119aab734ea8da47646,2023-06-08 08:36:10,succeeded
 https://github.com/opensafely/MH_pandemic,91e7d19aaaa5a253cdc1454976162e3a6e048f48,2023-06-20 13:25:29,succeeded
 https://github.com/opensafely/MH_pandemic,4607588afd927be5ea963c6cacfc1514d39aa486,2023-07-04 12:02:24,succeeded
-https://github.com/opensafely/migration-short-data-report,8c027b06cdceb0bbe7d3d37b15f08d6c7e1a3674,2026-02-05 15:44:54,running
+https://github.com/opensafely/migration-short-data-report,8c027b06cdceb0bbe7d3d37b15f08d6c7e1a3674,2026-02-05 15:44:54,failed
 https://github.com/opensafely/NeurodegenerativeDiseaseBurden,8519f41a58e00b06f25fb25728c8e3ac8a91af53,2026-02-02 13:54:52,succeeded
 https://github.com/opensafely/NICE-audit-BP,03a0a88980184b7e3c7d527672eb2aec24f8f3ea,2022-03-09 10:52:39,succeeded
 https://github.com/opensafely/NICE-audit-BP,f8bb426f085a6d7cb18840dea679d5353cf72895,2022-03-16 10:18:41,succeeded
@@ -14829,6 +14831,7 @@ https://github.com/opensafely/NICE-audit-lipids,213cf61912f7b969812b563de7c73670
 https://github.com/opensafely/NICE-audit-lipids,b20adca2080a51e5a3ff95b7092cb4cf3359a6fa,2022-05-19 16:36:49,failed
 https://github.com/opensafely/NICE-audit-lipids,000093e2313f8003f2e98b345a2deb212f2fe64e,2022-05-23 14:08:05,succeeded
 https://github.com/opensafely/NICE-audit-lipids,77d3573fe5c4734b461ba5b328adf84496b4131f,2022-05-23 17:31:03,succeeded
+https://github.com/opensafely/non-gp-prescribing,99fa7cda4b8a548afce7ca529d19f54cbe734859,2026-02-10 15:11:31,failed
 https://github.com/opensafely/non-specific-immunity-research,022e874e82f3d712ae250c5cfa1c1212f6212df6,2020-11-25 20:28:25,failed
 https://github.com/opensafely/non-specific-immunity-research,7207d9f7fefc9e6726a6708aee0b3da255a81c07,2020-11-26 10:32:14,succeeded
 https://github.com/opensafely/non-specific-immunity-research,5d45a44c33281ac96eb367fb1b79202212d2648f,2020-12-03 14:42:34,succeeded
@@ -14951,7 +14954,8 @@ https://github.com/opensafely/OpenPregnosis,87cae051ccbad024cbea6edb6aa8adf6644b
 https://github.com/opensafely/OpenPregnosis,c6fdca3fdac45d4d55b1fab5ecb7a4966822b504,2026-01-16 12:43:49,succeeded
 https://github.com/opensafely/OpenPregnosis,f98be22737ba1d527c297097274ccfa25e2c986c,2026-01-23 13:51:06,succeeded
 https://github.com/opensafely/OpenPregnosis,f98be22737ba1d527c297097274ccfa25e2c986c,2026-01-23 14:20:10,succeeded
-https://github.com/opensafely/OpenPregnosis,58b5fba926c2aeedf75c271c9435571600c29241,2026-02-06 10:55:07,running
+https://github.com/opensafely/OpenPregnosis,58b5fba926c2aeedf75c271c9435571600c29241,2026-02-06 10:55:07,succeeded
+https://github.com/opensafely/OpenPregnosis,0576a5828aa3a599c3e98caf0b3fc0e5e4489a8b,2026-02-10 14:53:51,succeeded
 https://github.com/opensafely/openprompt-cohort-profile,0dcf9496c4cdfa6a9073e50aaf1b4b61cc5a5a81,2023-09-18 17:55:22,failed
 https://github.com/opensafely/openprompt-cohort-profile,0dcf9496c4cdfa6a9073e50aaf1b4b61cc5a5a81,2023-09-19 09:09:33,failed
 https://github.com/opensafely/openprompt-cohort-profile,0dcf9496c4cdfa6a9073e50aaf1b4b61cc5a5a81,2023-09-19 09:24:46,succeeded
@@ -17455,7 +17459,8 @@ https://github.com/opensafely/post-covid-cvd,a02918b0a2a6be5bb7bd9c78c1c7db40e7a
 https://github.com/opensafely/post-covid-cvd,a979404db0c49f93dddf8ae44f2840e3a363c4a0,2025-12-22 11:45:22,succeeded
 https://github.com/opensafely/post-covid-cvd,a030fc204a5e70e4fd4ac0b58d8b517f3c9e145e,2026-01-23 14:57:00,succeeded
 https://github.com/opensafely/post-covid-cvd,dbb68438b62e518ef8e7e54e6b5b4bcacca521da,2026-01-30 12:48:47,failed
-https://github.com/opensafely/post-covid-cvd,971231dafb07385d11d5b13abd933b8e8d82f6c3,2026-02-03 17:30:36,running
+https://github.com/opensafely/post-covid-cvd,971231dafb07385d11d5b13abd933b8e8d82f6c3,2026-02-03 17:30:36,succeeded
+https://github.com/opensafely/post-covid-cvd,3619dd6fc30e49445b60f019b54c73955c6a5126,2026-02-11 15:35:08,running
 https://github.com/opensafely/post-covid-cvd-methods,602f82455560b470ccf7a2423ba0ad8e69c2d5ad,2023-10-13 14:38:10,failed
 https://github.com/opensafely/post-covid-cvd-methods,b2fc100d5f0a9d3bc6ee38f73f89a140a88ef513,2025-02-21 13:20:39,succeeded
 https://github.com/opensafely/post-covid-cvd-methods,995a9ea6dbcf5f2c4cc4753490d650a218b8e9aa,2025-03-28 17:25:52,failed
@@ -19604,6 +19609,8 @@ https://github.com/opensafely/post-covid-respiratory,022c626a653db401b95bfb514c7
 https://github.com/opensafely/post-covid-respiratory,022c626a653db401b95bfb514c7145f489b22cf7,2025-11-13 20:36:46,succeeded
 https://github.com/opensafely/post-covid-respiratory,022c626a653db401b95bfb514c7145f489b22cf7,2025-11-13 20:43:40,succeeded
 https://github.com/opensafely/post-covid-respiratory,022c626a653db401b95bfb514c7145f489b22cf7,2025-11-13 21:17:09,succeeded
+https://github.com/opensafely/post-covid-respiratory,5857186e9b1b31186de0a1253193ca1bf8ef5f92,2026-02-09 16:32:10,failed
+https://github.com/opensafely/post-covid-respiratory,f587d646d4afc47f1a24955adc595f434240a027,2026-02-11 15:50:53,running
 https://github.com/opensafely/post-covid-respiratory-incident-events,0d3d64dab4cea0786b6c847f9575cf86f0a691bb,2023-05-04 16:16:43,failed
 https://github.com/opensafely/post-covid-respiratory-incident-events,0d3d64dab4cea0786b6c847f9575cf86f0a691bb,2023-05-17 15:16:17,failed
 https://github.com/opensafely/post-covid-respiratory-incident-events,156dd4cfa406668da2d024301fd9bf5b1c2727ec,2023-05-18 09:59:36,succeeded
@@ -23012,6 +23019,15 @@ https://github.com/opensafely/tpp-code-counts,38659f9dbd12e1fd99c1ecdba522fc7d46
 https://github.com/opensafely/tpp-counts-by-year,41a14519be0ef91df3ac9fe53779888c25c10277,2026-01-29 19:54:05,failed
 https://github.com/opensafely/tpp-counts-by-year,41a14519be0ef91df3ac9fe53779888c25c10277,2026-01-30 12:42:57,succeeded
 https://github.com/opensafely/tpp-counts-by-year,a53055e49f3821ae9d1ef12f910b73ce159a6f4b,2026-01-30 13:48:27,succeeded
+https://github.com/opensafely/tpp-counts-by-year,e39c1b41fa0fbb3f58a685dc5b3f49d39295684b,2026-02-07 15:20:33,succeeded
+https://github.com/opensafely/tpp-counts-by-year,66c878adf13965e64746c7343bd28b6d0314bf1b,2026-02-07 17:33:12,succeeded
+https://github.com/opensafely/tpp-counts-by-year,187a9389b8f871cbc863f1c39ddd94458e795aaf,2026-02-07 22:20:21,succeeded
+https://github.com/opensafely/tpp-counts-by-year,187a9389b8f871cbc863f1c39ddd94458e795aaf,2026-02-07 23:21:56,succeeded
+https://github.com/opensafely/tpp-counts-by-year,10020ead01727095a185352477a41edd537785e5,2026-02-10 14:13:18,failed
+https://github.com/opensafely/tpp-counts-by-year,0938d02111767a1abe673c46a9e77807ace66da5,2026-02-10 15:14:04,succeeded
+https://github.com/opensafely/tpp-counts-by-year,04cfcefcbb1123709df2e6ff1c1fa2726d1d97ff,2026-02-10 17:07:38,succeeded
+https://github.com/opensafely/tpp-counts-by-year,8585cf8d81c6c74a46278a153e7e38b343ad991e,2026-02-10 20:06:22,succeeded
+https://github.com/opensafely/tpp-counts-by-year,a5845c1560cc5511f3f1e6411f2f12e7de7c8d94,2026-02-11 09:15:04,succeeded
 https://github.com/opensafely/tpp-ctv3,c579dfd10c862741c091437cee85efd890873a86,2022-11-16 14:32:37,failed
 https://github.com/opensafely/tpp-ctv3,1cdc187793e36eebf01988adb16809513255c035,2022-11-16 14:41:59,succeeded
 https://github.com/opensafely/tpp-ctv3,4fde8e6353e36a82dd87f1163e57261a84602d56,2022-11-17 18:04:59,succeeded
@@ -24605,8 +24621,9 @@ https://github.com/opensafely/winter_pressures_inequalities,2b417bdd515ccb566766
 https://github.com/opensafely/winter_pressures_inequalities,cae95bb8d9ca6d22024a332771e7893b14338040,2026-01-21 15:04:30,failed
 https://github.com/opensafely/winter_pressures_inequalities,63ec47133de00612f5df106b60f5ed373492b18d,2026-01-22 17:09:27,failed
 https://github.com/opensafely/winter_pressures_inequalities,24089f74bd30705ef676780da43d27d39eab9694,2026-02-05 13:10:43,failed
-https://github.com/opensafely/winter_pressures_inequalities,24089f74bd30705ef676780da43d27d39eab9694,2026-02-05 14:09:49,running
-https://github.com/opensafely/winter_pressures_inequalities,24089f74bd30705ef676780da43d27d39eab9694,2026-02-06 14:45:08,pending
+https://github.com/opensafely/winter_pressures_inequalities,24089f74bd30705ef676780da43d27d39eab9694,2026-02-05 14:09:49,succeeded
+https://github.com/opensafely/winter_pressures_inequalities,24089f74bd30705ef676780da43d27d39eab9694,2026-02-06 14:45:08,running
+https://github.com/opensafely/winter_pressures_inequalities,24089f74bd30705ef676780da43d27d39eab9694,2026-02-10 11:20:42,pending
 https://github.com/opensafely/winter-pressures-phase-II,459466f13667fd41467bd67cdb3d95f38b0f23bc,2024-10-25 14:30:42,succeeded
 https://github.com/opensafely/winter-pressures-phase-II,26a3cff312bb58a81927e407ab24a61d9fc2eefa,2024-11-26 14:46:22,failed
 https://github.com/opensafely/winter-pressures-phase-II,26a3cff312bb58a81927e407ab24a61d9fc2eefa,2024-11-28 16:30:39,failed

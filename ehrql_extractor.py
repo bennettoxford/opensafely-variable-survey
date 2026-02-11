@@ -28,8 +28,9 @@ import pyarrow.feather as feather
 import pyarrow.ipc as _pa_ipc
 
 from parsing.ehrql_github_helpers import (
-    clone_ehrql_repos,
+    clone_repos,
     get_dataset_files,
+    get_target_repos_and_shas,
 )
 from parsing.ehrql_qm_node_helpers import compact_qm_node
 from parsing.ehrql_variable_extractor import extract_variable_line_numbers
@@ -316,6 +317,15 @@ def setup_spoofs(silent: bool = False, verbose: bool = False) -> None:
         # Intercept reads of JSON files and redirect to spoofed file
         if "r" in mode and isinstance(file, (str, pathlib.Path)):
             file_str = str(file)
+
+            # NEVER redirect our internal cache files or output files
+            if (
+                file_str.endswith(".project_yaml_cache.json")
+                or file_str.endswith("ehrql_variables.json")
+                or file_str.endswith("ehrql_codelists.json")
+            ):
+                return builtin_open(file, mode, *args, **kwargs)
+
             if file_str.endswith(".json"):
                 if verbose:
                     print(
@@ -789,15 +799,97 @@ def collect(
     silent: bool = False,
     verbose: bool = False,
     include_full_qm_node_dump: bool = False,
+    force: bool = False,
 ) -> None:
     initial_start_time = time.time()
     cache_dir = pathlib.Path(CACHE_DIR)
     cache_dir.mkdir(exist_ok=True)
 
-    local_repos = clone_ehrql_repos(repos, cache_dir, silent=silent, verbose=verbose)
-    all_dataset_files = get_dataset_files(
-        local_repos, silent=silent, verbose=verbose, force=False
+    # Load existing results if not forcing recalculation
+    existing_data: dict[str, dict[str, list]] = {}
+    if not force and pathlib.Path(output).exists():
+        try:
+            with open(output, encoding="utf-8") as f:
+                existing_json = json.load(f)
+                existing_projects = existing_json.get("projects", {})
+
+                # Build a map of (repo, sha) -> files_data
+                # Include all processed SHAs, even those with no files_data
+                for repo_full, repo_data in existing_projects.items():
+                    sha = repo_data.get("sha")
+                    files_data = repo_data.get("files", {})
+                    if sha:
+                        if repo_full not in existing_data:
+                            existing_data[repo_full] = {}
+                        existing_data[repo_full][sha] = files_data
+
+                if not silent:
+                    total_cached = sum(len(shas) for shas in existing_data.values())
+                    print(
+                        f"Loaded {total_cached} existing SHA results from {output}",
+                        file=sys.stderr,
+                    )
+        except (json.JSONDecodeError, KeyError, FileNotFoundError) as e:
+            if not silent:
+                print(
+                    f"Warning: Could not load existing results from {output}: {e}",
+                    file=sys.stderr,
+                )
+            existing_data = {}
+
+    # Get target repos and SHAs (from CSV or GitHub API)
+    print(f"{time.strftime('%Y-%m-%d %H:%M:%S')} - Getting target repos and SHAs")
+    target_repos_shas = get_target_repos_and_shas(
+        repos=repos,
+        silent=silent,
+        verbose=verbose,
     )
+
+    # Filter out repos/SHAs that are already cached or have no dataset files
+    uncached_repos_shas = []
+    skipped_no_files = 0
+    for repo, sha, list_of_files in target_repos_shas:
+        # Skip if we already have results
+        if repo in existing_data and sha in existing_data[repo]:
+            continue
+        # Skip if project_yaml_cache shows this repo@SHA has no dataset files
+        # cache_key = f"{repo}@{sha}"
+        if list_of_files is not None and len(list_of_files) == 0:
+            skipped_no_files += 1
+            continue
+        # Need to clone this one
+        uncached_repos_shas.append((repo, sha))
+
+    # Report cache filtering
+    cached_shas = len(target_repos_shas) - len(uncached_repos_shas) - skipped_no_files
+    if not silent:
+        print(
+            f"Cache filtering: {len(target_repos_shas)} SHAs requested, "
+            f"{cached_shas} in output cache, {skipped_no_files} have no files, "
+            f"{len(uncached_repos_shas)} to clone",
+            file=sys.stderr,
+        )
+
+    # Only clone uncached repos
+    print(f"{time.strftime('%Y-%m-%d %H:%M:%S')} - Cloning uncached ehrQL repos")
+    if uncached_repos_shas:
+        local_repos = clone_repos(
+            uncached_repos_shas,
+            repos if repos else None,
+            cache_dir,
+            silent=silent,
+            verbose=verbose,
+        )
+    else:
+        if not silent:
+            print("No uncached repos to clone", file=sys.stderr)
+        local_repos = []
+
+    print(f"{time.strftime('%Y-%m-%d %H:%M:%S')} - Getting dataset files")
+    all_dataset_files = get_dataset_files(
+        local_repos, silent=silent, verbose=verbose, force=force
+    )
+    print(f"{time.strftime('%Y-%m-%d %H:%M:%S')} - Completed getting dataset files")
 
     duration = time.time() - initial_start_time
     if not silent:
@@ -817,7 +909,7 @@ def collect(
         repo_name = repo
         if not silent:
             print(
-                f"\nProcessing {repo} with {len(files)} dataset files... ({current_repo_index}/{total_repos} repos)",
+                f"\nProcessing {repo} with {len(files)} dataset files... ({current_repo_index}/{total_repos} uncached repos)",
                 file=sys.stderr,
             )
         if not files:
@@ -858,6 +950,21 @@ def collect(
     write_start_time = time.time()
     # Write JSON with structure project -> dataset_file -> list of [variable_name, expression, permalink, series_type]
     out_map: dict[str, dict[str, Any]] = {}
+
+    # First, add all cached results directly to out_map
+    for repo_full, sha_dict in existing_data.items():
+        for sha, files_data in sha_dict.items():
+            out_map[repo_full] = {
+                "sha": sha,
+                "files": files_data,
+            }
+
+    if not silent and existing_data:
+        cached_count = sum(len(shas) for shas in existing_data.values())
+        print(
+            f"\nAdded {cached_count} cached repo/SHA results to output",
+            file=sys.stderr,
+        )
 
     # qm_node analysis
     qm_out_map: dict[str, int] = {}
@@ -910,6 +1017,7 @@ def collect(
 
     with open(output, "w", encoding="utf-8") as f:
         json.dump(json_data, f, indent=2, ensure_ascii=False, sort_keys=True)
+        f.write("\n")  # ensure file ends with newline
     with open("ehrql_qm_dump.json", "w", encoding="utf-8") as f:
         json.dump(qm_out_map, f, indent=2, ensure_ascii=False, sort_keys=True)
     if include_full_qm_node_dump:
@@ -962,6 +1070,11 @@ def parse_args(argv: list[str]) -> argparse.Namespace:
         action="store_true",
         help="Include full (non-normalized) node dump in output. This is many GB and only useful for debugging.",
     )
+    p.add_argument(
+        "--force",
+        action="store_true",
+        help="Force recalculation of all results, ignoring cached data from previous runs",
+    )
     # args ends with an optional space separated list of repo names (e.g. "opensafely/pincer-measures opensafely/isaric-exploration")
     p.add_argument(
         "repos",
@@ -984,6 +1097,7 @@ def main(argv: list[str] | None = None) -> int:
         silent=args.silent,
         verbose=args.verbose,
         include_full_qm_node_dump=args.include_full_qm_node_dump,
+        force=args.force,
     )
 
 
