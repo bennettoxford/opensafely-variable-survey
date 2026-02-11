@@ -15,6 +15,14 @@
       "program": "${workspaceFolder}/ehrql_extractor.py",
       "console": "integratedTerminal",
       "args": ["post-covid-cvd-methods"]
+    },
+    {
+      "name": "Debug: codelist extractor",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/ehrql_codelist_extractor.py",
+      "console": "integratedTerminal",
+      "args": ["--csv", "data/all_jobs.csv"]
     }
   ]
 }
