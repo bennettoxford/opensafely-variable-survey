@@ -1,3 +1,19 @@
+[project]
+name = "opensafely-variable-survey"
+version = "0.1.0"
+description = "Tools for exploring variables and codelist used in OpenSAFELY projects"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+#  "dotenv",
+#  "marimo",
+#  "nltk",
+#  "pygithub",
+#  "pyyaml",
+#  "scipy",
+#  "seaborn",
+]
+
 [tool.coverage.run]
 branch = true
 dynamic_context = "test_function"
@@ -46,3 +62,24 @@ extend-ignore = [
 
 [tool.ruff.lint.isort]
 lines-after-imports = 2
+
+# Note: any `exclude-newer-package` timestamps should be removed if > 7 days old
+# See https://github.com/opensafely-core/repo-template/blob/main/DEVELOPERS.md for details
+[tool.uv]
+required-version = ">=0.9"
+exclude-newer = "2026-02-04T00:00:00Z"
+exclude-newer-package = {}
+
+[dependency-groups]
+dev = [
+  "coverage>=7.10.6",
+  "numpy>=1.23",
+  "opensafely-ehrql @ git+https://github.com/opensafely-core/ehrql@main",
+  "pandas>=1.5",
+  "pre-commit>=4.3.0",
+  "pyarrow>=10.0",
+  "pytest>=8.4.1",
+  "pyyaml>=6.0.2",
+  "ruff>=0.12.11",
+  "tqdm",
+]
