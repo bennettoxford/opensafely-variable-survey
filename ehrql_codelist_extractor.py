@@ -7,8 +7,6 @@ ehrql_codelists.json.
 See README.md for usage.
 """
 
-from __future__ import annotations
-
 import argparse
 import datetime
 import hashlib

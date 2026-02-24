@@ -40,6 +40,7 @@ def load_rsi_coding_systems() -> dict[str, str]:
 
     with data_path.open("r", encoding="utf-8") as handle:
         data = json.load(handle)
+        data = data["codelists"]
 
     coding_systems: dict[str, str] = {}
     for entry in data:
