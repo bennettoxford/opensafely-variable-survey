@@ -689,6 +689,9 @@
   "opensafely/COVID-19-vaccine-breakthrough@fa87762f001dc86725a12417745160421bd35b4f": [],
   "opensafely/COVID-19-vaccine-breakthrough@fbaa242c80d8f9e7bff1d9665b2e75fa01ac5b63": [],
   "opensafely/COVID-19-vaccine-breakthrough@fbe8064b0ebcafae79a98f7204ac4c88b7a54140": [],
+  "opensafely/COVID-19_vacci_and_MACE_after_hip_fracture@c22d2441016205fbb577e03c14b639a77fad2f61": [
+    "analysis/dataset_definition.py"
+  ],
   "opensafely/CareHomePrescribing@014cb4349e9fff696b62ed01f759d7e6d7ec17e6": [],
   "opensafely/CareHomePrescribing@158173e7ecbc9dcfabed980a8b6e44b4d64a93a3": [],
   "opensafely/CareHomePrescribing@3c5f8809200984536fe45345b34345883e0ad4d6": [],
@@ -26700,6 +26703,9 @@
     "analysis/hyp_reg_dataset.py",
     "analysis/dep_reg_dataset.py",
     "analysis/dm_reg_dataset.py"
+  ],
+  "opensafely/raw_medicines_short_data_report@4ad1a7669507aaea5fa047b0ca00f84b6e38d98c": [
+    "analysis/dataset_definition.py"
   ],
   "opensafely/rct-test@3abf7b2c2da136732399643a2f80696309a1cf7e": [],
   "opensafely/rct-test@99704cfd7a766f80e1f7020cd928b8b263fd95f2": [],
