@@ -31,17 +31,22 @@ def _get_codes_from_file(cache_path: Path) -> list[str]:
         return [row[0] for row in reader]
 
 
+def normalize_codelist_url(url: str) -> str:
+    return url.replace("https://www.opencodelists.org/codelist/", "").strip("/")
+
+
 def get_codelist(codelist_url: str, force: bool = False) -> list[str]:
     """
     Get codelist from cache or download it if not cached or if force is True. Returns list of clinical codes.
     """
     _ensure_cache_dir()
-    cache_path = _get_cache_path(codelist_url)
+    url = normalize_codelist_url(codelist_url)
+    cache_path = _get_cache_path(url)
 
     if not force and cache_path.exists():
         return _get_codes_from_file(cache_path)
 
-    download_url = f"{BASE_URL}{codelist_url}download.csv"
+    download_url = f"{BASE_URL}{url}download.csv"
     try:
         response = requests.get(download_url, timeout=30)
         response.raise_for_status()

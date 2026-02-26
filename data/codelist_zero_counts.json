@@ -2,53 +2,60 @@
   "opensafely/COMPARES-vaccines": [
     {
       "code_count": 1,
-      "coding_system": "icd10",
+      "name": "other_arterial_embolism_icd10",
+      "system": "icd10",
       "total_count": 0,
-      "url": "/user/elsie_horne/other_arterial_embolism_icd10/463adc5d/"
+      "url": "https://www.opencodelists.org/codelist/user/elsie_horne/other_arterial_embolism_icd10/463adc5d/"
     }
   ],
   "opensafely/COMPARES-vaccines-Autumn-2024": [
     {
       "code_count": 1,
-      "coding_system": "icd10",
+      "name": "other_arterial_embolism_icd10",
+      "system": "icd10",
       "total_count": 0,
-      "url": "/user/elsie_horne/other_arterial_embolism_icd10/463adc5d/"
+      "url": "https://www.opencodelists.org/codelist/user/elsie_horne/other_arterial_embolism_icd10/463adc5d/"
     }
   ],
   "opensafely/metformin_covid": [
     {
       "code_count": 1,
-      "coding_system": "icd10",
+      "name": "dementia_vascular_icd10",
+      "system": "icd10",
       "total_count": 0,
-      "url": "/user/elsie_horne/dementia_vascular_icd10/27c5e93c/"
+      "url": "https://www.opencodelists.org/codelist/user/elsie_horne/dementia_vascular_icd10/27c5e93c/"
     }
   ],
   "opensafely/post-covid-vax-autoimmune": [
     {
       "code_count": 1,
-      "coding_system": "icd10",
+      "name": "Type 1 diabetes (secondary care)",
+      "system": "icd10",
       "total_count": 0,
-      "url": "/opensafely/type-1-diabetes-secondary-care/2020-09-27/"
+      "url": "https://www.opencodelists.org/codelist/opensafely/type-1-diabetes-secondary-care/2020-09-27/"
     },
     {
       "code_count": 1,
-      "coding_system": "icd10",
+      "name": "Type 2 diabetes secondary care Bristol",
+      "system": "icd10",
       "total_count": 0,
-      "url": "/user/r_denholm/type-2-diabetes-secondary-care-bristol/0b7f6cd4/"
+      "url": "https://www.opencodelists.org/codelist/user/r_denholm/type-2-diabetes-secondary-care-bristol/0b7f6cd4/"
     }
   ],
   "opensafely/prophy_effects_Sotro_Molnup": [
     {
       "code_count": 3,
-      "coding_system": "snomedct",
+      "name": "Immunosuppresant Drugs (PRA) (SNOMED)",
+      "system": "snomedct",
       "total_count": 0,
-      "url": "/nhsd/immunosuppresant-drugs-pra-snomed/6b7d1294/"
+      "url": "https://www.opencodelists.org/codelist/nhsd/immunosuppresant-drugs-pra-snomed/6b7d1294/"
     },
     {
       "code_count": 1,
-      "coding_system": "snomedct",
+      "name": "Oral Steroid Drugs (SNOMED)",
+      "system": "snomedct",
       "total_count": 0,
-      "url": "/nhsd/oral-steroid-drugs-snomed/1ae93909/"
+      "url": "https://www.opencodelists.org/codelist/nhsd/oral-steroid-drugs-snomed/1ae93909/"
     }
   ]
 }
