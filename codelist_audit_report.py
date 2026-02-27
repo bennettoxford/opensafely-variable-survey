@@ -8,6 +8,9 @@ import os
 from datetime import datetime
 
 from codelist_newer_version_available import newer_versions
+from codelist_potentially_missing_codes import (
+    codelist_version_not_compatible_with_latest_release,
+)
 from parsing.codelist_helpers import (
     get_repos_with_codelists,
     lookup_codelists_by_repo,
@@ -39,6 +42,7 @@ def main():
             "unused_codelists": {"codelists": []},
             "no_events": {"codelists": []},
             "newer_version": {"codelists": []},
+            "potentially_missing_codes": {"codelists": []},
         }
 
         bad_codelists = set()
@@ -56,6 +60,7 @@ def main():
             bad_codelists.add(inline_codelist.get("url"))
 
         # add the codelists not using the latest version
+        # and codelists with potentially missing codes (i.e. not compatible with latest release)
         for codelist in codelists.get("codelists", []):
             if versions := newer_versions(codelist["url"]):
                 latest_version = sorted(
@@ -69,8 +74,11 @@ def main():
                     codelist | {"newer_version": newer_version}
                 )
                 bad_codelists.add(codelist["url"])
-
-        # add codelists with potentially missing codes (i.e. not compatible with latest release)
+            if not codelist["url"].endswith(
+                ".csv"
+            ) and codelist_version_not_compatible_with_latest_release(codelist["url"]):
+                repo_output["potentially_missing_codes"]["codelists"].append(codelist)
+                bad_codelists.add(codelist["url"])
 
         # Add the remaining "good" codelists
         for codelist in codelists.get("codelists", []):
