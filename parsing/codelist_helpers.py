@@ -52,6 +52,9 @@ def _get_latest_codelist_data():
                             "url": ocl_url,
                             "name": metadata.get("name", "<LOOKUP_FAILED>"),
                             "system": metadata.get("coding_system", "<LOOKUP_FAILED>"),
+                            "system_release": metadata.get(
+                                "coding_system_release", "<LOOKUP_FAILED>"
+                            ),
                         }
                     )
 
@@ -109,6 +112,9 @@ def _get_latest_codelist_data():
                                         "system": metadata.get(
                                             "coding_system", "<LOOKUP_FAILED>"
                                         ),
+                                        "system_release": metadata.get(
+                                            "coding_system_release", "<LOOKUP_FAILED>"
+                                        ),
                                         "variables": variable_object,
                                     }
 
@@ -138,7 +144,56 @@ def _get_rsi_data():
 
         # Build a mapping: version_slug or hash-> (coding_system, full_entry)
         # Each codelist can have multiple versions
-        _rsi_data = {}
+        _rsi_data = {"codelist_versions": {}, "latest_releases": {}}
+
+        for coding_system, releases in json_data["releases"].items():
+            # Get latest release
+            latest_release = sorted(
+                releases, key=lambda x: x["valid_from"], reverse=True
+            )[0]
+            if coding_system == "snomedct":
+                n = latest_release["database_alias"].split("_")[1]
+                latest_release_name = f"{n[0:2]}.{n[2:3]}.{n[3:]}"
+            elif coding_system == "bnf":
+                latest_release_name = latest_release["database_alias"].split("-")[0]
+            elif (
+                coding_system == "ctv3"
+                and latest_release["database_alias"]
+                == "ctv3_2018-04-01-with-tpp-extensions-2022-11-16_20221116"
+            ):
+                latest_release_name = "2018-04-01 with TPP extensions 2022-11-16"
+            elif coding_system == "dmd":
+                year, version = (
+                    latest_release["database_alias"].split("_")[1].split("-")
+                )
+                latest_release_name = (
+                    f"{year} {version[:-2]}.{version[-2:-1]}.{version[-1]}"
+                )
+            elif (
+                coding_system == "icd10"
+                and latest_release["database_alias"]
+                == "icd10_2019-covid-expanded_20190101"
+            ):
+                latest_release_name = "2019-covid-expanded"
+            elif coding_system == "null":
+                latest_release_name = "unknown"
+            elif (
+                coding_system == "opcs4"
+                and latest_release["database_alias"] == "opcs4_unknown_19000101"
+            ):
+                latest_release_name = "opcs4"
+            elif (
+                coding_system == "readv2"
+                and latest_release["database_alias"] == "readv2_unknown_19000101"
+            ):
+                latest_release_name = "readv2"
+            else:
+                latest_release_name = latest_release["database_alias"]
+
+            _rsi_data["latest_releases"][coding_system] = (
+                f"{latest_release_name} (valid from {latest_release['valid_from']})"
+            )
+
         for entry in json_data.get("codelists", []):
             coding_system = entry.get("coding_system", "")
             name = entry.get("name", "")
@@ -148,27 +203,31 @@ def _get_rsi_data():
             for version in versions:
                 tag = version.get("tag")
                 hash_val = version.get("hash")
+                coding_system_release = version.get("coding_system_release", "")
 
                 metadata = {
                     "name": name,
                     "coding_system": coding_system,
+                    "coding_system_release": coding_system_release,
                     "creation_method": version.get("creation_method", ""),
                 }
 
                 # Create entries for both tag and hash based slugs
                 if tag:
                     tag_slug = f"/{base_slug}/{tag}/"
-                    _rsi_data[tag_slug] = metadata
+                    _rsi_data["codelist_versions"][tag_slug] = metadata
 
                 if hash_val:
-                    assert hash_val not in _rsi_data, f"Duplicate hash {hash_val}"
-                    _rsi_data[hash_val] = metadata
+                    assert hash_val not in _rsi_data["codelist_versions"], (
+                        f"Duplicate hash {hash_val}"
+                    )
+                    _rsi_data["codelist_versions"][hash_val] = metadata
 
     return _rsi_data
 
 
 def lookup_codelist_metadata(url_path):
-    rsi_data = _get_rsi_data()
+    rsi_data = _get_rsi_data()["codelist_versions"]
     entry = rsi_data.get(url_path)
 
     if not entry:
@@ -179,6 +238,11 @@ def lookup_codelist_metadata(url_path):
         return {}
 
     return entry
+
+
+def lookup_latest_releases():
+    rsi_data = _get_rsi_data()
+    return rsi_data["latest_releases"]
 
 
 def url_to_slug(version_url: str) -> str:

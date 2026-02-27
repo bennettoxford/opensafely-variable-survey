@@ -14,6 +14,7 @@ from codelist_potentially_missing_codes import (
 from parsing.codelist_helpers import (
     get_repos_with_codelists,
     lookup_codelists_by_repo,
+    lookup_latest_releases,
     make_ocl_url,
 )
 
@@ -92,6 +93,9 @@ def main():
         )
 
         output["repos"][repo_name] = repo_output
+
+    # Add latest releases
+    output["latest_releases"] = lookup_latest_releases()
 
     # Write the output to a json file
     output_file = OUTPUT_FILE_DEFAULT
