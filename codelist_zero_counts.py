@@ -52,6 +52,7 @@ def build_zero_event_report() -> dict[str, list[dict[str, object]]]:
                         "code_count": len(codes),
                         "total_count": total,
                         "name": codelist["name"],
+                        "variables": codelist["variables"],
                     }
                 )
         if zero_entries:

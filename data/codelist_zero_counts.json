@@ -5,7 +5,19 @@
       "name": "other_arterial_embolism_icd10",
       "system": "icd10",
       "total_count": 0,
-      "url": "https://www.opencodelists.org/codelist/user/elsie_horne/other_arterial_embolism_icd10/463adc5d/"
+      "url": "https://www.opencodelists.org/codelist/user/elsie_horne/other_arterial_embolism_icd10/463adc5d/",
+      "variables": {
+        "analysis/1-extract/dataset_definition.py": {
+          "github_url": "https://github.com/opensafely/COMPARES-vaccines/blob/f231b4fe63bc06caba1e9888821063fb83ce0920/analysis/1-extract/dataset_definition.py",
+          "variables": [
+            "ate_admitted_date",
+            "ate_date",
+            "ate_death_date",
+            "ate_prior",
+            "ate_prior_admitted"
+          ]
+        }
+      }
     }
   ],
   "opensafely/COMPARES-vaccines-Autumn-2024": [
@@ -14,7 +26,19 @@
       "name": "other_arterial_embolism_icd10",
       "system": "icd10",
       "total_count": 0,
-      "url": "https://www.opencodelists.org/codelist/user/elsie_horne/other_arterial_embolism_icd10/463adc5d/"
+      "url": "https://www.opencodelists.org/codelist/user/elsie_horne/other_arterial_embolism_icd10/463adc5d/",
+      "variables": {
+        "analysis/1-extract/dataset_definition.py": {
+          "github_url": "https://github.com/opensafely/COMPARES-vaccines-Autumn-2024/blob/f231b4fe63bc06caba1e9888821063fb83ce0920/analysis/1-extract/dataset_definition.py",
+          "variables": [
+            "ate_admitted_date",
+            "ate_date",
+            "ate_death_date",
+            "ate_prior",
+            "ate_prior_admitted"
+          ]
+        }
+      }
     }
   ],
   "opensafely/metformin_covid": [
@@ -23,7 +47,21 @@
       "name": "dementia_vascular_icd10",
       "system": "icd10",
       "total_count": 0,
-      "url": "https://www.opencodelists.org/codelist/user/elsie_horne/dementia_vascular_icd10/27c5e93c/"
+      "url": "https://www.opencodelists.org/codelist/user/elsie_horne/dementia_vascular_icd10/27c5e93c/",
+      "variables": {
+        "analysis/dataset_definition_ppa.py": {
+          "github_url": "https://github.com/opensafely/metformin_covid/blob/d452c8dab8538d236ee428237d81bd5c5f538a1b/analysis/dataset_definition_ppa.py",
+          "variables": [
+            "cov_date_dementia"
+          ]
+        },
+        "analysis/dataset_definition_t2dm.py": {
+          "github_url": "https://github.com/opensafely/metformin_covid/blob/d452c8dab8538d236ee428237d81bd5c5f538a1b/analysis/dataset_definition_t2dm.py",
+          "variables": [
+            "cov_bin_dementia"
+          ]
+        }
+      }
     }
   ],
   "opensafely/post-covid-vax-autoimmune": [
@@ -32,14 +70,30 @@
       "name": "Type 1 diabetes (secondary care)",
       "system": "icd10",
       "total_count": 0,
-      "url": "https://www.opencodelists.org/codelist/opensafely/type-1-diabetes-secondary-care/2020-09-27/"
+      "url": "https://www.opencodelists.org/codelist/opensafely/type-1-diabetes-secondary-care/2020-09-27/",
+      "variables": {
+        "analysis/dataset_definition.py": {
+          "github_url": "https://github.com/opensafely/post-covid-vax-autoimmune/blob/5756bdf68a189c6f20c89726f69c9d34d017e040/analysis/dataset_definition.py",
+          "variables": [
+            "diabetes"
+          ]
+        }
+      }
     },
     {
       "code_count": 1,
       "name": "Type 2 diabetes secondary care Bristol",
       "system": "icd10",
       "total_count": 0,
-      "url": "https://www.opencodelists.org/codelist/user/r_denholm/type-2-diabetes-secondary-care-bristol/0b7f6cd4/"
+      "url": "https://www.opencodelists.org/codelist/user/r_denholm/type-2-diabetes-secondary-care-bristol/0b7f6cd4/",
+      "variables": {
+        "analysis/dataset_definition.py": {
+          "github_url": "https://github.com/opensafely/post-covid-vax-autoimmune/blob/5756bdf68a189c6f20c89726f69c9d34d017e040/analysis/dataset_definition.py",
+          "variables": [
+            "diabetes"
+          ]
+        }
+      }
     }
   ],
   "opensafely/prophy_effects_Sotro_Molnup": [
@@ -48,14 +102,51 @@
       "name": "Immunosuppresant Drugs (PRA) (SNOMED)",
       "system": "snomedct",
       "total_count": 0,
-      "url": "https://www.opencodelists.org/codelist/nhsd/immunosuppresant-drugs-pra-snomed/6b7d1294/"
+      "url": "https://www.opencodelists.org/codelist/nhsd/immunosuppresant-drugs-pra-snomed/6b7d1294/",
+      "variables": {
+        "analysis/dataset_definition.py": {
+          "github_url": "https://github.com/opensafely/prophy_effects_Sotro_Molnup/blob/27fafcb2ee96084780df42b0f3d5e0315d267188/analysis/dataset_definition.py",
+          "variables": [
+            "had_imid",
+            "had_imid_ever",
+            "highrisk_codelist",
+            "highrisk_codelist_ever",
+            "imid",
+            "imid_ever",
+            "immunosuppresant_drugs_nhsd",
+            "immunosuppresant_drugs_nhsd_ever",
+            "is_codelist_highrisk",
+            "is_codelist_highrisk_ever"
+          ]
+        }
+      }
     },
     {
       "code_count": 1,
       "name": "Oral Steroid Drugs (SNOMED)",
       "system": "snomedct",
       "total_count": 0,
-      "url": "https://www.opencodelists.org/codelist/nhsd/oral-steroid-drugs-snomed/1ae93909/"
+      "url": "https://www.opencodelists.org/codelist/nhsd/oral-steroid-drugs-snomed/1ae93909/",
+      "variables": {
+        "analysis/dataset_definition.py": {
+          "github_url": "https://github.com/opensafely/prophy_effects_Sotro_Molnup/blob/27fafcb2ee96084780df42b0f3d5e0315d267188/analysis/dataset_definition.py",
+          "variables": [
+            "had_imid",
+            "had_imid_ever",
+            "highrisk_codelist",
+            "highrisk_codelist_ever",
+            "imid",
+            "imid_ever",
+            "is_codelist_highrisk",
+            "is_codelist_highrisk_ever",
+            "oral_steroid_drug_nhsd_12m_count",
+            "oral_steroid_drug_nhsd_3m_count",
+            "oral_steroid_drugs_nhsd",
+            "oral_steroid_drugs_nhsd_check",
+            "oral_steroid_drugs_nhsd_ever"
+          ]
+        }
+      }
     }
   ]
 }

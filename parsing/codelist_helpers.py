@@ -15,6 +15,13 @@ def make_ocl_url(url):
     return f"https://www.opencodelists.org/codelist{url}"
 
 
+def make_github_url(repo_name, filepath, sha, line_number=None):
+    url = f"https://github.com/{repo_name}/blob/{sha}/{filepath}"
+    if line_number:
+        url += f"#L{line_number}"
+    return url
+
+
 def _get_latest_codelist_data():
     global _codelists
     if _codelists is None:
@@ -51,29 +58,59 @@ def _get_latest_codelist_data():
                 for file_name, variables in files.items():
                     for variable_name, codelists in variables.items():
                         for codelist_info in codelists:
+                            variable_content = {
+                                "variables": [variable_name],
+                                "github_url": make_github_url(
+                                    repo_name, file_name, sha
+                                ),
+                            }
+                            variable_object = {}
+                            variable_object[file_name] = variable_content
                             if codelist_info[0] == "<inline>":
                                 source_file, line_number = codelist_info[2][7:].split(
                                     ":"
                                 )
                                 codes = codelist_info[3][7:].split("|")
                                 url = f"https://github.com/{repo_name}/blob/{sha}/{source_file}#L{line_number}"
-                                inline_codelists[url] = {
-                                    "file": source_file,
-                                    "line": line_number,
-                                    "url": url,
-                                    "codes": codes,
-                                }
+                                if url in inline_codelists:
+                                    if file_name in inline_codelists[url]["variables"]:
+                                        inline_codelists[url]["variables"][file_name][
+                                            "variables"
+                                        ].append(variable_name)
+                                    else:
+                                        inline_codelists[url]["variables"][
+                                            file_name
+                                        ] = variable_content
+                                else:
+                                    inline_codelists[url] = {
+                                        "file": source_file,
+                                        "line": line_number,
+                                        "url": url,
+                                        "codes": codes,
+                                        "variables": variable_object,
+                                    }
                             elif codelist_info[0]:
                                 url = codelist_info[0]
                                 metadata = lookup_codelist_metadata(url)
                                 ocl_url = make_ocl_url(url)
-                                ocl_codelists[url] = {
-                                    "url": ocl_url,
-                                    "name": metadata.get("name", "<LOOKUP_FAILED>"),
-                                    "system": metadata.get(
-                                        "coding_system", "<LOOKUP_FAILED>"
-                                    ),
-                                }
+                                if url in ocl_codelists:
+                                    if file_name in ocl_codelists[url]["variables"]:
+                                        ocl_codelists[url]["variables"][file_name][
+                                            "variables"
+                                        ].append(variable_name)
+                                    else:
+                                        ocl_codelists[url]["variables"][file_name] = (
+                                            variable_content
+                                        )
+                                else:
+                                    ocl_codelists[url] = {
+                                        "url": ocl_url,
+                                        "name": metadata.get("name", "<LOOKUP_FAILED>"),
+                                        "system": metadata.get(
+                                            "coding_system", "<LOOKUP_FAILED>"
+                                        ),
+                                        "variables": variable_object,
+                                    }
 
             _codelists[repo_name]["inline_codelists"] = list(inline_codelists.values())
             _codelists[repo_name]["codelists"] = list(ocl_codelists.values())
@@ -88,7 +125,9 @@ def get_repos_with_codelists() -> list[str]:
 
 def lookup_codelists_by_repo(repo_name: str) -> dict[str, list[dict[str, str]]]:
     codelist_data = _get_latest_codelist_data()
-    return codelist_data.get(repo_name, {"codelists": [], "inline_codelists": []})
+    return codelist_data.get(
+        repo_name, {"codelists": [], "inline_codelists": [], "unused_codelists": []}
+    )
 
 
 def _get_rsi_data():
