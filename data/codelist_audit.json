@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-02-27 12:02:39",
+  "generated_at": "2026-02-27 13:06:09",
   "repos": {
     "opensafely/ACT-PharmacyFirst-Protocol2-healthcare-usage": {
       "good": {
@@ -32,6 +32,9 @@
             "url": "https://github.com/opensafely/ACT-PharmacyFirst-Protocol2-healthcare-usage/blob/37294007f547bd95e6d166ffe855b5a229483731/analysis/codelist.py#L80"
           }
         ]
+      },
+      "newer_version": {
+        "codelists": []
       },
       "no_events": {
         "codelists": []
@@ -95,11 +98,6 @@
       "good": {
         "codelists": [
           {
-            "name": "Attention Deficit Hyperactivity disorder codes",
-            "system": "snomedct",
-            "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/adhd_cod/20200812/"
-          },
-          {
             "name": "ADHD - dmd",
             "system": "dmd",
             "url": "https://www.opencodelists.org/codelist/user/Adam/adhd-dmd/59d39fe1/"
@@ -108,6 +106,19 @@
       },
       "inline_codelists": {
         "codelists": []
+      },
+      "newer_version": {
+        "codelists": [
+          {
+            "name": "Attention Deficit Hyperactivity disorder codes",
+            "newer_version": {
+              "label": "20250912",
+              "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/adhd_cod/20250912"
+            },
+            "system": "snomedct",
+            "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/adhd_cod/20200812/"
+          }
+        ]
       },
       "no_events": {
         "codelists": []
@@ -405,6 +416,9 @@
             "url": "https://github.com/opensafely/COMPARES-vaccines/blob/f231b4fe63bc06caba1e9888821063fb83ce0920/analysis/1-extract/codelists.py#L28"
           }
         ]
+      },
+      "newer_version": {
+        "codelists": []
       },
       "no_events": {
         "codelists": [
@@ -976,6 +990,9 @@
           }
         ]
       },
+      "newer_version": {
+        "codelists": []
+      },
       "no_events": {
         "codelists": [
           {
@@ -1294,6 +1311,9 @@
       "inline_codelists": {
         "codelists": []
       },
+      "newer_version": {
+        "codelists": []
+      },
       "no_events": {
         "codelists": []
       },
@@ -1304,11 +1324,6 @@
     "opensafely/JAKi-hosp": {
       "good": {
         "codelists": [
-          {
-            "name": "Patients in long-stay nursing and residential care",
-            "system": "snomedct",
-            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/longres/v1/"
-          },
           {
             "name": "Smoking - Clear",
             "system": "ctv3",
@@ -1369,6 +1384,19 @@
       "inline_codelists": {
         "codelists": []
       },
+      "newer_version": {
+        "codelists": [
+          {
+            "name": "Patients in long-stay nursing and residential care",
+            "newer_version": {
+              "label": "v2.5",
+              "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/longres/v2.5"
+            },
+            "system": "snomedct",
+            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/longres/v1/"
+          }
+        ]
+      },
       "no_events": {
         "codelists": []
       },
@@ -1406,11 +1434,6 @@
             "url": "https://www.opencodelists.org/codelist/opensafely/ethnicity-snomed-0removed/22911876/"
           },
           {
-            "name": "Pregnant patients at any stage of pregnancy",
-            "system": "snomedct",
-            "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/c19preg_cod/20250627/"
-          },
-          {
             "name": "prostate_cancer_SNOMED",
             "system": "snomedct",
             "url": "https://www.opencodelists.org/codelist/user/RochelleKnight/prostate_cancer_snomed/0437497e/"
@@ -1424,6 +1447,19 @@
       },
       "inline_codelists": {
         "codelists": []
+      },
+      "newer_version": {
+        "codelists": [
+          {
+            "name": "Pregnant patients at any stage of pregnancy",
+            "newer_version": {
+              "label": "20250912",
+              "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/c19preg_cod/20250912"
+            },
+            "system": "snomedct",
+            "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/c19preg_cod/20250627/"
+          }
+        ]
       },
       "no_events": {
         "codelists": []
@@ -1685,6 +1721,9 @@
           }
         ]
       },
+      "newer_version": {
+        "codelists": []
+      },
       "no_events": {
         "codelists": []
       },
@@ -1775,6 +1814,9 @@
           }
         ]
       },
+      "newer_version": {
+        "codelists": []
+      },
       "no_events": {
         "codelists": []
       },
@@ -1840,6 +1882,9 @@
       "inline_codelists": {
         "codelists": []
       },
+      "newer_version": {
+        "codelists": []
+      },
       "no_events": {
         "codelists": []
       },
@@ -1869,11 +1914,6 @@
             "name": "COVID identification in primary care - probable covid - positive test",
             "system": "ctv3",
             "url": "https://www.opencodelists.org/codelist/opensafely/covid-identification-in-primary-care-probable-covid-positive-test/508192f8/"
-          },
-          {
-            "name": "Patients in long-stay nursing and residential care",
-            "system": "snomedct",
-            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/longres/v1/"
           }
         ]
       },
@@ -1886,6 +1926,19 @@
             "file": "analysis/codelists_ehrql.py",
             "line": "9",
             "url": "https://github.com/opensafely/cis-pop-validation-ehrql/blob/cce4f0bfaffa5370b00f847fbcfe742c7a13aeeb/analysis/codelists_ehrql.py#L9"
+          }
+        ]
+      },
+      "newer_version": {
+        "codelists": [
+          {
+            "name": "Patients in long-stay nursing and residential care",
+            "newer_version": {
+              "label": "v2.5",
+              "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/longres/v2.5"
+            },
+            "system": "snomedct",
+            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/longres/v1/"
           }
         ]
       },
@@ -1909,6 +1962,9 @@
       "inline_codelists": {
         "codelists": []
       },
+      "newer_version": {
+        "codelists": []
+      },
       "no_events": {
         "codelists": []
       },
@@ -1926,29 +1982,9 @@
       "good": {
         "codelists": [
           {
-            "name": "Asplenia or Dysfunction of the Spleen codes",
-            "system": "snomedct",
-            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/spln_cov/v2.4/"
-          },
-          {
-            "name": "Asthma Admission codes",
-            "system": "snomedct",
-            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/astadm/v2.4/"
-          },
-          {
             "name": "Asthma Diagnosis code",
             "system": "snomedct",
             "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/ast/v2.4/"
-          },
-          {
-            "name": "Oral prednisolone codes",
-            "system": "dmd",
-            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/astrxm2/v2.4/"
-          },
-          {
-            "name": "Asthma inhaler or nebuliser codes",
-            "system": "dmd",
-            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/astrxm1/v2.4/"
           },
           {
             "name": "Chemotherapy or Radiotherapy (SNOMED)",
@@ -1971,46 +2007,6 @@
             "url": "https://www.opencodelists.org/codelist/opensafely/haematological-cancer-snomed/2020-04-15/"
           },
           {
-            "name": "Patients in long-stay nursing and residential care",
-            "system": "snomedct",
-            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/longres/v2.4/"
-          },
-          {
-            "name": "Chronic heart disease codes",
-            "system": "snomedct",
-            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/chd_cov/v2.4/"
-          },
-          {
-            "name": "Chronic kidney disease diagnostic codes",
-            "system": "snomedct",
-            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/ckd_cov/v2.4/"
-          },
-          {
-            "name": "Chronic kidney disease codes-stages 3 - 5",
-            "system": "snomedct",
-            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/ckd35/v2.4/"
-          },
-          {
-            "name": "Chronic kidney disease codes - all stages",
-            "system": "snomedct",
-            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/ckd15/v2.4/"
-          },
-          {
-            "name": "Chronic Liver disease codes",
-            "system": "snomedct",
-            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/cld/v2.4/"
-          },
-          {
-            "name": "Chronic Neurological Disease including Significant Learning Disorder",
-            "system": "snomedct",
-            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/cns_cov/v2.4/"
-          },
-          {
-            "name": "Chronic Respiratory Disease",
-            "system": "snomedct",
-            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/resp_cov/v2.4/"
-          },
-          {
             "name": "COVID Identification",
             "system": "icd10",
             "url": "https://www.opencodelists.org/codelist/opensafely/covid-identification/2020-06-03/"
@@ -2021,49 +2017,9 @@
             "url": "https://www.opencodelists.org/codelist/opensafely/fractures/086e92fc/"
           },
           {
-            "name": "Addisons & hypoadrenalism",
-            "system": "snomedct",
-            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/addis_cod/v2.4/"
-          },
-          {
-            "name": "Gestational Diabetes",
-            "system": "snomedct",
-            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/gdiab_cod/v2.4/"
-          },
-          {
-            "name": "Pregnancy codes recorded in the 8.5 months before the audit run date",
-            "system": "snomedct",
-            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/preg/v2.4/"
-          },
-          {
-            "name": "Pregnancy or Delivery codes recorded in the 8.5 months before audit run date",
-            "system": "snomedct",
-            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/pregdel/v2.4/"
-          },
-          {
-            "name": "Diabetes resolved codes",
-            "system": "snomedct",
-            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/dmres/v2.4/"
-          },
-          {
-            "name": "Diabetes diagnosis codes",
-            "system": "snomedct",
-            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/diab/v2.4/"
-          },
-          {
-            "name": "receiving chemotherapy or radiotherapy codes",
-            "system": "snomedct",
-            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/dxt_chemo_cod/v2.4/"
-          },
-          {
             "name": "Midazolam - end of life",
             "system": "dmd",
             "url": "https://www.opencodelists.org/codelist/opensafely/midazolam-end-of-life/4c1b3c89/"
-          },
-          {
-            "name": "Palliative care codes",
-            "system": "snomedct",
-            "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/palcare_cod/5fce98cf/"
           },
           {
             "name": "Ethnicity",
@@ -2086,26 +2042,6 @@
             "url": "https://www.opencodelists.org/codelist/opensafely/no-longer-housebound/29a88ca6/"
           },
           {
-            "name": "Immunosuppression diagnosis codes",
-            "system": "snomedct",
-            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/immdx_cov/v2.4/"
-          },
-          {
-            "name": "Immunosuppression medication codes",
-            "system": "dmd",
-            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/immrx/v2.4/"
-          },
-          {
-            "name": "Immunosuppression admin codes",
-            "system": "snomedct",
-            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/immunosuppression-admin-codes/v2.4/"
-          },
-          {
-            "name": "Wider Learning Disability",
-            "system": "snomedct",
-            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/learndis/v2.4/"
-          },
-          {
             "name": "COVID identification in primary care - probable covid - sequelae",
             "system": "ctv3",
             "url": "https://www.opencodelists.org/codelist/opensafely/covid-identification-in-primary-care-probable-covid-sequelae/2020-07-16/"
@@ -2119,31 +2055,6 @@
             "name": "COVID identification in primary care - probable covid - positive test",
             "system": "ctv3",
             "url": "https://www.opencodelists.org/codelist/opensafely/covid-identification-in-primary-care-probable-covid-positive-test/508192f8/"
-          },
-          {
-            "name": "Remission codes relating to Severe Mental Illness",
-            "system": "snomedct",
-            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/smhres/v2.4/"
-          },
-          {
-            "name": "Severe Mental Illness codes",
-            "system": "snomedct",
-            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/sev_mental/v2.4/"
-          },
-          {
-            "name": "Severe Obesity code recorded",
-            "system": "snomedct",
-            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/sev_obesity/v2.4/"
-          },
-          {
-            "name": "All BMI coded terms",
-            "system": "snomedct",
-            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/bmi_stage/v2.4/"
-          },
-          {
-            "name": "BMI",
-            "system": "snomedct",
-            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/bmi/v2.4/"
           },
           {
             "name": "Solid Organ Transplantation  (SNOMED)",
@@ -2293,6 +2204,271 @@
           }
         ]
       },
+      "newer_version": {
+        "codelists": [
+          {
+            "name": "Asplenia or Dysfunction of the Spleen codes",
+            "newer_version": {
+              "label": "v2.5",
+              "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/spln_cov/v2.5"
+            },
+            "system": "snomedct",
+            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/spln_cov/v2.4/"
+          },
+          {
+            "name": "Asthma Admission codes",
+            "newer_version": {
+              "label": "v2.5",
+              "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/astadm/v2.5"
+            },
+            "system": "snomedct",
+            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/astadm/v2.4/"
+          },
+          {
+            "name": "Oral prednisolone codes",
+            "newer_version": {
+              "label": "v2.5",
+              "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/astrxm2/v2.5"
+            },
+            "system": "dmd",
+            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/astrxm2/v2.4/"
+          },
+          {
+            "name": "Asthma inhaler or nebuliser codes",
+            "newer_version": {
+              "label": "v2.5",
+              "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/astrxm1/v2.5"
+            },
+            "system": "dmd",
+            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/astrxm1/v2.4/"
+          },
+          {
+            "name": "Patients in long-stay nursing and residential care",
+            "newer_version": {
+              "label": "v2.5",
+              "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/longres/v2.5"
+            },
+            "system": "snomedct",
+            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/longres/v2.4/"
+          },
+          {
+            "name": "Chronic heart disease codes",
+            "newer_version": {
+              "label": "v2.5",
+              "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/chd_cov/v2.5"
+            },
+            "system": "snomedct",
+            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/chd_cov/v2.4/"
+          },
+          {
+            "name": "Chronic kidney disease diagnostic codes",
+            "newer_version": {
+              "label": "v2.5",
+              "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/ckd_cov/v2.5"
+            },
+            "system": "snomedct",
+            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/ckd_cov/v2.4/"
+          },
+          {
+            "name": "Chronic kidney disease codes-stages 3 - 5",
+            "newer_version": {
+              "label": "v2.5",
+              "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/ckd35/v2.5"
+            },
+            "system": "snomedct",
+            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/ckd35/v2.4/"
+          },
+          {
+            "name": "Chronic kidney disease codes - all stages",
+            "newer_version": {
+              "label": "v2.5",
+              "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/ckd15/v2.5"
+            },
+            "system": "snomedct",
+            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/ckd15/v2.4/"
+          },
+          {
+            "name": "Chronic Liver disease codes",
+            "newer_version": {
+              "label": "v2.5",
+              "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/cld/v2.5"
+            },
+            "system": "snomedct",
+            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/cld/v2.4/"
+          },
+          {
+            "name": "Chronic Neurological Disease including Significant Learning Disorder",
+            "newer_version": {
+              "label": "v2.5",
+              "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/cns_cov/v2.5"
+            },
+            "system": "snomedct",
+            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/cns_cov/v2.4/"
+          },
+          {
+            "name": "Chronic Respiratory Disease",
+            "newer_version": {
+              "label": "v2.5",
+              "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/resp_cov/v2.5"
+            },
+            "system": "snomedct",
+            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/resp_cov/v2.4/"
+          },
+          {
+            "name": "Addisons & hypoadrenalism",
+            "newer_version": {
+              "label": "v2.5",
+              "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/addis_cod/v2.5"
+            },
+            "system": "snomedct",
+            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/addis_cod/v2.4/"
+          },
+          {
+            "name": "Gestational Diabetes",
+            "newer_version": {
+              "label": "v2.5",
+              "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/gdiab_cod/v2.5"
+            },
+            "system": "snomedct",
+            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/gdiab_cod/v2.4/"
+          },
+          {
+            "name": "Pregnancy codes recorded in the 8.5 months before the audit run date",
+            "newer_version": {
+              "label": "v2.5",
+              "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/preg/v2.5"
+            },
+            "system": "snomedct",
+            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/preg/v2.4/"
+          },
+          {
+            "name": "Pregnancy or Delivery codes recorded in the 8.5 months before audit run date",
+            "newer_version": {
+              "label": "v2.5",
+              "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/pregdel/v2.5"
+            },
+            "system": "snomedct",
+            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/pregdel/v2.4/"
+          },
+          {
+            "name": "Diabetes resolved codes",
+            "newer_version": {
+              "label": "v2.5",
+              "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/dmres/v2.5"
+            },
+            "system": "snomedct",
+            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/dmres/v2.4/"
+          },
+          {
+            "name": "Diabetes diagnosis codes",
+            "newer_version": {
+              "label": "v2.5",
+              "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/diab/v2.5"
+            },
+            "system": "snomedct",
+            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/diab/v2.4/"
+          },
+          {
+            "name": "receiving chemotherapy or radiotherapy codes",
+            "newer_version": {
+              "label": "v2.5",
+              "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/dxt_chemo_cod/v2.5"
+            },
+            "system": "snomedct",
+            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/dxt_chemo_cod/v2.4/"
+          },
+          {
+            "name": "Palliative care codes",
+            "newer_version": {
+              "label": "20250912",
+              "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/palcare_cod/20250912"
+            },
+            "system": "snomedct",
+            "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/palcare_cod/5fce98cf/"
+          },
+          {
+            "name": "Immunosuppression diagnosis codes",
+            "newer_version": {
+              "label": "v2.5",
+              "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/immdx_cov/v2.5"
+            },
+            "system": "snomedct",
+            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/immdx_cov/v2.4/"
+          },
+          {
+            "name": "Immunosuppression medication codes",
+            "newer_version": {
+              "label": "v2.5",
+              "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/immrx/v2.5"
+            },
+            "system": "dmd",
+            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/immrx/v2.4/"
+          },
+          {
+            "name": "Immunosuppression admin codes",
+            "newer_version": {
+              "label": "v2.5",
+              "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/immunosuppression-admin-codes/v2.5"
+            },
+            "system": "snomedct",
+            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/immunosuppression-admin-codes/v2.4/"
+          },
+          {
+            "name": "Wider Learning Disability",
+            "newer_version": {
+              "label": "v2.5",
+              "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/learndis/v2.5"
+            },
+            "system": "snomedct",
+            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/learndis/v2.4/"
+          },
+          {
+            "name": "Remission codes relating to Severe Mental Illness",
+            "newer_version": {
+              "label": "v2.5",
+              "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/smhres/v2.5"
+            },
+            "system": "snomedct",
+            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/smhres/v2.4/"
+          },
+          {
+            "name": "Severe Mental Illness codes",
+            "newer_version": {
+              "label": "v2.5",
+              "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/sev_mental/v2.5"
+            },
+            "system": "snomedct",
+            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/sev_mental/v2.4/"
+          },
+          {
+            "name": "Severe Obesity code recorded",
+            "newer_version": {
+              "label": "v2.5",
+              "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/sev_obesity/v2.5"
+            },
+            "system": "snomedct",
+            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/sev_obesity/v2.4/"
+          },
+          {
+            "name": "All BMI coded terms",
+            "newer_version": {
+              "label": "v2.5",
+              "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/bmi_stage/v2.5"
+            },
+            "system": "snomedct",
+            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/bmi_stage/v2.4/"
+          },
+          {
+            "name": "BMI",
+            "newer_version": {
+              "label": "v2.5",
+              "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/bmi/v2.5"
+            },
+            "system": "snomedct",
+            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/bmi/v2.4/"
+          }
+        ]
+      },
       "no_events": {
         "codelists": []
       },
@@ -2381,6 +2557,9 @@
         "codelists": []
       },
       "inline_codelists": {
+        "codelists": []
+      },
+      "newer_version": {
         "codelists": []
       },
       "no_events": {
@@ -2514,6 +2693,9 @@
             "url": "https://github.com/opensafely/covid-vaccine-history/blob/747ca1cb7dc5bb3902368502ece91bc18698431b/analysis/1-extract/codelists.py#L268"
           }
         ]
+      },
+      "newer_version": {
+        "codelists": []
       },
       "no_events": {
         "codelists": []
@@ -2790,6 +2972,9 @@
       "inline_codelists": {
         "codelists": []
       },
+      "newer_version": {
+        "codelists": []
+      },
       "no_events": {
         "codelists": []
       },
@@ -2810,6 +2995,9 @@
       "inline_codelists": {
         "codelists": []
       },
+      "newer_version": {
+        "codelists": []
+      },
       "no_events": {
         "codelists": []
       },
@@ -2822,6 +3010,9 @@
         "codelists": []
       },
       "inline_codelists": {
+        "codelists": []
+      },
+      "newer_version": {
         "codelists": []
       },
       "no_events": {
@@ -2849,6 +3040,9 @@
       "inline_codelists": {
         "codelists": []
       },
+      "newer_version": {
+        "codelists": []
+      },
       "no_events": {
         "codelists": []
       },
@@ -2860,89 +3054,153 @@
       "good": {
         "codelists": [
           {
-            "name": "Asthma diagnosis codes",
-            "system": "snomedct",
-            "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/ast_cod/20250627/"
-          },
-          {
-            "name": "Severe asthma drug treatment codes",
-            "system": "dmd",
-            "url": "https://www.opencodelists.org/codelist/nhs-drug-refsets/c19astdrug_cod/20250627/"
-          },
-          {
-            "name": "Asthma inhaled corticosteroids codes",
-            "system": "dmd",
-            "url": "https://www.opencodelists.org/codelist/nhs-drug-refsets/asttrtatrisk1_cod/20250627/"
-          },
-          {
-            "name": "Chronic obstructive pulmonary disease (COPD) codes",
-            "system": "snomedct",
-            "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/copd_cod/20250627/"
-          },
-          {
-            "name": "Codes for chronic obstructive pulmonary disease (COPD) review",
-            "system": "snomedct",
-            "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/copdrvw_cod/20250627/"
-          },
-          {
-            "name": "Chronic obstructive pulmonary disease (COPD) resolved codes",
-            "system": "snomedct",
-            "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/copdres_cod/20250627/"
-          },
-          {
             "name": "ethnicity (SNOMED)",
             "system": "snomedct",
             "url": "https://www.opencodelists.org/codelist/opensafely/ethnicity-snomed-0removed/22911876/"
-          },
-          {
-            "name": "Branded salbutamol - AirSalb",
-            "system": "dmd",
-            "url": "https://www.opencodelists.org/codelist/nhs-drug-refsets/airsbrdinhdrug_cod/20250627/"
-          },
-          {
-            "name": "Branded salbutamol - Airomir",
-            "system": "dmd",
-            "url": "https://www.opencodelists.org/codelist/nhs-drug-refsets/airobrdinhdrug_cod/20250627/"
-          },
-          {
-            "name": "Branded salbutamol - Easyhaler",
-            "system": "dmd",
-            "url": "https://www.opencodelists.org/codelist/nhs-drug-refsets/easybrdinhdrug_cod/20250627/"
-          },
-          {
-            "name": "Branded salbutamol - Salamol",
-            "system": "dmd",
-            "url": "https://www.opencodelists.org/codelist/nhs-drug-refsets/salabrdinhdrug_cod/20250627/"
-          },
-          {
-            "name": "Branded salbutamol - Salbulin Novolizer",
-            "system": "dmd",
-            "url": "https://www.opencodelists.org/codelist/nhs-drug-refsets/salbbrdinhdrug_cod/20250627/"
-          },
-          {
-            "name": "Branded salbutamol - Ventolin Accuhaler",
-            "system": "dmd",
-            "url": "https://www.opencodelists.org/codelist/nhs-drug-refsets/ventaccubrdinhdrug_cod/20250627/"
-          },
-          {
-            "name": "Branded salbutamol - Ventolin Evohaler",
-            "system": "dmd",
-            "url": "https://www.opencodelists.org/codelist/nhs-drug-refsets/ventevobrdinhdrug_cod/20250627/"
-          },
-          {
-            "name": "Generic salbutamol MDI inhalers",
-            "system": "dmd",
-            "url": "https://www.opencodelists.org/codelist/nhs-drug-refsets/gensalbmdiinhdrug_cod/20250627/"
-          },
-          {
-            "name": "Generic salbutamol DPI inhalers",
-            "system": "dmd",
-            "url": "https://www.opencodelists.org/codelist/nhs-drug-refsets/gensalbdpinhdrug_cod/20250627/"
           }
         ]
       },
       "inline_codelists": {
         "codelists": []
+      },
+      "newer_version": {
+        "codelists": [
+          {
+            "name": "Asthma diagnosis codes",
+            "newer_version": {
+              "label": "20250912",
+              "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/ast_cod/20250912"
+            },
+            "system": "snomedct",
+            "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/ast_cod/20250627/"
+          },
+          {
+            "name": "Severe asthma drug treatment codes",
+            "newer_version": {
+              "label": "20250912",
+              "url": "https://www.opencodelists.org/codelist/nhs-drug-refsets/c19astdrug_cod/20250912"
+            },
+            "system": "dmd",
+            "url": "https://www.opencodelists.org/codelist/nhs-drug-refsets/c19astdrug_cod/20250627/"
+          },
+          {
+            "name": "Asthma inhaled corticosteroids codes",
+            "newer_version": {
+              "label": "20250912",
+              "url": "https://www.opencodelists.org/codelist/nhs-drug-refsets/asttrtatrisk1_cod/20250912"
+            },
+            "system": "dmd",
+            "url": "https://www.opencodelists.org/codelist/nhs-drug-refsets/asttrtatrisk1_cod/20250627/"
+          },
+          {
+            "name": "Chronic obstructive pulmonary disease (COPD) codes",
+            "newer_version": {
+              "label": "20250912",
+              "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/copd_cod/20250912"
+            },
+            "system": "snomedct",
+            "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/copd_cod/20250627/"
+          },
+          {
+            "name": "Codes for chronic obstructive pulmonary disease (COPD) review",
+            "newer_version": {
+              "label": "20250912",
+              "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/copdrvw_cod/20250912"
+            },
+            "system": "snomedct",
+            "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/copdrvw_cod/20250627/"
+          },
+          {
+            "name": "Chronic obstructive pulmonary disease (COPD) resolved codes",
+            "newer_version": {
+              "label": "20250912",
+              "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/copdres_cod/20250912"
+            },
+            "system": "snomedct",
+            "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/copdres_cod/20250627/"
+          },
+          {
+            "name": "Branded salbutamol - AirSalb",
+            "newer_version": {
+              "label": "20250912",
+              "url": "https://www.opencodelists.org/codelist/nhs-drug-refsets/airsbrdinhdrug_cod/20250912"
+            },
+            "system": "dmd",
+            "url": "https://www.opencodelists.org/codelist/nhs-drug-refsets/airsbrdinhdrug_cod/20250627/"
+          },
+          {
+            "name": "Branded salbutamol - Airomir",
+            "newer_version": {
+              "label": "20250912",
+              "url": "https://www.opencodelists.org/codelist/nhs-drug-refsets/airobrdinhdrug_cod/20250912"
+            },
+            "system": "dmd",
+            "url": "https://www.opencodelists.org/codelist/nhs-drug-refsets/airobrdinhdrug_cod/20250627/"
+          },
+          {
+            "name": "Branded salbutamol - Easyhaler",
+            "newer_version": {
+              "label": "20250912",
+              "url": "https://www.opencodelists.org/codelist/nhs-drug-refsets/easybrdinhdrug_cod/20250912"
+            },
+            "system": "dmd",
+            "url": "https://www.opencodelists.org/codelist/nhs-drug-refsets/easybrdinhdrug_cod/20250627/"
+          },
+          {
+            "name": "Branded salbutamol - Salamol",
+            "newer_version": {
+              "label": "20250912",
+              "url": "https://www.opencodelists.org/codelist/nhs-drug-refsets/salabrdinhdrug_cod/20250912"
+            },
+            "system": "dmd",
+            "url": "https://www.opencodelists.org/codelist/nhs-drug-refsets/salabrdinhdrug_cod/20250627/"
+          },
+          {
+            "name": "Branded salbutamol - Salbulin Novolizer",
+            "newer_version": {
+              "label": "20250912",
+              "url": "https://www.opencodelists.org/codelist/nhs-drug-refsets/salbbrdinhdrug_cod/20250912"
+            },
+            "system": "dmd",
+            "url": "https://www.opencodelists.org/codelist/nhs-drug-refsets/salbbrdinhdrug_cod/20250627/"
+          },
+          {
+            "name": "Branded salbutamol - Ventolin Accuhaler",
+            "newer_version": {
+              "label": "20250912",
+              "url": "https://www.opencodelists.org/codelist/nhs-drug-refsets/ventaccubrdinhdrug_cod/20250912"
+            },
+            "system": "dmd",
+            "url": "https://www.opencodelists.org/codelist/nhs-drug-refsets/ventaccubrdinhdrug_cod/20250627/"
+          },
+          {
+            "name": "Branded salbutamol - Ventolin Evohaler",
+            "newer_version": {
+              "label": "20250912",
+              "url": "https://www.opencodelists.org/codelist/nhs-drug-refsets/ventevobrdinhdrug_cod/20250912"
+            },
+            "system": "dmd",
+            "url": "https://www.opencodelists.org/codelist/nhs-drug-refsets/ventevobrdinhdrug_cod/20250627/"
+          },
+          {
+            "name": "Generic salbutamol MDI inhalers",
+            "newer_version": {
+              "label": "20250912",
+              "url": "https://www.opencodelists.org/codelist/nhs-drug-refsets/gensalbmdiinhdrug_cod/20250912"
+            },
+            "system": "dmd",
+            "url": "https://www.opencodelists.org/codelist/nhs-drug-refsets/gensalbmdiinhdrug_cod/20250627/"
+          },
+          {
+            "name": "Generic salbutamol DPI inhalers",
+            "newer_version": {
+              "label": "20250912",
+              "url": "https://www.opencodelists.org/codelist/nhs-drug-refsets/gensalbdpinhdrug_cod/20250912"
+            },
+            "system": "dmd",
+            "url": "https://www.opencodelists.org/codelist/nhs-drug-refsets/gensalbdpinhdrug_cod/20250627/"
+          }
+        ]
       },
       "no_events": {
         "codelists": []
@@ -2969,6 +3227,9 @@
       "inline_codelists": {
         "codelists": []
       },
+      "newer_version": {
+        "codelists": []
+      },
       "no_events": {
         "codelists": []
       },
@@ -2988,16 +3249,24 @@
             "name": "Virtual consultation",
             "system": "snomedct",
             "url": "https://www.opencodelists.org/codelist/user/KatieDavies_1234/virtual-consultation/39f65e2f/"
-          },
-          {
-            "name": "ethnicity (SNOMED)",
-            "system": "snomedct",
-            "url": "https://www.opencodelists.org/codelist/opensafely/ethnicity-snomed-0removed/2e641f61/"
           }
         ]
       },
       "inline_codelists": {
         "codelists": []
+      },
+      "newer_version": {
+        "codelists": [
+          {
+            "name": "ethnicity (SNOMED)",
+            "newer_version": {
+              "label": "22911876",
+              "url": "https://www.opencodelists.org/codelist/opensafely/ethnicity-snomed-0removed/22911876"
+            },
+            "system": "snomedct",
+            "url": "https://www.opencodelists.org/codelist/opensafely/ethnicity-snomed-0removed/2e641f61/"
+          }
+        ]
       },
       "no_events": {
         "codelists": []
@@ -3017,6 +3286,9 @@
         ]
       },
       "inline_codelists": {
+        "codelists": []
+      },
+      "newer_version": {
         "codelists": []
       },
       "no_events": {
@@ -3331,11 +3603,6 @@
             "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/addis_cod/v2.5/"
           },
           {
-            "name": "Asthma Diagnosis code",
-            "system": "snomedct",
-            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/ast/v2.5/"
-          },
-          {
             "name": "Oral prednisolone codes",
             "system": "dmd",
             "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/astrxm2/v2.5/"
@@ -3552,6 +3819,19 @@
           }
         ]
       },
+      "newer_version": {
+        "codelists": [
+          {
+            "name": "Asthma Diagnosis code",
+            "newer_version": {
+              "label": "v2.4",
+              "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/ast/v2.4"
+            },
+            "system": "snomedct",
+            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/ast/v2.5/"
+          }
+        ]
+      },
       "no_events": {
         "codelists": []
       },
@@ -3722,6 +4002,9 @@
       "inline_codelists": {
         "codelists": []
       },
+      "newer_version": {
+        "codelists": []
+      },
       "no_events": {
         "codelists": []
       },
@@ -3734,6 +4017,9 @@
         "codelists": []
       },
       "inline_codelists": {
+        "codelists": []
+      },
+      "newer_version": {
         "codelists": []
       },
       "no_events": {
@@ -3787,11 +4073,6 @@
             "url": "https://www.opencodelists.org/codelist/opensafely/current-copd/2020-05-06/"
           },
           {
-            "name": "Diabetes",
-            "system": "ctv3",
-            "url": "https://www.opencodelists.org/codelist/opensafely/diabetes/2020-04-15/"
-          },
-          {
             "name": "<LOOKUP_FAILED>",
             "system": "<LOOKUP_FAILED>",
             "url": "https://www.opencodelists.org/codelist/opensafely/chronic-kidney-disease/2020-04-14/"
@@ -3835,11 +4116,6 @@
             "name": "Lung Cancer",
             "system": "ctv3",
             "url": "https://www.opencodelists.org/codelist/opensafely/lung-cancer/2020-04-15/"
-          },
-          {
-            "name": "Methotrexate (oral)",
-            "system": "dmd",
-            "url": "https://www.opencodelists.org/codelist/opensafely/methotrexate-oral/041a8320/"
           },
           {
             "name": "Methotrexate - injectable",
@@ -3901,6 +4177,28 @@
             "file": "analysis/codelists_ehrQL.py",
             "line": "51",
             "url": "https://github.com/opensafely/early-inflammatory-arthritis/blob/069e61712fcc9a0c2ec2804ff36a9b773073291c/analysis/codelists_ehrQL.py#L51"
+          }
+        ]
+      },
+      "newer_version": {
+        "codelists": [
+          {
+            "name": "Diabetes",
+            "newer_version": {
+              "label": "47ac0884",
+              "url": "https://www.opencodelists.org/codelist/opensafely/diabetes/47ac0884"
+            },
+            "system": "ctv3",
+            "url": "https://www.opencodelists.org/codelist/opensafely/diabetes/2020-04-15/"
+          },
+          {
+            "name": "Methotrexate (oral)",
+            "newer_version": {
+              "label": "26ee05e8",
+              "url": "https://www.opencodelists.org/codelist/opensafely/methotrexate-oral/26ee05e8"
+            },
+            "system": "dmd",
+            "url": "https://www.opencodelists.org/codelist/opensafely/methotrexate-oral/041a8320/"
           }
         ]
       },
@@ -4019,21 +4317,32 @@
     },
     "opensafely/ehrql-demo": {
       "good": {
+        "codelists": []
+      },
+      "inline_codelists": {
+        "codelists": []
+      },
+      "newer_version": {
         "codelists": [
           {
             "name": "Depression diagnosis codes",
+            "newer_version": {
+              "label": "20250912",
+              "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/depr_cod/20250912"
+            },
             "system": "snomedct",
             "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/depr_cod/20241205/"
           },
           {
             "name": "Depression resolved codes",
+            "newer_version": {
+              "label": "20250912",
+              "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/depres_cod/20250912"
+            },
             "system": "snomedct",
             "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/depres_cod/20241205/"
           }
         ]
-      },
-      "inline_codelists": {
-        "codelists": []
       },
       "no_events": {
         "codelists": []
@@ -4047,6 +4356,9 @@
         "codelists": []
       },
       "inline_codelists": {
+        "codelists": []
+      },
+      "newer_version": {
         "codelists": []
       },
       "no_events": {
@@ -4119,6 +4431,9 @@
       "inline_codelists": {
         "codelists": []
       },
+      "newer_version": {
+        "codelists": []
+      },
       "no_events": {
         "codelists": []
       },
@@ -4170,19 +4485,9 @@
             "url": "https://www.opencodelists.org/codelist/opensafely/haloperidol-subcutaneous-dmd/78768925/"
           },
           {
-            "name": "ethnicity (SNOMED)",
-            "system": "snomedct",
-            "url": "https://www.opencodelists.org/codelist/opensafely/ethnicity-snomed-0removed/2e641f61/"
-          },
-          {
             "name": "Community nursing",
             "system": "snomedct",
             "url": "https://www.opencodelists.org/codelist/user/eiliskeeble/community-nursing/5e41bd18/"
-          },
-          {
-            "name": "Palliative care codes",
-            "system": "snomedct",
-            "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/palcare_cod/20200812/"
           },
           {
             "name": "Specialist Palliative Care",
@@ -4193,6 +4498,28 @@
       },
       "inline_codelists": {
         "codelists": []
+      },
+      "newer_version": {
+        "codelists": [
+          {
+            "name": "ethnicity (SNOMED)",
+            "newer_version": {
+              "label": "22911876",
+              "url": "https://www.opencodelists.org/codelist/opensafely/ethnicity-snomed-0removed/22911876"
+            },
+            "system": "snomedct",
+            "url": "https://www.opencodelists.org/codelist/opensafely/ethnicity-snomed-0removed/2e641f61/"
+          },
+          {
+            "name": "Palliative care codes",
+            "newer_version": {
+              "label": "20250912",
+              "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/palcare_cod/20250912"
+            },
+            "system": "snomedct",
+            "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/palcare_cod/20200812/"
+          }
+        ]
       },
       "no_events": {
         "codelists": []
@@ -4364,6 +4691,9 @@
       "inline_codelists": {
         "codelists": []
       },
+      "newer_version": {
+        "codelists": []
+      },
       "no_events": {
         "codelists": []
       },
@@ -4394,6 +4724,9 @@
       "inline_codelists": {
         "codelists": []
       },
+      "newer_version": {
+        "codelists": []
+      },
       "no_events": {
         "codelists": []
       },
@@ -4415,49 +4748,9 @@
             "url": "https://www.opencodelists.org/codelist/user/markdrussell/cyclic-citrullinated-peptide-ccp-antibody/0a0679e5/"
           },
           {
-            "name": "Coronary heart disease (CHD) codes",
-            "system": "snomedct",
-            "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/chd_cod/0f32f87c/"
-          },
-          {
-            "name": "Chronic kidney disease (CKD) stage 3 4 and 5 codes",
-            "system": "snomedct",
-            "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/ckdatrisk2_cod/4529f7b4/"
-          },
-          {
-            "name": "Chronic obstructive pulmonary disease (COPD) codes",
-            "system": "snomedct",
-            "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/copd_cod/3a5ef7dc/"
-          },
-          {
             "name": "Creatinine level",
             "system": "snomedct",
             "url": "https://www.opencodelists.org/codelist/ardens/creatinine-level/1d46314c/"
-          },
-          {
-            "name": "Stroke diagnosis codes",
-            "system": "snomedct",
-            "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/strk_cod/78779ff3/"
-          },
-          {
-            "name": "Transient ischaemic attack (TIA) codes",
-            "system": "snomedct",
-            "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/tia_cod/1625df86/"
-          },
-          {
-            "name": "Codes for dementia",
-            "system": "snomedct",
-            "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/dem_cod/21b792ed/"
-          },
-          {
-            "name": "Depression diagnosis codes",
-            "system": "snomedct",
-            "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/depr_cod/477e1261/"
-          },
-          {
-            "name": "Diabetes Type 2 codes used in National Audit",
-            "system": "snomedct",
-            "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/dmtype2audit_cod/130b114a/"
           },
           {
             "name": "Erosive rheumatoid arthritis",
@@ -4468,16 +4761,6 @@
             "name": "Smoking - Clear",
             "system": "ctv3",
             "url": "https://www.opencodelists.org/codelist/opensafely/smoking-clear/2020-04-29/"
-          },
-          {
-            "name": "Fragility fracture codes",
-            "system": "snomedct",
-            "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/ff_cod/7c4fb8c1/"
-          },
-          {
-            "name": "Haematological cancer codes",
-            "system": "snomedct",
-            "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/c19haemcan_cod/4d423796/"
           },
           {
             "name": "Hydroxychloroquine",
@@ -4503,16 +4786,6 @@
             "name": "Methotrexate - injectable",
             "system": "dmd",
             "url": "https://www.opencodelists.org/codelist/opensafely/methotrexate-injectable/3328044b/"
-          },
-          {
-            "name": "Methotrexate (oral)",
-            "system": "dmd",
-            "url": "https://www.opencodelists.org/codelist/opensafely/methotrexate-oral/041a8320/"
-          },
-          {
-            "name": "Osteoporosis codes",
-            "system": "snomedct",
-            "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/osteo_cod/1dd61122/"
           },
           {
             "name": "Referral to rheumatology only",
@@ -4566,6 +4839,118 @@
             "file": "analysis/codelists_ehrQL.py",
             "line": "243",
             "url": "https://github.com/opensafely/inflammatory_rheum/blob/b74162a887a0cf5f8ab27919a342c45fb0fa9fa4/analysis/codelists_ehrQL.py#L243"
+          }
+        ]
+      },
+      "newer_version": {
+        "codelists": [
+          {
+            "name": "Coronary heart disease (CHD) codes",
+            "newer_version": {
+              "label": "20250912",
+              "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/chd_cod/20250912"
+            },
+            "system": "snomedct",
+            "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/chd_cod/0f32f87c/"
+          },
+          {
+            "name": "Chronic kidney disease (CKD) stage 3 4 and 5 codes",
+            "newer_version": {
+              "label": "20250912",
+              "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/ckdatrisk2_cod/20250912"
+            },
+            "system": "snomedct",
+            "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/ckdatrisk2_cod/4529f7b4/"
+          },
+          {
+            "name": "Chronic obstructive pulmonary disease (COPD) codes",
+            "newer_version": {
+              "label": "20250912",
+              "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/copd_cod/20250912"
+            },
+            "system": "snomedct",
+            "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/copd_cod/3a5ef7dc/"
+          },
+          {
+            "name": "Stroke diagnosis codes",
+            "newer_version": {
+              "label": "20250912",
+              "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/strk_cod/20250912"
+            },
+            "system": "snomedct",
+            "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/strk_cod/78779ff3/"
+          },
+          {
+            "name": "Transient ischaemic attack (TIA) codes",
+            "newer_version": {
+              "label": "20250912",
+              "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/tia_cod/20250912"
+            },
+            "system": "snomedct",
+            "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/tia_cod/1625df86/"
+          },
+          {
+            "name": "Codes for dementia",
+            "newer_version": {
+              "label": "20250912",
+              "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/dem_cod/20250912"
+            },
+            "system": "snomedct",
+            "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/dem_cod/21b792ed/"
+          },
+          {
+            "name": "Depression diagnosis codes",
+            "newer_version": {
+              "label": "20250912",
+              "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/depr_cod/20250912"
+            },
+            "system": "snomedct",
+            "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/depr_cod/477e1261/"
+          },
+          {
+            "name": "Diabetes Type 2 codes used in National Audit",
+            "newer_version": {
+              "label": "20250912",
+              "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/dmtype2audit_cod/20250912"
+            },
+            "system": "snomedct",
+            "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/dmtype2audit_cod/130b114a/"
+          },
+          {
+            "name": "Fragility fracture codes",
+            "newer_version": {
+              "label": "20250912",
+              "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/ff_cod/20250912"
+            },
+            "system": "snomedct",
+            "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/ff_cod/7c4fb8c1/"
+          },
+          {
+            "name": "Haematological cancer codes",
+            "newer_version": {
+              "label": "20250912",
+              "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/c19haemcan_cod/20250912"
+            },
+            "system": "snomedct",
+            "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/c19haemcan_cod/4d423796/"
+          },
+          {
+            "name": "Methotrexate (oral)",
+            "newer_version": {
+              "label": "26ee05e8",
+              "url": "https://www.opencodelists.org/codelist/opensafely/methotrexate-oral/26ee05e8"
+            },
+            "system": "dmd",
+            "url": "https://www.opencodelists.org/codelist/opensafely/methotrexate-oral/041a8320/"
+          },
+          {
+            "name": "Osteoporosis codes",
+            "newer_version": {
+              "label": "20250912",
+              "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/osteo_cod/20250912"
+            },
+            "system": "snomedct",
+            "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/osteo_cod/1dd61122/"
           }
         ]
       },
@@ -4686,11 +5071,6 @@
       "good": {
         "codelists": [
           {
-            "name": "ethnicity (SNOMED)",
-            "system": "snomedct",
-            "url": "https://www.opencodelists.org/codelist/opensafely/ethnicity-snomed-0removed/2e641f61/"
-          },
-          {
             "name": "COVID identification in primary care - probable covid - sequelae",
             "system": "ctv3",
             "url": "https://www.opencodelists.org/codelist/opensafely/covid-identification-in-primary-care-probable-covid-sequelae/2020-07-16/"
@@ -4748,6 +5128,19 @@
             "file": "analysis/codelists_ehrql.py",
             "line": "172",
             "url": "https://github.com/opensafely/isaric-exploration/blob/63b23df6f85df8991cf38a01afd73d90e59c490c/analysis/codelists_ehrql.py#L172"
+          }
+        ]
+      },
+      "newer_version": {
+        "codelists": [
+          {
+            "name": "ethnicity (SNOMED)",
+            "newer_version": {
+              "label": "22911876",
+              "url": "https://www.opencodelists.org/codelist/opensafely/ethnicity-snomed-0removed/22911876"
+            },
+            "system": "snomedct",
+            "url": "https://www.opencodelists.org/codelist/opensafely/ethnicity-snomed-0removed/2e641f61/"
           }
         ]
       },
@@ -4868,11 +5261,6 @@
             "url": "https://www.opencodelists.org/codelist/phc/phc-colorectal-cancer-snomed/3925b63c/"
           },
           {
-            "name": "ethnicity (SNOMED)",
-            "system": "snomedct",
-            "url": "https://www.opencodelists.org/codelist/opensafely/ethnicity-snomed-0removed/2e641f61/"
-          },
-          {
             "name": "symptom lowerGI abdo mass",
             "system": "snomedct",
             "url": "https://www.opencodelists.org/codelist/phc/symptom-lowergi-abdo-mass/154bce96/"
@@ -4932,6 +5320,19 @@
       "inline_codelists": {
         "codelists": []
       },
+      "newer_version": {
+        "codelists": [
+          {
+            "name": "ethnicity (SNOMED)",
+            "newer_version": {
+              "label": "22911876",
+              "url": "https://www.opencodelists.org/codelist/opensafely/ethnicity-snomed-0removed/22911876"
+            },
+            "system": "snomedct",
+            "url": "https://www.opencodelists.org/codelist/opensafely/ethnicity-snomed-0removed/2e641f61/"
+          }
+        ]
+      },
       "no_events": {
         "codelists": []
       },
@@ -4957,6 +5358,9 @@
       "inline_codelists": {
         "codelists": []
       },
+      "newer_version": {
+        "codelists": []
+      },
       "no_events": {
         "codelists": []
       },
@@ -4967,11 +5371,6 @@
     "opensafely/metformin_covid": {
       "good": {
         "codelists": [
-          {
-            "name": "ethnicity (SNOMED)",
-            "system": "snomedct",
-            "url": "https://www.opencodelists.org/codelist/opensafely/ethnicity-snomed-0removed/2e641f61/"
-          },
           {
             "name": "Type 2 diabetes",
             "system": "ctv3",
@@ -5163,11 +5562,6 @@
             "url": "https://www.opencodelists.org/codelist/user/RochelleKnight/hf_icd10/72bbcced/"
           },
           {
-            "name": "Hypertension diagnosis codes",
-            "system": "snomedct",
-            "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/hyp_cod/20210127/"
-          },
-          {
             "name": "hypertension_icd10",
             "system": "icd10",
             "url": "https://www.opencodelists.org/codelist/user/elsie_horne/hypertension_icd10/1a48296e/"
@@ -5298,24 +5692,9 @@
             "url": "https://www.opencodelists.org/codelist/opensafely/glycated-haemoglobin-hba1c-tests/2ab11f20/"
           },
           {
-            "name": "Lifestyle intervention and advice codes",
-            "system": "snomedct",
-            "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/lifestyleint_cod/75d83d5e/"
-          },
-          {
-            "name": "Patients in long-stay nursing and residential care",
-            "system": "snomedct",
-            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/longres/v1/"
-          },
-          {
             "name": "diabetes agi",
             "system": "dmd",
             "url": "https://www.opencodelists.org/codelist/user/alainamstutz/diabetes-agi/67cccb56/"
-          },
-          {
-            "name": "Chronic kidney disease (CKD) stage 4 and 5 codes",
-            "system": "snomedct",
-            "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/ckdatrisk1_cod/08a67d83/"
           },
           {
             "name": "diabetes dpp4",
@@ -5361,11 +5740,6 @@
             "name": "metformin drug-drug interaction Bristol - dmd",
             "system": "dmd",
             "url": "https://www.opencodelists.org/codelist/user/alainamstutz/metformin-drug-drug-interaction-bristol-dmd/76baa07d/"
-          },
-          {
-            "name": "Palliative care codes",
-            "system": "snomedct",
-            "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/palcare_cod/7748de1e/"
           },
           {
             "name": "diabetes sglt2",
@@ -5497,6 +5871,64 @@
             "file": "analysis/codelists.py",
             "line": "249",
             "url": "https://github.com/opensafely/metformin_covid/blob/d452c8dab8538d236ee428237d81bd5c5f538a1b/analysis/codelists.py#L249"
+          }
+        ]
+      },
+      "newer_version": {
+        "codelists": [
+          {
+            "name": "ethnicity (SNOMED)",
+            "newer_version": {
+              "label": "22911876",
+              "url": "https://www.opencodelists.org/codelist/opensafely/ethnicity-snomed-0removed/22911876"
+            },
+            "system": "snomedct",
+            "url": "https://www.opencodelists.org/codelist/opensafely/ethnicity-snomed-0removed/2e641f61/"
+          },
+          {
+            "name": "Hypertension diagnosis codes",
+            "newer_version": {
+              "label": "20250912",
+              "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/hyp_cod/20250912"
+            },
+            "system": "snomedct",
+            "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/hyp_cod/20210127/"
+          },
+          {
+            "name": "Lifestyle intervention and advice codes",
+            "newer_version": {
+              "label": "20250912",
+              "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/lifestyleint_cod/20250912"
+            },
+            "system": "snomedct",
+            "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/lifestyleint_cod/75d83d5e/"
+          },
+          {
+            "name": "Patients in long-stay nursing and residential care",
+            "newer_version": {
+              "label": "v2.5",
+              "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/longres/v2.5"
+            },
+            "system": "snomedct",
+            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/longres/v1/"
+          },
+          {
+            "name": "Chronic kidney disease (CKD) stage 4 and 5 codes",
+            "newer_version": {
+              "label": "20250912",
+              "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/ckdatrisk1_cod/20250912"
+            },
+            "system": "snomedct",
+            "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/ckdatrisk1_cod/08a67d83/"
+          },
+          {
+            "name": "Palliative care codes",
+            "newer_version": {
+              "label": "20250912",
+              "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/palcare_cod/20250912"
+            },
+            "system": "snomedct",
+            "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/palcare_cod/7748de1e/"
           }
         ]
       },
@@ -5749,6 +6181,9 @@
       "inline_codelists": {
         "codelists": []
       },
+      "newer_version": {
+        "codelists": []
+      },
       "no_events": {
         "codelists": []
       },
@@ -5772,6 +6207,9 @@
         "codelists": []
       },
       "inline_codelists": {
+        "codelists": []
+      },
+      "newer_version": {
         "codelists": []
       },
       "no_events": {
@@ -5857,6 +6295,9 @@
         "codelists": []
       },
       "inline_codelists": {
+        "codelists": []
+      },
+      "newer_version": {
         "codelists": []
       },
       "no_events": {
@@ -6018,6 +6459,9 @@
         ]
       },
       "inline_codelists": {
+        "codelists": []
+      },
+      "newer_version": {
         "codelists": []
       },
       "no_events": {
@@ -6301,6 +6745,9 @@
       "inline_codelists": {
         "codelists": []
       },
+      "newer_version": {
+        "codelists": []
+      },
       "no_events": {
         "codelists": []
       },
@@ -6502,6 +6949,9 @@
       "inline_codelists": {
         "codelists": []
       },
+      "newer_version": {
+        "codelists": []
+      },
       "no_events": {
         "codelists": []
       },
@@ -6647,21 +7097,32 @@
     },
     "opensafely/opioids-covid-research": {
       "good": {
+        "codelists": []
+      },
+      "inline_codelists": {
+        "codelists": []
+      },
+      "newer_version": {
         "codelists": [
           {
             "name": "Patients in long-stay nursing and residential care",
+            "newer_version": {
+              "label": "v2.5",
+              "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/longres/v2.5"
+            },
             "system": "snomedct",
             "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/longres/v1/"
           },
           {
             "name": "ethnicity (SNOMED)",
+            "newer_version": {
+              "label": "22911876",
+              "url": "https://www.opencodelists.org/codelist/opensafely/ethnicity-snomed-0removed/22911876"
+            },
             "system": "snomedct",
             "url": "https://www.opencodelists.org/codelist/opensafely/ethnicity-snomed-0removed/2e641f61/"
           }
         ]
-      },
-      "inline_codelists": {
-        "codelists": []
       },
       "no_events": {
         "codelists": []
@@ -6728,6 +7189,9 @@
       "inline_codelists": {
         "codelists": []
       },
+      "newer_version": {
+        "codelists": []
+      },
       "no_events": {
         "codelists": []
       },
@@ -6740,6 +7204,9 @@
         "codelists": []
       },
       "inline_codelists": {
+        "codelists": []
+      },
+      "newer_version": {
         "codelists": []
       },
       "no_events": {
@@ -6757,13 +7224,7 @@
     },
     "opensafely/pharmacy-first": {
       "good": {
-        "codelists": [
-          {
-            "name": "ethnicity (SNOMED)",
-            "system": "snomedct",
-            "url": "https://www.opencodelists.org/codelist/opensafely/ethnicity-snomed-0removed/2e641f61/"
-          }
-        ]
+        "codelists": []
       },
       "inline_codelists": {
         "codelists": [
@@ -6849,6 +7310,19 @@
           }
         ]
       },
+      "newer_version": {
+        "codelists": [
+          {
+            "name": "ethnicity (SNOMED)",
+            "newer_version": {
+              "label": "22911876",
+              "url": "https://www.opencodelists.org/codelist/opensafely/ethnicity-snomed-0removed/22911876"
+            },
+            "system": "snomedct",
+            "url": "https://www.opencodelists.org/codelist/opensafely/ethnicity-snomed-0removed/2e641f61/"
+          }
+        ]
+      },
       "no_events": {
         "codelists": []
       },
@@ -6909,6 +7383,9 @@
       "inline_codelists": {
         "codelists": []
       },
+      "newer_version": {
+        "codelists": []
+      },
       "no_events": {
         "codelists": []
       },
@@ -6962,6 +7439,9 @@
         "codelists": []
       },
       "inline_codelists": {
+        "codelists": []
+      },
+      "newer_version": {
         "codelists": []
       },
       "no_events": {
@@ -7094,6 +7574,9 @@
       "inline_codelists": {
         "codelists": []
       },
+      "newer_version": {
+        "codelists": []
+      },
       "no_events": {
         "codelists": []
       },
@@ -7114,16 +7597,23 @@
     },
     "opensafely/polypharmacy-deprescribing-dementia": {
       "good": {
+        "codelists": []
+      },
+      "inline_codelists": {
+        "codelists": []
+      },
+      "newer_version": {
         "codelists": [
           {
             "name": "Dementia medication review codes",
+            "newer_version": {
+              "label": "20250912",
+              "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/demmedrvw_cod/20250912"
+            },
             "system": "snomedct",
             "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/demmedrvw_cod/5f1ce4d6/"
           }
         ]
-      },
-      "inline_codelists": {
-        "codelists": []
       },
       "no_events": {
         "codelists": []
@@ -7273,6 +7763,9 @@
         "codelists": []
       },
       "inline_codelists": {
+        "codelists": []
+      },
+      "newer_version": {
         "codelists": []
       },
       "no_events": {
@@ -7745,6 +8238,9 @@
       "inline_codelists": {
         "codelists": []
       },
+      "newer_version": {
+        "codelists": []
+      },
       "no_events": {
         "codelists": []
       },
@@ -8205,6 +8701,9 @@
       "inline_codelists": {
         "codelists": []
       },
+      "newer_version": {
+        "codelists": []
+      },
       "no_events": {
         "codelists": []
       },
@@ -8643,6 +9142,9 @@
         "codelists": []
       },
       "inline_codelists": {
+        "codelists": []
+      },
+      "newer_version": {
         "codelists": []
       },
       "no_events": {
@@ -9163,6 +9665,9 @@
         "codelists": []
       },
       "inline_codelists": {
+        "codelists": []
+      },
+      "newer_version": {
         "codelists": []
       },
       "no_events": {
@@ -9737,11 +10242,6 @@
             "url": "https://www.opencodelists.org/codelist/user/elsie_horne/hypertension_icd10/1a48296e/"
           },
           {
-            "name": "Hypertension diagnosis codes",
-            "system": "snomedct",
-            "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/hyp_cod/20210127/"
-          },
-          {
             "name": "hypertension_drugs_dmd",
             "system": "dmd",
             "url": "https://www.opencodelists.org/codelist/user/elsie_horne/hypertension_drugs_dmd/0009f464/"
@@ -9755,6 +10255,19 @@
       },
       "inline_codelists": {
         "codelists": []
+      },
+      "newer_version": {
+        "codelists": [
+          {
+            "name": "Hypertension diagnosis codes",
+            "newer_version": {
+              "label": "20250912",
+              "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/hyp_cod/20250912"
+            },
+            "system": "snomedct",
+            "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/hyp_cod/20210127/"
+          }
+        ]
       },
       "no_events": {
         "codelists": [
@@ -10458,11 +10971,6 @@
             "url": "https://www.opencodelists.org/codelist/user/bangzheng/cancer-excluding-lung-and-haematological-snomed-new/31cac0ec/"
           },
           {
-            "name": "Patients in long-stay nursing and residential care",
-            "system": "snomedct",
-            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/longres/v1/"
-          },
-          {
             "name": "Dialysis OPCS-4",
             "system": "opcs4",
             "url": "https://www.opencodelists.org/codelist/ukrr/dialysis-opcs-4/505bef04/"
@@ -10483,11 +10991,6 @@
             "url": "https://www.opencodelists.org/codelistcodelists/opensafely-ethnicity-snomed-0removed.csv"
           },
           {
-            "name": "Autism diagnosis codes",
-            "system": "snomedct",
-            "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/autism_cod/20210127/"
-          },
-          {
             "name": "Chronic Cardiac Disease (SNOMED)",
             "system": "snomedct",
             "url": "https://www.opencodelists.org/codelist/opensafely/chronic-cardiac-disease-snomed/2020-04-08/"
@@ -10496,11 +10999,6 @@
             "name": "Chronic Respiratory Disease (SNOMED)",
             "system": "snomedct",
             "url": "https://www.opencodelists.org/codelist/opensafely/chronic-respiratory-disease-snomed/2020-04-10/"
-          },
-          {
-            "name": "Codes for dementia",
-            "system": "snomedct",
-            "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/dem_cod/20210127/"
           },
           {
             "name": "Diabetes (SNOMED)",
@@ -10588,16 +11086,6 @@
             "url": "https://www.opencodelists.org/codelist/opensafely/kidney-transplant/2020-07-15/"
           },
           {
-            "name": "Wider Learning Disability",
-            "system": "snomedct",
-            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/learndis/v1/"
-          },
-          {
-            "name": "Psychosis and schizophrenia and bipolar affective disease codes",
-            "system": "snomedct",
-            "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/mh_cod/20210127/"
-          },
-          {
             "name": "Transplant (SPL-AtRiskv4) (SNOMED CT)",
             "system": "snomedct",
             "url": "https://www.opencodelists.org/codelist/nhsd/transplant-spl-atriskv4-snomed-ct/57747a02/"
@@ -10658,16 +11146,6 @@
             "url": "https://www.opencodelists.org/codelist/user/bangzheng/nhsd-transplant-spl-atriskv4-snomed-ct-new/15a9e878/"
           },
           {
-            "name": "Pregnancy or Delivery codes recorded in the 8.5 months before audit run date",
-            "system": "snomedct",
-            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/pregdel/v1/"
-          },
-          {
-            "name": "Pregnancy codes recorded in the 8.5 months before the audit run date",
-            "system": "snomedct",
-            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/preg/v1/"
-          },
-          {
             "name": "Solid Organ Transplantation  (SNOMED)",
             "system": "snomedct",
             "url": "https://www.opencodelists.org/codelist/opensafely/solid-organ-transplantation-snomed/2020-04-10/"
@@ -10697,6 +11175,73 @@
           }
         ]
       },
+      "newer_version": {
+        "codelists": [
+          {
+            "name": "Patients in long-stay nursing and residential care",
+            "newer_version": {
+              "label": "v2.5",
+              "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/longres/v2.5"
+            },
+            "system": "snomedct",
+            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/longres/v1/"
+          },
+          {
+            "name": "Autism diagnosis codes",
+            "newer_version": {
+              "label": "20250912",
+              "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/autism_cod/20250912"
+            },
+            "system": "snomedct",
+            "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/autism_cod/20210127/"
+          },
+          {
+            "name": "Codes for dementia",
+            "newer_version": {
+              "label": "20250912",
+              "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/dem_cod/20250912"
+            },
+            "system": "snomedct",
+            "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/dem_cod/20210127/"
+          },
+          {
+            "name": "Wider Learning Disability",
+            "newer_version": {
+              "label": "v2.5",
+              "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/learndis/v2.5"
+            },
+            "system": "snomedct",
+            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/learndis/v1/"
+          },
+          {
+            "name": "Psychosis and schizophrenia and bipolar affective disease codes",
+            "newer_version": {
+              "label": "20250912",
+              "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/mh_cod/20250912"
+            },
+            "system": "snomedct",
+            "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/mh_cod/20210127/"
+          },
+          {
+            "name": "Pregnancy or Delivery codes recorded in the 8.5 months before audit run date",
+            "newer_version": {
+              "label": "v2.5",
+              "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/pregdel/v2.5"
+            },
+            "system": "snomedct",
+            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/pregdel/v1/"
+          },
+          {
+            "name": "Pregnancy codes recorded in the 8.5 months before the audit run date",
+            "newer_version": {
+              "label": "v2.5",
+              "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/preg/v2.5"
+            },
+            "system": "snomedct",
+            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/preg/v1/"
+          }
+        ]
+      },
       "no_events": {
         "codelists": [
           {
@@ -10721,31 +11266,50 @@
     },
     "opensafely/qof": {
       "good": {
+        "codelists": []
+      },
+      "inline_codelists": {
+        "codelists": []
+      },
+      "newer_version": {
         "codelists": [
           {
             "name": "Depression diagnosis codes",
+            "newer_version": {
+              "label": "20250912",
+              "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/depr_cod/20250912"
+            },
             "system": "snomedct",
             "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/depr_cod/20210127/"
           },
           {
             "name": "Depression resolved codes",
+            "newer_version": {
+              "label": "20250912",
+              "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/depres_cod/20250912"
+            },
             "system": "snomedct",
             "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/depres_cod/20200812/"
           },
           {
             "name": "Hypertension diagnosis codes",
+            "newer_version": {
+              "label": "20250912",
+              "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/hyp_cod/20250912"
+            },
             "system": "snomedct",
             "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/hyp_cod/20210127/"
           },
           {
             "name": "Hypertension resolved codes",
+            "newer_version": {
+              "label": "20250912",
+              "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/hypres_cod/20250912"
+            },
             "system": "snomedct",
             "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/hypres_cod/20200812/"
           }
         ]
-      },
-      "inline_codelists": {
-        "codelists": []
       },
       "no_events": {
         "codelists": []
@@ -10777,6 +11341,9 @@
       "inline_codelists": {
         "codelists": []
       },
+      "newer_version": {
+        "codelists": []
+      },
       "no_events": {
         "codelists": []
       },
@@ -10791,6 +11358,9 @@
       "inline_codelists": {
         "codelists": []
       },
+      "newer_version": {
+        "codelists": []
+      },
       "no_events": {
         "codelists": []
       },
@@ -10803,6 +11373,9 @@
         "codelists": []
       },
       "inline_codelists": {
+        "codelists": []
+      },
+      "newer_version": {
         "codelists": []
       },
       "no_events": {
@@ -10853,6 +11426,9 @@
         ]
       },
       "inline_codelists": {
+        "codelists": []
+      },
+      "newer_version": {
         "codelists": []
       },
       "no_events": {
@@ -10980,6 +11556,9 @@
       "inline_codelists": {
         "codelists": []
       },
+      "newer_version": {
+        "codelists": []
+      },
       "no_events": {
         "codelists": []
       },
@@ -10992,6 +11571,9 @@
         "codelists": []
       },
       "inline_codelists": {
+        "codelists": []
+      },
+      "newer_version": {
         "codelists": []
       },
       "no_events": {
@@ -11211,6 +11793,9 @@
           }
         ]
       },
+      "newer_version": {
+        "codelists": []
+      },
       "no_events": {
         "codelists": []
       },
@@ -11223,6 +11808,9 @@
         "codelists": []
       },
       "inline_codelists": {
+        "codelists": []
+      },
+      "newer_version": {
         "codelists": []
       },
       "no_events": {
@@ -11381,6 +11969,9 @@
       "inline_codelists": {
         "codelists": []
       },
+      "newer_version": {
+        "codelists": []
+      },
       "no_events": {
         "codelists": []
       },
@@ -11473,11 +12064,6 @@
             "url": "https://www.opencodelists.org/codelist/opensafely/lung-cancer-snomed/2020-04-15/"
           },
           {
-            "name": "ethnicity (SNOMED)",
-            "system": "snomedct",
-            "url": "https://www.opencodelists.org/codelist/opensafely/ethnicity-snomed-0removed/2e641f61/"
-          },
-          {
             "name": "Opioids for analgesia - dmd",
             "system": "dmd",
             "url": "https://www.opencodelists.org/codelist/user/anschaf/opioids-for-analgesia-dmd/08cdc3ac/"
@@ -11486,6 +12072,19 @@
       },
       "inline_codelists": {
         "codelists": []
+      },
+      "newer_version": {
+        "codelists": [
+          {
+            "name": "ethnicity (SNOMED)",
+            "newer_version": {
+              "label": "22911876",
+              "url": "https://www.opencodelists.org/codelist/opensafely/ethnicity-snomed-0removed/22911876"
+            },
+            "system": "snomedct",
+            "url": "https://www.opencodelists.org/codelist/opensafely/ethnicity-snomed-0removed/2e641f61/"
+          }
+        ]
       },
       "no_events": {
         "codelists": []
@@ -11641,6 +12240,9 @@
         ]
       },
       "inline_codelists": {
+        "codelists": []
+      },
+      "newer_version": {
         "codelists": []
       },
       "no_events": {

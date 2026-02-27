@@ -7,9 +7,11 @@ import json
 import os
 from datetime import datetime
 
+from codelist_newer_version_available import newer_versions
 from parsing.codelist_helpers import (
     get_repos_with_codelists,
     lookup_codelists_by_repo,
+    make_ocl_url,
 )
 
 
@@ -36,6 +38,7 @@ def main():
             "inline_codelists": {"codelists": []},
             "unused_codelists": {"codelists": []},
             "no_events": {"codelists": []},
+            "newer_version": {"codelists": []},
         }
 
         bad_codelists = set()
@@ -51,6 +54,21 @@ def main():
         for inline_codelist in codelists.get("inline_codelists", []):
             repo_output["inline_codelists"]["codelists"].append(inline_codelist)
             bad_codelists.add(inline_codelist.get("url"))
+
+        # add the codelists not using the latest version
+        for codelist in codelists["codelists"]:
+            if versions := newer_versions(codelist["url"]):
+                latest_version = sorted(
+                    versions, key=lambda x: x["created_at"], reverse=True
+                )[0]
+                newer_version = {
+                    "url": make_ocl_url("/" + latest_version["slug"]),
+                    "label": latest_version.get("tag") or latest_version["hash"],
+                }
+                repo_output["newer_version"]["codelists"].append(
+                    codelist | {"newer_version": newer_version}
+                )
+                bad_codelists.add(codelist["url"])
 
         # Add the remaining "good" codelists
         for codelist in codelists.get("codelists", []):

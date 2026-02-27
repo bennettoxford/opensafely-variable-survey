@@ -1,31 +1,33 @@
 import json
-from collections.abc import Generator
+
+from parsing.codelist_helpers import url_to_slug
 
 
 with open("notebooks/public/rsi-codelists-analysis.json") as f:
     codelists = json.load(f)["codelists"]
 
 
-def newer_versions(codelist_version_slug: str) -> list[dict[str, str]]:
+def newer_versions(codelist_version_url: str) -> list[dict[str, str]]:
     # `updated_at` might get updated by various automated processes
     # as well as humans making actual updates to the version.
     # the "latest version" behaviour on OpenCodelists uses `created_at`
     # so replicated here.
-    codelist_slug, _ = codelist_version_slug.rsplit("/")
-    if not (codelist := next(c for c in codelists if c["slug"] == codelist_slug)):
-        raise ValueError(
-            f"Could not find codelist {codelist_slug} in opencodelists data dump"
-        )
+    if codelist_version_url.endswith(".csv"):
+        return []
+    codelist_version_slug = url_to_slug(codelist_version_url)
+    codelist_slug, _ = codelist_version_slug.rsplit("/", 1)
+    if not (
+        codelist := next((c for c in codelists if c["slug"] == codelist_slug), None)
+    ):
+        print(f"Could not find codelist {codelist_slug} in opencodelists data dump")
+        return []
     codelist_version = next(
-        v for v in codelist["versions"] if v["slug"] == codelist_version_slug
+        v
+        for v in codelist["versions"]
+        if v["slug"] == codelist_version_slug
+        or (codelist_slug + "/" + v["hash"] == codelist_version_slug)
     )
     return _newer_versions(codelist, codelist_version)
-
-
-def all_newer_versions() -> Generator[tuple[str, list[dict]]]:
-    for codelist in codelists:
-        for version in codelist["versions"]:
-            yield _newer_versions(codelist, version)
 
 
 def _newer_versions(codelist: dict, codelist_version: dict) -> list[dict]:

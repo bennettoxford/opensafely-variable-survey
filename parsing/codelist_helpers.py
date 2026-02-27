@@ -142,5 +142,9 @@ def lookup_codelist_metadata(url_path):
     return entry
 
 
+def url_to_slug(version_url: str) -> str:
+    return version_url.rstrip("/").split("/", 4)[4]
+
+
 # if __name__ == "__main__":
 #     _get_latest_codelist_data()
