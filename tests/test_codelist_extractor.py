@@ -1193,6 +1193,187 @@ asthma_icd = codelist_from_csv("codelists/asthma_icd.csv", column="code")
         )
 
 
+def test_unused_codelists_from_codelists_json():
+    """Test that codelists in codelists.json not referenced by any variable are identified."""
+    import json
+
+    from ehrql_codelist_extractor import normalize_path, parse_codelists_json
+
+    code = """
+from ehrql import create_dataset, codelist_from_csv
+
+asthma_codes = codelist_from_csv("codelists/asthma.csv", column="code")
+
+dataset = create_dataset()
+dataset.has_asthma = patients.conditions.where(
+    patients.conditions.code.is_in(asthma_codes)
+).exists_for_patient()
+"""
+    codelists_json_content = {
+        "files": {
+            "asthma.csv": {
+                "id": "opensafely/asthma/v1",
+                "url": "https://codelists.opensafely.org/codelist/opensafely/asthma/v1/",
+            },
+            "diabetes.csv": {
+                "id": "opensafely/diabetes/v2",
+                "url": "https://codelists.opensafely.org/codelist/opensafely/diabetes/v2/",
+            },
+            "copd.csv": {
+                "id": "opensafely/copd/v1",
+                "url": "https://codelists.opensafely.org/codelist/opensafely/copd/v1/",
+            },
+        }
+    }
+
+    with tempfile.TemporaryDirectory() as tmpdir:
+        repo_root = pathlib.Path(tmpdir)
+
+        # Create dataset definition
+        file_path = repo_root / "dataset_definition.py"
+        file_path.write_text(code)
+
+        # Create codelists.json
+        codelists_dir = repo_root / "codelists"
+        codelists_dir.mkdir()
+        (codelists_dir / "codelists.json").write_text(
+            json.dumps(codelists_json_content)
+        )
+
+        # Extract variable codelists
+        variable_codelists = extract_variable_codelists(file_path, repo_root)
+
+        # Parse codelists.json
+        url_map, _invalid = parse_codelists_json(repo_root)
+
+        # Simulate the processing from collect_codelists:
+        # Build files_data with URL-resolved paths
+        files_data = {}
+        file_data = {}
+        for var_name, codelist_calls in variable_codelists.items():
+            processed_calls = []
+            for call in codelist_calls:
+                call_list = list(call)
+                if call_list and call_list[0]:
+                    normalized_path = normalize_path(call_list[0])
+                    if normalized_path in url_map:
+                        call_list[0] = url_map[normalized_path]
+                processed_calls.append(call_list)
+            file_data[var_name] = processed_calls
+        files_data["dataset_definition.py"] = file_data
+
+        # Now find unused codelists (same logic as in collect_codelists)
+        used_slugs = set()
+        for file_vars in files_data.values():
+            for codelist_calls in file_vars.values():
+                for call in codelist_calls:
+                    if call and call[0]:
+                        used_slugs.add(call[0])
+
+        slug_to_filename = {}
+        for path, slug in url_map.items():
+            if slug not in slug_to_filename or path.startswith("codelists/"):
+                slug_to_filename[slug] = path
+
+        unused = []
+        for slug, filename in sorted(slug_to_filename.items()):
+            if slug not in used_slugs:
+                unused.append([slug, f"file={filename}"])
+
+        files_data["_unused_codelists"] = unused
+
+        # Assertions
+        # asthma should be used (referenced by has_asthma variable)
+        assert "/opensafely/asthma/v1/" in used_slugs
+
+        # diabetes and copd should be unused
+        assert "_unused_codelists" in files_data
+        unused_slugs = [entry[0] for entry in files_data["_unused_codelists"]]
+        assert "/opensafely/copd/v1/" in unused_slugs
+        assert "/opensafely/diabetes/v2/" in unused_slugs
+        assert "/opensafely/asthma/v1/" not in unused_slugs
+
+        # Each unused entry should have the file reference
+        for entry in files_data["_unused_codelists"]:
+            assert entry[1].startswith("file=codelists/")
+
+
+def test_no_unused_codelists_when_all_referenced():
+    """Test that _unused_codelists is an empty list when all codelists are referenced."""
+    import json
+
+    from ehrql_codelist_extractor import normalize_path, parse_codelists_json
+
+    code = """
+from ehrql import create_dataset, codelist_from_csv
+
+asthma_codes = codelist_from_csv("codelists/asthma.csv", column="code")
+
+dataset = create_dataset()
+dataset.has_asthma = patients.conditions.where(
+    patients.conditions.code.is_in(asthma_codes)
+).exists_for_patient()
+"""
+    codelists_json_content = {
+        "files": {
+            "asthma.csv": {
+                "id": "opensafely/asthma/v1",
+                "url": "https://codelists.opensafely.org/codelist/opensafely/asthma/v1/",
+            },
+        }
+    }
+
+    with tempfile.TemporaryDirectory() as tmpdir:
+        repo_root = pathlib.Path(tmpdir)
+        file_path = repo_root / "dataset_definition.py"
+        file_path.write_text(code)
+
+        codelists_dir = repo_root / "codelists"
+        codelists_dir.mkdir()
+        (codelists_dir / "codelists.json").write_text(
+            json.dumps(codelists_json_content)
+        )
+
+        variable_codelists = extract_variable_codelists(file_path, repo_root)
+        url_map, _ = parse_codelists_json(repo_root)
+
+        files_data = {}
+        file_data = {}
+        for var_name, codelist_calls in variable_codelists.items():
+            processed_calls = []
+            for call in codelist_calls:
+                call_list = list(call)
+                if call_list and call_list[0]:
+                    normalized_path = normalize_path(call_list[0])
+                    if normalized_path in url_map:
+                        call_list[0] = url_map[normalized_path]
+                processed_calls.append(call_list)
+            file_data[var_name] = processed_calls
+        files_data["dataset_definition.py"] = file_data
+
+        used_slugs = set()
+        for file_vars in files_data.values():
+            for codelist_calls in file_vars.values():
+                for call in codelist_calls:
+                    if call and call[0]:
+                        used_slugs.add(call[0])
+
+        slug_to_filename = {}
+        for path, slug in url_map.items():
+            if slug not in slug_to_filename or path.startswith("codelists/"):
+                slug_to_filename[slug] = path
+
+        unused = []
+        for slug, filename in sorted(slug_to_filename.items()):
+            if slug not in used_slugs:
+                unused.append([slug, f"file={filename}"])
+
+        files_data["_unused_codelists"] = unused
+
+        # All codelists are used, so _unused_codelists should be an empty list
+        assert files_data["_unused_codelists"] == []
+
+
 if __name__ == "__main__":
     import pytest
 

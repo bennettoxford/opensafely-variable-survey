@@ -34,6 +34,7 @@ def main():
         repo_output = {
             "good": {"codelists": []},
             "inline_codelists": {"codelists": []},
+            "unused_codelists": {"codelists": []},
             "no_events": {"codelists": []},
         }
 
@@ -56,6 +57,11 @@ def main():
             if codelist.get("url") in bad_codelists:
                 continue
             repo_output["good"]["codelists"].append(codelist)
+
+        # Add unused codelists to the output
+        repo_output["unused_codelists"]["codelists"] = codelists.get(
+            "unused_codelists", []
+        )
 
         output["repos"][repo_name] = repo_output
 

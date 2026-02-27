@@ -30,10 +30,24 @@ def _get_latest_codelist_data():
             _codelists[repo_name] = {
                 "codelists": [],
                 "inline_codelists": [],
+                "unused_codelists": [],
             }
             inline_codelists = dict()
             ocl_codelists = dict()
             for sha, files in commits.items():
+                # Remove the "_unused_codelists" key from files before iterating
+                for codelist_info in files.pop("_unused_codelists", []):
+                    url = codelist_info[0]
+                    metadata = lookup_codelist_metadata(url)
+                    ocl_url = make_ocl_url(url)
+                    _codelists[repo_name]["unused_codelists"].append(
+                        {
+                            "url": ocl_url,
+                            "name": metadata.get("name", "<LOOKUP_FAILED>"),
+                            "system": metadata.get("coding_system", "<LOOKUP_FAILED>"),
+                        }
+                    )
+
                 for file_name, variables in files.items():
                     for variable_name, codelists in variables.items():
                         for codelist_info in codelists:
