@@ -56,7 +56,7 @@ def main():
             bad_codelists.add(inline_codelist.get("url"))
 
         # add the codelists not using the latest version
-        for codelist in codelists["codelists"]:
+        for codelist in codelists.get("codelists", []):
             if versions := newer_versions(codelist["url"]):
                 latest_version = sorted(
                     versions, key=lambda x: x["created_at"], reverse=True
@@ -69,6 +69,8 @@ def main():
                     codelist | {"newer_version": newer_version}
                 )
                 bad_codelists.add(codelist["url"])
+
+        # add codelists with potentially missing codes (i.e. not compatible with latest release)
 
         # Add the remaining "good" codelists
         for codelist in codelists.get("codelists", []):
