@@ -3,7 +3,7 @@ import json
 from parsing.codelist_helpers import url_to_slug
 
 
-with open("notebooks/public/rsi-codelists-analysis.json") as f:
+with open("data/rsi-codelists-analysis.json") as f:
     opencodelists_dump = json.load(f)
     codelists = opencodelists_dump["codelists"]
     releases = opencodelists_dump["releases"]
@@ -31,7 +31,11 @@ def codelist_version_not_compatible_with_latest_release(
         or (codelist_slug + "/" + v["hash"] == codelist_version_slug)
     )
     coding_system = codelist["coding_system"]
-    return (
-        latest_releases[coding_system]["database_alias"]
-        not in codelist_version["release_compatibility"]
+    latest_release = latest_releases[coding_system]["database_alias"]
+    latest_release_in_compatible_versions = (
+        latest_release in codelist_version["release_compatibility"]
     )
+    created_with_latest_release = (
+        latest_release == codelist_version["coding_system_release"]
+    )
+    return not (latest_release_in_compatible_versions or created_with_latest_release)

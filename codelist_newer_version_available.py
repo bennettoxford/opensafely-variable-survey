@@ -3,7 +3,7 @@ import json
 from parsing.codelist_helpers import url_to_slug
 
 
-with open("notebooks/public/rsi-codelists-analysis.json") as f:
+with open("data/rsi-codelists-analysis.json") as f:
     codelists = json.load(f)["codelists"]
 
 
