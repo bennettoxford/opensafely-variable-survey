@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-03-03 09:15:55",
+  "generated_at": "2026-03-03 16:06:37",
   "latest_releases": {
     "bnf": "86 (2024-09-02) (valid from 2024-09-02)",
     "ctv3": "2018-04-01 with TPP extensions 2022-11-16 (valid from 2022-11-16)",
@@ -563,6 +563,20 @@
             }
           },
           {
+            "name": "BMI",
+            "system": "snomedct",
+            "system_release": "36.0.0 (valid from 2023-04-19)",
+            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/bmi/v2.5/",
+            "variables": {
+              "analysis/1-extract/dataset_definition.py": {
+                "github_url": "https://github.com/opensafely/COMPARES-vaccines/blob/f231b4fe63bc06caba1e9888821063fb83ce0920/analysis/1-extract/dataset_definition.py",
+                "variables": [
+                  "severe_obesity"
+                ]
+              }
+            }
+          },
+          {
             "name": "Guillain Barre syndrome - ICD10",
             "system": "icd10",
             "system_release": "unknown",
@@ -799,6 +813,20 @@
             }
           },
           {
+            "name": "Asplenia or Dysfunction of the Spleen codes",
+            "system": "snomedct",
+            "system_release": "36.0.0 (valid from 2023-04-19)",
+            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/spln_cov/v2.5/",
+            "variables": {
+              "analysis/1-extract/dataset_definition.py": {
+                "github_url": "https://github.com/opensafely/COMPARES-vaccines/blob/f231b4fe63bc06caba1e9888821063fb83ce0920/analysis/1-extract/dataset_definition.py",
+                "variables": [
+                  "asplenia"
+                ]
+              }
+            }
+          },
+          {
             "name": "stroke_isch_snomed",
             "system": "snomedct",
             "system_release": "unknown",
@@ -904,6 +932,188 @@
             }
           },
           {
+            "name": "Chronic heart disease codes",
+            "system": "snomedct",
+            "system_release": "36.0.0 (valid from 2023-04-19)",
+            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/chd_cov/v2.5/",
+            "variables": {
+              "analysis/1-extract/dataset_definition.py": {
+                "github_url": "https://github.com/opensafely/COMPARES-vaccines/blob/f231b4fe63bc06caba1e9888821063fb83ce0920/analysis/1-extract/dataset_definition.py",
+                "variables": [
+                  "chd"
+                ]
+              }
+            }
+          },
+          {
+            "name": "Chronic kidney disease diagnostic codes",
+            "system": "snomedct",
+            "system_release": "36.0.0 (valid from 2023-04-19)",
+            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/ckd_cov/v2.5/",
+            "variables": {
+              "analysis/1-extract/dataset_definition.py": {
+                "github_url": "https://github.com/opensafely/COMPARES-vaccines/blob/f231b4fe63bc06caba1e9888821063fb83ce0920/analysis/1-extract/dataset_definition.py",
+                "variables": [
+                  "ckd"
+                ]
+              }
+            }
+          },
+          {
+            "name": "Chronic kidney disease codes-stages 3 - 5",
+            "system": "snomedct",
+            "system_release": "36.0.0 (valid from 2023-04-19)",
+            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/ckd35/v2.5/",
+            "variables": {
+              "analysis/1-extract/dataset_definition.py": {
+                "github_url": "https://github.com/opensafely/COMPARES-vaccines/blob/f231b4fe63bc06caba1e9888821063fb83ce0920/analysis/1-extract/dataset_definition.py",
+                "variables": [
+                  "ckd"
+                ]
+              }
+            }
+          },
+          {
+            "name": "Chronic kidney disease codes - all stages",
+            "system": "snomedct",
+            "system_release": "36.0.0 (valid from 2023-04-19)",
+            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/ckd15/v2.5/",
+            "variables": {
+              "analysis/1-extract/dataset_definition.py": {
+                "github_url": "https://github.com/opensafely/COMPARES-vaccines/blob/f231b4fe63bc06caba1e9888821063fb83ce0920/analysis/1-extract/dataset_definition.py",
+                "variables": [
+                  "ckd"
+                ]
+              }
+            }
+          },
+          {
+            "name": "Chronic Liver disease codes",
+            "system": "snomedct",
+            "system_release": "36.0.0 (valid from 2023-04-19)",
+            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/cld/v2.5/",
+            "variables": {
+              "analysis/1-extract/dataset_definition.py": {
+                "github_url": "https://github.com/opensafely/COMPARES-vaccines/blob/f231b4fe63bc06caba1e9888821063fb83ce0920/analysis/1-extract/dataset_definition.py",
+                "variables": [
+                  "cld"
+                ]
+              }
+            }
+          },
+          {
+            "name": "Chronic Neurological Disease including Significant Learning Disorder",
+            "system": "snomedct",
+            "system_release": "36.0.0 (valid from 2023-04-19)",
+            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/cns_cov/v2.5/",
+            "variables": {
+              "analysis/1-extract/dataset_definition.py": {
+                "github_url": "https://github.com/opensafely/COMPARES-vaccines/blob/f231b4fe63bc06caba1e9888821063fb83ce0920/analysis/1-extract/dataset_definition.py",
+                "variables": [
+                  "cns"
+                ]
+              }
+            }
+          },
+          {
+            "name": "Chronic Respiratory Disease",
+            "system": "snomedct",
+            "system_release": "36.0.0 (valid from 2023-04-19)",
+            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/resp_cov/v2.5/",
+            "variables": {
+              "analysis/1-extract/dataset_definition.py": {
+                "github_url": "https://github.com/opensafely/COMPARES-vaccines/blob/f231b4fe63bc06caba1e9888821063fb83ce0920/analysis/1-extract/dataset_definition.py",
+                "variables": [
+                  "crd"
+                ]
+              }
+            }
+          },
+          {
+            "name": "Addisons & hypoadrenalism",
+            "system": "snomedct",
+            "system_release": "36.0.0 (valid from 2023-04-19)",
+            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/addis_cod/v2.5/",
+            "variables": {
+              "analysis/1-extract/dataset_definition.py": {
+                "github_url": "https://github.com/opensafely/COMPARES-vaccines/blob/f231b4fe63bc06caba1e9888821063fb83ce0920/analysis/1-extract/dataset_definition.py",
+                "variables": [
+                  "diabetes"
+                ]
+              }
+            }
+          },
+          {
+            "name": "Gestational Diabetes",
+            "system": "snomedct",
+            "system_release": "36.0.0 (valid from 2023-04-19)",
+            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/gdiab_cod/v2.5/",
+            "variables": {
+              "analysis/1-extract/dataset_definition.py": {
+                "github_url": "https://github.com/opensafely/COMPARES-vaccines/blob/f231b4fe63bc06caba1e9888821063fb83ce0920/analysis/1-extract/dataset_definition.py",
+                "variables": [
+                  "diabetes"
+                ]
+              }
+            }
+          },
+          {
+            "name": "Pregnancy codes recorded in the 8.5 months before the audit run date",
+            "system": "snomedct",
+            "system_release": "36.0.0 (valid from 2023-04-19)",
+            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/preg/v2.5/",
+            "variables": {
+              "analysis/1-extract/dataset_definition.py": {
+                "github_url": "https://github.com/opensafely/COMPARES-vaccines/blob/f231b4fe63bc06caba1e9888821063fb83ce0920/analysis/1-extract/dataset_definition.py",
+                "variables": [
+                  "diabetes"
+                ]
+              }
+            }
+          },
+          {
+            "name": "Pregnancy or Delivery codes recorded in the 8.5 months before audit run date",
+            "system": "snomedct",
+            "system_release": "36.0.0 (valid from 2023-04-19)",
+            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/pregdel/v2.5/",
+            "variables": {
+              "analysis/1-extract/dataset_definition.py": {
+                "github_url": "https://github.com/opensafely/COMPARES-vaccines/blob/f231b4fe63bc06caba1e9888821063fb83ce0920/analysis/1-extract/dataset_definition.py",
+                "variables": [
+                  "diabetes"
+                ]
+              }
+            }
+          },
+          {
+            "name": "Diabetes resolved codes",
+            "system": "snomedct",
+            "system_release": "36.0.0 (valid from 2023-04-19)",
+            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/dmres/v2.5/",
+            "variables": {
+              "analysis/1-extract/dataset_definition.py": {
+                "github_url": "https://github.com/opensafely/COMPARES-vaccines/blob/f231b4fe63bc06caba1e9888821063fb83ce0920/analysis/1-extract/dataset_definition.py",
+                "variables": [
+                  "diabetes"
+                ]
+              }
+            }
+          },
+          {
+            "name": "Diabetes diagnosis codes",
+            "system": "snomedct",
+            "system_release": "36.0.0 (valid from 2023-04-19)",
+            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/diab/v2.5/",
+            "variables": {
+              "analysis/1-extract/dataset_definition.py": {
+                "github_url": "https://github.com/opensafely/COMPARES-vaccines/blob/f231b4fe63bc06caba1e9888821063fb83ce0920/analysis/1-extract/dataset_definition.py",
+                "variables": [
+                  "diabetes"
+                ]
+              }
+            }
+          },
+          {
             "name": "dvt_main",
             "system": "snomedct",
             "system_release": "unknown",
@@ -996,6 +1206,76 @@
                   "vte_gp_date",
                   "vte_prior",
                   "vte_prior_gp"
+                ]
+              }
+            }
+          },
+          {
+            "name": "Immunosuppression diagnosis codes",
+            "system": "snomedct",
+            "system_release": "36.0.0 (valid from 2023-04-19)",
+            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/immdx_cov/v2.5/",
+            "variables": {
+              "analysis/1-extract/dataset_definition.py": {
+                "github_url": "https://github.com/opensafely/COMPARES-vaccines/blob/f231b4fe63bc06caba1e9888821063fb83ce0920/analysis/1-extract/dataset_definition.py",
+                "variables": [
+                  "immunosuppressed"
+                ]
+              }
+            }
+          },
+          {
+            "name": "Immunosuppression medication codes",
+            "system": "dmd",
+            "system_release": "2023 5.4.0 (valid from 2023-05-29)",
+            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/immrx/v2.5/",
+            "variables": {
+              "analysis/1-extract/dataset_definition.py": {
+                "github_url": "https://github.com/opensafely/COMPARES-vaccines/blob/f231b4fe63bc06caba1e9888821063fb83ce0920/analysis/1-extract/dataset_definition.py",
+                "variables": [
+                  "immunosuppressed"
+                ]
+              }
+            }
+          },
+          {
+            "name": "Immunosuppression admin codes",
+            "system": "snomedct",
+            "system_release": "36.0.0 (valid from 2023-04-19)",
+            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/immunosuppression-admin-codes/v2.5/",
+            "variables": {
+              "analysis/1-extract/dataset_definition.py": {
+                "github_url": "https://github.com/opensafely/COMPARES-vaccines/blob/f231b4fe63bc06caba1e9888821063fb83ce0920/analysis/1-extract/dataset_definition.py",
+                "variables": [
+                  "immunosuppressed"
+                ]
+              }
+            }
+          },
+          {
+            "name": "receiving chemotherapy or radiotherapy codes",
+            "system": "snomedct",
+            "system_release": "36.0.0 (valid from 2023-04-19)",
+            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/dxt_chemo_cod/v2.5/",
+            "variables": {
+              "analysis/1-extract/dataset_definition.py": {
+                "github_url": "https://github.com/opensafely/COMPARES-vaccines/blob/f231b4fe63bc06caba1e9888821063fb83ce0920/analysis/1-extract/dataset_definition.py",
+                "variables": [
+                  "immunosuppressed"
+                ]
+              }
+            }
+          },
+          {
+            "name": "Wider Learning Disability",
+            "system": "snomedct",
+            "system_release": "36.0.0 (valid from 2023-04-19)",
+            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/learndis/v2.5/",
+            "variables": {
+              "analysis/1-extract/dataset_definition.py": {
+                "github_url": "https://github.com/opensafely/COMPARES-vaccines/blob/f231b4fe63bc06caba1e9888821063fb83ce0920/analysis/1-extract/dataset_definition.py",
+                "variables": [
+                  "learndis"
                 ]
               }
             }
@@ -1107,6 +1387,34 @@
             }
           },
           {
+            "name": "Severe Obesity code recorded",
+            "system": "snomedct",
+            "system_release": "36.0.0 (valid from 2023-04-19)",
+            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/sev_obesity/v2.5/",
+            "variables": {
+              "analysis/1-extract/dataset_definition.py": {
+                "github_url": "https://github.com/opensafely/COMPARES-vaccines/blob/f231b4fe63bc06caba1e9888821063fb83ce0920/analysis/1-extract/dataset_definition.py",
+                "variables": [
+                  "severe_obesity"
+                ]
+              }
+            }
+          },
+          {
+            "name": "All BMI coded terms",
+            "system": "snomedct",
+            "system_release": "36.0.0 (valid from 2023-04-19)",
+            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/bmi_stage/v2.5/",
+            "variables": {
+              "analysis/1-extract/dataset_definition.py": {
+                "github_url": "https://github.com/opensafely/COMPARES-vaccines/blob/f231b4fe63bc06caba1e9888821063fb83ce0920/analysis/1-extract/dataset_definition.py",
+                "variables": [
+                  "severe_obesity"
+                ]
+              }
+            }
+          },
+          {
             "name": "Guillain Barre SNOMED",
             "system": "snomedct",
             "system_release": "39.6.0 (valid from 2025-03-19)",
@@ -1119,6 +1427,34 @@
                   "sgb_gp_date",
                   "sgb_prior",
                   "sgb_prior_gp"
+                ]
+              }
+            }
+          },
+          {
+            "name": "Remission codes relating to Severe Mental Illness",
+            "system": "snomedct",
+            "system_release": "36.0.0 (valid from 2023-04-19)",
+            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/smhres/v2.5/",
+            "variables": {
+              "analysis/1-extract/dataset_definition.py": {
+                "github_url": "https://github.com/opensafely/COMPARES-vaccines/blob/f231b4fe63bc06caba1e9888821063fb83ce0920/analysis/1-extract/dataset_definition.py",
+                "variables": [
+                  "smi"
+                ]
+              }
+            }
+          },
+          {
+            "name": "Severe Mental Illness codes",
+            "system": "snomedct",
+            "system_release": "36.0.0 (valid from 2023-04-19)",
+            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/sev_mental/v2.5/",
+            "variables": {
+              "analysis/1-extract/dataset_definition.py": {
+                "github_url": "https://github.com/opensafely/COMPARES-vaccines/blob/f231b4fe63bc06caba1e9888821063fb83ce0920/analysis/1-extract/dataset_definition.py",
+                "variables": [
+                  "smi"
                 ]
               }
             }
@@ -1323,12 +1659,6 @@
             "url": "https://www.opencodelists.org/codelist/opensafely/solid-organ-transplantation-snomed/2020-04-10/"
           },
           {
-            "name": "Addisons & hypoadrenalism",
-            "system": "snomedct",
-            "system_release": "36.0.0 (valid from 2023-04-19)",
-            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/addis_cod/v2.5/"
-          },
-          {
             "name": "Asthma Diagnosis code",
             "system": "snomedct",
             "system_release": "36.0.0 (valid from 2023-04-19)",
@@ -1353,18 +1683,6 @@
             "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/astrxm2/v2.5/"
           },
           {
-            "name": "BMI",
-            "system": "snomedct",
-            "system_release": "36.0.0 (valid from 2023-04-19)",
-            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/bmi/v2.5/"
-          },
-          {
-            "name": "All BMI coded terms",
-            "system": "snomedct",
-            "system_release": "36.0.0 (valid from 2023-04-19)",
-            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/bmi_stage/v2.5/"
-          },
-          {
             "name": "Employed by Care Home codes",
             "system": "snomedct",
             "system_release": "36.0.0 (valid from 2023-04-19)",
@@ -1377,100 +1695,16 @@
             "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/carer/v2.5/"
           },
           {
-            "name": "Chronic heart disease codes",
-            "system": "snomedct",
-            "system_release": "36.0.0 (valid from 2023-04-19)",
-            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/chd_cov/v2.5/"
-          },
-          {
-            "name": "Chronic kidney disease codes - all stages",
-            "system": "snomedct",
-            "system_release": "36.0.0 (valid from 2023-04-19)",
-            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/ckd15/v2.5/"
-          },
-          {
-            "name": "Chronic kidney disease codes-stages 3 - 5",
-            "system": "snomedct",
-            "system_release": "36.0.0 (valid from 2023-04-19)",
-            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/ckd35/v2.5/"
-          },
-          {
-            "name": "Chronic kidney disease diagnostic codes",
-            "system": "snomedct",
-            "system_release": "36.0.0 (valid from 2023-04-19)",
-            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/ckd_cov/v2.5/"
-          },
-          {
-            "name": "Chronic Liver disease codes",
-            "system": "snomedct",
-            "system_release": "36.0.0 (valid from 2023-04-19)",
-            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/cld/v2.5/"
-          },
-          {
-            "name": "Chronic Neurological Disease including Significant Learning Disorder",
-            "system": "snomedct",
-            "system_release": "36.0.0 (valid from 2023-04-19)",
-            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/cns_cov/v2.5/"
-          },
-          {
-            "name": "Diabetes diagnosis codes",
-            "system": "snomedct",
-            "system_release": "36.0.0 (valid from 2023-04-19)",
-            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/diab/v2.5/"
-          },
-          {
-            "name": "Diabetes resolved codes",
-            "system": "snomedct",
-            "system_release": "36.0.0 (valid from 2023-04-19)",
-            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/dmres/v2.5/"
-          },
-          {
             "name": "Employed by domiciliary care provider codes",
             "system": "snomedct",
             "system_release": "36.0.0 (valid from 2023-04-19)",
             "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/domcare/v2.5/"
           },
           {
-            "name": "receiving chemotherapy or radiotherapy codes",
-            "system": "snomedct",
-            "system_release": "36.0.0 (valid from 2023-04-19)",
-            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/dxt_chemo_cod/v2.5/"
-          },
-          {
-            "name": "Gestational Diabetes",
-            "system": "snomedct",
-            "system_release": "36.0.0 (valid from 2023-04-19)",
-            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/gdiab_cod/v2.5/"
-          },
-          {
             "name": "to represent household contact of shielding individual",
             "system": "snomedct",
             "system_release": "36.0.0 (valid from 2023-04-19)",
             "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/hhld_imdef/v2.5/"
-          },
-          {
-            "name": "Immunosuppression diagnosis codes",
-            "system": "snomedct",
-            "system_release": "36.0.0 (valid from 2023-04-19)",
-            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/immdx_cov/v2.5/"
-          },
-          {
-            "name": "Immunosuppression medication codes",
-            "system": "dmd",
-            "system_release": "2023 5.4.0 (valid from 2023-05-29)",
-            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/immrx/v2.5/"
-          },
-          {
-            "name": "Immunosuppression admin codes",
-            "system": "snomedct",
-            "system_release": "36.0.0 (valid from 2023-04-19)",
-            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/immunosuppression-admin-codes/v2.5/"
-          },
-          {
-            "name": "Wider Learning Disability",
-            "system": "snomedct",
-            "system_release": "36.0.0 (valid from 2023-04-19)",
-            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/learndis/v2.5/"
           },
           {
             "name": "No longer a carer codes",
@@ -1483,48 +1717,6 @@
             "system": "snomedct",
             "system_release": "36.0.0 (valid from 2023-04-19)",
             "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/nursehome/v2.5/"
-          },
-          {
-            "name": "Pregnancy codes recorded in the 8.5 months before the audit run date",
-            "system": "snomedct",
-            "system_release": "36.0.0 (valid from 2023-04-19)",
-            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/preg/v2.5/"
-          },
-          {
-            "name": "Pregnancy or Delivery codes recorded in the 8.5 months before audit run date",
-            "system": "snomedct",
-            "system_release": "36.0.0 (valid from 2023-04-19)",
-            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/pregdel/v2.5/"
-          },
-          {
-            "name": "Chronic Respiratory Disease",
-            "system": "snomedct",
-            "system_release": "36.0.0 (valid from 2023-04-19)",
-            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/resp_cov/v2.5/"
-          },
-          {
-            "name": "Severe Mental Illness codes",
-            "system": "snomedct",
-            "system_release": "36.0.0 (valid from 2023-04-19)",
-            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/sev_mental/v2.5/"
-          },
-          {
-            "name": "Severe Obesity code recorded",
-            "system": "snomedct",
-            "system_release": "36.0.0 (valid from 2023-04-19)",
-            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/sev_obesity/v2.5/"
-          },
-          {
-            "name": "Remission codes relating to Severe Mental Illness",
-            "system": "snomedct",
-            "system_release": "36.0.0 (valid from 2023-04-19)",
-            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/smhres/v2.5/"
-          },
-          {
-            "name": "Asplenia or Dysfunction of the Spleen codes",
-            "system": "snomedct",
-            "system_release": "36.0.0 (valid from 2023-04-19)",
-            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/spln_cov/v2.5/"
           },
           {
             "name": "ami_prior_icd10",
@@ -1838,6 +2030,20 @@
             }
           },
           {
+            "name": "BMI",
+            "system": "snomedct",
+            "system_release": "36.0.0 (valid from 2023-04-19)",
+            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/bmi/v2.5/",
+            "variables": {
+              "analysis/1-extract/dataset_definition.py": {
+                "github_url": "https://github.com/opensafely/COMPARES-vaccines-Autumn-2024/blob/f231b4fe63bc06caba1e9888821063fb83ce0920/analysis/1-extract/dataset_definition.py",
+                "variables": [
+                  "severe_obesity"
+                ]
+              }
+            }
+          },
+          {
             "name": "Guillain Barre syndrome - ICD10",
             "system": "icd10",
             "system_release": "unknown",
@@ -2074,6 +2280,20 @@
             }
           },
           {
+            "name": "Asplenia or Dysfunction of the Spleen codes",
+            "system": "snomedct",
+            "system_release": "36.0.0 (valid from 2023-04-19)",
+            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/spln_cov/v2.5/",
+            "variables": {
+              "analysis/1-extract/dataset_definition.py": {
+                "github_url": "https://github.com/opensafely/COMPARES-vaccines-Autumn-2024/blob/f231b4fe63bc06caba1e9888821063fb83ce0920/analysis/1-extract/dataset_definition.py",
+                "variables": [
+                  "asplenia"
+                ]
+              }
+            }
+          },
+          {
             "name": "stroke_isch_snomed",
             "system": "snomedct",
             "system_release": "unknown",
@@ -2179,6 +2399,188 @@
             }
           },
           {
+            "name": "Chronic heart disease codes",
+            "system": "snomedct",
+            "system_release": "36.0.0 (valid from 2023-04-19)",
+            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/chd_cov/v2.5/",
+            "variables": {
+              "analysis/1-extract/dataset_definition.py": {
+                "github_url": "https://github.com/opensafely/COMPARES-vaccines-Autumn-2024/blob/f231b4fe63bc06caba1e9888821063fb83ce0920/analysis/1-extract/dataset_definition.py",
+                "variables": [
+                  "chd"
+                ]
+              }
+            }
+          },
+          {
+            "name": "Chronic kidney disease diagnostic codes",
+            "system": "snomedct",
+            "system_release": "36.0.0 (valid from 2023-04-19)",
+            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/ckd_cov/v2.5/",
+            "variables": {
+              "analysis/1-extract/dataset_definition.py": {
+                "github_url": "https://github.com/opensafely/COMPARES-vaccines-Autumn-2024/blob/f231b4fe63bc06caba1e9888821063fb83ce0920/analysis/1-extract/dataset_definition.py",
+                "variables": [
+                  "ckd"
+                ]
+              }
+            }
+          },
+          {
+            "name": "Chronic kidney disease codes-stages 3 - 5",
+            "system": "snomedct",
+            "system_release": "36.0.0 (valid from 2023-04-19)",
+            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/ckd35/v2.5/",
+            "variables": {
+              "analysis/1-extract/dataset_definition.py": {
+                "github_url": "https://github.com/opensafely/COMPARES-vaccines-Autumn-2024/blob/f231b4fe63bc06caba1e9888821063fb83ce0920/analysis/1-extract/dataset_definition.py",
+                "variables": [
+                  "ckd"
+                ]
+              }
+            }
+          },
+          {
+            "name": "Chronic kidney disease codes - all stages",
+            "system": "snomedct",
+            "system_release": "36.0.0 (valid from 2023-04-19)",
+            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/ckd15/v2.5/",
+            "variables": {
+              "analysis/1-extract/dataset_definition.py": {
+                "github_url": "https://github.com/opensafely/COMPARES-vaccines-Autumn-2024/blob/f231b4fe63bc06caba1e9888821063fb83ce0920/analysis/1-extract/dataset_definition.py",
+                "variables": [
+                  "ckd"
+                ]
+              }
+            }
+          },
+          {
+            "name": "Chronic Liver disease codes",
+            "system": "snomedct",
+            "system_release": "36.0.0 (valid from 2023-04-19)",
+            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/cld/v2.5/",
+            "variables": {
+              "analysis/1-extract/dataset_definition.py": {
+                "github_url": "https://github.com/opensafely/COMPARES-vaccines-Autumn-2024/blob/f231b4fe63bc06caba1e9888821063fb83ce0920/analysis/1-extract/dataset_definition.py",
+                "variables": [
+                  "cld"
+                ]
+              }
+            }
+          },
+          {
+            "name": "Chronic Neurological Disease including Significant Learning Disorder",
+            "system": "snomedct",
+            "system_release": "36.0.0 (valid from 2023-04-19)",
+            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/cns_cov/v2.5/",
+            "variables": {
+              "analysis/1-extract/dataset_definition.py": {
+                "github_url": "https://github.com/opensafely/COMPARES-vaccines-Autumn-2024/blob/f231b4fe63bc06caba1e9888821063fb83ce0920/analysis/1-extract/dataset_definition.py",
+                "variables": [
+                  "cns"
+                ]
+              }
+            }
+          },
+          {
+            "name": "Chronic Respiratory Disease",
+            "system": "snomedct",
+            "system_release": "36.0.0 (valid from 2023-04-19)",
+            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/resp_cov/v2.5/",
+            "variables": {
+              "analysis/1-extract/dataset_definition.py": {
+                "github_url": "https://github.com/opensafely/COMPARES-vaccines-Autumn-2024/blob/f231b4fe63bc06caba1e9888821063fb83ce0920/analysis/1-extract/dataset_definition.py",
+                "variables": [
+                  "crd"
+                ]
+              }
+            }
+          },
+          {
+            "name": "Addisons & hypoadrenalism",
+            "system": "snomedct",
+            "system_release": "36.0.0 (valid from 2023-04-19)",
+            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/addis_cod/v2.5/",
+            "variables": {
+              "analysis/1-extract/dataset_definition.py": {
+                "github_url": "https://github.com/opensafely/COMPARES-vaccines-Autumn-2024/blob/f231b4fe63bc06caba1e9888821063fb83ce0920/analysis/1-extract/dataset_definition.py",
+                "variables": [
+                  "diabetes"
+                ]
+              }
+            }
+          },
+          {
+            "name": "Gestational Diabetes",
+            "system": "snomedct",
+            "system_release": "36.0.0 (valid from 2023-04-19)",
+            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/gdiab_cod/v2.5/",
+            "variables": {
+              "analysis/1-extract/dataset_definition.py": {
+                "github_url": "https://github.com/opensafely/COMPARES-vaccines-Autumn-2024/blob/f231b4fe63bc06caba1e9888821063fb83ce0920/analysis/1-extract/dataset_definition.py",
+                "variables": [
+                  "diabetes"
+                ]
+              }
+            }
+          },
+          {
+            "name": "Pregnancy codes recorded in the 8.5 months before the audit run date",
+            "system": "snomedct",
+            "system_release": "36.0.0 (valid from 2023-04-19)",
+            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/preg/v2.5/",
+            "variables": {
+              "analysis/1-extract/dataset_definition.py": {
+                "github_url": "https://github.com/opensafely/COMPARES-vaccines-Autumn-2024/blob/f231b4fe63bc06caba1e9888821063fb83ce0920/analysis/1-extract/dataset_definition.py",
+                "variables": [
+                  "diabetes"
+                ]
+              }
+            }
+          },
+          {
+            "name": "Pregnancy or Delivery codes recorded in the 8.5 months before audit run date",
+            "system": "snomedct",
+            "system_release": "36.0.0 (valid from 2023-04-19)",
+            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/pregdel/v2.5/",
+            "variables": {
+              "analysis/1-extract/dataset_definition.py": {
+                "github_url": "https://github.com/opensafely/COMPARES-vaccines-Autumn-2024/blob/f231b4fe63bc06caba1e9888821063fb83ce0920/analysis/1-extract/dataset_definition.py",
+                "variables": [
+                  "diabetes"
+                ]
+              }
+            }
+          },
+          {
+            "name": "Diabetes resolved codes",
+            "system": "snomedct",
+            "system_release": "36.0.0 (valid from 2023-04-19)",
+            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/dmres/v2.5/",
+            "variables": {
+              "analysis/1-extract/dataset_definition.py": {
+                "github_url": "https://github.com/opensafely/COMPARES-vaccines-Autumn-2024/blob/f231b4fe63bc06caba1e9888821063fb83ce0920/analysis/1-extract/dataset_definition.py",
+                "variables": [
+                  "diabetes"
+                ]
+              }
+            }
+          },
+          {
+            "name": "Diabetes diagnosis codes",
+            "system": "snomedct",
+            "system_release": "36.0.0 (valid from 2023-04-19)",
+            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/diab/v2.5/",
+            "variables": {
+              "analysis/1-extract/dataset_definition.py": {
+                "github_url": "https://github.com/opensafely/COMPARES-vaccines-Autumn-2024/blob/f231b4fe63bc06caba1e9888821063fb83ce0920/analysis/1-extract/dataset_definition.py",
+                "variables": [
+                  "diabetes"
+                ]
+              }
+            }
+          },
+          {
             "name": "dvt_main",
             "system": "snomedct",
             "system_release": "unknown",
@@ -2271,6 +2673,76 @@
                   "vte_gp_date",
                   "vte_prior",
                   "vte_prior_gp"
+                ]
+              }
+            }
+          },
+          {
+            "name": "Immunosuppression diagnosis codes",
+            "system": "snomedct",
+            "system_release": "36.0.0 (valid from 2023-04-19)",
+            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/immdx_cov/v2.5/",
+            "variables": {
+              "analysis/1-extract/dataset_definition.py": {
+                "github_url": "https://github.com/opensafely/COMPARES-vaccines-Autumn-2024/blob/f231b4fe63bc06caba1e9888821063fb83ce0920/analysis/1-extract/dataset_definition.py",
+                "variables": [
+                  "immunosuppressed"
+                ]
+              }
+            }
+          },
+          {
+            "name": "Immunosuppression medication codes",
+            "system": "dmd",
+            "system_release": "2023 5.4.0 (valid from 2023-05-29)",
+            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/immrx/v2.5/",
+            "variables": {
+              "analysis/1-extract/dataset_definition.py": {
+                "github_url": "https://github.com/opensafely/COMPARES-vaccines-Autumn-2024/blob/f231b4fe63bc06caba1e9888821063fb83ce0920/analysis/1-extract/dataset_definition.py",
+                "variables": [
+                  "immunosuppressed"
+                ]
+              }
+            }
+          },
+          {
+            "name": "Immunosuppression admin codes",
+            "system": "snomedct",
+            "system_release": "36.0.0 (valid from 2023-04-19)",
+            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/immunosuppression-admin-codes/v2.5/",
+            "variables": {
+              "analysis/1-extract/dataset_definition.py": {
+                "github_url": "https://github.com/opensafely/COMPARES-vaccines-Autumn-2024/blob/f231b4fe63bc06caba1e9888821063fb83ce0920/analysis/1-extract/dataset_definition.py",
+                "variables": [
+                  "immunosuppressed"
+                ]
+              }
+            }
+          },
+          {
+            "name": "receiving chemotherapy or radiotherapy codes",
+            "system": "snomedct",
+            "system_release": "36.0.0 (valid from 2023-04-19)",
+            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/dxt_chemo_cod/v2.5/",
+            "variables": {
+              "analysis/1-extract/dataset_definition.py": {
+                "github_url": "https://github.com/opensafely/COMPARES-vaccines-Autumn-2024/blob/f231b4fe63bc06caba1e9888821063fb83ce0920/analysis/1-extract/dataset_definition.py",
+                "variables": [
+                  "immunosuppressed"
+                ]
+              }
+            }
+          },
+          {
+            "name": "Wider Learning Disability",
+            "system": "snomedct",
+            "system_release": "36.0.0 (valid from 2023-04-19)",
+            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/learndis/v2.5/",
+            "variables": {
+              "analysis/1-extract/dataset_definition.py": {
+                "github_url": "https://github.com/opensafely/COMPARES-vaccines-Autumn-2024/blob/f231b4fe63bc06caba1e9888821063fb83ce0920/analysis/1-extract/dataset_definition.py",
+                "variables": [
+                  "learndis"
                 ]
               }
             }
@@ -2382,6 +2854,34 @@
             }
           },
           {
+            "name": "Severe Obesity code recorded",
+            "system": "snomedct",
+            "system_release": "36.0.0 (valid from 2023-04-19)",
+            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/sev_obesity/v2.5/",
+            "variables": {
+              "analysis/1-extract/dataset_definition.py": {
+                "github_url": "https://github.com/opensafely/COMPARES-vaccines-Autumn-2024/blob/f231b4fe63bc06caba1e9888821063fb83ce0920/analysis/1-extract/dataset_definition.py",
+                "variables": [
+                  "severe_obesity"
+                ]
+              }
+            }
+          },
+          {
+            "name": "All BMI coded terms",
+            "system": "snomedct",
+            "system_release": "36.0.0 (valid from 2023-04-19)",
+            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/bmi_stage/v2.5/",
+            "variables": {
+              "analysis/1-extract/dataset_definition.py": {
+                "github_url": "https://github.com/opensafely/COMPARES-vaccines-Autumn-2024/blob/f231b4fe63bc06caba1e9888821063fb83ce0920/analysis/1-extract/dataset_definition.py",
+                "variables": [
+                  "severe_obesity"
+                ]
+              }
+            }
+          },
+          {
             "name": "Guillain Barre SNOMED",
             "system": "snomedct",
             "system_release": "39.6.0 (valid from 2025-03-19)",
@@ -2394,6 +2894,34 @@
                   "sgb_gp_date",
                   "sgb_prior",
                   "sgb_prior_gp"
+                ]
+              }
+            }
+          },
+          {
+            "name": "Remission codes relating to Severe Mental Illness",
+            "system": "snomedct",
+            "system_release": "36.0.0 (valid from 2023-04-19)",
+            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/smhres/v2.5/",
+            "variables": {
+              "analysis/1-extract/dataset_definition.py": {
+                "github_url": "https://github.com/opensafely/COMPARES-vaccines-Autumn-2024/blob/f231b4fe63bc06caba1e9888821063fb83ce0920/analysis/1-extract/dataset_definition.py",
+                "variables": [
+                  "smi"
+                ]
+              }
+            }
+          },
+          {
+            "name": "Severe Mental Illness codes",
+            "system": "snomedct",
+            "system_release": "36.0.0 (valid from 2023-04-19)",
+            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/sev_mental/v2.5/",
+            "variables": {
+              "analysis/1-extract/dataset_definition.py": {
+                "github_url": "https://github.com/opensafely/COMPARES-vaccines-Autumn-2024/blob/f231b4fe63bc06caba1e9888821063fb83ce0920/analysis/1-extract/dataset_definition.py",
+                "variables": [
+                  "smi"
                 ]
               }
             }
@@ -2598,12 +3126,6 @@
             "url": "https://www.opencodelists.org/codelist/opensafely/solid-organ-transplantation-snomed/2020-04-10/"
           },
           {
-            "name": "Addisons & hypoadrenalism",
-            "system": "snomedct",
-            "system_release": "36.0.0 (valid from 2023-04-19)",
-            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/addis_cod/v2.5/"
-          },
-          {
             "name": "Asthma Diagnosis code",
             "system": "snomedct",
             "system_release": "36.0.0 (valid from 2023-04-19)",
@@ -2628,18 +3150,6 @@
             "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/astrxm2/v2.5/"
           },
           {
-            "name": "BMI",
-            "system": "snomedct",
-            "system_release": "36.0.0 (valid from 2023-04-19)",
-            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/bmi/v2.5/"
-          },
-          {
-            "name": "All BMI coded terms",
-            "system": "snomedct",
-            "system_release": "36.0.0 (valid from 2023-04-19)",
-            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/bmi_stage/v2.5/"
-          },
-          {
             "name": "Employed by Care Home codes",
             "system": "snomedct",
             "system_release": "36.0.0 (valid from 2023-04-19)",
@@ -2652,100 +3162,16 @@
             "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/carer/v2.5/"
           },
           {
-            "name": "Chronic heart disease codes",
-            "system": "snomedct",
-            "system_release": "36.0.0 (valid from 2023-04-19)",
-            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/chd_cov/v2.5/"
-          },
-          {
-            "name": "Chronic kidney disease codes - all stages",
-            "system": "snomedct",
-            "system_release": "36.0.0 (valid from 2023-04-19)",
-            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/ckd15/v2.5/"
-          },
-          {
-            "name": "Chronic kidney disease codes-stages 3 - 5",
-            "system": "snomedct",
-            "system_release": "36.0.0 (valid from 2023-04-19)",
-            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/ckd35/v2.5/"
-          },
-          {
-            "name": "Chronic kidney disease diagnostic codes",
-            "system": "snomedct",
-            "system_release": "36.0.0 (valid from 2023-04-19)",
-            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/ckd_cov/v2.5/"
-          },
-          {
-            "name": "Chronic Liver disease codes",
-            "system": "snomedct",
-            "system_release": "36.0.0 (valid from 2023-04-19)",
-            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/cld/v2.5/"
-          },
-          {
-            "name": "Chronic Neurological Disease including Significant Learning Disorder",
-            "system": "snomedct",
-            "system_release": "36.0.0 (valid from 2023-04-19)",
-            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/cns_cov/v2.5/"
-          },
-          {
-            "name": "Diabetes diagnosis codes",
-            "system": "snomedct",
-            "system_release": "36.0.0 (valid from 2023-04-19)",
-            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/diab/v2.5/"
-          },
-          {
-            "name": "Diabetes resolved codes",
-            "system": "snomedct",
-            "system_release": "36.0.0 (valid from 2023-04-19)",
-            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/dmres/v2.5/"
-          },
-          {
             "name": "Employed by domiciliary care provider codes",
             "system": "snomedct",
             "system_release": "36.0.0 (valid from 2023-04-19)",
             "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/domcare/v2.5/"
           },
           {
-            "name": "receiving chemotherapy or radiotherapy codes",
-            "system": "snomedct",
-            "system_release": "36.0.0 (valid from 2023-04-19)",
-            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/dxt_chemo_cod/v2.5/"
-          },
-          {
-            "name": "Gestational Diabetes",
-            "system": "snomedct",
-            "system_release": "36.0.0 (valid from 2023-04-19)",
-            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/gdiab_cod/v2.5/"
-          },
-          {
             "name": "to represent household contact of shielding individual",
             "system": "snomedct",
             "system_release": "36.0.0 (valid from 2023-04-19)",
             "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/hhld_imdef/v2.5/"
-          },
-          {
-            "name": "Immunosuppression diagnosis codes",
-            "system": "snomedct",
-            "system_release": "36.0.0 (valid from 2023-04-19)",
-            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/immdx_cov/v2.5/"
-          },
-          {
-            "name": "Immunosuppression medication codes",
-            "system": "dmd",
-            "system_release": "2023 5.4.0 (valid from 2023-05-29)",
-            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/immrx/v2.5/"
-          },
-          {
-            "name": "Immunosuppression admin codes",
-            "system": "snomedct",
-            "system_release": "36.0.0 (valid from 2023-04-19)",
-            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/immunosuppression-admin-codes/v2.5/"
-          },
-          {
-            "name": "Wider Learning Disability",
-            "system": "snomedct",
-            "system_release": "36.0.0 (valid from 2023-04-19)",
-            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/learndis/v2.5/"
           },
           {
             "name": "No longer a carer codes",
@@ -2758,48 +3184,6 @@
             "system": "snomedct",
             "system_release": "36.0.0 (valid from 2023-04-19)",
             "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/nursehome/v2.5/"
-          },
-          {
-            "name": "Pregnancy codes recorded in the 8.5 months before the audit run date",
-            "system": "snomedct",
-            "system_release": "36.0.0 (valid from 2023-04-19)",
-            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/preg/v2.5/"
-          },
-          {
-            "name": "Pregnancy or Delivery codes recorded in the 8.5 months before audit run date",
-            "system": "snomedct",
-            "system_release": "36.0.0 (valid from 2023-04-19)",
-            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/pregdel/v2.5/"
-          },
-          {
-            "name": "Chronic Respiratory Disease",
-            "system": "snomedct",
-            "system_release": "36.0.0 (valid from 2023-04-19)",
-            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/resp_cov/v2.5/"
-          },
-          {
-            "name": "Severe Mental Illness codes",
-            "system": "snomedct",
-            "system_release": "36.0.0 (valid from 2023-04-19)",
-            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/sev_mental/v2.5/"
-          },
-          {
-            "name": "Severe Obesity code recorded",
-            "system": "snomedct",
-            "system_release": "36.0.0 (valid from 2023-04-19)",
-            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/sev_obesity/v2.5/"
-          },
-          {
-            "name": "Remission codes relating to Severe Mental Illness",
-            "system": "snomedct",
-            "system_release": "36.0.0 (valid from 2023-04-19)",
-            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/smhres/v2.5/"
-          },
-          {
-            "name": "Asplenia or Dysfunction of the Spleen codes",
-            "system": "snomedct",
-            "system_release": "36.0.0 (valid from 2023-04-19)",
-            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/spln_cov/v2.5/"
           },
           {
             "name": "ami_prior_icd10",
@@ -8076,20 +8460,36 @@
                   "age",
                   "bmi",
                   "bmi_date",
+                  "chronic_cardiac_disease",
+                  "chronic_liver_disease",
+                  "chronic_respiratory_disease",
+                  "copd",
+                  "creatinine",
+                  "creatinine_date",
                   "curr_reg_end",
                   "curr_reg_start",
+                  "diabetes",
                   "eia_code_date",
                   "eia_code_snomed",
+                  "esrf",
                   "ever_smoked",
+                  "haem_cancer",
                   "has_12m_follow_up",
                   "has_6m_follow_up",
                   "has_follow_up",
+                  "hba1c_mmol_per_mol",
+                  "hba1c_mmol_per_mol_date",
+                  "hba1c_percentage",
+                  "hba1c_percentage_date",
+                  "hypertension",
                   "imd",
                   "last_gp_precode_date",
                   "last_gp_prerheum_date",
                   "last_gp_refcode_date",
                   "last_gp_refrheum_date",
+                  "lung_cancer",
                   "most_recent_smoking_code",
+                  "other_cancer",
                   "referral_rheum_precode",
                   "referral_rheum_prerheum",
                   "region",
@@ -8102,6 +8502,7 @@
                   "rheum_appt_medium",
                   "smoking_status",
                   "stp",
+                  "stroke",
                   "undiff_code_date"
                 ]
               }
@@ -8119,20 +8520,36 @@
                   "age",
                   "bmi",
                   "bmi_date",
+                  "chronic_cardiac_disease",
+                  "chronic_liver_disease",
+                  "chronic_respiratory_disease",
+                  "copd",
+                  "creatinine",
+                  "creatinine_date",
                   "curr_reg_end",
                   "curr_reg_start",
+                  "diabetes",
                   "eia_code_date",
                   "eia_code_snomed",
+                  "esrf",
                   "ever_smoked",
+                  "haem_cancer",
                   "has_12m_follow_up",
                   "has_6m_follow_up",
                   "has_follow_up",
+                  "hba1c_mmol_per_mol",
+                  "hba1c_mmol_per_mol_date",
+                  "hba1c_percentage",
+                  "hba1c_percentage_date",
+                  "hypertension",
                   "imd",
                   "last_gp_precode_date",
                   "last_gp_prerheum_date",
                   "last_gp_refcode_date",
                   "last_gp_refrheum_date",
+                  "lung_cancer",
                   "most_recent_smoking_code",
+                  "other_cancer",
                   "ra_code_date",
                   "referral_rheum_precode",
                   "referral_rheum_prerheum",
@@ -8145,7 +8562,8 @@
                   "rheum_appt_date",
                   "rheum_appt_medium",
                   "smoking_status",
-                  "stp"
+                  "stp",
+                  "stroke"
                 ]
               }
             }
@@ -8163,20 +8581,36 @@
                   "anksp_code_date",
                   "bmi",
                   "bmi_date",
+                  "chronic_cardiac_disease",
+                  "chronic_liver_disease",
+                  "chronic_respiratory_disease",
+                  "copd",
+                  "creatinine",
+                  "creatinine_date",
                   "curr_reg_end",
                   "curr_reg_start",
+                  "diabetes",
                   "eia_code_date",
                   "eia_code_snomed",
+                  "esrf",
                   "ever_smoked",
+                  "haem_cancer",
                   "has_12m_follow_up",
                   "has_6m_follow_up",
                   "has_follow_up",
+                  "hba1c_mmol_per_mol",
+                  "hba1c_mmol_per_mol_date",
+                  "hba1c_percentage",
+                  "hba1c_percentage_date",
+                  "hypertension",
                   "imd",
                   "last_gp_precode_date",
                   "last_gp_prerheum_date",
                   "last_gp_refcode_date",
                   "last_gp_refrheum_date",
+                  "lung_cancer",
                   "most_recent_smoking_code",
+                  "other_cancer",
                   "referral_rheum_precode",
                   "referral_rheum_prerheum",
                   "region",
@@ -8188,7 +8622,8 @@
                   "rheum_appt_date",
                   "rheum_appt_medium",
                   "smoking_status",
-                  "stp"
+                  "stp",
+                  "stroke"
                 ]
               }
             }
@@ -8205,20 +8640,36 @@
                   "age",
                   "bmi",
                   "bmi_date",
+                  "chronic_cardiac_disease",
+                  "chronic_liver_disease",
+                  "chronic_respiratory_disease",
+                  "copd",
+                  "creatinine",
+                  "creatinine_date",
                   "curr_reg_end",
                   "curr_reg_start",
+                  "diabetes",
                   "eia_code_date",
                   "eia_code_snomed",
+                  "esrf",
                   "ever_smoked",
+                  "haem_cancer",
                   "has_12m_follow_up",
                   "has_6m_follow_up",
                   "has_follow_up",
+                  "hba1c_mmol_per_mol",
+                  "hba1c_mmol_per_mol_date",
+                  "hba1c_percentage",
+                  "hba1c_percentage_date",
+                  "hypertension",
                   "imd",
                   "last_gp_precode_date",
                   "last_gp_prerheum_date",
                   "last_gp_refcode_date",
                   "last_gp_refrheum_date",
+                  "lung_cancer",
                   "most_recent_smoking_code",
+                  "other_cancer",
                   "psa_code_date",
                   "referral_rheum_precode",
                   "referral_rheum_prerheum",
@@ -8231,7 +8682,8 @@
                   "rheum_appt_date",
                   "rheum_appt_medium",
                   "smoking_status",
-                  "stp"
+                  "stp",
+                  "stroke"
                 ]
               }
             }
@@ -13623,6 +14075,24 @@
             }
           },
           {
+            "name": "Assessment instruments and outcome measures for long covid",
+            "system": "snomedct",
+            "system_release": "unknown",
+            "url": "https://www.opencodelists.org/codelist/opensafely/assessment-instruments-and-outcome-measures-for-long-covid/79c0fa8a/",
+            "variables": {
+              "analysis/add_tpp_data.py": {
+                "github_url": "https://github.com/opensafely/openprompt-cohort-profile/blob/90d44ee26d30cd6c20b040721149719623c787be/analysis/add_tpp_data.py",
+                "variables": [
+                  "first_lc",
+                  "first_lc_code",
+                  "has_covid_dx",
+                  "n_distinct_lc_records",
+                  "n_lc_records"
+                ]
+              }
+            }
+          },
+          {
             "name": "NICE managing the long-term effects of COVID-19",
             "system": "snomedct",
             "system_release": "unknown",
@@ -13631,7 +14101,29 @@
               "analysis/add_tpp_data.py": {
                 "github_url": "https://github.com/opensafely/openprompt-cohort-profile/blob/90d44ee26d30cd6c20b040721149719623c787be/analysis/add_tpp_data.py",
                 "variables": [
-                  "has_covid_dx"
+                  "first_lc",
+                  "first_lc_code",
+                  "has_covid_dx",
+                  "n_distinct_lc_records",
+                  "n_lc_records"
+                ]
+              }
+            }
+          },
+          {
+            "name": "Referral and signposting for long COVID",
+            "system": "snomedct",
+            "system_release": "unknown",
+            "url": "https://www.opencodelists.org/codelist/opensafely/referral-and-signposting-for-long-covid/12d06dc0/",
+            "variables": {
+              "analysis/add_tpp_data.py": {
+                "github_url": "https://github.com/opensafely/openprompt-cohort-profile/blob/90d44ee26d30cd6c20b040721149719623c787be/analysis/add_tpp_data.py",
+                "variables": [
+                  "first_lc",
+                  "first_lc_code",
+                  "has_covid_dx",
+                  "n_distinct_lc_records",
+                  "n_lc_records"
                 ]
               }
             }
@@ -13663,12 +14155,6 @@
             "system": "ctv3",
             "system_release": "unknown",
             "url": "https://www.opencodelists.org/codelist/opensafely/asplenia/2020-06-02/"
-          },
-          {
-            "name": "Assessment instruments and outcome measures for long covid",
-            "system": "snomedct",
-            "system_release": "unknown",
-            "url": "https://www.opencodelists.org/codelist/opensafely/assessment-instruments-and-outcome-measures-for-long-covid/79c0fa8a/"
           },
           {
             "name": "Asthma Inhaler Salbutamol Medication",
@@ -13729,12 +14215,6 @@
             "system": "ctv3",
             "system_release": "unknown",
             "url": "https://www.opencodelists.org/codelist/opensafely/multiple-sclerosis-v2/063627df/"
-          },
-          {
-            "name": "Referral and signposting for long COVID",
-            "system": "snomedct",
-            "system_release": "unknown",
-            "url": "https://www.opencodelists.org/codelist/opensafely/referral-and-signposting-for-long-covid/12d06dc0/"
           },
           {
             "name": "Rheumatoid Arthritis",
@@ -14145,6 +14625,24 @@
             }
           },
           {
+            "name": "Assessment instruments and outcome measures for long covid",
+            "system": "snomedct",
+            "system_release": "unknown",
+            "url": "https://www.opencodelists.org/codelist/opensafely/assessment-instruments-and-outcome-measures-for-long-covid/79c0fa8a/",
+            "variables": {
+              "analysis/add_tpp_data.py": {
+                "github_url": "https://github.com/opensafely/openprompt-hrqol/blob/71f904943e31bb620716e37699b8026f434de2a0/analysis/add_tpp_data.py",
+                "variables": [
+                  "first_lc",
+                  "first_lc_code",
+                  "has_covid_dx",
+                  "n_distinct_lc_records",
+                  "n_lc_records"
+                ]
+              }
+            }
+          },
+          {
             "name": "NICE managing the long-term effects of COVID-19",
             "system": "snomedct",
             "system_release": "unknown",
@@ -14153,7 +14651,29 @@
               "analysis/add_tpp_data.py": {
                 "github_url": "https://github.com/opensafely/openprompt-hrqol/blob/71f904943e31bb620716e37699b8026f434de2a0/analysis/add_tpp_data.py",
                 "variables": [
-                  "has_covid_dx"
+                  "first_lc",
+                  "first_lc_code",
+                  "has_covid_dx",
+                  "n_distinct_lc_records",
+                  "n_lc_records"
+                ]
+              }
+            }
+          },
+          {
+            "name": "Referral and signposting for long COVID",
+            "system": "snomedct",
+            "system_release": "unknown",
+            "url": "https://www.opencodelists.org/codelist/opensafely/referral-and-signposting-for-long-covid/12d06dc0/",
+            "variables": {
+              "analysis/add_tpp_data.py": {
+                "github_url": "https://github.com/opensafely/openprompt-hrqol/blob/71f904943e31bb620716e37699b8026f434de2a0/analysis/add_tpp_data.py",
+                "variables": [
+                  "first_lc",
+                  "first_lc_code",
+                  "has_covid_dx",
+                  "n_distinct_lc_records",
+                  "n_lc_records"
                 ]
               }
             }
@@ -14181,12 +14701,6 @@
             "url": "https://www.opencodelists.org/codelist/opensafely/asplenia/2020-06-02/"
           },
           {
-            "name": "Assessment instruments and outcome measures for long covid",
-            "system": "snomedct",
-            "system_release": "unknown",
-            "url": "https://www.opencodelists.org/codelist/opensafely/assessment-instruments-and-outcome-measures-for-long-covid/79c0fa8a/"
-          },
-          {
             "name": "chronic inflammatory demyelinating polyneuropathy (CIDP)",
             "system": "ctv3",
             "system_release": "unknown",
@@ -14209,12 +14723,6 @@
             "system": "ctv3",
             "system_release": "unknown",
             "url": "https://www.opencodelists.org/codelist/opensafely/multiple-sclerosis-v2/063627df/"
-          },
-          {
-            "name": "Referral and signposting for long COVID",
-            "system": "snomedct",
-            "system_release": "unknown",
-            "url": "https://www.opencodelists.org/codelist/opensafely/referral-and-signposting-for-long-covid/12d06dc0/"
           },
           {
             "name": "Rheumatoid Arthritis",
@@ -15317,7 +15825,25 @@
     },
     "opensafely/paxlovid-test": {
       "good": {
-        "codelists": []
+        "codelists": [
+          {
+            "name": "Paxlovid - dmd",
+            "system": "dmd",
+            "system_release": "2023 9.0.0 (valid from 2023-09-04)",
+            "url": "https://www.opencodelists.org/codelist/user/bangzheng/paxlovid-dmd/0964dee3/",
+            "variables": {
+              "analysis/dataset_definition.py": {
+                "github_url": "https://github.com/opensafely/paxlovid-test/blob/79a6ae7067a59084f45ad12f12ee685993e3eb8b/analysis/dataset_definition.py",
+                "variables": [
+                  "august",
+                  "july",
+                  "june",
+                  "may"
+                ]
+              }
+            }
+          }
+        ]
       },
       "inline_codelists": {
         "codelists": []
@@ -15332,14 +15858,7 @@
         "codelists": []
       },
       "unused_codelists": {
-        "codelists": [
-          {
-            "name": "Paxlovid - dmd",
-            "system": "dmd",
-            "system_release": "2023 9.0.0 (valid from 2023-09-04)",
-            "url": "https://www.opencodelists.org/codelist/user/bangzheng/paxlovid-dmd/0964dee3/"
-          }
-        ]
+        "codelists": []
       }
     },
     "opensafely/pharmacy-first": {
@@ -20954,6 +21473,8 @@
                   "had_ccare_covid60d12m",
                   "had_ccare_covid60d24m",
                   "had_ccare_covid60d6m",
+                  "had_ccare_covid_bf30d",
+                  "had_ccare_covid_bf60d",
                   "hosp_60daf_treat_alldiag_date",
                   "hosp_af_treat_alldiag_date",
                   "hosp_covid60d12m_classfic",
@@ -20965,6 +21486,12 @@
                   "hosp_covid60d6m_classfic",
                   "hosp_covid60d6m_date",
                   "hosp_covid60d6m_pdiag",
+                  "hosp_covid_bf30d_classfic",
+                  "hosp_covid_bf30d_date",
+                  "hosp_covid_bf30d_pdiag",
+                  "hosp_covid_bf60d_classfic",
+                  "hosp_covid_bf60d_date",
+                  "hosp_covid_bf60d_pdiag",
                   "hospitalise_disc_covid",
                   "was_covid_death_60d_12m",
                   "was_covid_death_60d_24m",
@@ -21953,6 +22480,21 @@
       "good": {
         "codelists": [
           {
+            "name": "BMI",
+            "system": "snomedct",
+            "system_release": "36.0.0 (valid from 2023-04-19)",
+            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/bmi/v2.5/",
+            "variables": {
+              "analysis/PRIMIS/dataset_definition.py": {
+                "github_url": "https://github.com/opensafely/reusable-variables/blob/1d643fb1fcf9d35e608fdf2e67b90781276cd72e/analysis/PRIMIS/dataset_definition.py",
+                "variables": [
+                  "primis_atrisk",
+                  "severe_obesity"
+                ]
+              }
+            }
+          },
+          {
             "name": "ethnicity (SNOMED)",
             "system": "snomedct",
             "system_release": "39.0.0 (valid from 2024-10-02)",
@@ -21974,7 +22516,27 @@
         "codelists": []
       },
       "newer_version": {
-        "codelists": []
+        "codelists": [
+          {
+            "name": "Asthma Diagnosis code",
+            "newer_version": {
+              "label": "v2.4",
+              "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/ast/v2.4"
+            },
+            "system": "snomedct",
+            "system_release": "36.0.0 (valid from 2023-04-19)",
+            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/ast/v2.5/",
+            "variables": {
+              "analysis/PRIMIS/dataset_definition.py": {
+                "github_url": "https://github.com/opensafely/reusable-variables/blob/1d643fb1fcf9d35e608fdf2e67b90781276cd72e/analysis/PRIMIS/dataset_definition.py",
+                "variables": [
+                  "crd",
+                  "primis_atrisk"
+                ]
+              }
+            }
+          }
+        ]
       },
       "no_events": {
         "codelists": []
@@ -21990,7 +22552,8 @@
               "analysis/PRIMIS/dataset_definition.py": {
                 "github_url": "https://github.com/opensafely/reusable-variables/blob/1d643fb1fcf9d35e608fdf2e67b90781276cd72e/analysis/PRIMIS/dataset_definition.py",
                 "variables": [
-                  "asplenia"
+                  "asplenia",
+                  "primis_atrisk"
                 ]
               }
             }
@@ -22004,7 +22567,53 @@
               "analysis/PRIMIS/dataset_definition.py": {
                 "github_url": "https://github.com/opensafely/reusable-variables/blob/1d643fb1fcf9d35e608fdf2e67b90781276cd72e/analysis/PRIMIS/dataset_definition.py",
                 "variables": [
-                  "chd"
+                  "chd",
+                  "primis_atrisk"
+                ]
+              }
+            }
+          },
+          {
+            "name": "Chronic kidney disease diagnostic codes",
+            "system": "snomedct",
+            "system_release": "36.0.0 (valid from 2023-04-19)",
+            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/ckd_cov/v2.5/",
+            "variables": {
+              "analysis/PRIMIS/dataset_definition.py": {
+                "github_url": "https://github.com/opensafely/reusable-variables/blob/1d643fb1fcf9d35e608fdf2e67b90781276cd72e/analysis/PRIMIS/dataset_definition.py",
+                "variables": [
+                  "ckd",
+                  "primis_atrisk"
+                ]
+              }
+            }
+          },
+          {
+            "name": "Chronic kidney disease codes-stages 3 - 5",
+            "system": "snomedct",
+            "system_release": "36.0.0 (valid from 2023-04-19)",
+            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/ckd35/v2.5/",
+            "variables": {
+              "analysis/PRIMIS/dataset_definition.py": {
+                "github_url": "https://github.com/opensafely/reusable-variables/blob/1d643fb1fcf9d35e608fdf2e67b90781276cd72e/analysis/PRIMIS/dataset_definition.py",
+                "variables": [
+                  "ckd",
+                  "primis_atrisk"
+                ]
+              }
+            }
+          },
+          {
+            "name": "Chronic kidney disease codes - all stages",
+            "system": "snomedct",
+            "system_release": "36.0.0 (valid from 2023-04-19)",
+            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/ckd15/v2.5/",
+            "variables": {
+              "analysis/PRIMIS/dataset_definition.py": {
+                "github_url": "https://github.com/opensafely/reusable-variables/blob/1d643fb1fcf9d35e608fdf2e67b90781276cd72e/analysis/PRIMIS/dataset_definition.py",
+                "variables": [
+                  "ckd",
+                  "primis_atrisk"
                 ]
               }
             }
@@ -22018,7 +22627,8 @@
               "analysis/PRIMIS/dataset_definition.py": {
                 "github_url": "https://github.com/opensafely/reusable-variables/blob/1d643fb1fcf9d35e608fdf2e67b90781276cd72e/analysis/PRIMIS/dataset_definition.py",
                 "variables": [
-                  "cld"
+                  "cld",
+                  "primis_atrisk"
                 ]
               }
             }
@@ -22032,7 +22642,8 @@
               "analysis/PRIMIS/dataset_definition.py": {
                 "github_url": "https://github.com/opensafely/reusable-variables/blob/1d643fb1fcf9d35e608fdf2e67b90781276cd72e/analysis/PRIMIS/dataset_definition.py",
                 "variables": [
-                  "cns"
+                  "cns",
+                  "primis_atrisk"
                 ]
               }
             }
@@ -22046,7 +22657,218 @@
               "analysis/PRIMIS/dataset_definition.py": {
                 "github_url": "https://github.com/opensafely/reusable-variables/blob/1d643fb1fcf9d35e608fdf2e67b90781276cd72e/analysis/PRIMIS/dataset_definition.py",
                 "variables": [
-                  "crd"
+                  "crd",
+                  "primis_atrisk"
+                ]
+              }
+            }
+          },
+          {
+            "name": "Asthma Admission codes",
+            "system": "snomedct",
+            "system_release": "36.0.0 (valid from 2023-04-19)",
+            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/astadm/v2.5/",
+            "variables": {
+              "analysis/PRIMIS/dataset_definition.py": {
+                "github_url": "https://github.com/opensafely/reusable-variables/blob/1d643fb1fcf9d35e608fdf2e67b90781276cd72e/analysis/PRIMIS/dataset_definition.py",
+                "variables": [
+                  "crd",
+                  "primis_atrisk"
+                ]
+              }
+            }
+          },
+          {
+            "name": "Asthma Diagnosis code",
+            "system": "snomedct",
+            "system_release": "36.0.0 (valid from 2023-04-19)",
+            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/ast/v2.5/",
+            "variables": {
+              "analysis/PRIMIS/dataset_definition.py": {
+                "github_url": "https://github.com/opensafely/reusable-variables/blob/1d643fb1fcf9d35e608fdf2e67b90781276cd72e/analysis/PRIMIS/dataset_definition.py",
+                "variables": [
+                  "crd",
+                  "primis_atrisk"
+                ]
+              }
+            }
+          },
+          {
+            "name": "Asthma inhaler or nebuliser codes",
+            "system": "dmd",
+            "system_release": "2023 4.3.0 (valid from 2023-04-24)",
+            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/astrxm1/v2.5/",
+            "variables": {
+              "analysis/PRIMIS/dataset_definition.py": {
+                "github_url": "https://github.com/opensafely/reusable-variables/blob/1d643fb1fcf9d35e608fdf2e67b90781276cd72e/analysis/PRIMIS/dataset_definition.py",
+                "variables": [
+                  "crd",
+                  "primis_atrisk"
+                ]
+              }
+            }
+          },
+          {
+            "name": "Oral prednisolone codes",
+            "system": "dmd",
+            "system_release": "2023 4.2.0 (valid from 2023-04-17)",
+            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/astrxm2/v2.5/",
+            "variables": {
+              "analysis/PRIMIS/dataset_definition.py": {
+                "github_url": "https://github.com/opensafely/reusable-variables/blob/1d643fb1fcf9d35e608fdf2e67b90781276cd72e/analysis/PRIMIS/dataset_definition.py",
+                "variables": [
+                  "crd",
+                  "primis_atrisk"
+                ]
+              }
+            }
+          },
+          {
+            "name": "Addisons & hypoadrenalism",
+            "system": "snomedct",
+            "system_release": "36.0.0 (valid from 2023-04-19)",
+            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/addis_cod/v2.5/",
+            "variables": {
+              "analysis/PRIMIS/dataset_definition.py": {
+                "github_url": "https://github.com/opensafely/reusable-variables/blob/1d643fb1fcf9d35e608fdf2e67b90781276cd72e/analysis/PRIMIS/dataset_definition.py",
+                "variables": [
+                  "diabetes",
+                  "primis_atrisk"
+                ]
+              }
+            }
+          },
+          {
+            "name": "Gestational Diabetes",
+            "system": "snomedct",
+            "system_release": "36.0.0 (valid from 2023-04-19)",
+            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/gdiab_cod/v2.5/",
+            "variables": {
+              "analysis/PRIMIS/dataset_definition.py": {
+                "github_url": "https://github.com/opensafely/reusable-variables/blob/1d643fb1fcf9d35e608fdf2e67b90781276cd72e/analysis/PRIMIS/dataset_definition.py",
+                "variables": [
+                  "diabetes",
+                  "primis_atrisk"
+                ]
+              }
+            }
+          },
+          {
+            "name": "Pregnancy codes recorded in the 8.5 months before the audit run date",
+            "system": "snomedct",
+            "system_release": "36.0.0 (valid from 2023-04-19)",
+            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/preg/v2.5/",
+            "variables": {
+              "analysis/PRIMIS/dataset_definition.py": {
+                "github_url": "https://github.com/opensafely/reusable-variables/blob/1d643fb1fcf9d35e608fdf2e67b90781276cd72e/analysis/PRIMIS/dataset_definition.py",
+                "variables": [
+                  "diabetes",
+                  "primis_atrisk"
+                ]
+              }
+            }
+          },
+          {
+            "name": "Pregnancy or Delivery codes recorded in the 8.5 months before audit run date",
+            "system": "snomedct",
+            "system_release": "36.0.0 (valid from 2023-04-19)",
+            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/pregdel/v2.5/",
+            "variables": {
+              "analysis/PRIMIS/dataset_definition.py": {
+                "github_url": "https://github.com/opensafely/reusable-variables/blob/1d643fb1fcf9d35e608fdf2e67b90781276cd72e/analysis/PRIMIS/dataset_definition.py",
+                "variables": [
+                  "diabetes",
+                  "primis_atrisk"
+                ]
+              }
+            }
+          },
+          {
+            "name": "Diabetes resolved codes",
+            "system": "snomedct",
+            "system_release": "36.0.0 (valid from 2023-04-19)",
+            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/dmres/v2.5/",
+            "variables": {
+              "analysis/PRIMIS/dataset_definition.py": {
+                "github_url": "https://github.com/opensafely/reusable-variables/blob/1d643fb1fcf9d35e608fdf2e67b90781276cd72e/analysis/PRIMIS/dataset_definition.py",
+                "variables": [
+                  "diabetes",
+                  "primis_atrisk"
+                ]
+              }
+            }
+          },
+          {
+            "name": "Diabetes diagnosis codes",
+            "system": "snomedct",
+            "system_release": "36.0.0 (valid from 2023-04-19)",
+            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/diab/v2.5/",
+            "variables": {
+              "analysis/PRIMIS/dataset_definition.py": {
+                "github_url": "https://github.com/opensafely/reusable-variables/blob/1d643fb1fcf9d35e608fdf2e67b90781276cd72e/analysis/PRIMIS/dataset_definition.py",
+                "variables": [
+                  "diabetes",
+                  "primis_atrisk"
+                ]
+              }
+            }
+          },
+          {
+            "name": "Immunosuppression diagnosis codes",
+            "system": "snomedct",
+            "system_release": "36.0.0 (valid from 2023-04-19)",
+            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/immdx_cov/v2.5/",
+            "variables": {
+              "analysis/PRIMIS/dataset_definition.py": {
+                "github_url": "https://github.com/opensafely/reusable-variables/blob/1d643fb1fcf9d35e608fdf2e67b90781276cd72e/analysis/PRIMIS/dataset_definition.py",
+                "variables": [
+                  "immunosuppressed",
+                  "primis_atrisk"
+                ]
+              }
+            }
+          },
+          {
+            "name": "Immunosuppression medication codes",
+            "system": "dmd",
+            "system_release": "2023 5.4.0 (valid from 2023-05-29)",
+            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/immrx/v2.5/",
+            "variables": {
+              "analysis/PRIMIS/dataset_definition.py": {
+                "github_url": "https://github.com/opensafely/reusable-variables/blob/1d643fb1fcf9d35e608fdf2e67b90781276cd72e/analysis/PRIMIS/dataset_definition.py",
+                "variables": [
+                  "immunosuppressed",
+                  "primis_atrisk"
+                ]
+              }
+            }
+          },
+          {
+            "name": "Immunosuppression admin codes",
+            "system": "snomedct",
+            "system_release": "36.0.0 (valid from 2023-04-19)",
+            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/immunosuppression-admin-codes/v2.5/",
+            "variables": {
+              "analysis/PRIMIS/dataset_definition.py": {
+                "github_url": "https://github.com/opensafely/reusable-variables/blob/1d643fb1fcf9d35e608fdf2e67b90781276cd72e/analysis/PRIMIS/dataset_definition.py",
+                "variables": [
+                  "immunosuppressed",
+                  "primis_atrisk"
+                ]
+              }
+            }
+          },
+          {
+            "name": "receiving chemotherapy or radiotherapy codes",
+            "system": "snomedct",
+            "system_release": "36.0.0 (valid from 2023-04-19)",
+            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/dxt_chemo_cod/v2.5/",
+            "variables": {
+              "analysis/PRIMIS/dataset_definition.py": {
+                "github_url": "https://github.com/opensafely/reusable-variables/blob/1d643fb1fcf9d35e608fdf2e67b90781276cd72e/analysis/PRIMIS/dataset_definition.py",
+                "variables": [
+                  "immunosuppressed",
+                  "primis_atrisk"
                 ]
               }
             }
@@ -22060,7 +22882,68 @@
               "analysis/PRIMIS/dataset_definition.py": {
                 "github_url": "https://github.com/opensafely/reusable-variables/blob/1d643fb1fcf9d35e608fdf2e67b90781276cd72e/analysis/PRIMIS/dataset_definition.py",
                 "variables": [
-                  "learndis"
+                  "learndis",
+                  "primis_atrisk"
+                ]
+              }
+            }
+          },
+          {
+            "name": "Severe Obesity code recorded",
+            "system": "snomedct",
+            "system_release": "36.0.0 (valid from 2023-04-19)",
+            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/sev_obesity/v2.5/",
+            "variables": {
+              "analysis/PRIMIS/dataset_definition.py": {
+                "github_url": "https://github.com/opensafely/reusable-variables/blob/1d643fb1fcf9d35e608fdf2e67b90781276cd72e/analysis/PRIMIS/dataset_definition.py",
+                "variables": [
+                  "primis_atrisk",
+                  "severe_obesity"
+                ]
+              }
+            }
+          },
+          {
+            "name": "All BMI coded terms",
+            "system": "snomedct",
+            "system_release": "36.0.0 (valid from 2023-04-19)",
+            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/bmi_stage/v2.5/",
+            "variables": {
+              "analysis/PRIMIS/dataset_definition.py": {
+                "github_url": "https://github.com/opensafely/reusable-variables/blob/1d643fb1fcf9d35e608fdf2e67b90781276cd72e/analysis/PRIMIS/dataset_definition.py",
+                "variables": [
+                  "primis_atrisk",
+                  "severe_obesity"
+                ]
+              }
+            }
+          },
+          {
+            "name": "Remission codes relating to Severe Mental Illness",
+            "system": "snomedct",
+            "system_release": "36.0.0 (valid from 2023-04-19)",
+            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/smhres/v2.5/",
+            "variables": {
+              "analysis/PRIMIS/dataset_definition.py": {
+                "github_url": "https://github.com/opensafely/reusable-variables/blob/1d643fb1fcf9d35e608fdf2e67b90781276cd72e/analysis/PRIMIS/dataset_definition.py",
+                "variables": [
+                  "primis_atrisk",
+                  "smi"
+                ]
+              }
+            }
+          },
+          {
+            "name": "Severe Mental Illness codes",
+            "system": "snomedct",
+            "system_release": "36.0.0 (valid from 2023-04-19)",
+            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/sev_mental/v2.5/",
+            "variables": {
+              "analysis/PRIMIS/dataset_definition.py": {
+                "github_url": "https://github.com/opensafely/reusable-variables/blob/1d643fb1fcf9d35e608fdf2e67b90781276cd72e/analysis/PRIMIS/dataset_definition.py",
+                "variables": [
+                  "primis_atrisk",
+                  "smi"
                 ]
               }
             }
@@ -22068,140 +22951,7 @@
         ]
       },
       "unused_codelists": {
-        "codelists": [
-          {
-            "name": "Addisons & hypoadrenalism",
-            "system": "snomedct",
-            "system_release": "36.0.0 (valid from 2023-04-19)",
-            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/addis_cod/v2.5/"
-          },
-          {
-            "name": "Asthma Diagnosis code",
-            "system": "snomedct",
-            "system_release": "36.0.0 (valid from 2023-04-19)",
-            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/ast/v2.5/"
-          },
-          {
-            "name": "Asthma Admission codes",
-            "system": "snomedct",
-            "system_release": "36.0.0 (valid from 2023-04-19)",
-            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/astadm/v2.5/"
-          },
-          {
-            "name": "Asthma inhaler or nebuliser codes",
-            "system": "dmd",
-            "system_release": "2023 4.3.0 (valid from 2023-04-24)",
-            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/astrxm1/v2.5/"
-          },
-          {
-            "name": "Oral prednisolone codes",
-            "system": "dmd",
-            "system_release": "2023 4.2.0 (valid from 2023-04-17)",
-            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/astrxm2/v2.5/"
-          },
-          {
-            "name": "BMI",
-            "system": "snomedct",
-            "system_release": "36.0.0 (valid from 2023-04-19)",
-            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/bmi/v2.5/"
-          },
-          {
-            "name": "All BMI coded terms",
-            "system": "snomedct",
-            "system_release": "36.0.0 (valid from 2023-04-19)",
-            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/bmi_stage/v2.5/"
-          },
-          {
-            "name": "Chronic kidney disease codes - all stages",
-            "system": "snomedct",
-            "system_release": "36.0.0 (valid from 2023-04-19)",
-            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/ckd15/v2.5/"
-          },
-          {
-            "name": "Chronic kidney disease codes-stages 3 - 5",
-            "system": "snomedct",
-            "system_release": "36.0.0 (valid from 2023-04-19)",
-            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/ckd35/v2.5/"
-          },
-          {
-            "name": "Chronic kidney disease diagnostic codes",
-            "system": "snomedct",
-            "system_release": "36.0.0 (valid from 2023-04-19)",
-            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/ckd_cov/v2.5/"
-          },
-          {
-            "name": "Diabetes diagnosis codes",
-            "system": "snomedct",
-            "system_release": "36.0.0 (valid from 2023-04-19)",
-            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/diab/v2.5/"
-          },
-          {
-            "name": "Diabetes resolved codes",
-            "system": "snomedct",
-            "system_release": "36.0.0 (valid from 2023-04-19)",
-            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/dmres/v2.5/"
-          },
-          {
-            "name": "receiving chemotherapy or radiotherapy codes",
-            "system": "snomedct",
-            "system_release": "36.0.0 (valid from 2023-04-19)",
-            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/dxt_chemo_cod/v2.5/"
-          },
-          {
-            "name": "Gestational Diabetes",
-            "system": "snomedct",
-            "system_release": "36.0.0 (valid from 2023-04-19)",
-            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/gdiab_cod/v2.5/"
-          },
-          {
-            "name": "Immunosuppression diagnosis codes",
-            "system": "snomedct",
-            "system_release": "36.0.0 (valid from 2023-04-19)",
-            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/immdx_cov/v2.5/"
-          },
-          {
-            "name": "Immunosuppression medication codes",
-            "system": "dmd",
-            "system_release": "2023 5.4.0 (valid from 2023-05-29)",
-            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/immrx/v2.5/"
-          },
-          {
-            "name": "Immunosuppression admin codes",
-            "system": "snomedct",
-            "system_release": "36.0.0 (valid from 2023-04-19)",
-            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/immunosuppression-admin-codes/v2.5/"
-          },
-          {
-            "name": "Pregnancy codes recorded in the 8.5 months before the audit run date",
-            "system": "snomedct",
-            "system_release": "36.0.0 (valid from 2023-04-19)",
-            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/preg/v2.5/"
-          },
-          {
-            "name": "Pregnancy or Delivery codes recorded in the 8.5 months before audit run date",
-            "system": "snomedct",
-            "system_release": "36.0.0 (valid from 2023-04-19)",
-            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/pregdel/v2.5/"
-          },
-          {
-            "name": "Severe Mental Illness codes",
-            "system": "snomedct",
-            "system_release": "36.0.0 (valid from 2023-04-19)",
-            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/sev_mental/v2.5/"
-          },
-          {
-            "name": "Severe Obesity code recorded",
-            "system": "snomedct",
-            "system_release": "36.0.0 (valid from 2023-04-19)",
-            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/sev_obesity/v2.5/"
-          },
-          {
-            "name": "Remission codes relating to Severe Mental Illness",
-            "system": "snomedct",
-            "system_release": "36.0.0 (valid from 2023-04-19)",
-            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/smhres/v2.5/"
-          }
-        ]
+        "codelists": []
       }
     },
     "opensafely/statins-covid": {
@@ -23469,6 +24219,34 @@
             }
           },
           {
+            "name": "Asthma exacerbations (SNOMED)",
+            "system": "snomedct",
+            "system_release": "36.0.0 (valid from 2023-04-19)",
+            "url": "https://www.opencodelists.org/codelist/bristol/asthma_exacerbations_snomed/137bfd26/",
+            "variables": {
+              "analysis/dataset.py": {
+                "github_url": "https://github.com/opensafely/winter-pressures-phase-II/blob/7fc04d51fbf9f4517b2a436ddded4d4f622f2b73/analysis/dataset.py",
+                "variables": [
+                  "overall_resp_sensitive"
+                ]
+              }
+            }
+          },
+          {
+            "name": "COPD exacerbations (SNOMED)",
+            "system": "snomedct",
+            "system_release": "36.0.0 (valid from 2023-04-19)",
+            "url": "https://www.opencodelists.org/codelist/bristol/copd-exacerbations-snomed/162ebd1c/",
+            "variables": {
+              "analysis/dataset.py": {
+                "github_url": "https://github.com/opensafely/winter-pressures-phase-II/blob/7fc04d51fbf9f4517b2a436ddded4d4f622f2b73/analysis/dataset.py",
+                "variables": [
+                  "overall_resp_sensitive"
+                ]
+              }
+            }
+          },
+          {
             "name": "RSV Identification (Prescriptions) - Maximal Sensitivity - dmd",
             "system": "dmd",
             "system_release": "2025 11.0.0 (valid from 2025-11-03)",
@@ -23507,18 +24285,6 @@
             "system": "snomedct",
             "system_release": "unknown",
             "url": "https://www.opencodelists.org/codelist/bristol/antidepressants-snomedct/677f55d2/"
-          },
-          {
-            "name": "Asthma exacerbations (SNOMED)",
-            "system": "snomedct",
-            "system_release": "36.0.0 (valid from 2023-04-19)",
-            "url": "https://www.opencodelists.org/codelist/bristol/asthma_exacerbations_snomed/137bfd26/"
-          },
-          {
-            "name": "COPD exacerbations (SNOMED)",
-            "system": "snomedct",
-            "system_release": "36.0.0 (valid from 2023-04-19)",
-            "url": "https://www.opencodelists.org/codelist/bristol/copd-exacerbations-snomed/162ebd1c/"
           },
           {
             "name": "Pneumonia",

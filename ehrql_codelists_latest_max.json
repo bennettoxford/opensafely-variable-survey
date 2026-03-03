@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-02-27 11:53:44",
+  "generated_at": "2026-03-03 16:06:30",
   "projects": {
     "opensafely/ACT-PharmacyFirst-Protocol2-healthcare-usage": {
       "37294007f547bd95e6d166ffe855b5a229483731": {
@@ -261,10 +261,6 @@
             "file=codelists/opensafely-solid-organ-transplantation-snomed.csv"
           ],
           [
-            "/primis-covid19-vacc-uptake/addis_cod/v2.5/",
-            "file=codelists/primis-covid19-vacc-uptake-addis_cod.csv"
-          ],
-          [
             "/primis-covid19-vacc-uptake/ast/v2.5/",
             "file=codelists/primis-covid19-vacc-uptake-ast.csv"
           ],
@@ -281,14 +277,6 @@
             "file=codelists/primis-covid19-vacc-uptake-astrxm2.csv"
           ],
           [
-            "/primis-covid19-vacc-uptake/bmi/v2.5/",
-            "file=codelists/primis-covid19-vacc-uptake-bmi.csv"
-          ],
-          [
-            "/primis-covid19-vacc-uptake/bmi_stage/v2.5/",
-            "file=codelists/primis-covid19-vacc-uptake-bmi_stage.csv"
-          ],
-          [
             "/primis-covid19-vacc-uptake/carehome/v2.5/",
             "file=codelists/primis-covid19-vacc-uptake-carehome.csv"
           ],
@@ -297,68 +285,12 @@
             "file=codelists/primis-covid19-vacc-uptake-carer.csv"
           ],
           [
-            "/primis-covid19-vacc-uptake/chd_cov/v2.5/",
-            "file=codelists/primis-covid19-vacc-uptake-chd_cov.csv"
-          ],
-          [
-            "/primis-covid19-vacc-uptake/ckd15/v2.5/",
-            "file=codelists/primis-covid19-vacc-uptake-ckd15.csv"
-          ],
-          [
-            "/primis-covid19-vacc-uptake/ckd35/v2.5/",
-            "file=codelists/primis-covid19-vacc-uptake-ckd35.csv"
-          ],
-          [
-            "/primis-covid19-vacc-uptake/ckd_cov/v2.5/",
-            "file=codelists/primis-covid19-vacc-uptake-ckd_cov.csv"
-          ],
-          [
-            "/primis-covid19-vacc-uptake/cld/v2.5/",
-            "file=codelists/primis-covid19-vacc-uptake-cld.csv"
-          ],
-          [
-            "/primis-covid19-vacc-uptake/cns_cov/v2.5/",
-            "file=codelists/primis-covid19-vacc-uptake-cns_cov.csv"
-          ],
-          [
-            "/primis-covid19-vacc-uptake/diab/v2.5/",
-            "file=codelists/primis-covid19-vacc-uptake-diab.csv"
-          ],
-          [
-            "/primis-covid19-vacc-uptake/dmres/v2.5/",
-            "file=codelists/primis-covid19-vacc-uptake-dmres.csv"
-          ],
-          [
             "/primis-covid19-vacc-uptake/domcare/v2.5/",
             "file=codelists/primis-covid19-vacc-uptake-domcare.csv"
           ],
           [
-            "/primis-covid19-vacc-uptake/dxt_chemo_cod/v2.5/",
-            "file=codelists/primis-covid19-vacc-uptake-dxt_chemo_cod.csv"
-          ],
-          [
-            "/primis-covid19-vacc-uptake/gdiab_cod/v2.5/",
-            "file=codelists/primis-covid19-vacc-uptake-gdiab_cod.csv"
-          ],
-          [
             "/primis-covid19-vacc-uptake/hhld_imdef/v2.5/",
             "file=codelists/primis-covid19-vacc-uptake-hhld_imdef.csv"
-          ],
-          [
-            "/primis-covid19-vacc-uptake/immdx_cov/v2.5/",
-            "file=codelists/primis-covid19-vacc-uptake-immdx_cov.csv"
-          ],
-          [
-            "/primis-covid19-vacc-uptake/immrx/v2.5/",
-            "file=codelists/primis-covid19-vacc-uptake-immrx.csv"
-          ],
-          [
-            "/primis-covid19-vacc-uptake/immunosuppression-admin-codes/v2.5/",
-            "file=codelists/primis-covid19-vacc-uptake-immunosuppression-admin-codes.csv"
-          ],
-          [
-            "/primis-covid19-vacc-uptake/learndis/v2.5/",
-            "file=codelists/primis-covid19-vacc-uptake-learndis.csv"
           ],
           [
             "/primis-covid19-vacc-uptake/notcarer/v2.5/",
@@ -367,34 +299,6 @@
           [
             "/primis-covid19-vacc-uptake/nursehome/v2.5/",
             "file=codelists/primis-covid19-vacc-uptake-nursehome.csv"
-          ],
-          [
-            "/primis-covid19-vacc-uptake/preg/v2.5/",
-            "file=codelists/primis-covid19-vacc-uptake-preg.csv"
-          ],
-          [
-            "/primis-covid19-vacc-uptake/pregdel/v2.5/",
-            "file=codelists/primis-covid19-vacc-uptake-pregdel.csv"
-          ],
-          [
-            "/primis-covid19-vacc-uptake/resp_cov/v2.5/",
-            "file=codelists/primis-covid19-vacc-uptake-resp_cov.csv"
-          ],
-          [
-            "/primis-covid19-vacc-uptake/sev_mental/v2.5/",
-            "file=codelists/primis-covid19-vacc-uptake-sev_mental.csv"
-          ],
-          [
-            "/primis-covid19-vacc-uptake/sev_obesity/v2.5/",
-            "file=codelists/primis-covid19-vacc-uptake-sev_obesity.csv"
-          ],
-          [
-            "/primis-covid19-vacc-uptake/smhres/v2.5/",
-            "file=codelists/primis-covid19-vacc-uptake-smhres.csv"
-          ],
-          [
-            "/primis-covid19-vacc-uptake/spln_cov/v2.5/",
-            "file=codelists/primis-covid19-vacc-uptake-spln_cov.csv"
           ],
           [
             "/user/elsie_horne/ami_prior_icd10/360a5c99/",
@@ -534,6 +438,12 @@
           "anaphylaxis_prior_gp": [
             [
               "/opensafely/anaphylaxis-snomed/3843de84/",
+              "column=code"
+            ]
+          ],
+          "asplenia": [
+            [
+              "/primis-covid19-vacc-uptake/spln_cov/v2.5/",
               "column=code"
             ]
           ],
@@ -760,6 +670,38 @@
               "values=860816004|863907000|449671007"
             ]
           ],
+          "chd": [
+            [
+              "/primis-covid19-vacc-uptake/chd_cov/v2.5/",
+              "column=code"
+            ]
+          ],
+          "ckd": [
+            [
+              "/primis-covid19-vacc-uptake/ckd_cov/v2.5/",
+              "column=code"
+            ],
+            [
+              "/primis-covid19-vacc-uptake/ckd35/v2.5/",
+              "column=code"
+            ],
+            [
+              "/primis-covid19-vacc-uptake/ckd15/v2.5/",
+              "column=code"
+            ]
+          ],
+          "cld": [
+            [
+              "/primis-covid19-vacc-uptake/cld/v2.5/",
+              "column=code"
+            ]
+          ],
+          "cns": [
+            [
+              "/primis-covid19-vacc-uptake/cns_cov/v2.5/",
+              "column=code"
+            ]
+          ],
           "covid_admitted_date": [
             [
               "/opensafely/covid-identification/2020-06-03/",
@@ -836,8 +778,40 @@
               "values=1240751000000100|1325171000000109|1325181000000106"
             ]
           ],
+          "crd": [
+            [
+              "/primis-covid19-vacc-uptake/resp_cov/v2.5/",
+              "column=code"
+            ]
+          ],
           "death_date": [],
           "dereg_date": [],
+          "diabetes": [
+            [
+              "/primis-covid19-vacc-uptake/addis_cod/v2.5/",
+              "column=code"
+            ],
+            [
+              "/primis-covid19-vacc-uptake/gdiab_cod/v2.5/",
+              "column=code"
+            ],
+            [
+              "/primis-covid19-vacc-uptake/preg/v2.5/",
+              "column=code"
+            ],
+            [
+              "/primis-covid19-vacc-uptake/pregdel/v2.5/",
+              "column=code"
+            ],
+            [
+              "/primis-covid19-vacc-uptake/dmres/v2.5/",
+              "column=code"
+            ],
+            [
+              "/primis-covid19-vacc-uptake/diab/v2.5/",
+              "column=code"
+            ]
+          ],
           "dvt_admitted_date": [
             [
               "/user/RochelleKnight/dvt_dvt_icd10/24dab358/",
@@ -1086,7 +1060,31 @@
             ]
           ],
           "imd": [],
+          "immunosuppressed": [
+            [
+              "/primis-covid19-vacc-uptake/immdx_cov/v2.5/",
+              "column=code"
+            ],
+            [
+              "/primis-covid19-vacc-uptake/immrx/v2.5/",
+              "column=code"
+            ],
+            [
+              "/primis-covid19-vacc-uptake/immunosuppression-admin-codes/v2.5/",
+              "column=code"
+            ],
+            [
+              "/primis-covid19-vacc-uptake/dxt_chemo_cod/v2.5/",
+              "column=code"
+            ]
+          ],
           "inhospital": [],
+          "learndis": [
+            [
+              "/primis-covid19-vacc-uptake/learndis/v2.5/",
+              "column=code"
+            ]
+          ],
           "menorrhagia_admitted_date": [
             [
               "/opensafely/heavy-menstrual-bleeding-icd-10/0624f81a/",
@@ -1331,6 +1329,20 @@
           "prior_emergency": [],
           "region": [],
           "registered_previous_6weeks": [],
+          "severe_obesity": [
+            [
+              "/primis-covid19-vacc-uptake/sev_obesity/v2.5/",
+              "column=code"
+            ],
+            [
+              "/primis-covid19-vacc-uptake/bmi_stage/v2.5/",
+              "column=code"
+            ],
+            [
+              "/primis-covid19-vacc-uptake/bmi/v2.5/",
+              "column=code"
+            ]
+          ],
           "sex": [],
           "sgb_admitted_date": [
             [
@@ -1379,6 +1391,16 @@
           "sgb_prior_gp": [
             [
               "/opensafely/guillain-barre-snomed/60093c59/",
+              "column=code"
+            ]
+          ],
+          "smi": [
+            [
+              "/primis-covid19-vacc-uptake/smhres/v2.5/",
+              "column=code"
+            ],
+            [
+              "/primis-covid19-vacc-uptake/sev_mental/v2.5/",
               "column=code"
             ]
           ],
@@ -1839,10 +1861,6 @@
             "file=codelists/opensafely-solid-organ-transplantation-snomed.csv"
           ],
           [
-            "/primis-covid19-vacc-uptake/addis_cod/v2.5/",
-            "file=codelists/primis-covid19-vacc-uptake-addis_cod.csv"
-          ],
-          [
             "/primis-covid19-vacc-uptake/ast/v2.5/",
             "file=codelists/primis-covid19-vacc-uptake-ast.csv"
           ],
@@ -1859,14 +1877,6 @@
             "file=codelists/primis-covid19-vacc-uptake-astrxm2.csv"
           ],
           [
-            "/primis-covid19-vacc-uptake/bmi/v2.5/",
-            "file=codelists/primis-covid19-vacc-uptake-bmi.csv"
-          ],
-          [
-            "/primis-covid19-vacc-uptake/bmi_stage/v2.5/",
-            "file=codelists/primis-covid19-vacc-uptake-bmi_stage.csv"
-          ],
-          [
             "/primis-covid19-vacc-uptake/carehome/v2.5/",
             "file=codelists/primis-covid19-vacc-uptake-carehome.csv"
           ],
@@ -1875,68 +1885,12 @@
             "file=codelists/primis-covid19-vacc-uptake-carer.csv"
           ],
           [
-            "/primis-covid19-vacc-uptake/chd_cov/v2.5/",
-            "file=codelists/primis-covid19-vacc-uptake-chd_cov.csv"
-          ],
-          [
-            "/primis-covid19-vacc-uptake/ckd15/v2.5/",
-            "file=codelists/primis-covid19-vacc-uptake-ckd15.csv"
-          ],
-          [
-            "/primis-covid19-vacc-uptake/ckd35/v2.5/",
-            "file=codelists/primis-covid19-vacc-uptake-ckd35.csv"
-          ],
-          [
-            "/primis-covid19-vacc-uptake/ckd_cov/v2.5/",
-            "file=codelists/primis-covid19-vacc-uptake-ckd_cov.csv"
-          ],
-          [
-            "/primis-covid19-vacc-uptake/cld/v2.5/",
-            "file=codelists/primis-covid19-vacc-uptake-cld.csv"
-          ],
-          [
-            "/primis-covid19-vacc-uptake/cns_cov/v2.5/",
-            "file=codelists/primis-covid19-vacc-uptake-cns_cov.csv"
-          ],
-          [
-            "/primis-covid19-vacc-uptake/diab/v2.5/",
-            "file=codelists/primis-covid19-vacc-uptake-diab.csv"
-          ],
-          [
-            "/primis-covid19-vacc-uptake/dmres/v2.5/",
-            "file=codelists/primis-covid19-vacc-uptake-dmres.csv"
-          ],
-          [
             "/primis-covid19-vacc-uptake/domcare/v2.5/",
             "file=codelists/primis-covid19-vacc-uptake-domcare.csv"
           ],
           [
-            "/primis-covid19-vacc-uptake/dxt_chemo_cod/v2.5/",
-            "file=codelists/primis-covid19-vacc-uptake-dxt_chemo_cod.csv"
-          ],
-          [
-            "/primis-covid19-vacc-uptake/gdiab_cod/v2.5/",
-            "file=codelists/primis-covid19-vacc-uptake-gdiab_cod.csv"
-          ],
-          [
             "/primis-covid19-vacc-uptake/hhld_imdef/v2.5/",
             "file=codelists/primis-covid19-vacc-uptake-hhld_imdef.csv"
-          ],
-          [
-            "/primis-covid19-vacc-uptake/immdx_cov/v2.5/",
-            "file=codelists/primis-covid19-vacc-uptake-immdx_cov.csv"
-          ],
-          [
-            "/primis-covid19-vacc-uptake/immrx/v2.5/",
-            "file=codelists/primis-covid19-vacc-uptake-immrx.csv"
-          ],
-          [
-            "/primis-covid19-vacc-uptake/immunosuppression-admin-codes/v2.5/",
-            "file=codelists/primis-covid19-vacc-uptake-immunosuppression-admin-codes.csv"
-          ],
-          [
-            "/primis-covid19-vacc-uptake/learndis/v2.5/",
-            "file=codelists/primis-covid19-vacc-uptake-learndis.csv"
           ],
           [
             "/primis-covid19-vacc-uptake/notcarer/v2.5/",
@@ -1945,34 +1899,6 @@
           [
             "/primis-covid19-vacc-uptake/nursehome/v2.5/",
             "file=codelists/primis-covid19-vacc-uptake-nursehome.csv"
-          ],
-          [
-            "/primis-covid19-vacc-uptake/preg/v2.5/",
-            "file=codelists/primis-covid19-vacc-uptake-preg.csv"
-          ],
-          [
-            "/primis-covid19-vacc-uptake/pregdel/v2.5/",
-            "file=codelists/primis-covid19-vacc-uptake-pregdel.csv"
-          ],
-          [
-            "/primis-covid19-vacc-uptake/resp_cov/v2.5/",
-            "file=codelists/primis-covid19-vacc-uptake-resp_cov.csv"
-          ],
-          [
-            "/primis-covid19-vacc-uptake/sev_mental/v2.5/",
-            "file=codelists/primis-covid19-vacc-uptake-sev_mental.csv"
-          ],
-          [
-            "/primis-covid19-vacc-uptake/sev_obesity/v2.5/",
-            "file=codelists/primis-covid19-vacc-uptake-sev_obesity.csv"
-          ],
-          [
-            "/primis-covid19-vacc-uptake/smhres/v2.5/",
-            "file=codelists/primis-covid19-vacc-uptake-smhres.csv"
-          ],
-          [
-            "/primis-covid19-vacc-uptake/spln_cov/v2.5/",
-            "file=codelists/primis-covid19-vacc-uptake-spln_cov.csv"
           ],
           [
             "/user/elsie_horne/ami_prior_icd10/360a5c99/",
@@ -2112,6 +2038,12 @@
           "anaphylaxis_prior_gp": [
             [
               "/opensafely/anaphylaxis-snomed/3843de84/",
+              "column=code"
+            ]
+          ],
+          "asplenia": [
+            [
+              "/primis-covid19-vacc-uptake/spln_cov/v2.5/",
               "column=code"
             ]
           ],
@@ -2338,6 +2270,38 @@
               "values=860816004|863907000|449671007"
             ]
           ],
+          "chd": [
+            [
+              "/primis-covid19-vacc-uptake/chd_cov/v2.5/",
+              "column=code"
+            ]
+          ],
+          "ckd": [
+            [
+              "/primis-covid19-vacc-uptake/ckd_cov/v2.5/",
+              "column=code"
+            ],
+            [
+              "/primis-covid19-vacc-uptake/ckd35/v2.5/",
+              "column=code"
+            ],
+            [
+              "/primis-covid19-vacc-uptake/ckd15/v2.5/",
+              "column=code"
+            ]
+          ],
+          "cld": [
+            [
+              "/primis-covid19-vacc-uptake/cld/v2.5/",
+              "column=code"
+            ]
+          ],
+          "cns": [
+            [
+              "/primis-covid19-vacc-uptake/cns_cov/v2.5/",
+              "column=code"
+            ]
+          ],
           "covid_admitted_date": [
             [
               "/opensafely/covid-identification/2020-06-03/",
@@ -2414,8 +2378,40 @@
               "values=1240751000000100|1325171000000109|1325181000000106"
             ]
           ],
+          "crd": [
+            [
+              "/primis-covid19-vacc-uptake/resp_cov/v2.5/",
+              "column=code"
+            ]
+          ],
           "death_date": [],
           "dereg_date": [],
+          "diabetes": [
+            [
+              "/primis-covid19-vacc-uptake/addis_cod/v2.5/",
+              "column=code"
+            ],
+            [
+              "/primis-covid19-vacc-uptake/gdiab_cod/v2.5/",
+              "column=code"
+            ],
+            [
+              "/primis-covid19-vacc-uptake/preg/v2.5/",
+              "column=code"
+            ],
+            [
+              "/primis-covid19-vacc-uptake/pregdel/v2.5/",
+              "column=code"
+            ],
+            [
+              "/primis-covid19-vacc-uptake/dmres/v2.5/",
+              "column=code"
+            ],
+            [
+              "/primis-covid19-vacc-uptake/diab/v2.5/",
+              "column=code"
+            ]
+          ],
           "dvt_admitted_date": [
             [
               "/user/RochelleKnight/dvt_dvt_icd10/24dab358/",
@@ -2664,7 +2660,31 @@
             ]
           ],
           "imd": [],
+          "immunosuppressed": [
+            [
+              "/primis-covid19-vacc-uptake/immdx_cov/v2.5/",
+              "column=code"
+            ],
+            [
+              "/primis-covid19-vacc-uptake/immrx/v2.5/",
+              "column=code"
+            ],
+            [
+              "/primis-covid19-vacc-uptake/immunosuppression-admin-codes/v2.5/",
+              "column=code"
+            ],
+            [
+              "/primis-covid19-vacc-uptake/dxt_chemo_cod/v2.5/",
+              "column=code"
+            ]
+          ],
           "inhospital": [],
+          "learndis": [
+            [
+              "/primis-covid19-vacc-uptake/learndis/v2.5/",
+              "column=code"
+            ]
+          ],
           "menorrhagia_admitted_date": [
             [
               "/opensafely/heavy-menstrual-bleeding-icd-10/0624f81a/",
@@ -2909,6 +2929,20 @@
           "prior_emergency": [],
           "region": [],
           "registered_previous_6weeks": [],
+          "severe_obesity": [
+            [
+              "/primis-covid19-vacc-uptake/sev_obesity/v2.5/",
+              "column=code"
+            ],
+            [
+              "/primis-covid19-vacc-uptake/bmi_stage/v2.5/",
+              "column=code"
+            ],
+            [
+              "/primis-covid19-vacc-uptake/bmi/v2.5/",
+              "column=code"
+            ]
+          ],
           "sex": [],
           "sgb_admitted_date": [
             [
@@ -2957,6 +2991,16 @@
           "sgb_prior_gp": [
             [
               "/opensafely/guillain-barre-snomed/60093c59/",
+              "column=code"
+            ]
+          ],
+          "smi": [
+            [
+              "/primis-covid19-vacc-uptake/smhres/v2.5/",
+              "column=code"
+            ],
+            [
+              "/primis-covid19-vacc-uptake/sev_mental/v2.5/",
               "column=code"
             ]
           ],
@@ -6143,11 +6187,43 @@
           ],
           "chronic_cardiac_disease": [
             [
+              "/user/markdrussell/undiff-eia/459a5829/",
+              "column=code"
+            ],
+            [
+              "/user/markdrussell/new-rheumatoid-arthritis/535a8249/",
+              "column=code"
+            ],
+            [
+              "/user/markdrussell/axial-spondyloarthritis/057968b4/",
+              "column=code"
+            ],
+            [
+              "/user/markdrussell/psoriatic-arthritis/6c69f57e/",
+              "column=code"
+            ],
+            [
               "/opensafely/chronic-cardiac-disease/2020-04-08/",
               "column=CTV3ID"
             ]
           ],
           "chronic_liver_disease": [
+            [
+              "/user/markdrussell/undiff-eia/459a5829/",
+              "column=code"
+            ],
+            [
+              "/user/markdrussell/new-rheumatoid-arthritis/535a8249/",
+              "column=code"
+            ],
+            [
+              "/user/markdrussell/axial-spondyloarthritis/057968b4/",
+              "column=code"
+            ],
+            [
+              "/user/markdrussell/psoriatic-arthritis/6c69f57e/",
+              "column=code"
+            ],
             [
               "/opensafely/chronic-liver-disease/2020-06-02/",
               "column=CTV3ID"
@@ -6155,17 +6231,65 @@
           ],
           "chronic_respiratory_disease": [
             [
+              "/user/markdrussell/undiff-eia/459a5829/",
+              "column=code"
+            ],
+            [
+              "/user/markdrussell/new-rheumatoid-arthritis/535a8249/",
+              "column=code"
+            ],
+            [
+              "/user/markdrussell/axial-spondyloarthritis/057968b4/",
+              "column=code"
+            ],
+            [
+              "/user/markdrussell/psoriatic-arthritis/6c69f57e/",
+              "column=code"
+            ],
+            [
               "/opensafely/chronic-respiratory-disease/2020-04-10/",
               "column=CTV3ID"
             ]
           ],
           "copd": [
             [
+              "/user/markdrussell/undiff-eia/459a5829/",
+              "column=code"
+            ],
+            [
+              "/user/markdrussell/new-rheumatoid-arthritis/535a8249/",
+              "column=code"
+            ],
+            [
+              "/user/markdrussell/axial-spondyloarthritis/057968b4/",
+              "column=code"
+            ],
+            [
+              "/user/markdrussell/psoriatic-arthritis/6c69f57e/",
+              "column=code"
+            ],
+            [
               "/opensafely/current-copd/2020-05-06/",
               "column=CTV3ID"
             ]
           ],
           "creatinine": [
+            [
+              "/user/markdrussell/undiff-eia/459a5829/",
+              "column=code"
+            ],
+            [
+              "/user/markdrussell/new-rheumatoid-arthritis/535a8249/",
+              "column=code"
+            ],
+            [
+              "/user/markdrussell/axial-spondyloarthritis/057968b4/",
+              "column=code"
+            ],
+            [
+              "/user/markdrussell/psoriatic-arthritis/6c69f57e/",
+              "column=code"
+            ],
             [
               "<inline>",
               "length=1",
@@ -6174,6 +6298,22 @@
             ]
           ],
           "creatinine_date": [
+            [
+              "/user/markdrussell/undiff-eia/459a5829/",
+              "column=code"
+            ],
+            [
+              "/user/markdrussell/new-rheumatoid-arthritis/535a8249/",
+              "column=code"
+            ],
+            [
+              "/user/markdrussell/axial-spondyloarthritis/057968b4/",
+              "column=code"
+            ],
+            [
+              "/user/markdrussell/psoriatic-arthritis/6c69f57e/",
+              "column=code"
+            ],
             [
               "<inline>",
               "length=1",
@@ -6219,6 +6359,22 @@
           ],
           "diabetes": [
             [
+              "/user/markdrussell/undiff-eia/459a5829/",
+              "column=code"
+            ],
+            [
+              "/user/markdrussell/new-rheumatoid-arthritis/535a8249/",
+              "column=code"
+            ],
+            [
+              "/user/markdrussell/axial-spondyloarthritis/057968b4/",
+              "column=code"
+            ],
+            [
+              "/user/markdrussell/psoriatic-arthritis/6c69f57e/",
+              "column=code"
+            ],
+            [
               "/opensafely/diabetes/2020-04-15/",
               "column=CTV3ID"
             ]
@@ -6263,6 +6419,22 @@
           ],
           "esrf": [
             [
+              "/user/markdrussell/undiff-eia/459a5829/",
+              "column=code"
+            ],
+            [
+              "/user/markdrussell/new-rheumatoid-arthritis/535a8249/",
+              "column=code"
+            ],
+            [
+              "/user/markdrussell/axial-spondyloarthritis/057968b4/",
+              "column=code"
+            ],
+            [
+              "/user/markdrussell/psoriatic-arthritis/6c69f57e/",
+              "column=code"
+            ],
+            [
               "/opensafely/chronic-kidney-disease/2020-04-14/",
               "column=CTV3ID"
             ]
@@ -6298,6 +6470,22 @@
             ]
           ],
           "haem_cancer": [
+            [
+              "/user/markdrussell/undiff-eia/459a5829/",
+              "column=code"
+            ],
+            [
+              "/user/markdrussell/new-rheumatoid-arthritis/535a8249/",
+              "column=code"
+            ],
+            [
+              "/user/markdrussell/axial-spondyloarthritis/057968b4/",
+              "column=code"
+            ],
+            [
+              "/user/markdrussell/psoriatic-arthritis/6c69f57e/",
+              "column=code"
+            ],
             [
               "/opensafely/haematological-cancer/2020-04-15/",
               "column=CTV3ID"
@@ -6359,6 +6547,22 @@
           ],
           "hba1c_mmol_per_mol": [
             [
+              "/user/markdrussell/undiff-eia/459a5829/",
+              "column=code"
+            ],
+            [
+              "/user/markdrussell/new-rheumatoid-arthritis/535a8249/",
+              "column=code"
+            ],
+            [
+              "/user/markdrussell/axial-spondyloarthritis/057968b4/",
+              "column=code"
+            ],
+            [
+              "/user/markdrussell/psoriatic-arthritis/6c69f57e/",
+              "column=code"
+            ],
+            [
               "<inline>",
               "length=3",
               "source=analysis/codelists_ehrQL.py:50",
@@ -6366,6 +6570,22 @@
             ]
           ],
           "hba1c_mmol_per_mol_date": [
+            [
+              "/user/markdrussell/undiff-eia/459a5829/",
+              "column=code"
+            ],
+            [
+              "/user/markdrussell/new-rheumatoid-arthritis/535a8249/",
+              "column=code"
+            ],
+            [
+              "/user/markdrussell/axial-spondyloarthritis/057968b4/",
+              "column=code"
+            ],
+            [
+              "/user/markdrussell/psoriatic-arthritis/6c69f57e/",
+              "column=code"
+            ],
             [
               "<inline>",
               "length=3",
@@ -6375,6 +6595,22 @@
           ],
           "hba1c_percentage": [
             [
+              "/user/markdrussell/undiff-eia/459a5829/",
+              "column=code"
+            ],
+            [
+              "/user/markdrussell/new-rheumatoid-arthritis/535a8249/",
+              "column=code"
+            ],
+            [
+              "/user/markdrussell/axial-spondyloarthritis/057968b4/",
+              "column=code"
+            ],
+            [
+              "/user/markdrussell/psoriatic-arthritis/6c69f57e/",
+              "column=code"
+            ],
+            [
               "<inline>",
               "length=3",
               "source=analysis/codelists_ehrQL.py:51",
@@ -6382,6 +6618,22 @@
             ]
           ],
           "hba1c_percentage_date": [
+            [
+              "/user/markdrussell/undiff-eia/459a5829/",
+              "column=code"
+            ],
+            [
+              "/user/markdrussell/new-rheumatoid-arthritis/535a8249/",
+              "column=code"
+            ],
+            [
+              "/user/markdrussell/axial-spondyloarthritis/057968b4/",
+              "column=code"
+            ],
+            [
+              "/user/markdrussell/psoriatic-arthritis/6c69f57e/",
+              "column=code"
+            ],
             [
               "<inline>",
               "length=3",
@@ -6402,6 +6654,22 @@
             ]
           ],
           "hypertension": [
+            [
+              "/user/markdrussell/undiff-eia/459a5829/",
+              "column=code"
+            ],
+            [
+              "/user/markdrussell/new-rheumatoid-arthritis/535a8249/",
+              "column=code"
+            ],
+            [
+              "/user/markdrussell/axial-spondyloarthritis/057968b4/",
+              "column=code"
+            ],
+            [
+              "/user/markdrussell/psoriatic-arthritis/6c69f57e/",
+              "column=code"
+            ],
             [
               "/opensafely/hypertension/2020-04-28/",
               "column=CTV3ID"
@@ -6519,6 +6787,22 @@
           ],
           "lung_cancer": [
             [
+              "/user/markdrussell/undiff-eia/459a5829/",
+              "column=code"
+            ],
+            [
+              "/user/markdrussell/new-rheumatoid-arthritis/535a8249/",
+              "column=code"
+            ],
+            [
+              "/user/markdrussell/axial-spondyloarthritis/057968b4/",
+              "column=code"
+            ],
+            [
+              "/user/markdrussell/psoriatic-arthritis/6c69f57e/",
+              "column=code"
+            ],
+            [
               "/opensafely/lung-cancer/2020-04-15/",
               "column=CTV3ID"
             ]
@@ -6571,6 +6855,22 @@
             ]
           ],
           "other_cancer": [
+            [
+              "/user/markdrussell/undiff-eia/459a5829/",
+              "column=code"
+            ],
+            [
+              "/user/markdrussell/new-rheumatoid-arthritis/535a8249/",
+              "column=code"
+            ],
+            [
+              "/user/markdrussell/axial-spondyloarthritis/057968b4/",
+              "column=code"
+            ],
+            [
+              "/user/markdrussell/psoriatic-arthritis/6c69f57e/",
+              "column=code"
+            ],
             [
               "/opensafely/cancer-excluding-lung-and-haematological/2020-04-15/",
               "column=CTV3ID"
@@ -6819,6 +7119,22 @@
             ]
           ],
           "stroke": [
+            [
+              "/user/markdrussell/undiff-eia/459a5829/",
+              "column=code"
+            ],
+            [
+              "/user/markdrussell/new-rheumatoid-arthritis/535a8249/",
+              "column=code"
+            ],
+            [
+              "/user/markdrussell/axial-spondyloarthritis/057968b4/",
+              "column=code"
+            ],
+            [
+              "/user/markdrussell/psoriatic-arthritis/6c69f57e/",
+              "column=code"
+            ],
             [
               "/opensafely/stroke-updated/2020-06-02/",
               "column=CTV3ID"
@@ -10159,10 +10475,6 @@
             "file=codelists/opensafely-asplenia.csv"
           ],
           [
-            "/opensafely/assessment-instruments-and-outcome-measures-for-long-covid/79c0fa8a/",
-            "file=codelists/opensafely-assessment-instruments-and-outcome-measures-for-long-covid.csv"
-          ],
-          [
             "/opensafely/asthma-inhaler-salbutamol-medication/2020-04-15/",
             "file=codelists/opensafely-asthma-inhaler-salbutamol-medication.csv"
           ],
@@ -10201,10 +10513,6 @@
           [
             "/opensafely/multiple-sclerosis-v2/063627df/",
             "file=codelists/opensafely-multiple-sclerosis-v2.csv"
-          ],
-          [
-            "/opensafely/referral-and-signposting-for-long-covid/12d06dc0/",
-            "file=codelists/opensafely-referral-and-signposting-for-long-covid.csv"
           ],
           [
             "/opensafely/rheumatoid-arthritis/68dc9931/",
@@ -10405,8 +10713,34 @@
               "column=icd10_code"
             ]
           ],
-          "first_lc": [],
-          "first_lc_code": [],
+          "first_lc": [
+            [
+              "/opensafely/assessment-instruments-and-outcome-measures-for-long-covid/79c0fa8a/",
+              "column=code"
+            ],
+            [
+              "/opensafely/nice-managing-the-long-term-effects-of-covid-19/64f1ae69/",
+              "column=code"
+            ],
+            [
+              "/opensafely/referral-and-signposting-for-long-covid/12d06dc0/",
+              "column=code"
+            ]
+          ],
+          "first_lc_code": [
+            [
+              "/opensafely/assessment-instruments-and-outcome-measures-for-long-covid/79c0fa8a/",
+              "column=code"
+            ],
+            [
+              "/opensafely/nice-managing-the-long-term-effects-of-covid-19/64f1ae69/",
+              "column=code"
+            ],
+            [
+              "/opensafely/referral-and-signposting-for-long-covid/12d06dc0/",
+              "column=code"
+            ]
+          ],
           "haem_cancer": [
             [
               "/opensafely/haematological-cancer/2020-04-15/",
@@ -10415,7 +10749,15 @@
           ],
           "has_covid_dx": [
             [
+              "/opensafely/assessment-instruments-and-outcome-measures-for-long-covid/79c0fa8a/",
+              "column=code"
+            ],
+            [
               "/opensafely/nice-managing-the-long-term-effects-of-covid-19/64f1ae69/",
+              "column=code"
+            ],
+            [
+              "/opensafely/referral-and-signposting-for-long-covid/12d06dc0/",
               "column=code"
             ]
           ],
@@ -10444,8 +10786,34 @@
             ]
           ],
           "msoa": [],
-          "n_distinct_lc_records": [],
-          "n_lc_records": [],
+          "n_distinct_lc_records": [
+            [
+              "/opensafely/assessment-instruments-and-outcome-measures-for-long-covid/79c0fa8a/",
+              "column=code"
+            ],
+            [
+              "/opensafely/nice-managing-the-long-term-effects-of-covid-19/64f1ae69/",
+              "column=code"
+            ],
+            [
+              "/opensafely/referral-and-signposting-for-long-covid/12d06dc0/",
+              "column=code"
+            ]
+          ],
+          "n_lc_records": [
+            [
+              "/opensafely/assessment-instruments-and-outcome-measures-for-long-covid/79c0fa8a/",
+              "column=code"
+            ],
+            [
+              "/opensafely/nice-managing-the-long-term-effects-of-covid-19/64f1ae69/",
+              "column=code"
+            ],
+            [
+              "/opensafely/referral-and-signposting-for-long-covid/12d06dc0/",
+              "column=code"
+            ]
+          ],
           "no_prev_vacc": [],
           "other_cancer": [
             [
@@ -10545,10 +10913,6 @@
             "file=codelists/opensafely-asplenia.csv"
           ],
           [
-            "/opensafely/assessment-instruments-and-outcome-measures-for-long-covid/79c0fa8a/",
-            "file=codelists/opensafely-assessment-instruments-and-outcome-measures-for-long-covid.csv"
-          ],
-          [
             "/opensafely/chronic-inflammatory-demyelinating-polyneuropathy-cidp/38550e49/",
             "file=codelists/opensafely-chronic-inflammatory-demyelinating-polyneuropathy-cidp.csv"
           ],
@@ -10563,10 +10927,6 @@
           [
             "/opensafely/multiple-sclerosis-v2/063627df/",
             "file=codelists/opensafely-multiple-sclerosis-v2.csv"
-          ],
-          [
-            "/opensafely/referral-and-signposting-for-long-covid/12d06dc0/",
-            "file=codelists/opensafely-referral-and-signposting-for-long-covid.csv"
           ],
           [
             "/opensafely/rheumatoid-arthritis/68dc9931/",
@@ -10731,8 +11091,34 @@
               "column=icd10_code"
             ]
           ],
-          "first_lc": [],
-          "first_lc_code": [],
+          "first_lc": [
+            [
+              "/opensafely/assessment-instruments-and-outcome-measures-for-long-covid/79c0fa8a/",
+              "column=code"
+            ],
+            [
+              "/opensafely/nice-managing-the-long-term-effects-of-covid-19/64f1ae69/",
+              "column=code"
+            ],
+            [
+              "/opensafely/referral-and-signposting-for-long-covid/12d06dc0/",
+              "column=code"
+            ]
+          ],
+          "first_lc_code": [
+            [
+              "/opensafely/assessment-instruments-and-outcome-measures-for-long-covid/79c0fa8a/",
+              "column=code"
+            ],
+            [
+              "/opensafely/nice-managing-the-long-term-effects-of-covid-19/64f1ae69/",
+              "column=code"
+            ],
+            [
+              "/opensafely/referral-and-signposting-for-long-covid/12d06dc0/",
+              "column=code"
+            ]
+          ],
           "haem_cancer": [
             [
               "/opensafely/haematological-cancer/2020-04-15/",
@@ -10741,7 +11127,15 @@
           ],
           "has_covid_dx": [
             [
+              "/opensafely/assessment-instruments-and-outcome-measures-for-long-covid/79c0fa8a/",
+              "column=code"
+            ],
+            [
               "/opensafely/nice-managing-the-long-term-effects-of-covid-19/64f1ae69/",
+              "column=code"
+            ],
+            [
+              "/opensafely/referral-and-signposting-for-long-covid/12d06dc0/",
               "column=code"
             ]
           ],
@@ -10769,8 +11163,34 @@
             ]
           ],
           "msoa": [],
-          "n_distinct_lc_records": [],
-          "n_lc_records": [],
+          "n_distinct_lc_records": [
+            [
+              "/opensafely/assessment-instruments-and-outcome-measures-for-long-covid/79c0fa8a/",
+              "column=code"
+            ],
+            [
+              "/opensafely/nice-managing-the-long-term-effects-of-covid-19/64f1ae69/",
+              "column=code"
+            ],
+            [
+              "/opensafely/referral-and-signposting-for-long-covid/12d06dc0/",
+              "column=code"
+            ]
+          ],
+          "n_lc_records": [
+            [
+              "/opensafely/assessment-instruments-and-outcome-measures-for-long-covid/79c0fa8a/",
+              "column=code"
+            ],
+            [
+              "/opensafely/nice-managing-the-long-term-effects-of-covid-19/64f1ae69/",
+              "column=code"
+            ],
+            [
+              "/opensafely/referral-and-signposting-for-long-covid/12d06dc0/",
+              "column=code"
+            ]
+          ],
           "no_prev_vacc": [],
           "other_cancer": [
             [
@@ -11740,17 +12160,32 @@
     },
     "opensafely/paxlovid-test": {
       "79a6ae7067a59084f45ad12f12ee685993e3eb8b": {
-        "_unused_codelists": [
-          [
-            "/user/bangzheng/paxlovid-dmd/0964dee3/",
-            "file=codelists/user-bangzheng-paxlovid-dmd.csv"
-          ]
-        ],
+        "_unused_codelists": [],
         "analysis/dataset_definition.py": {
-          "august": [],
-          "july": [],
-          "june": [],
-          "may": []
+          "august": [
+            [
+              "/user/bangzheng/paxlovid-dmd/0964dee3/",
+              "column=code"
+            ]
+          ],
+          "july": [
+            [
+              "/user/bangzheng/paxlovid-dmd/0964dee3/",
+              "column=code"
+            ]
+          ],
+          "june": [
+            [
+              "/user/bangzheng/paxlovid-dmd/0964dee3/",
+              "column=code"
+            ]
+          ],
+          "may": [
+            [
+              "/user/bangzheng/paxlovid-dmd/0964dee3/",
+              "column=code"
+            ]
+          ]
         }
       }
     },
@@ -15748,8 +16183,22 @@
               "values=U071|U072|U099|U109"
             ]
           ],
-          "had_ccare_covid_bf30d": [],
-          "had_ccare_covid_bf60d": [],
+          "had_ccare_covid_bf30d": [
+            [
+              "<inline>",
+              "length=4",
+              "source=analysis/codelists.py:9",
+              "values=U071|U072|U099|U109"
+            ]
+          ],
+          "had_ccare_covid_bf60d": [
+            [
+              "<inline>",
+              "length=4",
+              "source=analysis/codelists.py:9",
+              "values=U071|U072|U099|U109"
+            ]
+          ],
           "had_chronic_cardiac_disease": [
             [
               "/opensafely/chronic-cardiac-disease-snomed/2020-04-08/",
@@ -16644,12 +17093,54 @@
               "values=U071|U072|U099|U109"
             ]
           ],
-          "hosp_covid_bf30d_classfic": [],
-          "hosp_covid_bf30d_date": [],
-          "hosp_covid_bf30d_pdiag": [],
-          "hosp_covid_bf60d_classfic": [],
-          "hosp_covid_bf60d_date": [],
-          "hosp_covid_bf60d_pdiag": [],
+          "hosp_covid_bf30d_classfic": [
+            [
+              "<inline>",
+              "length=4",
+              "source=analysis/codelists.py:9",
+              "values=U071|U072|U099|U109"
+            ]
+          ],
+          "hosp_covid_bf30d_date": [
+            [
+              "<inline>",
+              "length=4",
+              "source=analysis/codelists.py:9",
+              "values=U071|U072|U099|U109"
+            ]
+          ],
+          "hosp_covid_bf30d_pdiag": [
+            [
+              "<inline>",
+              "length=4",
+              "source=analysis/codelists.py:9",
+              "values=U071|U072|U099|U109"
+            ]
+          ],
+          "hosp_covid_bf60d_classfic": [
+            [
+              "<inline>",
+              "length=4",
+              "source=analysis/codelists.py:9",
+              "values=U071|U072|U099|U109"
+            ]
+          ],
+          "hosp_covid_bf60d_date": [
+            [
+              "<inline>",
+              "length=4",
+              "source=analysis/codelists.py:9",
+              "values=U071|U072|U099|U109"
+            ]
+          ],
+          "hosp_covid_bf60d_pdiag": [
+            [
+              "<inline>",
+              "length=4",
+              "source=analysis/codelists.py:9",
+              "values=U071|U072|U099|U109"
+            ]
+          ],
           "hospitalise_disc_allcause": [],
           "hospitalise_disc_covid": [
             [
@@ -17753,96 +18244,7 @@
     },
     "opensafely/reusable-variables": {
       "1d643fb1fcf9d35e608fdf2e67b90781276cd72e": {
-        "_unused_codelists": [
-          [
-            "/primis-covid19-vacc-uptake/addis_cod/v2.5/",
-            "file=codelists/primis-covid19-vacc-uptake-addis_cod.csv"
-          ],
-          [
-            "/primis-covid19-vacc-uptake/ast/v2.5/",
-            "file=codelists/primis-covid19-vacc-uptake-ast.csv"
-          ],
-          [
-            "/primis-covid19-vacc-uptake/astadm/v2.5/",
-            "file=codelists/primis-covid19-vacc-uptake-astadm.csv"
-          ],
-          [
-            "/primis-covid19-vacc-uptake/astrxm1/v2.5/",
-            "file=codelists/primis-covid19-vacc-uptake-astrxm1.csv"
-          ],
-          [
-            "/primis-covid19-vacc-uptake/astrxm2/v2.5/",
-            "file=codelists/primis-covid19-vacc-uptake-astrxm2.csv"
-          ],
-          [
-            "/primis-covid19-vacc-uptake/bmi/v2.5/",
-            "file=codelists/primis-covid19-vacc-uptake-bmi.csv"
-          ],
-          [
-            "/primis-covid19-vacc-uptake/bmi_stage/v2.5/",
-            "file=codelists/primis-covid19-vacc-uptake-bmi_stage.csv"
-          ],
-          [
-            "/primis-covid19-vacc-uptake/ckd15/v2.5/",
-            "file=codelists/primis-covid19-vacc-uptake-ckd15.csv"
-          ],
-          [
-            "/primis-covid19-vacc-uptake/ckd35/v2.5/",
-            "file=codelists/primis-covid19-vacc-uptake-ckd35.csv"
-          ],
-          [
-            "/primis-covid19-vacc-uptake/ckd_cov/v2.5/",
-            "file=codelists/primis-covid19-vacc-uptake-ckd_cov.csv"
-          ],
-          [
-            "/primis-covid19-vacc-uptake/diab/v2.5/",
-            "file=codelists/primis-covid19-vacc-uptake-diab.csv"
-          ],
-          [
-            "/primis-covid19-vacc-uptake/dmres/v2.5/",
-            "file=codelists/primis-covid19-vacc-uptake-dmres.csv"
-          ],
-          [
-            "/primis-covid19-vacc-uptake/dxt_chemo_cod/v2.5/",
-            "file=codelists/primis-covid19-vacc-uptake-dxt_chemo_cod.csv"
-          ],
-          [
-            "/primis-covid19-vacc-uptake/gdiab_cod/v2.5/",
-            "file=codelists/primis-covid19-vacc-uptake-gdiab_cod.csv"
-          ],
-          [
-            "/primis-covid19-vacc-uptake/immdx_cov/v2.5/",
-            "file=codelists/primis-covid19-vacc-uptake-immdx_cov.csv"
-          ],
-          [
-            "/primis-covid19-vacc-uptake/immrx/v2.5/",
-            "file=codelists/primis-covid19-vacc-uptake-immrx.csv"
-          ],
-          [
-            "/primis-covid19-vacc-uptake/immunosuppression-admin-codes/v2.5/",
-            "file=codelists/primis-covid19-vacc-uptake-immunosuppression-admin-codes.csv"
-          ],
-          [
-            "/primis-covid19-vacc-uptake/preg/v2.5/",
-            "file=codelists/primis-covid19-vacc-uptake-preg.csv"
-          ],
-          [
-            "/primis-covid19-vacc-uptake/pregdel/v2.5/",
-            "file=codelists/primis-covid19-vacc-uptake-pregdel.csv"
-          ],
-          [
-            "/primis-covid19-vacc-uptake/sev_mental/v2.5/",
-            "file=codelists/primis-covid19-vacc-uptake-sev_mental.csv"
-          ],
-          [
-            "/primis-covid19-vacc-uptake/sev_obesity/v2.5/",
-            "file=codelists/primis-covid19-vacc-uptake-sev_obesity.csv"
-          ],
-          [
-            "/primis-covid19-vacc-uptake/smhres/v2.5/",
-            "file=codelists/primis-covid19-vacc-uptake-smhres.csv"
-          ]
-        ],
+        "_unused_codelists": [],
         "analysis/PRIMIS/dataset_definition.py": {
           "asplenia": [
             [
@@ -17856,7 +18258,20 @@
               "column=code"
             ]
           ],
-          "ckd": [],
+          "ckd": [
+            [
+              "/primis-covid19-vacc-uptake/ckd_cov/v2.5/",
+              "column=code"
+            ],
+            [
+              "/primis-covid19-vacc-uptake/ckd35/v2.5/",
+              "column=code"
+            ],
+            [
+              "/primis-covid19-vacc-uptake/ckd15/v2.5/",
+              "column=code"
+            ]
+          ],
           "cld": [
             [
               "/primis-covid19-vacc-uptake/cld/v2.5/",
@@ -17873,19 +18288,212 @@
             [
               "/primis-covid19-vacc-uptake/resp_cov/v2.5/",
               "column=code"
+            ],
+            [
+              "/primis-covid19-vacc-uptake/astadm/v2.5/",
+              "column=code"
+            ],
+            [
+              "/primis-covid19-vacc-uptake/ast/v2.5/",
+              "column=code"
+            ],
+            [
+              "/primis-covid19-vacc-uptake/astrxm1/v2.5/",
+              "column=code"
+            ],
+            [
+              "/primis-covid19-vacc-uptake/astrxm2/v2.5/",
+              "column=code"
             ]
           ],
-          "diabetes": [],
-          "immunosuppressed": [],
+          "diabetes": [
+            [
+              "/primis-covid19-vacc-uptake/addis_cod/v2.5/",
+              "column=code"
+            ],
+            [
+              "/primis-covid19-vacc-uptake/gdiab_cod/v2.5/",
+              "column=code"
+            ],
+            [
+              "/primis-covid19-vacc-uptake/preg/v2.5/",
+              "column=code"
+            ],
+            [
+              "/primis-covid19-vacc-uptake/pregdel/v2.5/",
+              "column=code"
+            ],
+            [
+              "/primis-covid19-vacc-uptake/dmres/v2.5/",
+              "column=code"
+            ],
+            [
+              "/primis-covid19-vacc-uptake/diab/v2.5/",
+              "column=code"
+            ]
+          ],
+          "immunosuppressed": [
+            [
+              "/primis-covid19-vacc-uptake/immdx_cov/v2.5/",
+              "column=code"
+            ],
+            [
+              "/primis-covid19-vacc-uptake/immrx/v2.5/",
+              "column=code"
+            ],
+            [
+              "/primis-covid19-vacc-uptake/immunosuppression-admin-codes/v2.5/",
+              "column=code"
+            ],
+            [
+              "/primis-covid19-vacc-uptake/dxt_chemo_cod/v2.5/",
+              "column=code"
+            ]
+          ],
           "learndis": [
             [
               "/primis-covid19-vacc-uptake/learndis/v2.5/",
               "column=code"
             ]
           ],
-          "primis_atrisk": [],
-          "severe_obesity": [],
-          "smi": []
+          "primis_atrisk": [
+            [
+              "/primis-covid19-vacc-uptake/sev_obesity/v2.5/",
+              "column=code"
+            ],
+            [
+              "/primis-covid19-vacc-uptake/bmi_stage/v2.5/",
+              "column=code"
+            ],
+            [
+              "/primis-covid19-vacc-uptake/bmi/v2.5/",
+              "column=code"
+            ],
+            [
+              "/primis-covid19-vacc-uptake/smhres/v2.5/",
+              "column=code"
+            ],
+            [
+              "/primis-covid19-vacc-uptake/sev_mental/v2.5/",
+              "column=code"
+            ],
+            [
+              "/primis-covid19-vacc-uptake/learndis/v2.5/",
+              "column=code"
+            ],
+            [
+              "/primis-covid19-vacc-uptake/spln_cov/v2.5/",
+              "column=code"
+            ],
+            [
+              "/primis-covid19-vacc-uptake/chd_cov/v2.5/",
+              "column=code"
+            ],
+            [
+              "/primis-covid19-vacc-uptake/cns_cov/v2.5/",
+              "column=code"
+            ],
+            [
+              "/primis-covid19-vacc-uptake/cld/v2.5/",
+              "column=code"
+            ],
+            [
+              "/primis-covid19-vacc-uptake/addis_cod/v2.5/",
+              "column=code"
+            ],
+            [
+              "/primis-covid19-vacc-uptake/gdiab_cod/v2.5/",
+              "column=code"
+            ],
+            [
+              "/primis-covid19-vacc-uptake/preg/v2.5/",
+              "column=code"
+            ],
+            [
+              "/primis-covid19-vacc-uptake/pregdel/v2.5/",
+              "column=code"
+            ],
+            [
+              "/primis-covid19-vacc-uptake/dmres/v2.5/",
+              "column=code"
+            ],
+            [
+              "/primis-covid19-vacc-uptake/diab/v2.5/",
+              "column=code"
+            ],
+            [
+              "/primis-covid19-vacc-uptake/resp_cov/v2.5/",
+              "column=code"
+            ],
+            [
+              "/primis-covid19-vacc-uptake/astadm/v2.5/",
+              "column=code"
+            ],
+            [
+              "/primis-covid19-vacc-uptake/ast/v2.5/",
+              "column=code"
+            ],
+            [
+              "/primis-covid19-vacc-uptake/astrxm1/v2.5/",
+              "column=code"
+            ],
+            [
+              "/primis-covid19-vacc-uptake/astrxm2/v2.5/",
+              "column=code"
+            ],
+            [
+              "/primis-covid19-vacc-uptake/immdx_cov/v2.5/",
+              "column=code"
+            ],
+            [
+              "/primis-covid19-vacc-uptake/immrx/v2.5/",
+              "column=code"
+            ],
+            [
+              "/primis-covid19-vacc-uptake/immunosuppression-admin-codes/v2.5/",
+              "column=code"
+            ],
+            [
+              "/primis-covid19-vacc-uptake/dxt_chemo_cod/v2.5/",
+              "column=code"
+            ],
+            [
+              "/primis-covid19-vacc-uptake/ckd_cov/v2.5/",
+              "column=code"
+            ],
+            [
+              "/primis-covid19-vacc-uptake/ckd35/v2.5/",
+              "column=code"
+            ],
+            [
+              "/primis-covid19-vacc-uptake/ckd15/v2.5/",
+              "column=code"
+            ]
+          ],
+          "severe_obesity": [
+            [
+              "/primis-covid19-vacc-uptake/sev_obesity/v2.5/",
+              "column=code"
+            ],
+            [
+              "/primis-covid19-vacc-uptake/bmi_stage/v2.5/",
+              "column=code"
+            ],
+            [
+              "/primis-covid19-vacc-uptake/bmi/v2.5/",
+              "column=code"
+            ]
+          ],
+          "smi": [
+            [
+              "/primis-covid19-vacc-uptake/smhres/v2.5/",
+              "column=code"
+            ],
+            [
+              "/primis-covid19-vacc-uptake/sev_mental/v2.5/",
+              "column=code"
+            ]
+          ]
         },
         "analysis/ethnicity/dataset_definition.py": {
           "ethnicity16": [
@@ -18567,14 +19175,6 @@
             "file=codelists/bristol-antidepressants-snomedct.csv"
           ],
           [
-            "/bristol/asthma_exacerbations_snomed/137bfd26/",
-            "file=codelists/bristol-asthma_exacerbations_snomed.csv"
-          ],
-          [
-            "/bristol/copd-exacerbations-snomed/162ebd1c/",
-            "file=codelists/bristol-copd-exacerbations-snomed.csv"
-          ],
-          [
             "/bristol/pneumonia/44622d57/",
             "file=codelists/bristol-pneumonia.csv"
           ],
@@ -18826,6 +19426,14 @@
             ]
           ],
           "overall_resp_sensitive": [
+            [
+              "/bristol/asthma_exacerbations_snomed/137bfd26/",
+              "column=code"
+            ],
+            [
+              "/bristol/copd-exacerbations-snomed/162ebd1c/",
+              "column=code"
+            ],
             [
               "/user/emprestige/influenza-identification-prescriptions-maximal-sensitivity-dmd/4bf6af63/",
               "column=code"

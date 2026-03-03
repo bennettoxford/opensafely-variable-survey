@@ -1216,7 +1216,72 @@ class CodelistTracer:
             )
             codelist_calls.extend(calls)
 
+        if codelist_calls:
+            return codelist_calls
+
+        function_defs = [
+            node
+            for node in ast.walk(tree)
+            if isinstance(node, ast.FunctionDef) and node.name == var_name
+        ]
+        for function_def in function_defs:
+            for return_node in self._iter_non_nested_returns(function_def):
+                if return_node.value is None:
+                    continue
+                calls = self._trace_expression(
+                    return_node.value,
+                    tree,
+                    import_collector,
+                    file_path,
+                    ast_index,
+                    depth + 1,
+                )
+                codelist_calls.extend(calls)
+
         return codelist_calls
+
+    def _iter_non_nested_returns(self, func_def: ast.FunctionDef) -> list[ast.Return]:
+        returns: list[ast.Return] = []
+
+        def visit_statements(statements: list[ast.stmt]) -> None:
+            for stmt in statements:
+                if isinstance(stmt, ast.Return):
+                    returns.append(stmt)
+                    continue
+
+                if isinstance(
+                    stmt, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)
+                ):
+                    continue
+
+                if isinstance(stmt, ast.If):
+                    visit_statements(stmt.body)
+                    visit_statements(stmt.orelse)
+                    continue
+
+                if isinstance(stmt, (ast.For, ast.AsyncFor, ast.While)):
+                    visit_statements(stmt.body)
+                    visit_statements(stmt.orelse)
+                    continue
+
+                if isinstance(stmt, (ast.With, ast.AsyncWith)):
+                    visit_statements(stmt.body)
+                    continue
+
+                if isinstance(stmt, ast.Try):
+                    visit_statements(stmt.body)
+                    visit_statements(stmt.orelse)
+                    visit_statements(stmt.finalbody)
+                    for handler in stmt.handlers:
+                        visit_statements(handler.body)
+                    continue
+
+                if hasattr(ast, "Match") and isinstance(stmt, ast.Match):
+                    for case_node in stmt.cases:
+                        visit_statements(case_node.body)
+
+        visit_statements(func_def.body)
+        return returns
 
     def _trace_imported_name(
         self,
@@ -3259,17 +3324,245 @@ class VariableExtractor:
                                         )
                                     )
                                     # Merge with existing
-                                    for var, calls in vars_from_func.items():
-                                        if var not in variable_codelists:
-                                            variable_codelists[var] = calls
+                                    self._merge_variable_codelists(
+                                        variable_codelists, vars_from_func
+                                    )
+
+        # Pass 4: Helper functions that directly accept a dataset parameter
+        for node in ast.walk(tree):
+            if not isinstance(node, ast.FunctionDef):
+                continue
+
+            has_dataset_param = any(arg.arg == "dataset" for arg in node.args.args)
+            if not has_dataset_param:
+                has_dataset_param = any(
+                    arg.arg == "dataset" for arg in node.args.kwonlyargs
+                )
+            if not has_dataset_param:
+                continue
+
+            vars_from_func = self._extract_codelists_from_function(
+                node, tree, import_collector
+            )
+            self._merge_variable_codelists(variable_codelists, vars_from_func)
+
+        # Pass 5: Module-level calls to helper functions that accept dataset
+        for node in ast.walk(tree):
+            if not isinstance(node, ast.Call):
+                continue
+
+            # Local helper call: helper(dataset, ...)
+            if isinstance(node.func, ast.Name):
+                func_name = node.func.id
+                if func_name in import_collector.function_defs:
+                    func_def = import_collector.function_defs[func_name]
+                    if self._call_uses_dataset_param(func_def, node):
+                        call_values = self._function_call_string_values(func_def, node)
+                        vars_from_func = self._extract_codelists_from_function(
+                            func_def,
+                            tree,
+                            import_collector,
+                            string_overrides=call_values,
+                        )
+                        self._merge_variable_codelists(
+                            variable_codelists, vars_from_func
+                        )
+
+            # Imported module helper call: module.helper(dataset, ...)
+            elif isinstance(node.func, ast.Attribute) and isinstance(
+                node.func.value, ast.Name
+            ):
+                obj_name = node.func.value.id
+                func_name = node.func.attr
+                if obj_name in import_collector.imported_modules:
+                    module_name, original_name = import_collector.imported_modules[
+                        obj_name
+                    ]
+                    # Only treat plain module imports (import variables)
+                    if original_name is None:
+                        vars_from_func = (
+                            self._extract_codelists_from_imported_function_call(
+                                module_name,
+                                func_name,
+                                node,
+                            )
+                        )
+                        self._merge_variable_codelists(
+                            variable_codelists, vars_from_func
+                        )
 
         return variable_codelists
+
+    def _resolve_string_literal_expr(
+        self,
+        expr: ast.AST,
+        known_names: dict[str, str],
+    ) -> str | None:
+        if isinstance(expr, ast.Constant) and isinstance(expr.value, str):
+            return expr.value
+
+        if isinstance(expr, ast.Name):
+            return known_names.get(expr.id)
+
+        if isinstance(expr, ast.JoinedStr):
+            parts: list[str] = []
+            for value in expr.values:
+                if isinstance(value, ast.Constant):
+                    parts.append(str(value.value))
+                elif isinstance(value, ast.FormattedValue):
+                    resolved = self._resolve_string_literal_expr(
+                        value.value, known_names
+                    )
+                    if resolved is None:
+                        return None
+                    parts.append(resolved)
+                else:
+                    return None
+            return "".join(parts)
+
+        if isinstance(expr, ast.BinOp) and isinstance(expr.op, ast.Add):
+            left = self._resolve_string_literal_expr(expr.left, known_names)
+            right = self._resolve_string_literal_expr(expr.right, known_names)
+            if left is None or right is None:
+                return None
+            return left + right
+
+        return None
+
+    def _function_default_string_values(
+        self,
+        func_def: ast.FunctionDef,
+    ) -> dict[str, str]:
+        default_values: dict[str, str] = {}
+
+        positional_args = func_def.args.args
+        positional_defaults = func_def.args.defaults
+        if positional_defaults:
+            start = len(positional_args) - len(positional_defaults)
+            for arg, default in zip(positional_args[start:], positional_defaults):
+                resolved = self._resolve_string_literal_expr(default, default_values)
+                if resolved is not None:
+                    default_values[arg.arg] = resolved
+
+        for kwarg, default in zip(func_def.args.kwonlyargs, func_def.args.kw_defaults):
+            if default is None:
+                continue
+            resolved = self._resolve_string_literal_expr(default, default_values)
+            if resolved is not None:
+                default_values[kwarg.arg] = resolved
+
+        return default_values
+
+    def _function_call_string_values(
+        self,
+        func_def: ast.FunctionDef,
+        call_node: ast.Call,
+    ) -> dict[str, str]:
+        values: dict[str, str] = {}
+
+        positional_params = [arg.arg for arg in func_def.args.args]
+        for index, arg_node in enumerate(call_node.args):
+            if index >= len(positional_params):
+                break
+            resolved = self._resolve_string_literal_expr(arg_node, values)
+            if resolved is not None:
+                values[positional_params[index]] = resolved
+
+        for keyword in call_node.keywords:
+            if not keyword.arg:
+                continue
+            resolved = self._resolve_string_literal_expr(keyword.value, values)
+            if resolved is not None:
+                values[keyword.arg] = resolved
+
+        return values
+
+    @staticmethod
+    def _call_uses_dataset_param(
+        func_def: ast.FunctionDef, call_node: ast.Call
+    ) -> bool:
+        positional_params = [arg.arg for arg in func_def.args.args]
+        dataset_index = None
+        for index, param in enumerate(positional_params):
+            if param == "dataset":
+                dataset_index = index
+                break
+
+        if dataset_index is not None and dataset_index < len(call_node.args):
+            dataset_arg = call_node.args[dataset_index]
+            if isinstance(dataset_arg, ast.Name):
+                return True
+
+        for keyword in call_node.keywords:
+            if keyword.arg == "dataset" and isinstance(keyword.value, ast.Name):
+                return True
+
+        return False
+
+    def _merge_variable_codelists(
+        self,
+        destination: dict[str, list[tuple[str | None, ...]]],
+        source: dict[str, list[tuple[str | None, ...]]],
+    ) -> None:
+        for var_name, calls in source.items():
+            if var_name in destination:
+                existing = set(destination[var_name])
+                for call in calls:
+                    if call not in existing:
+                        destination[var_name].append(call)
+                        existing.add(call)
+            else:
+                destination[var_name] = calls
+
+    def _extract_codelists_from_imported_function_call(
+        self,
+        module_name: str,
+        func_name: str,
+        call_node: ast.Call,
+    ) -> dict[str, list[tuple[str | None, ...]]]:
+        for module_file in self.module_resolver.find_module_file(module_name):
+            if not module_file.exists():
+                continue
+
+            try:
+                with open(module_file, encoding="utf-8") as f:
+                    module_source = f.read()
+                module_tree = ast.parse(module_source, filename=str(module_file))
+
+                module_import_collector = ImportCollector()
+                module_import_collector.collect(module_tree)
+                module_import_collector.resolve_star_imports(self.module_resolver)
+
+                for node in ast.walk(module_tree):
+                    if not (
+                        isinstance(node, ast.FunctionDef) and node.name == func_name
+                    ):
+                        continue
+                    if not self._call_uses_dataset_param(node, call_node):
+                        return {}
+
+                    call_string_values = self._function_call_string_values(
+                        node, call_node
+                    )
+                    return self._extract_codelists_from_function(
+                        node,
+                        module_tree,
+                        module_import_collector,
+                        source_file=module_file,
+                        string_overrides=call_string_values,
+                    )
+            except Exception:
+                continue
+
+        return {}
 
     def _extract_codelists_from_function(
         self,
         func_def: ast.FunctionDef,
         tree: ast.AST,
         import_collector: ImportCollector,
+        source_file: pathlib.Path | None = None,
+        string_overrides: dict[str, str] | None = None,
     ) -> dict[str, list[tuple[str | None, ...]]]:
         """Extract codelist calls from variables defined within a function.
 
@@ -3282,6 +3575,10 @@ class VariableExtractor:
             Dict mapping variable names to codelist parameter tuples
         """
         variable_codelists: dict[str, list[tuple[str | None, ...]]] = {}
+        default_string_values = self._function_default_string_values(func_def)
+        if string_overrides:
+            default_string_values.update(string_overrides)
+        expression_file = source_file if source_file is not None else self.file_path
 
         # Look for dataset.var = expr patterns inside the function
         for node in ast.walk(func_def):
@@ -3293,7 +3590,7 @@ class VariableExtractor:
                             var_name = target.attr
                             codelist_calls = (
                                 self.codelist_tracer.trace_expression_for_codelists(
-                                    node.value, tree, import_collector, self.file_path
+                                    node.value, tree, import_collector, expression_file
                                 )
                             )
                             codelists = [
@@ -3315,16 +3612,16 @@ class VariableExtractor:
                     if node.func.attr == "add_column":
                         if len(node.args) >= 2:
                             first_arg = node.args[0]
-                            if isinstance(first_arg, ast.Constant) and isinstance(
-                                first_arg.value, str
-                            ):
-                                var_name = first_arg.value
+                            var_name = self._resolve_string_literal_expr(
+                                first_arg, default_string_values
+                            )
+                            if var_name is not None:
                                 codelist_calls = (
                                     self.codelist_tracer.trace_expression_for_codelists(
                                         node.args[1],
                                         tree,
                                         import_collector,
-                                        self.file_path,
+                                        expression_file,
                                     )
                                 )
                                 codelists = [

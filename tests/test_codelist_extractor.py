@@ -609,6 +609,250 @@ covid_critcare_codes = [
         assert any(part.startswith("values=U071|U072|U109") for part in inline_call[1:])
 
 
+def test_helper_function_with_fstring_add_column_default_suffix():
+    """Extract codelists from helper functions that add columns with f-string names.
+
+    Regression case from COMPARES-vaccines `variables.py` where variables are
+    defined in a helper function via:
+        dataset.add_column(f"name{var_name_suffix}", ... codelists.xxx ...)
+    """
+
+    dataset_code = """
+from ehrql import create_dataset
+import codelists
+
+def has_prior_event(codelist, index_date):
+    return records.where(records.code.is_in(codelist)).exists_for_patient()
+
+def primis_variables(dataset, index_date, var_name_suffix=""):
+    dataset.add_column(
+        f"immunosuppressed{var_name_suffix}",
+        has_prior_event(codelists.immadm, index_date),
+    )
+    dataset.add_column(
+        f"ckd{var_name_suffix}",
+        has_prior_event(codelists.ckd_cov, index_date),
+    )
+"""
+
+    codelists_code = """
+from ehrql import codelist_from_csv
+
+immadm = codelist_from_csv("codelists/immadm.csv", column="code")
+ckd_cov = codelist_from_csv("codelists/ckd_cov.csv", column="code")
+"""
+
+    with tempfile.TemporaryDirectory() as tmpdir:
+        repo_root = pathlib.Path(tmpdir)
+        file_path = repo_root / "variables.py"
+        file_path.write_text(dataset_code)
+
+        codelists_path = repo_root / "codelists.py"
+        codelists_path.write_text(codelists_code)
+
+        codelists_result = extract_variable_codelists(file_path, repo_root)
+
+        assert "immunosuppressed" in codelists_result
+        assert "ckd" in codelists_result
+
+        imm_calls = codelists_result["immunosuppressed"]
+        ckd_calls = codelists_result["ckd"]
+
+        assert any(call[0] == "codelists/immadm.csv" for call in imm_calls), imm_calls
+        assert any(call[0] == "codelists/ckd_cov.csv" for call in ckd_calls), ckd_calls
+
+
+def test_helper_add_column_value_calls_local_codelist_function():
+    """Codelists should be inherited from local function calls in add_column values."""
+
+    dataset_code = """
+from ehrql import create_dataset
+import codelists
+
+def has_prior_event(codelist, index_date):
+    return records.where(records.code.is_in(codelist)).exists_for_patient()
+
+def is_immunosuppressed(index_date):
+    return (
+        has_prior_event(codelists.immadm, index_date)
+        | has_prior_event(codelists.dxt_chemo, index_date)
+    )
+
+def primis_variables(dataset, index_date, var_name_suffix=""):
+    dataset.add_column(
+        f"immunosuppressed{var_name_suffix}",
+        is_immunosuppressed(index_date),
+    )
+"""
+
+    codelists_code = """
+from ehrql import codelist_from_csv
+
+immadm = codelist_from_csv("codelists/immadm.csv", column="code")
+dxt_chemo = codelist_from_csv("codelists/dxt_chemo.csv", column="code")
+"""
+
+    with tempfile.TemporaryDirectory() as tmpdir:
+        repo_root = pathlib.Path(tmpdir)
+        file_path = repo_root / "variables.py"
+        file_path.write_text(dataset_code)
+
+        codelists_path = repo_root / "codelists.py"
+        codelists_path.write_text(codelists_code)
+
+        codelists_result = extract_variable_codelists(file_path, repo_root)
+
+        assert "immunosuppressed" in codelists_result
+        calls = codelists_result["immunosuppressed"]
+
+        codelist_files = [call[0] for call in calls]
+        assert "codelists/immadm.csv" in codelist_files, calls
+        assert "codelists/dxt_chemo.csv" in codelist_files, calls
+
+
+def test_dataset_calls_imported_helper_that_adds_columns():
+    """Extract codelists when dataset_definition calls module helper adding columns."""
+
+    dataset_code = """
+from ehrql import create_dataset
+import variables
+
+dataset = create_dataset()
+variables.primis_variables(dataset, "2024-01-01", var_name_suffix="")
+"""
+
+    variables_code = """
+import codelists
+
+def has_prior_event(codelist, index_date):
+    return records.where(records.code.is_in(codelist)).exists_for_patient()
+
+def is_immunosuppressed(index_date):
+    return has_prior_event(codelists.immadm, index_date)
+
+def has_ckd(index_date):
+    return has_prior_event(codelists.ckd_cov, index_date)
+
+def primis_variables(dataset, index_date, var_name_suffix=""):
+    dataset.add_column(f"immunosuppressed{var_name_suffix}", is_immunosuppressed(index_date))
+    dataset.add_column(f"ckd{var_name_suffix}", has_ckd(index_date))
+"""
+
+    codelists_code = """
+from ehrql import codelist_from_csv
+
+immadm = codelist_from_csv("codelists/immadm.csv", column="code")
+ckd_cov = codelist_from_csv("codelists/ckd_cov.csv", column="code")
+"""
+
+    with tempfile.TemporaryDirectory() as tmpdir:
+        repo_root = pathlib.Path(tmpdir)
+
+        file_path = repo_root / "dataset_definition.py"
+        file_path.write_text(dataset_code)
+
+        variables_path = repo_root / "variables.py"
+        variables_path.write_text(variables_code)
+
+        codelists_path = repo_root / "codelists.py"
+        codelists_path.write_text(codelists_code)
+
+        codelists_result = extract_variable_codelists(file_path, repo_root)
+
+        assert "immunosuppressed" in codelists_result
+        assert "ckd" in codelists_result
+
+        imm_calls = codelists_result["immunosuppressed"]
+        ckd_calls = codelists_result["ckd"]
+
+        assert any(call[0] == "codelists/immadm.csv" for call in imm_calls), imm_calls
+        assert any(call[0] == "codelists/ckd_cov.csv" for call in ckd_calls), ckd_calls
+
+
+def test_imported_function_tracing_ignores_nested_function_returns():
+    """Nested helper returns in imported functions must not leak unrelated codelists."""
+
+    dataset_code = """
+from ehrql import case, when
+from ehrql.tables.tpp import clinical_events
+import codelists
+from dataset_definition import make_dataset_lowerGI
+
+dataset = make_dataset_lowerGI(index_date="2018-03-23", end_date="2023-10-22")
+
+ethnicity6 = clinical_events.where(
+    clinical_events.snomedct_code.is_in(codelists.ethnicity_codes_6)
+).where(
+    clinical_events.date.is_on_or_before(dataset.entry_date)
+).sort_by(
+    clinical_events.date
+).last_for_patient().snomedct_code.to_category(codelists.ethnicity_codes_6)
+
+dataset.ethnicity6 = case(
+    when(ethnicity6 == "1").then("White"),
+    otherwise="Unknown"
+)
+"""
+
+    imported_code = """
+from ehrql import Dataset
+from ehrql.tables.tpp import clinical_events
+import codelists
+
+def make_dataset_lowerGI(index_date, end_date):
+    dataset = Dataset()
+    dataset.entry_date = clinical_events.sort_by(clinical_events.date).first_for_patient().date
+
+    def fit_event():
+        return clinical_events.where(
+            clinical_events.snomedct_code.is_in(codelists.fit_codes)
+        ).first_for_patient().date
+
+    def colorectal_event():
+        return clinical_events.where(
+            clinical_events.snomedct_code.is_in(codelists.colorectal_codes)
+        ).first_for_patient().date
+
+    dataset.exit_date = fit_event()
+    dataset.colorectal_date = colorectal_event()
+    return dataset
+"""
+
+    codelists_code = """
+from ehrql import codelist_from_csv
+
+ethnicity_codes_6 = codelist_from_csv(
+    "codelists/ethnicity.csv",
+    column="code",
+    category_column="Grouping_6",
+)
+fit_codes = codelist_from_csv("codelists/fit.csv", column="code")
+colorectal_codes = codelist_from_csv("codelists/colorectal.csv", column="code")
+"""
+
+    with tempfile.TemporaryDirectory() as tmpdir:
+        repo_root = pathlib.Path(tmpdir)
+
+        file_path = repo_root / "define_static_dataset.py"
+        file_path.write_text(dataset_code)
+
+        imported_path = repo_root / "dataset_definition.py"
+        imported_path.write_text(imported_code)
+
+        codelists_path = repo_root / "codelists.py"
+        codelists_path.write_text(codelists_code)
+
+        codelists_result = extract_variable_codelists(file_path, repo_root)
+
+        assert "ethnicity6" in codelists_result
+        calls = codelists_result["ethnicity6"]
+        call_paths = [call[0] for call in calls]
+
+        assert "codelists/ethnicity.csv" in call_paths, calls
+        assert "codelists/fit.csv" not in call_paths, calls
+        assert "codelists/colorectal.csv" not in call_paths, calls
+
+
 def test_parse_codelists_json_url_mapping():
     """Test that codelists.json is parsed correctly to get URL mapping."""
     import json
