@@ -31,7 +31,7 @@ def codelist_version_not_compatible_with_latest_release(
         or (codelist_slug + "/" + v["hash"] == codelist_version_slug)
     )
     coding_system = codelist["coding_system"]
-    latest_release = latest_releases[coding_system]["database_alias"]
+    latest_release = latest_releases[coding_system]["release_name"]
     latest_release_in_compatible_versions = (
         latest_release in codelist_version["release_compatibility"]
     )

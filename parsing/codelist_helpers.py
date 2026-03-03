@@ -151,48 +151,7 @@ def _get_rsi_data():
             latest_release = sorted(
                 releases, key=lambda x: x["valid_from"], reverse=True
             )[0]
-            if coding_system == "snomedct":
-                n = latest_release["database_alias"].split("_")[1]
-                latest_release_name = f"{n[0:2]}.{n[2:3]}.{n[3:]}"
-            elif coding_system == "bnf":
-                latest_release_name = latest_release["database_alias"].split("-")[0]
-            elif (
-                coding_system == "ctv3"
-                and latest_release["database_alias"]
-                == "ctv3_2018-04-01-with-tpp-extensions-2022-11-16_20221116"
-            ):
-                latest_release_name = "2018-04-01 with TPP extensions 2022-11-16"
-            elif coding_system == "dmd":
-                year, version = (
-                    latest_release["database_alias"].split("_")[1].split("-")
-                )
-                latest_release_name = (
-                    f"{year} {version[:-2]}.{version[-2:-1]}.{version[-1]}"
-                )
-            elif (
-                coding_system == "icd10"
-                and latest_release["database_alias"]
-                == "icd10_2019-covid-expanded_20190101"
-            ):
-                latest_release_name = "2019-covid-expanded"
-            elif coding_system == "null":
-                latest_release_name = "unknown"
-            elif (
-                coding_system == "opcs4"
-                and latest_release["database_alias"] == "opcs4_unknown_19000101"
-            ):
-                latest_release_name = "opcs4"
-            elif (
-                coding_system == "readv2"
-                and latest_release["database_alias"] == "readv2_unknown_19000101"
-            ):
-                latest_release_name = "readv2"
-            else:
-                latest_release_name = latest_release["database_alias"]
-
-            _rsi_data["latest_releases"][coding_system] = (
-                f"{latest_release_name} (valid from {latest_release['valid_from']})"
-            )
+            _rsi_data["latest_releases"][coding_system] = latest_release["release_name"]
 
         for entry in json_data.get("codelists", []):
             coding_system = entry.get("coding_system", "")
