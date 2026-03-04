@@ -16,6 +16,18 @@ GH_API_HEADERS = [
     "X-GitHub-Api-Version: 2022-11-28",
 ]
 
+RETRYABLE_STATUS_CODES = {429, 500, 502, 503, 504}
+RETRYABLE_ERROR_SNIPPETS = (
+    "bad gateway",
+    "gateway timeout",
+    "service unavailable",
+    "connection reset",
+    "timed out",
+    "timeout",
+    "temporary failure",
+    "tls handshake timeout",
+)
+
 # Global cache for project.yaml parsing
 # Maps content hash -> list of dataset files
 _PROJECT_YAML_CACHE: dict[str, list[str]] = {}
@@ -27,6 +39,76 @@ class GitHubError(RuntimeError):
     """Generic error for GitHub CLI interactions."""
 
     pass
+
+
+def _is_retryable_failure(stderr: str) -> bool:
+    stderr_lower = stderr.lower()
+    if any(snippet in stderr_lower for snippet in RETRYABLE_ERROR_SNIPPETS):
+        return True
+
+    match = re.search(r"\b(\d{3})\b", stderr)
+    if match and int(match.group(1)) in RETRYABLE_STATUS_CODES:
+        return True
+
+    return False
+
+
+def _run_subprocess_with_retry(
+    cmd: list[str],
+    timeout: int = 30,
+    retries: int = 3,
+    initial_backoff_seconds: float = 1.0,
+) -> subprocess.CompletedProcess:
+    backoff_seconds = initial_backoff_seconds
+    cmd_str = " ".join(cmd)
+
+    for attempt in range(retries + 1):
+        try:
+            proc = subprocess.run(
+                cmd,
+                check=False,
+                capture_output=True,
+                text=True,
+                timeout=timeout,
+            )
+        except subprocess.TimeoutExpired:
+            if attempt < retries:
+                print(
+                    f"[github] timeout running command (attempt {attempt + 1}/{retries + 1}), retrying in {backoff_seconds:.1f}s: {cmd_str}",
+                    file=sys.stderr,
+                )
+                time.sleep(backoff_seconds)
+                backoff_seconds *= 2
+                continue
+            print(
+                f"[github] command timed out after {retries + 1} attempts: {cmd_str}",
+                file=sys.stderr,
+            )
+            raise
+
+        if proc.returncode == 0:
+            return proc
+
+        if attempt < retries and _is_retryable_failure(proc.stderr):
+            stderr_excerpt = proc.stderr.strip().replace("\n", " ")[:240]
+            print(
+                f"[github] transient failure (attempt {attempt + 1}/{retries + 1}), retrying in {backoff_seconds:.1f}s: {cmd_str}\n[github] stderr: {stderr_excerpt}",
+                file=sys.stderr,
+            )
+            time.sleep(backoff_seconds)
+            backoff_seconds *= 2
+            continue
+
+        stderr_excerpt = proc.stderr.strip().replace("\n", " ")[:240]
+        print(
+            f"[github] command failed (attempt {attempt + 1}/{retries + 1}): {cmd_str}\n[github] exit={proc.returncode} stderr={stderr_excerpt}",
+            file=sys.stderr,
+        )
+
+        return proc
+
+    # Unreachable due to return/raise above, but keeps type-checkers satisfied.
+    raise RuntimeError("Unreachable retry state")
 
 
 def _load_project_yaml_cache() -> None:
@@ -93,16 +175,13 @@ def run_gh(args: list[str], expect_json: bool = True) -> dict | list | str:
     """
     cmd = ["gh"] + args
     try:
-        proc = subprocess.run(
-            cmd,
-            check=False,
-            capture_output=True,
-            text=True,
-        )
+        proc = _run_subprocess_with_retry(cmd, timeout=60)
     except FileNotFoundError as e:
         raise GitHubError(
             "gh CLI not found. Install from https://cli.github.com/"
         ) from e
+    except subprocess.TimeoutExpired as e:
+        raise GitHubError(f"gh command timed out after retries: {' '.join(cmd)}") from e
     if proc.returncode != 0:
         raise GitHubError(f"gh command failed: {' '.join(cmd)}\n{proc.stderr.strip()}")
     if not expect_json:
@@ -280,14 +359,7 @@ def get_all_repos_with_shas_graphql(
                 f"Fetching {len(repo_filter)} specific repos via GraphQL...",
                 file=sys.stderr,
             )
-            result = subprocess.run(
-                ["gh", "api", "graphql", "-f", f"query={query}"],
-                capture_output=True,
-                text=True,
-                timeout=30,
-                check=False,
-            )
-            data = json.loads(result.stdout)
+            data = run_gh(["api", "graphql", "-f", f"query={query}"])
 
             if "errors" in data:
                 raise GitHubError(f"GraphQL error: {data['errors']}")
@@ -357,10 +429,7 @@ query($org: String!, $first: Int!, $after: String) {
 
             try:
                 print("Fetching 100 repos via GraphQL...", file=sys.stderr)
-                result = subprocess.run(
-                    cmd, capture_output=True, text=True, timeout=30, check=False
-                )
-                data = json.loads(result.stdout)
+                data = run_gh(cmd[1:])
                 print(
                     f"Received data for {len(data.get('data', {}).get('organization', {}).get('repositories', {}).get('nodes', []))} repos",
                     file=sys.stderr,
@@ -490,7 +559,7 @@ def project_yaml_search(
                 print(f"  Cloning {repo_full_name}@{head_sha[:8]}...", file=sys.stderr)
 
                 # Full shallow clone (with working tree)
-                result = subprocess.run(
+                result = _run_subprocess_with_retry(
                     [
                         "git",
                         "clone",
@@ -499,14 +568,12 @@ def project_yaml_search(
                         f"https://github.com/{repo_full_name}.git",
                         str(repo_cache_dir),
                     ],
-                    capture_output=True,
-                    check=False,
                     timeout=30,
                 )
 
                 if result.returncode != 0:
                     print(
-                        f"  Failed to clone {repo_full_name}: {result.stderr.decode()[:100]}",
+                        f"  Failed to clone {repo_full_name}: {result.stderr[:100]}",
                         file=sys.stderr,
                     )
                     continue
@@ -752,7 +819,7 @@ def _clone_with_worktrees(
                 file=sys.stderr,
             )
 
-        proc = subprocess.run(cmd, capture_output=True, text=True)
+        proc = _run_subprocess_with_retry(cmd, timeout=60)
         if proc.returncode != 0:
             if not silent:
                 print(
@@ -786,10 +853,9 @@ def _clone_with_worktrees(
                 )
 
         if needs_fetch:
-            fetch_proc = subprocess.run(
+            fetch_proc = _run_subprocess_with_retry(
                 ["git", "--git-dir", str(bare_repo_dir), "fetch", "origin"],
-                capture_output=True,
-                text=True,
+                timeout=60,
             )
             if fetch_proc.returncode != 0 and not silent:
                 print(
@@ -824,10 +890,9 @@ def _clone_with_worktrees(
                         file=sys.stderr,
                     )
 
-                fetch_commit_proc = subprocess.run(
+                fetch_commit_proc = _run_subprocess_with_retry(
                     ["git", "--git-dir", str(bare_repo_dir), "fetch", "origin", sha],
-                    capture_output=True,
-                    text=True,
+                    timeout=60,
                 )
 
                 if fetch_commit_proc.returncode != 0:

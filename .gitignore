@@ -6,6 +6,8 @@
 .env
 **/__marimo__
 
+.codelist_cache/
+data/code_counts_cache/
 .ehrql_repo_cache/
 ehrql_qm_dump.json
 ehrql_qm_full_dump.json

@@ -689,6 +689,9 @@
   "opensafely/COVID-19-vaccine-breakthrough@fa87762f001dc86725a12417745160421bd35b4f": [],
   "opensafely/COVID-19-vaccine-breakthrough@fbaa242c80d8f9e7bff1d9665b2e75fa01ac5b63": [],
   "opensafely/COVID-19-vaccine-breakthrough@fbe8064b0ebcafae79a98f7204ac4c88b7a54140": [],
+  "opensafely/COVID-19_vacci_and_MACE_after_hip_fracture@c22d2441016205fbb577e03c14b639a77fad2f61": [
+    "analysis/dataset_definition.py"
+  ],
   "opensafely/CareHomePrescribing@014cb4349e9fff696b62ed01f759d7e6d7ec17e6": [],
   "opensafely/CareHomePrescribing@158173e7ecbc9dcfabed980a8b6e44b4d64a93a3": [],
   "opensafely/CareHomePrescribing@3c5f8809200984536fe45345b34345883e0ad4d6": [],
@@ -12198,9 +12201,9 @@
     "analysis/dataset_definition_household.py"
   ],
   "opensafely/disparities-comparison@0329924ae0774c9f23dd60068a72f2685d87fcc0": [
+    "analysis/dataset_definition.py",
     "analysis/dataset_definition_flow_chart.py",
     "analysis/dataset_definition_flow_chart_mothers.py",
-    "analysis/dataset_definition.py",
     "analysis/dataset_definition_household.py",
     "analysis/dataset_definition_mothers.py"
   ],
@@ -14229,8 +14232,8 @@
   "opensafely/dq-investigation-sus-acps-numbers@c4cff039460e246c999be7957604b82fcee5a0ea": [],
   "opensafely/dq-investigation-sus-acps-numbers@e45c44eb15b58491faf58affc2691247688aeaef": [],
   "opensafely/dummy-data-workshop@1bb88e02c51757c3904b053867394a3fb559e1d2": [
-    "analysis/dataset_definition_2.py",
-    "analysis/dataset_definition_1.py"
+    "analysis/dataset_definition_1.py",
+    "analysis/dataset_definition_2.py"
   ],
   "opensafely/early-inflammatory-arthritis@005e3d0fbbe30b3d4ac93d4fb5aee35f1047790c": [],
   "opensafely/early-inflammatory-arthritis@069e61712fcc9a0c2ec2804ff36a9b773073291c": [
@@ -16801,9 +16804,9 @@
   "opensafely/mainroute_cancer@5d470bb9880a886cc3f0781a31cc79c616920468": [],
   "opensafely/mainroute_cancer@6e12e6bd33b47056cce021296628631309c22b23": [],
   "opensafely/mainroute_cancer@750f9804609c613eff525a31b356582960078508": [
+    "analysis/define_static_dataset.py",
     "analysis/define_static_dataset_fit.py",
-    "analysis/referral_test.py",
-    "analysis/define_static_dataset.py"
+    "analysis/referral_test.py"
   ],
   "opensafely/mainroute_cancer@76d22dd59f591a98aa165aed6d0262a75022e19e": [],
   "opensafely/mainroute_cancer@789c4f5e3f44642c81ec18700e3962770150e2f8": [],
@@ -17254,9 +17257,9 @@
     "analysis/dataset_definition_t2dm.py"
   ],
   "opensafely/metformin_covid@d452c8dab8538d236ee428237d81bd5c5f538a1b": [
-    "analysis/dataset_definition_t2dm.py",
     "analysis/dataset_definition_dm_algo.py",
-    "analysis/dataset_definition_ppa.py"
+    "analysis/dataset_definition_ppa.py",
+    "analysis/dataset_definition_t2dm.py"
   ],
   "opensafely/metformin_covid@d591f69e79c8ba1ccbc790ee531fec850dc95268": [
     "analysis/dataset_definition_dm_algo.py",
@@ -17327,11 +17330,11 @@
     "analysis/dataset_definition_full_study_cohort.py"
   ],
   "opensafely/migration-short-data-report@a4fa03d662418a62820c352e20116ecfd451613b": [
-    "analysis/create_cohorts/dataset_definition_census_cohorts.py",
     "analysis/code_usage/generate_migration_event_level_dataset.py",
+    "analysis/create_cohorts/dataset_definition_census_cohorts.py",
     "analysis/create_cohorts/dataset_definition_full_study_cohort.py",
-    "analysis/create_cohorts/population_denominator_cohort.py",
-    "analysis/create_cohorts/dataset_definition_km_time_to_first_migration_code.py"
+    "analysis/create_cohorts/dataset_definition_km_time_to_first_migration_code.py",
+    "analysis/create_cohorts/population_denominator_cohort.py"
   ],
   "opensafely/non-gp-prescribing@99fa7cda4b8a548afce7ca529d19f54cbe734859": [
     "analysis/dataset_definition.py"
@@ -23036,8 +23039,8 @@
   ],
   "opensafely/opioids-covid-research@0cc1ad554821a782a6bc549817af95000f09a59b": [],
   "opensafely/opioids-covid-research@0e45b0d3cfc0a4ccb418fd9ce63ffdf79ca41a99": [
-    "analysis/define_dataset_table.py",
-    "analysis/define_dataset_missing.py"
+    "analysis/define_dataset_missing.py",
+    "analysis/define_dataset_table.py"
   ],
   "opensafely/opioids-covid-research@119dfa52c145b89afc5f49c09a4d946c574f2a01": [
     "analysis/define_dataset_table.py"
@@ -24375,8 +24378,8 @@
     "analysis/dataset_definition/dataset_definition_prevax.py"
   ],
   "opensafely/post-covid-cvd-methods@31178c5323b1ba7e43bfff5ee08ea1d3800c4506": [
-    "analysis/dataset_definition/dataset_definition_prevax.py",
-    "analysis/dataset_definition/dataset_definition_dates.py"
+    "analysis/dataset_definition/dataset_definition_dates.py",
+    "analysis/dataset_definition/dataset_definition_prevax.py"
   ],
   "opensafely/post-covid-cvd-methods@39efe58d267af72ea05f002d62b4eb80ed29d57d": [
     "analysis/dataset_definition/dataset_definition_dates.py",
@@ -26697,9 +26700,12 @@
   ],
   "opensafely/qof-diabetes@c2293619c2971493b11dfdc3e47c5978ffb44b4f": [],
   "opensafely/qof@9d00aa15f04b294f88728518b7e6185a1a59b0cb": [
-    "analysis/hyp_reg_dataset.py",
     "analysis/dep_reg_dataset.py",
-    "analysis/dm_reg_dataset.py"
+    "analysis/dm_reg_dataset.py",
+    "analysis/hyp_reg_dataset.py"
+  ],
+  "opensafely/raw_medicines_short_data_report@4ad1a7669507aaea5fa047b0ca00f84b6e38d98c": [
+    "analysis/dataset_definition.py"
   ],
   "opensafely/rct-test@3abf7b2c2da136732399643a2f80696309a1cf7e": [],
   "opensafely/rct-test@99704cfd7a766f80e1f7020cd928b8b263fd95f2": [],
@@ -26923,8 +26929,8 @@
   "opensafely/restoration-observatory-emis-research@abb8de3ea8f59c2c6d80ef51b62b9cbda7ec6aa7": [],
   "opensafely/restoration-observatory-emis-research@f71981b8bd0b6d4b4a678d142bca18f1282d1d96": [],
   "opensafely/reusable-variables@1d643fb1fcf9d35e608fdf2e67b90781276cd72e": [
-    "analysis/ethnicity/dataset_definition.py",
     "analysis/PRIMIS/dataset_definition.py",
+    "analysis/ethnicity/dataset_definition.py",
     "analysis/vaccine-history/dataset_definition.py"
   ],
   "opensafely/risk-prediction-research@381a4c43a7650c10a963236004cb703646822203": [],

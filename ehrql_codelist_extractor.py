@@ -7,8 +7,6 @@ ehrql_codelists.json.
 See README.md for usage.
 """
 
-from __future__ import annotations
-
 import argparse
 import datetime
 import hashlib
@@ -183,6 +181,8 @@ def generate_empty_codelists_report(out_map: dict[str, dict]) -> None:
     # Collect all variables with empty codelists
     for repo, proj_data in out_map.items():
         for file_path, file_vars in proj_data.get("files", {}).items():
+            if file_path == "_unused_codelists":
+                continue
             for var_name, codelist_calls in file_vars.items():
                 # Check if codelists list is empty and not in ignore list
                 if not codelist_calls and not should_ignore_variable(var_name):
@@ -277,14 +277,24 @@ def collect_codelists(
                 existing_signatures = existing_json.get("signatures", {})
 
                 # Build a map of (repo, sha) -> files_data
+                skipped_missing_unused = 0
                 for repo_name, sha_dict in existing_projects.items():
                     if repo_name not in existing_data:
                         existing_data[repo_name] = {}
                     for sha, signature in sha_dict.items():
                         if signature in existing_signatures:
-                            existing_data[repo_name][sha] = existing_signatures[
-                                signature
-                            ]
+                            sig_data = existing_signatures[signature]
+                            # Skip entries missing _unused_codelists (pre-feature cache)
+                            if "_unused_codelists" not in sig_data:
+                                skipped_missing_unused += 1
+                                continue
+                            existing_data[repo_name][sha] = sig_data
+
+                if not silent and skipped_missing_unused:
+                    print(
+                        f"Skipped {skipped_missing_unused} cached SHAs missing _unused_codelists (will re-process)",
+                        file=sys.stderr,
+                    )
 
                 if not silent:
                     total_cached = sum(len(shas) for shas in existing_data.values())
@@ -491,6 +501,36 @@ def collect_codelists(
                         file=sys.stderr,
                     )
 
+        # Find codelists in codelists.json that aren't referenced by any variable
+        # Collect all slugs used by variables across all files
+        used_slugs: set[str] = set()
+        for file_vars in files_data.values():
+            for codelist_calls in file_vars.values():
+                for call in codelist_calls:
+                    if call and call[0]:
+                        used_slugs.add(call[0])
+
+        # Build reverse mapping: slug -> canonical csv filename (prefer codelists/ prefixed)
+        slug_to_filename: dict[str, str] = {}
+        for path, slug in url_map.items():
+            if slug not in slug_to_filename or path.startswith("codelists/"):
+                slug_to_filename[slug] = path
+
+        # Find unused codelists (in codelists.json but not referenced by any variable)
+        unused = []
+        for slug, filename in sorted(slug_to_filename.items()):
+            if slug not in used_slugs:
+                unused.append([slug, f"file={filename}"])
+
+        # Always include the key (even if empty) so its presence marks
+        # that the feature has been computed, enabling cache invalidation
+        files_data["_unused_codelists"] = unused
+        if verbose and unused:
+            print(
+                f"..Found {len(unused)} unused codelists from codelists.json",
+                file=sys.stderr,
+            )
+
         # Initialize repo entry if not exists
         if repo_name not in out_map:
             out_map[repo_name] = {}
@@ -528,11 +568,15 @@ def collect_codelists(
             sorted_files = {}
             for file_path in sorted(files_data.keys()):
                 file_vars = files_data[file_path]
-                # Sort variables by name
-                sorted_files[file_path] = {
-                    var_name: file_vars[var_name]
-                    for var_name in sorted(file_vars.keys())
-                }
+                if file_path == "_unused_codelists":
+                    # Already a sorted list, preserve as-is
+                    sorted_files[file_path] = file_vars
+                else:
+                    # Sort variables by name
+                    sorted_files[file_path] = {
+                        var_name: file_vars[var_name]
+                        for var_name in sorted(file_vars.keys())
+                    }
 
             # Compute signature (hash of the sorted JSON)
             files_json = json.dumps(sorted_files, sort_keys=True, ensure_ascii=False)
@@ -572,10 +616,13 @@ def collect_codelists(
             sorted_files = {}
             for file_path in sorted(files_data.keys()):
                 file_vars = files_data[file_path]
-                sorted_files[file_path] = {
-                    var_name: file_vars[var_name]
-                    for var_name in sorted(file_vars.keys())
-                }
+                if file_path == "_unused_codelists":
+                    sorted_files[file_path] = file_vars
+                else:
+                    sorted_files[file_path] = {
+                        var_name: file_vars[var_name]
+                        for var_name in sorted(file_vars.keys())
+                    }
             max_json_data[repo_name][sha] = sorted_files
 
     with open(max_output, "w", encoding="utf-8") as f:
@@ -601,24 +648,36 @@ def collect_codelists(
         # Calculate statistics
         total_shas = sum(len(sha_dict) for sha_dict in projects.values())
         total_unique_signatures = len(signatures)
-        total_files = sum(len(files_data) for files_data in signatures.values())
+        total_files = sum(
+            1
+            for files_data in signatures.values()
+            for k in files_data
+            if k != "_unused_codelists"
+        )
         total_variables = sum(
             len(file_vars)
             for files_data in signatures.values()
-            for file_vars in files_data.values()
+            for k, file_vars in files_data.items()
+            if k != "_unused_codelists"
         )
         total_codelist_calls = sum(
             len(calls)
             for files_data in signatures.values()
-            for file_vars in files_data.values()
+            for k, file_vars in files_data.items()
+            if k != "_unused_codelists"
             for calls in file_vars.values()
+        )
+        total_unused_codelists = sum(
+            len(files_data.get("_unused_codelists", []))
+            for files_data in signatures.values()
         )
 
         print(
             f"\nWrote {output} with {total_codelist_calls} codelist calls "
             f"across {total_variables} variables in {total_files} dataset files "
             f"from {total_shas} SHAs ({total_unique_signatures} unique signatures) "
-            f"across {len(projects)} repos",
+            f"across {len(projects)} repos"
+            f" ({total_unused_codelists} unused codelists from codelists.json)",
             file=sys.stderr,
         )
         print(f"Also wrote {max_output} (without deduplication)", file=sys.stderr)
