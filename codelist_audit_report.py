@@ -40,6 +40,8 @@ def main():
         repo_output = {
             "good": {"codelists": []},
             "inline_codelists": {"codelists": []},
+            "local_codelists": {"codelists": []},
+            "unintentional_local_codelists": {"codelists": []},
             "unused_codelists": {"codelists": []},
             "no_events": {"codelists": []},
             "newer_version": {"codelists": []},
@@ -90,6 +92,16 @@ def main():
         # Add unused codelists to the output
         repo_output["unused_codelists"]["codelists"] = codelists.get(
             "unused_codelists", []
+        )
+
+        # Add local codelists to the output
+        repo_output["local_codelists"]["codelists"] = codelists.get(
+            "local_codelists", []
+        )
+
+        # Add unintentional local codelists to the output
+        repo_output["unintentional_local_codelists"]["codelists"] = codelists.get(
+            "unintentional_local_codelists", []
         )
 
         output["repos"][repo_name] = repo_output

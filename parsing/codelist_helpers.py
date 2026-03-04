@@ -38,9 +38,13 @@ def _get_latest_codelist_data():
                 "codelists": [],
                 "inline_codelists": [],
                 "unused_codelists": [],
+                "local_codelists": [],
+                "unintentional_local_codelists": [],
             }
             inline_codelists = dict()
             ocl_codelists = dict()
+            local_codelists = dict()
+            unintentional_local_codelists = dict()
             for sha, files in commits.items():
                 # Remove the "_unused_codelists" key from files before iterating
                 for codelist_info in files.pop("_unused_codelists", []):
@@ -92,6 +96,48 @@ def _get_latest_codelist_data():
                                         "codes": codes,
                                         "variables": variable_object,
                                     }
+                            elif codelist_info[0] and codelist_info[0].endswith(".csv"):
+                                url = codelist_info[0]
+                                if url.startswith("codelists/"):
+                                    if url in unintentional_local_codelists:
+                                        if (
+                                            file_name
+                                            in unintentional_local_codelists[url][
+                                                "variables"
+                                            ]
+                                        ):
+                                            unintentional_local_codelists[url][
+                                                "variables"
+                                            ][file_name]["variables"].append(
+                                                variable_name
+                                            )
+                                        else:
+                                            unintentional_local_codelists[url][
+                                                "variables"
+                                            ][file_name] = variable_content
+                                    else:
+                                        unintentional_local_codelists[url] = {
+                                            "url": url,
+                                            "variables": variable_object,
+                                        }
+                                else:
+                                    if url in local_codelists:
+                                        if (
+                                            file_name
+                                            in local_codelists[url]["variables"]
+                                        ):
+                                            local_codelists[url]["variables"][
+                                                file_name
+                                            ]["variables"].append(variable_name)
+                                        else:
+                                            local_codelists[url]["variables"][
+                                                file_name
+                                            ] = variable_content
+                                    else:
+                                        local_codelists[url] = {
+                                            "url": url,
+                                            "variables": variable_object,
+                                        }
                             elif codelist_info[0]:
                                 url = codelist_info[0]
                                 metadata = lookup_codelist_metadata(url)
@@ -119,6 +165,10 @@ def _get_latest_codelist_data():
                                     }
 
             _codelists[repo_name]["inline_codelists"] = list(inline_codelists.values())
+            _codelists[repo_name]["local_codelists"] = list(local_codelists.values())
+            _codelists[repo_name]["unintentional_local_codelists"] = list(
+                unintentional_local_codelists.values()
+            )
             _codelists[repo_name]["codelists"] = list(ocl_codelists.values())
 
     return _codelists
@@ -132,7 +182,14 @@ def get_repos_with_codelists() -> list[str]:
 def lookup_codelists_by_repo(repo_name: str) -> dict[str, list[dict[str, str]]]:
     codelist_data = _get_latest_codelist_data()
     return codelist_data.get(
-        repo_name, {"codelists": [], "inline_codelists": [], "unused_codelists": []}
+        repo_name,
+        {
+            "codelists": [],
+            "inline_codelists": [],
+            "unused_codelists": [],
+            "local_codelists": [],
+            "unintentional_local_codelists": [],
+        },
     )
 
 
@@ -186,6 +243,12 @@ def _get_rsi_data():
 
 
 def lookup_codelist_metadata(url_path):
+    if url_path.endswith(".csv"):
+        # We only want to lookup URLs - throw an error so we catch this quickly
+        raise ValueError(
+            f"URL path {url_path} looks like a direct CSV link, skipping metadata lookup"
+        )
+
     rsi_data = _get_rsi_data()["codelist_versions"]
     entry = rsi_data.get(url_path)
 
@@ -193,8 +256,28 @@ def lookup_codelist_metadata(url_path):
         entry = rsi_data.get(url_path.strip("/").split("/")[-1])
 
     if not entry:
-        print(f"Metadata lookup failed for {url_path}")
-        return {}
+        # It might be an issue with a codelist with multiple handles
+        # Let's query OCL and see if we get a 302
+        ocl_url = make_ocl_url(url_path)
+
+        # the redirect only happens if you don't specify a tag or hash
+        ocl_url_no_version = ocl_url.rstrip("/").rsplit("/", 1)[0] + "/"
+        try:
+            import requests
+
+            response = requests.head(
+                ocl_url_no_version, allow_redirects=True, timeout=5
+            )
+            if response.status_code == 200 and response.url != ocl_url_no_version:
+                redirected_slug = response.url.split("/codelist/")[1]
+                entry = rsi_data.get("/" + redirected_slug)
+        except Exception as e:
+            print(f"Error occurred while fetching OCL data for {url_path}: {e}")
+            return {}
+
+        if not entry:
+            print(f"Metadata lookup failed for {url_path}")
+            return {}
 
     return entry
 

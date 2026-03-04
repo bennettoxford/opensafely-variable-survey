@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-03-03 16:06:37",
+  "generated_at": "2026-03-04 10:45:22",
   "latest_releases": {
     "bnf": "86 (2024-09-02) (valid from 2024-09-02)",
     "ctv3": "2018-04-01 with TPP extensions 2022-11-16 (valid from 2022-11-16)",
@@ -67,6 +67,9 @@
           }
         ]
       },
+      "local_codelists": {
+        "codelists": []
+      },
       "newer_version": {
         "codelists": []
       },
@@ -74,6 +77,9 @@
         "codelists": []
       },
       "potentially_missing_codes": {
+        "codelists": []
+      },
+      "unintentional_local_codelists": {
         "codelists": []
       },
       "unused_codelists": {
@@ -148,6 +154,9 @@
       "inline_codelists": {
         "codelists": []
       },
+      "local_codelists": {
+        "codelists": []
+      },
       "newer_version": {
         "codelists": [
           {
@@ -218,6 +227,9 @@
             }
           }
         ]
+      },
+      "unintentional_local_codelists": {
+        "codelists": []
       },
       "unused_codelists": {
         "codelists": [
@@ -713,6 +725,9 @@
             }
           }
         ]
+      },
+      "local_codelists": {
+        "codelists": []
       },
       "newer_version": {
         "codelists": []
@@ -1511,6 +1526,9 @@
             }
           }
         ]
+      },
+      "unintentional_local_codelists": {
+        "codelists": []
       },
       "unused_codelists": {
         "codelists": [
@@ -2181,6 +2199,9 @@
           }
         ]
       },
+      "local_codelists": {
+        "codelists": []
+      },
       "newer_version": {
         "codelists": []
       },
@@ -2979,6 +3000,9 @@
           }
         ]
       },
+      "unintentional_local_codelists": {
+        "codelists": []
+      },
       "unused_codelists": {
         "codelists": [
           {
@@ -3201,6 +3225,9 @@
       "inline_codelists": {
         "codelists": []
       },
+      "local_codelists": {
+        "codelists": []
+      },
       "newer_version": {
         "codelists": []
       },
@@ -3208,6 +3235,9 @@
         "codelists": []
       },
       "potentially_missing_codes": {
+        "codelists": []
+      },
+      "unintentional_local_codelists": {
         "codelists": []
       },
       "unused_codelists": {
@@ -3262,6 +3292,9 @@
         ]
       },
       "inline_codelists": {
+        "codelists": []
+      },
+      "local_codelists": {
         "codelists": []
       },
       "newer_version": {
@@ -3422,6 +3455,9 @@
           }
         ]
       },
+      "unintentional_local_codelists": {
+        "codelists": []
+      },
       "unused_codelists": {
         "codelists": [
           {
@@ -3487,6 +3523,9 @@
       "inline_codelists": {
         "codelists": []
       },
+      "local_codelists": {
+        "codelists": []
+      },
       "newer_version": {
         "codelists": [
           {
@@ -3543,6 +3582,9 @@
             }
           }
         ]
+      },
+      "unintentional_local_codelists": {
+        "codelists": []
       },
       "unused_codelists": {
         "codelists": [
@@ -3869,6 +3911,9 @@
           }
         ]
       },
+      "local_codelists": {
+        "codelists": []
+      },
       "newer_version": {
         "codelists": []
       },
@@ -3876,6 +3921,9 @@
         "codelists": []
       },
       "potentially_missing_codes": {
+        "codelists": []
+      },
+      "unintentional_local_codelists": {
         "codelists": []
       },
       "unused_codelists": {
@@ -3999,6 +4047,9 @@
           }
         ]
       },
+      "local_codelists": {
+        "codelists": []
+      },
       "newer_version": {
         "codelists": []
       },
@@ -4006,6 +4057,9 @@
         "codelists": []
       },
       "potentially_missing_codes": {
+        "codelists": []
+      },
+      "unintentional_local_codelists": {
         "codelists": []
       },
       "unused_codelists": {
@@ -4080,6 +4134,9 @@
       "inline_codelists": {
         "codelists": []
       },
+      "local_codelists": {
+        "codelists": []
+      },
       "newer_version": {
         "codelists": []
       },
@@ -4087,6 +4144,9 @@
         "codelists": []
       },
       "potentially_missing_codes": {
+        "codelists": []
+      },
+      "unintentional_local_codelists": {
         "codelists": []
       },
       "unused_codelists": {
@@ -4199,6 +4259,9 @@
           }
         ]
       },
+      "local_codelists": {
+        "codelists": []
+      },
       "newer_version": {
         "codelists": [
           {
@@ -4242,6 +4305,9 @@
           }
         ]
       },
+      "unintentional_local_codelists": {
+        "codelists": []
+      },
       "unused_codelists": {
         "codelists": [
           {
@@ -4260,6 +4326,9 @@
       "inline_codelists": {
         "codelists": []
       },
+      "local_codelists": {
+        "codelists": []
+      },
       "newer_version": {
         "codelists": []
       },
@@ -4267,6 +4336,9 @@
         "codelists": []
       },
       "potentially_missing_codes": {
+        "codelists": []
+      },
+      "unintentional_local_codelists": {
         "codelists": []
       },
       "unused_codelists": {
@@ -4563,6 +4635,9 @@
             }
           }
         ]
+      },
+      "local_codelists": {
+        "codelists": []
       },
       "newer_version": {
         "codelists": [
@@ -5655,6 +5730,9 @@
           }
         ]
       },
+      "unintentional_local_codelists": {
+        "codelists": []
+      },
       "unused_codelists": {
         "codelists": [
           {
@@ -5757,6 +5835,9 @@
       "inline_codelists": {
         "codelists": []
       },
+      "local_codelists": {
+        "codelists": []
+      },
       "newer_version": {
         "codelists": []
       },
@@ -5764,6 +5845,9 @@
         "codelists": []
       },
       "potentially_missing_codes": {
+        "codelists": []
+      },
+      "unintentional_local_codelists": {
         "codelists": []
       },
       "unused_codelists": {
@@ -5943,6 +6027,9 @@
           }
         ]
       },
+      "local_codelists": {
+        "codelists": []
+      },
       "newer_version": {
         "codelists": []
       },
@@ -5950,6 +6037,9 @@
         "codelists": []
       },
       "potentially_missing_codes": {
+        "codelists": []
+      },
+      "unintentional_local_codelists": {
         "codelists": []
       },
       "unused_codelists": {
@@ -6276,6 +6366,9 @@
       "inline_codelists": {
         "codelists": []
       },
+      "local_codelists": {
+        "codelists": []
+      },
       "newer_version": {
         "codelists": []
       },
@@ -6283,6 +6376,9 @@
         "codelists": []
       },
       "potentially_missing_codes": {
+        "codelists": []
+      },
+      "unintentional_local_codelists": {
         "codelists": []
       },
       "unused_codelists": {
@@ -6294,6 +6390,9 @@
         "codelists": []
       },
       "inline_codelists": {
+        "codelists": []
+      },
+      "local_codelists": {
         "codelists": []
       },
       "newer_version": {
@@ -6320,6 +6419,9 @@
           }
         ]
       },
+      "unintentional_local_codelists": {
+        "codelists": []
+      },
       "unused_codelists": {
         "codelists": []
       }
@@ -6331,6 +6433,9 @@
       "inline_codelists": {
         "codelists": []
       },
+      "local_codelists": {
+        "codelists": []
+      },
       "newer_version": {
         "codelists": []
       },
@@ -6338,6 +6443,9 @@
         "codelists": []
       },
       "potentially_missing_codes": {
+        "codelists": []
+      },
+      "unintentional_local_codelists": {
         "codelists": []
       },
       "unused_codelists": {
@@ -6380,6 +6488,9 @@
       "inline_codelists": {
         "codelists": []
       },
+      "local_codelists": {
+        "codelists": []
+      },
       "newer_version": {
         "codelists": []
       },
@@ -6387,6 +6498,9 @@
         "codelists": []
       },
       "potentially_missing_codes": {
+        "codelists": []
+      },
+      "unintentional_local_codelists": {
         "codelists": []
       },
       "unused_codelists": {
@@ -6413,6 +6527,9 @@
         ]
       },
       "inline_codelists": {
+        "codelists": []
+      },
+      "local_codelists": {
         "codelists": []
       },
       "newer_version": {
@@ -6787,6 +6904,9 @@
           }
         ]
       },
+      "unintentional_local_codelists": {
+        "codelists": []
+      },
       "unused_codelists": {
         "codelists": [
           {
@@ -6811,6 +6931,9 @@
       "inline_codelists": {
         "codelists": []
       },
+      "local_codelists": {
+        "codelists": []
+      },
       "newer_version": {
         "codelists": []
       },
@@ -6818,6 +6941,9 @@
         "codelists": []
       },
       "potentially_missing_codes": {
+        "codelists": []
+      },
+      "unintentional_local_codelists": {
         "codelists": []
       },
       "unused_codelists": {
@@ -6829,6 +6955,9 @@
         "codelists": []
       },
       "inline_codelists": {
+        "codelists": []
+      },
+      "local_codelists": {
         "codelists": []
       },
       "newer_version": {
@@ -6906,6 +7035,9 @@
           }
         ]
       },
+      "unintentional_local_codelists": {
+        "codelists": []
+      },
       "unused_codelists": {
         "codelists": []
       }
@@ -6938,6 +7070,9 @@
       "inline_codelists": {
         "codelists": []
       },
+      "local_codelists": {
+        "codelists": []
+      },
       "newer_version": {
         "codelists": []
       },
@@ -6945,6 +7080,9 @@
         "codelists": []
       },
       "potentially_missing_codes": {
+        "codelists": []
+      },
+      "unintentional_local_codelists": {
         "codelists": []
       },
       "unused_codelists": {
@@ -7538,6 +7676,9 @@
           }
         ]
       },
+      "local_codelists": {
+        "codelists": []
+      },
       "newer_version": {
         "codelists": [
           {
@@ -8005,6 +8146,9 @@
           }
         ]
       },
+      "unintentional_local_codelists": {
+        "codelists": []
+      },
       "unused_codelists": {
         "codelists": [
           {
@@ -8203,6 +8347,9 @@
       "inline_codelists": {
         "codelists": []
       },
+      "local_codelists": {
+        "codelists": []
+      },
       "newer_version": {
         "codelists": []
       },
@@ -8210,6 +8357,9 @@
         "codelists": []
       },
       "potentially_missing_codes": {
+        "codelists": []
+      },
+      "unintentional_local_codelists": {
         "codelists": []
       },
       "unused_codelists": {
@@ -8223,6 +8373,9 @@
       "inline_codelists": {
         "codelists": []
       },
+      "local_codelists": {
+        "codelists": []
+      },
       "newer_version": {
         "codelists": []
       },
@@ -8230,6 +8383,9 @@
         "codelists": []
       },
       "potentially_missing_codes": {
+        "codelists": []
+      },
+      "unintentional_local_codelists": {
         "codelists": []
       },
       "unused_codelists": {
@@ -8268,9 +8424,9 @@
             }
           },
           {
-            "name": "<LOOKUP_FAILED>",
-            "system": "<LOOKUP_FAILED>",
-            "system_release": "<LOOKUP_FAILED>",
+            "name": "Renal replacement therapy",
+            "system": "ctv3",
+            "system_release": "unknown",
             "url": "https://www.opencodelists.org/codelist/opensafely/chronic-kidney-disease/2020-04-14/",
             "variables": {
               "analysis/dataset_definition.py": {
@@ -8401,6 +8557,9 @@
             }
           }
         ]
+      },
+      "local_codelists": {
+        "codelists": []
       },
       "newer_version": {
         "codelists": [
@@ -8882,6 +9041,9 @@
           }
         ]
       },
+      "unintentional_local_codelists": {
+        "codelists": []
+      },
       "unused_codelists": {
         "codelists": [
           {
@@ -9020,6 +9182,9 @@
       "inline_codelists": {
         "codelists": []
       },
+      "local_codelists": {
+        "codelists": []
+      },
       "newer_version": {
         "codelists": [
           {
@@ -9086,6 +9251,9 @@
           }
         ]
       },
+      "unintentional_local_codelists": {
+        "codelists": []
+      },
       "unused_codelists": {
         "codelists": []
       }
@@ -9097,6 +9265,9 @@
       "inline_codelists": {
         "codelists": []
       },
+      "local_codelists": {
+        "codelists": []
+      },
       "newer_version": {
         "codelists": []
       },
@@ -9104,6 +9275,9 @@
         "codelists": []
       },
       "potentially_missing_codes": {
+        "codelists": []
+      },
+      "unintentional_local_codelists": {
         "codelists": []
       },
       "unused_codelists": {
@@ -9184,6 +9358,9 @@
       "inline_codelists": {
         "codelists": []
       },
+      "local_codelists": {
+        "codelists": []
+      },
       "newer_version": {
         "codelists": []
       },
@@ -9191,6 +9368,9 @@
         "codelists": []
       },
       "potentially_missing_codes": {
+        "codelists": []
+      },
+      "unintentional_local_codelists": {
         "codelists": []
       },
       "unused_codelists": {
@@ -9202,6 +9382,9 @@
         "codelists": []
       },
       "inline_codelists": {
+        "codelists": []
+      },
+      "local_codelists": {
         "codelists": []
       },
       "newer_version": {
@@ -9430,6 +9613,9 @@
           }
         ]
       },
+      "unintentional_local_codelists": {
+        "codelists": []
+      },
       "unused_codelists": {
         "codelists": [
           {
@@ -9628,6 +9814,9 @@
       "inline_codelists": {
         "codelists": []
       },
+      "local_codelists": {
+        "codelists": []
+      },
       "newer_version": {
         "codelists": []
       },
@@ -9635,6 +9824,9 @@
         "codelists": []
       },
       "potentially_missing_codes": {
+        "codelists": []
+      },
+      "unintentional_local_codelists": {
         "codelists": []
       },
       "unused_codelists": {
@@ -9646,6 +9838,9 @@
         "codelists": []
       },
       "inline_codelists": {
+        "codelists": []
+      },
+      "local_codelists": {
         "codelists": []
       },
       "newer_version": {
@@ -9699,6 +9894,9 @@
             }
           }
         ]
+      },
+      "unintentional_local_codelists": {
+        "codelists": []
       },
       "unused_codelists": {
         "codelists": []
@@ -9795,6 +9993,9 @@
             }
           }
         ]
+      },
+      "local_codelists": {
+        "codelists": []
       },
       "newer_version": {
         "codelists": [
@@ -10432,6 +10633,9 @@
           }
         ]
       },
+      "unintentional_local_codelists": {
+        "codelists": []
+      },
       "unused_codelists": {
         "codelists": [
           {
@@ -10754,6 +10958,9 @@
           }
         ]
       },
+      "local_codelists": {
+        "codelists": []
+      },
       "newer_version": {
         "codelists": [
           {
@@ -10808,6 +11015,9 @@
             }
           }
         ]
+      },
+      "unintentional_local_codelists": {
+        "codelists": []
       },
       "unused_codelists": {
         "codelists": [
@@ -10961,12 +11171,16 @@
                 ]
               }
             }
-          },
+          }
+        ]
+      },
+      "inline_codelists": {
+        "codelists": []
+      },
+      "local_codelists": {
+        "codelists": [
           {
-            "name": "<LOOKUP_FAILED>",
-            "system": "<LOOKUP_FAILED>",
-            "system_release": "<LOOKUP_FAILED>",
-            "url": "https://www.opencodelists.org/codelistlocal_codelists/phc-lowergi-endoscopy-hrg.csv",
+            "url": "local_codelists/phc-lowergi-endoscopy-hrg.csv",
             "variables": {
               "analysis/referral_test.py": {
                 "github_url": "https://github.com/opensafely/mainroute_cancer/blob/750f9804609c613eff525a31b356582960078508/analysis/referral_test.py",
@@ -10980,9 +11194,6 @@
             }
           }
         ]
-      },
-      "inline_codelists": {
-        "codelists": []
       },
       "newer_version": {
         "codelists": [
@@ -11192,6 +11403,9 @@
           }
         ]
       },
+      "unintentional_local_codelists": {
+        "codelists": []
+      },
       "unused_codelists": {
         "codelists": [
           {
@@ -11216,6 +11430,9 @@
       "inline_codelists": {
         "codelists": []
       },
+      "local_codelists": {
+        "codelists": []
+      },
       "newer_version": {
         "codelists": []
       },
@@ -11223,6 +11440,9 @@
         "codelists": []
       },
       "potentially_missing_codes": {
+        "codelists": []
+      },
+      "unintentional_local_codelists": {
         "codelists": []
       },
       "unused_codelists": {
@@ -12061,6 +12281,9 @@
             }
           }
         ]
+      },
+      "local_codelists": {
+        "codelists": []
       },
       "newer_version": {
         "codelists": [
@@ -13217,6 +13440,9 @@
           }
         ]
       },
+      "unintentional_local_codelists": {
+        "codelists": []
+      },
       "unused_codelists": {
         "codelists": [
           {
@@ -13544,6 +13770,9 @@
       "inline_codelists": {
         "codelists": []
       },
+      "local_codelists": {
+        "codelists": []
+      },
       "newer_version": {
         "codelists": []
       },
@@ -13567,6 +13796,9 @@
             }
           }
         ]
+      },
+      "unintentional_local_codelists": {
+        "codelists": []
       },
       "unused_codelists": {
         "codelists": [
@@ -13592,6 +13824,9 @@
       "inline_codelists": {
         "codelists": []
       },
+      "local_codelists": {
+        "codelists": []
+      },
       "newer_version": {
         "codelists": []
       },
@@ -13599,6 +13834,9 @@
         "codelists": []
       },
       "potentially_missing_codes": {
+        "codelists": []
+      },
+      "unintentional_local_codelists": {
         "codelists": []
       },
       "unused_codelists": {
@@ -13697,6 +13935,9 @@
       "inline_codelists": {
         "codelists": []
       },
+      "local_codelists": {
+        "codelists": []
+      },
       "newer_version": {
         "codelists": []
       },
@@ -13704,6 +13945,9 @@
         "codelists": []
       },
       "potentially_missing_codes": {
+        "codelists": []
+      },
+      "unintentional_local_codelists": {
         "codelists": []
       },
       "unused_codelists": {
@@ -13976,6 +14220,9 @@
       "inline_codelists": {
         "codelists": []
       },
+      "local_codelists": {
+        "codelists": []
+      },
       "newer_version": {
         "codelists": []
       },
@@ -14130,6 +14377,9 @@
           }
         ]
       },
+      "unintentional_local_codelists": {
+        "codelists": []
+      },
       "unused_codelists": {
         "codelists": [
           {
@@ -14181,9 +14431,9 @@
             "url": "https://www.opencodelists.org/codelist/opensafely/chronic-inflammatory-demyelinating-polyneuropathy-cidp/38550e49/"
           },
           {
-            "name": "<LOOKUP_FAILED>",
-            "system": "<LOOKUP_FAILED>",
-            "system_release": "<LOOKUP_FAILED>",
+            "name": "Renal replacement therapy",
+            "system": "ctv3",
+            "system_release": "unknown",
             "url": "https://www.opencodelists.org/codelist/opensafely/chronic-kidney-disease/2020-04-14/"
           },
           {
@@ -14526,6 +14776,9 @@
       "inline_codelists": {
         "codelists": []
       },
+      "local_codelists": {
+        "codelists": []
+      },
       "newer_version": {
         "codelists": []
       },
@@ -14679,6 +14932,9 @@
             }
           }
         ]
+      },
+      "unintentional_local_codelists": {
+        "codelists": []
       },
       "unused_codelists": {
         "codelists": [
@@ -15167,6 +15423,9 @@
       "inline_codelists": {
         "codelists": []
       },
+      "local_codelists": {
+        "codelists": []
+      },
       "newer_version": {
         "codelists": []
       },
@@ -15487,6 +15746,9 @@
           }
         ]
       },
+      "unintentional_local_codelists": {
+        "codelists": []
+      },
       "unused_codelists": {
         "codelists": [
           {
@@ -15661,6 +15923,9 @@
       "inline_codelists": {
         "codelists": []
       },
+      "local_codelists": {
+        "codelists": []
+      },
       "newer_version": {
         "codelists": [
           {
@@ -15738,6 +16003,9 @@
           }
         ]
       },
+      "unintentional_local_codelists": {
+        "codelists": []
+      },
       "unused_codelists": {
         "codelists": [
           {
@@ -15810,6 +16078,9 @@
       "inline_codelists": {
         "codelists": []
       },
+      "local_codelists": {
+        "codelists": []
+      },
       "newer_version": {
         "codelists": []
       },
@@ -15817,6 +16088,9 @@
         "codelists": []
       },
       "potentially_missing_codes": {
+        "codelists": []
+      },
+      "unintentional_local_codelists": {
         "codelists": []
       },
       "unused_codelists": {
@@ -15848,6 +16122,9 @@
       "inline_codelists": {
         "codelists": []
       },
+      "local_codelists": {
+        "codelists": []
+      },
       "newer_version": {
         "codelists": []
       },
@@ -15855,6 +16132,9 @@
         "codelists": []
       },
       "potentially_missing_codes": {
+        "codelists": []
+      },
+      "unintentional_local_codelists": {
         "codelists": []
       },
       "unused_codelists": {
@@ -16050,6 +16330,9 @@
           }
         ]
       },
+      "local_codelists": {
+        "codelists": []
+      },
       "newer_version": {
         "codelists": [
           {
@@ -16092,6 +16375,9 @@
             }
           }
         ]
+      },
+      "unintentional_local_codelists": {
+        "codelists": []
       },
       "unused_codelists": {
         "codelists": [
@@ -16159,6 +16445,9 @@
       "inline_codelists": {
         "codelists": []
       },
+      "local_codelists": {
+        "codelists": []
+      },
       "newer_version": {
         "codelists": []
       },
@@ -16166,6 +16455,9 @@
         "codelists": []
       },
       "potentially_missing_codes": {
+        "codelists": []
+      },
+      "unintentional_local_codelists": {
         "codelists": []
       },
       "unused_codelists": {
@@ -16228,6 +16520,9 @@
       "inline_codelists": {
         "codelists": []
       },
+      "local_codelists": {
+        "codelists": []
+      },
       "newer_version": {
         "codelists": []
       },
@@ -16235,6 +16530,9 @@
         "codelists": []
       },
       "potentially_missing_codes": {
+        "codelists": []
+      },
+      "unintentional_local_codelists": {
         "codelists": []
       },
       "unused_codelists": {
@@ -16263,6 +16561,9 @@
         ]
       },
       "inline_codelists": {
+        "codelists": []
+      },
+      "local_codelists": {
         "codelists": []
       },
       "newer_version": {
@@ -16644,6 +16945,9 @@
           }
         ]
       },
+      "unintentional_local_codelists": {
+        "codelists": []
+      },
       "unused_codelists": {
         "codelists": [
           {
@@ -16666,6 +16970,9 @@
         "codelists": []
       },
       "inline_codelists": {
+        "codelists": []
+      },
+      "local_codelists": {
         "codelists": []
       },
       "newer_version": {
@@ -16734,6 +17041,9 @@
             }
           }
         ]
+      },
+      "unintentional_local_codelists": {
+        "codelists": []
       },
       "unused_codelists": {
         "codelists": [
@@ -16909,6 +17219,9 @@
       "inline_codelists": {
         "codelists": []
       },
+      "local_codelists": {
+        "codelists": []
+      },
       "newer_version": {
         "codelists": []
       },
@@ -16916,6 +17229,9 @@
         "codelists": []
       },
       "potentially_missing_codes": {
+        "codelists": []
+      },
+      "unintentional_local_codelists": {
         "codelists": []
       },
       "unused_codelists": {
@@ -17476,6 +17792,9 @@
       "inline_codelists": {
         "codelists": []
       },
+      "local_codelists": {
+        "codelists": []
+      },
       "newer_version": {
         "codelists": []
       },
@@ -17483,6 +17802,9 @@
         "codelists": []
       },
       "potentially_missing_codes": {
+        "codelists": []
+      },
+      "unintentional_local_codelists": {
         "codelists": []
       },
       "unused_codelists": {
@@ -18031,6 +18353,9 @@
       "inline_codelists": {
         "codelists": []
       },
+      "local_codelists": {
+        "codelists": []
+      },
       "newer_version": {
         "codelists": []
       },
@@ -18038,6 +18363,9 @@
         "codelists": []
       },
       "potentially_missing_codes": {
+        "codelists": []
+      },
+      "unintentional_local_codelists": {
         "codelists": []
       },
       "unused_codelists": {
@@ -18562,6 +18890,9 @@
       "inline_codelists": {
         "codelists": []
       },
+      "local_codelists": {
+        "codelists": []
+      },
       "newer_version": {
         "codelists": []
       },
@@ -18569,6 +18900,9 @@
         "codelists": []
       },
       "potentially_missing_codes": {
+        "codelists": []
+      },
+      "unintentional_local_codelists": {
         "codelists": []
       },
       "unused_codelists": {
@@ -19189,6 +19523,9 @@
       "inline_codelists": {
         "codelists": []
       },
+      "local_codelists": {
+        "codelists": []
+      },
       "newer_version": {
         "codelists": []
       },
@@ -19196,6 +19533,9 @@
         "codelists": []
       },
       "potentially_missing_codes": {
+        "codelists": []
+      },
+      "unintentional_local_codelists": {
         "codelists": []
       },
       "unused_codelists": {
@@ -19953,6 +20293,9 @@
       "inline_codelists": {
         "codelists": []
       },
+      "local_codelists": {
+        "codelists": []
+      },
       "newer_version": {
         "codelists": [
           {
@@ -20200,6 +20543,9 @@
             }
           }
         ]
+      },
+      "unintentional_local_codelists": {
+        "codelists": []
       },
       "unused_codelists": {
         "codelists": [
@@ -20996,22 +21342,6 @@
       "good": {
         "codelists": [
           {
-            "name": "<LOOKUP_FAILED>",
-            "system": "<LOOKUP_FAILED>",
-            "system_release": "<LOOKUP_FAILED>",
-            "url": "https://www.opencodelists.org/codelistcodelists/opensafely-cancer-excluding-lung-and-haematological-snomed.csv",
-            "variables": {
-              "analysis/dataset_definition.py": {
-                "github_url": "https://github.com/opensafely/prophy_effects_Sotro_Molnup/blob/27fafcb2ee96084780df42b0f3d5e0315d267188/analysis/dataset_definition.py",
-                "variables": [
-                  "cancer_opensafely_snomed",
-                  "had_solid_cancer",
-                  "solid_cancer"
-                ]
-              }
-            }
-          },
-          {
             "name": "Dialysis OPCS-4",
             "system": "opcs4",
             "system_release": "unknown",
@@ -21047,21 +21377,6 @@
                   "highrisk_codelist_ever",
                   "is_codelist_highrisk",
                   "is_codelist_highrisk_ever"
-                ]
-              }
-            }
-          },
-          {
-            "name": "<LOOKUP_FAILED>",
-            "system": "<LOOKUP_FAILED>",
-            "system_release": "<LOOKUP_FAILED>",
-            "url": "https://www.opencodelists.org/codelistcodelists/opensafely-ethnicity-snomed-0removed.csv",
-            "variables": {
-              "analysis/dataset_definition.py": {
-                "github_url": "https://github.com/opensafely/prophy_effects_Sotro_Molnup/blob/27fafcb2ee96084780df42b0f3d5e0315d267188/analysis/dataset_definition.py",
-                "variables": [
-                  "ethnicity",
-                  "latest_ethnicity_code"
                 ]
               }
             }
@@ -21523,6 +21838,9 @@
             }
           }
         ]
+      },
+      "local_codelists": {
+        "codelists": []
       },
       "newer_version": {
         "codelists": [
@@ -22239,6 +22557,35 @@
           }
         ]
       },
+      "unintentional_local_codelists": {
+        "codelists": [
+          {
+            "url": "codelists/opensafely-cancer-excluding-lung-and-haematological-snomed.csv",
+            "variables": {
+              "analysis/dataset_definition.py": {
+                "github_url": "https://github.com/opensafely/prophy_effects_Sotro_Molnup/blob/27fafcb2ee96084780df42b0f3d5e0315d267188/analysis/dataset_definition.py",
+                "variables": [
+                  "cancer_opensafely_snomed",
+                  "had_solid_cancer",
+                  "solid_cancer"
+                ]
+              }
+            }
+          },
+          {
+            "url": "codelists/opensafely-ethnicity-snomed-0removed.csv",
+            "variables": {
+              "analysis/dataset_definition.py": {
+                "github_url": "https://github.com/opensafely/prophy_effects_Sotro_Molnup/blob/27fafcb2ee96084780df42b0f3d5e0315d267188/analysis/dataset_definition.py",
+                "variables": [
+                  "ethnicity",
+                  "latest_ethnicity_code"
+                ]
+              }
+            }
+          }
+        ]
+      },
       "unused_codelists": {
         "codelists": []
       }
@@ -22248,6 +22595,9 @@
         "codelists": []
       },
       "inline_codelists": {
+        "codelists": []
+      },
+      "local_codelists": {
         "codelists": []
       },
       "newer_version": {
@@ -22393,6 +22743,9 @@
           }
         ]
       },
+      "unintentional_local_codelists": {
+        "codelists": []
+      },
       "unused_codelists": {
         "codelists": [
           {
@@ -22423,6 +22776,9 @@
       "inline_codelists": {
         "codelists": []
       },
+      "local_codelists": {
+        "codelists": []
+      },
       "newer_version": {
         "codelists": []
       },
@@ -22430,6 +22786,9 @@
         "codelists": []
       },
       "potentially_missing_codes": {
+        "codelists": []
+      },
+      "unintentional_local_codelists": {
         "codelists": []
       },
       "unused_codelists": {
@@ -22443,6 +22802,9 @@
       "inline_codelists": {
         "codelists": []
       },
+      "local_codelists": {
+        "codelists": []
+      },
       "newer_version": {
         "codelists": []
       },
@@ -22450,6 +22812,9 @@
         "codelists": []
       },
       "potentially_missing_codes": {
+        "codelists": []
+      },
+      "unintentional_local_codelists": {
         "codelists": []
       },
       "unused_codelists": {
@@ -22463,6 +22828,9 @@
       "inline_codelists": {
         "codelists": []
       },
+      "local_codelists": {
+        "codelists": []
+      },
       "newer_version": {
         "codelists": []
       },
@@ -22470,6 +22838,9 @@
         "codelists": []
       },
       "potentially_missing_codes": {
+        "codelists": []
+      },
+      "unintentional_local_codelists": {
         "codelists": []
       },
       "unused_codelists": {
@@ -22513,6 +22884,9 @@
         ]
       },
       "inline_codelists": {
+        "codelists": []
+      },
+      "local_codelists": {
         "codelists": []
       },
       "newer_version": {
@@ -22950,6 +23324,9 @@
           }
         ]
       },
+      "unintentional_local_codelists": {
+        "codelists": []
+      },
       "unused_codelists": {
         "codelists": []
       }
@@ -22961,6 +23338,9 @@
       "inline_codelists": {
         "codelists": []
       },
+      "local_codelists": {
+        "codelists": []
+      },
       "newer_version": {
         "codelists": []
       },
@@ -22968,6 +23348,9 @@
         "codelists": []
       },
       "potentially_missing_codes": {
+        "codelists": []
+      },
+      "unintentional_local_codelists": {
         "codelists": []
       },
       "unused_codelists": {
@@ -22981,6 +23364,9 @@
       "inline_codelists": {
         "codelists": []
       },
+      "local_codelists": {
+        "codelists": []
+      },
       "newer_version": {
         "codelists": []
       },
@@ -22990,551 +23376,16 @@
       "potentially_missing_codes": {
         "codelists": []
       },
+      "unintentional_local_codelists": {
+        "codelists": []
+      },
       "unused_codelists": {
         "codelists": []
       }
     },
     "opensafely/tocilizumab_and_sarilumab": {
       "good": {
-        "codelists": [
-          {
-            "name": "<LOOKUP_FAILED>",
-            "system": "<LOOKUP_FAILED>",
-            "system_release": "<LOOKUP_FAILED>",
-            "url": "https://www.opencodelists.org/codelistcodelists/opensafely-chemotherapy-or-radiotherapy-snomed.csv",
-            "variables": {
-              "analysis/dataset_definition.py": {
-                "github_url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/analysis/dataset_definition.py",
-                "variables": [
-                  "cancer_opensafely_snomed_ever"
-                ]
-              }
-            }
-          },
-          {
-            "name": "<LOOKUP_FAILED>",
-            "system": "<LOOKUP_FAILED>",
-            "system_release": "<LOOKUP_FAILED>",
-            "url": "https://www.opencodelists.org/codelistcodelists/user-bangzheng-cancer-excluding-lung-and-haematological-snomed-new.csv",
-            "variables": {
-              "analysis/dataset_definition.py": {
-                "github_url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/analysis/dataset_definition.py",
-                "variables": [
-                  "cancer_opensafely_snomed_ever"
-                ]
-              }
-            }
-          },
-          {
-            "name": "<LOOKUP_FAILED>",
-            "system": "<LOOKUP_FAILED>",
-            "system_release": "<LOOKUP_FAILED>",
-            "url": "https://www.opencodelists.org/codelistcodelists/opensafely-lung-cancer-snomed.csv",
-            "variables": {
-              "analysis/dataset_definition.py": {
-                "github_url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/analysis/dataset_definition.py",
-                "variables": [
-                  "cancer_opensafely_snomed_ever"
-                ]
-              }
-            }
-          },
-          {
-            "name": "<LOOKUP_FAILED>",
-            "system": "<LOOKUP_FAILED>",
-            "system_release": "<LOOKUP_FAILED>",
-            "url": "https://www.opencodelists.org/codelistcodelists/opensafely-chronic-cardiac-disease-snomed.csv",
-            "variables": {
-              "analysis/dataset_definition.py": {
-                "github_url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/analysis/dataset_definition.py",
-                "variables": [
-                  "chronic_cardiac_disease"
-                ]
-              }
-            }
-          },
-          {
-            "name": "<LOOKUP_FAILED>",
-            "system": "<LOOKUP_FAILED>",
-            "system_release": "<LOOKUP_FAILED>",
-            "url": "https://www.opencodelists.org/codelistcodelists/opensafely-chronic-respiratory-disease-snomed.csv",
-            "variables": {
-              "analysis/dataset_definition.py": {
-                "github_url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/analysis/dataset_definition.py",
-                "variables": [
-                  "chronic_respiratory_disease"
-                ]
-              }
-            }
-          },
-          {
-            "name": "<LOOKUP_FAILED>",
-            "system": "<LOOKUP_FAILED>",
-            "system_release": "<LOOKUP_FAILED>",
-            "url": "https://www.opencodelists.org/codelistcodelists/user-Louis-ckd-stage.csv",
-            "variables": {
-              "analysis/dataset_definition.py": {
-                "github_url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/analysis/dataset_definition.py",
-                "variables": [
-                  "ckd_primis_stage"
-                ]
-              }
-            }
-          },
-          {
-            "name": "<LOOKUP_FAILED>",
-            "system": "<LOOKUP_FAILED>",
-            "system_release": "<LOOKUP_FAILED>",
-            "url": "https://www.opencodelists.org/codelistcodelists/nhsd-ckd-stage-5-snomed-ct.csv",
-            "variables": {
-              "analysis/dataset_definition.py": {
-                "github_url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/analysis/dataset_definition.py",
-                "variables": [
-                  "ckd_stage_5_nhsd"
-                ]
-              }
-            }
-          },
-          {
-            "name": "<LOOKUP_FAILED>",
-            "system": "<LOOKUP_FAILED>",
-            "system_release": "<LOOKUP_FAILED>",
-            "url": "https://www.opencodelists.org/codelistcodelists/nhsd-ckd-stage-5-icd-10.csv",
-            "variables": {
-              "analysis/dataset_definition.py": {
-                "github_url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/analysis/dataset_definition.py",
-                "variables": [
-                  "ckd_stage_5_nhsd"
-                ]
-              }
-            }
-          },
-          {
-            "name": "<LOOKUP_FAILED>",
-            "system": "<LOOKUP_FAILED>",
-            "system_release": "<LOOKUP_FAILED>",
-            "url": "https://www.opencodelists.org/codelistcodelists/primis-covid19-vacc-uptake-ckd35.csv",
-            "variables": {
-              "analysis/dataset_definition.py": {
-                "github_url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/analysis/dataset_definition.py",
-                "variables": [
-                  "ckd_stages_3_5"
-                ]
-              }
-            }
-          },
-          {
-            "name": "<LOOKUP_FAILED>",
-            "system": "<LOOKUP_FAILED>",
-            "system_release": "<LOOKUP_FAILED>",
-            "url": "https://www.opencodelists.org/codelistcodelists/opensafely-covid-identification-in-primary-care-probable-covid-sequelae.csv",
-            "variables": {
-              "analysis/dataset_definition.py": {
-                "github_url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/analysis/dataset_definition.py",
-                "variables": [
-                  "covid_primary_care_date",
-                  "covid_primary_care_date00"
-                ]
-              }
-            }
-          },
-          {
-            "name": "<LOOKUP_FAILED>",
-            "system": "<LOOKUP_FAILED>",
-            "system_release": "<LOOKUP_FAILED>",
-            "url": "https://www.opencodelists.org/codelistcodelists/opensafely-covid-identification-in-primary-care-probable-covid-positive-test.csv",
-            "variables": {
-              "analysis/dataset_definition.py": {
-                "github_url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/analysis/dataset_definition.py",
-                "variables": [
-                  "covid_primary_care_date",
-                  "covid_primary_care_date00"
-                ]
-              }
-            }
-          },
-          {
-            "name": "<LOOKUP_FAILED>",
-            "system": "<LOOKUP_FAILED>",
-            "system_release": "<LOOKUP_FAILED>",
-            "url": "https://www.opencodelists.org/codelistcodelists/opensafely-covid-identification-in-primary-care-probable-covid-clinical-code.csv",
-            "variables": {
-              "analysis/dataset_definition.py": {
-                "github_url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/analysis/dataset_definition.py",
-                "variables": [
-                  "covid_primary_care_date",
-                  "covid_primary_care_date00"
-                ]
-              }
-            }
-          },
-          {
-            "name": "<LOOKUP_FAILED>",
-            "system": "<LOOKUP_FAILED>",
-            "system_release": "<LOOKUP_FAILED>",
-            "url": "https://www.opencodelists.org/codelistcodelists/opensafely-diabetes-snomed.csv",
-            "variables": {
-              "analysis/dataset_definition.py": {
-                "github_url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/analysis/dataset_definition.py",
-                "variables": [
-                  "diabetes"
-                ]
-              }
-            }
-          },
-          {
-            "name": "<LOOKUP_FAILED>",
-            "system": "<LOOKUP_FAILED>",
-            "system_release": "<LOOKUP_FAILED>",
-            "url": "https://www.opencodelists.org/codelistcodelists/opensafely-ethnicity-snomed-0removed-2e641f61.csv",
-            "variables": {
-              "analysis/dataset_definition.py": {
-                "github_url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/analysis/dataset_definition.py",
-                "variables": [
-                  "ethnicity"
-                ]
-              }
-            }
-          },
-          {
-            "name": "<LOOKUP_FAILED>",
-            "system": "<LOOKUP_FAILED>",
-            "system_release": "<LOOKUP_FAILED>",
-            "url": "https://www.opencodelists.org/codelistcodelists/nhsd-haematopoietic-stem-cell-transplant-snomed.csv",
-            "variables": {
-              "analysis/dataset_definition.py": {
-                "github_url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/analysis/dataset_definition.py",
-                "variables": [
-                  "haematological_disease_nhsd_ever"
-                ]
-              }
-            }
-          },
-          {
-            "name": "<LOOKUP_FAILED>",
-            "system": "<LOOKUP_FAILED>",
-            "system_release": "<LOOKUP_FAILED>",
-            "url": "https://www.opencodelists.org/codelistcodelists/nhsd-haematopoietic-stem-cell-transplant-icd-10.csv",
-            "variables": {
-              "analysis/dataset_definition.py": {
-                "github_url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/analysis/dataset_definition.py",
-                "variables": [
-                  "haematological_disease_nhsd_ever"
-                ]
-              }
-            }
-          },
-          {
-            "name": "<LOOKUP_FAILED>",
-            "system": "<LOOKUP_FAILED>",
-            "system_release": "<LOOKUP_FAILED>",
-            "url": "https://www.opencodelists.org/codelistcodelists/nhsd-haematopoietic-stem-cell-transplant-opcs4.csv",
-            "variables": {
-              "analysis/dataset_definition.py": {
-                "github_url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/analysis/dataset_definition.py",
-                "variables": [
-                  "haematological_disease_nhsd_ever"
-                ]
-              }
-            }
-          },
-          {
-            "name": "<LOOKUP_FAILED>",
-            "system": "<LOOKUP_FAILED>",
-            "system_release": "<LOOKUP_FAILED>",
-            "url": "https://www.opencodelists.org/codelistcodelists/nhsd-haematological-malignancies-snomed.csv",
-            "variables": {
-              "analysis/dataset_definition.py": {
-                "github_url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/analysis/dataset_definition.py",
-                "variables": [
-                  "haematological_disease_nhsd_ever"
-                ]
-              }
-            }
-          },
-          {
-            "name": "<LOOKUP_FAILED>",
-            "system": "<LOOKUP_FAILED>",
-            "system_release": "<LOOKUP_FAILED>",
-            "url": "https://www.opencodelists.org/codelistcodelists/nhsd-haematological-malignancies-icd-10.csv",
-            "variables": {
-              "analysis/dataset_definition.py": {
-                "github_url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/analysis/dataset_definition.py",
-                "variables": [
-                  "haematological_disease_nhsd_ever"
-                ]
-              }
-            }
-          },
-          {
-            "name": "<LOOKUP_FAILED>",
-            "system": "<LOOKUP_FAILED>",
-            "system_release": "<LOOKUP_FAILED>",
-            "url": "https://www.opencodelists.org/codelistcodelists/nhsd-sickle-spl-atriskv4-snomed-ct.csv",
-            "variables": {
-              "analysis/dataset_definition.py": {
-                "github_url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/analysis/dataset_definition.py",
-                "variables": [
-                  "haematological_disease_nhsd_ever"
-                ]
-              }
-            }
-          },
-          {
-            "name": "<LOOKUP_FAILED>",
-            "system": "<LOOKUP_FAILED>",
-            "system_release": "<LOOKUP_FAILED>",
-            "url": "https://www.opencodelists.org/codelistcodelists/nhsd-sickle-spl-hes-icd-10.csv",
-            "variables": {
-              "analysis/dataset_definition.py": {
-                "github_url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/analysis/dataset_definition.py",
-                "variables": [
-                  "haematological_disease_nhsd_ever"
-                ]
-              }
-            }
-          },
-          {
-            "name": "<LOOKUP_FAILED>",
-            "system": "<LOOKUP_FAILED>",
-            "system_release": "<LOOKUP_FAILED>",
-            "url": "https://www.opencodelists.org/codelistcodelists/opensafely-hypertension-snomed.csv",
-            "variables": {
-              "analysis/dataset_definition.py": {
-                "github_url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/analysis/dataset_definition.py",
-                "variables": [
-                  "hypertension"
-                ]
-              }
-            }
-          },
-          {
-            "name": "<LOOKUP_FAILED>",
-            "system": "<LOOKUP_FAILED>",
-            "system_release": "<LOOKUP_FAILED>",
-            "url": "https://www.opencodelists.org/codelistcodelists/nhsd-immunosuppresant-drugs-pra-dmd.csv",
-            "variables": {
-              "analysis/dataset_definition.py": {
-                "github_url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/analysis/dataset_definition.py",
-                "variables": [
-                  "immunosuppresant_drugs_nhsd"
-                ]
-              }
-            }
-          },
-          {
-            "name": "<LOOKUP_FAILED>",
-            "system": "<LOOKUP_FAILED>",
-            "system_release": "<LOOKUP_FAILED>",
-            "url": "https://www.opencodelists.org/codelistcodelists/user-bangzheng-nhsd-immunosupression-pcdcluster-snomed-ct-new.csv",
-            "variables": {
-              "analysis/dataset_definition.py": {
-                "github_url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/analysis/dataset_definition.py",
-                "variables": [
-                  "immunosupression_nhsd_new"
-                ]
-              }
-            }
-          },
-          {
-            "name": "<LOOKUP_FAILED>",
-            "system": "<LOOKUP_FAILED>",
-            "system_release": "<LOOKUP_FAILED>",
-            "url": "https://www.opencodelists.org/codelistcodelists/nhsd-liver-cirrhosis.csv",
-            "variables": {
-              "analysis/dataset_definition.py": {
-                "github_url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/analysis/dataset_definition.py",
-                "variables": [
-                  "liver_disease_nhsd"
-                ]
-              }
-            }
-          },
-          {
-            "name": "<LOOKUP_FAILED>",
-            "system": "<LOOKUP_FAILED>",
-            "system_release": "<LOOKUP_FAILED>",
-            "url": "https://www.opencodelists.org/codelistcodelists/nhsd-liver-cirrhosis-icd-10.csv",
-            "variables": {
-              "analysis/dataset_definition.py": {
-                "github_url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/analysis/dataset_definition.py",
-                "variables": [
-                  "liver_disease_nhsd"
-                ]
-              }
-            }
-          },
-          {
-            "name": "<LOOKUP_FAILED>",
-            "system": "<LOOKUP_FAILED>",
-            "system_release": "<LOOKUP_FAILED>",
-            "url": "https://www.opencodelists.org/codelistcodelists/nhsd-oral-steroid-drugs-pra-dmd.csv",
-            "variables": {
-              "analysis/dataset_definition.py": {
-                "github_url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/analysis/dataset_definition.py",
-                "variables": [
-                  "oral_steroid_drug_nhsd_12m_count",
-                  "oral_steroid_drug_nhsd_3m_count",
-                  "oral_steroid_drugs_nhsd"
-                ]
-              }
-            }
-          },
-          {
-            "name": "<LOOKUP_FAILED>",
-            "system": "<LOOKUP_FAILED>",
-            "system_release": "<LOOKUP_FAILED>",
-            "url": "https://www.opencodelists.org/codelistcodelists/user-bangzheng-nhsd-transplant-spl-atriskv4-snomed-ct-new.csv",
-            "variables": {
-              "analysis/dataset_definition.py": {
-                "github_url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/analysis/dataset_definition.py",
-                "variables": [
-                  "solid_organ_transplant_nhsd_new"
-                ]
-              }
-            }
-          },
-          {
-            "name": "<LOOKUP_FAILED>",
-            "system": "<LOOKUP_FAILED>",
-            "system_release": "<LOOKUP_FAILED>",
-            "url": "https://www.opencodelists.org/codelistcodelists/nhsd-transplant-spl-hes-opcs4.csv",
-            "variables": {
-              "analysis/dataset_definition.py": {
-                "github_url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/analysis/dataset_definition.py",
-                "variables": [
-                  "solid_organ_transplant_nhsd_new"
-                ]
-              }
-            }
-          },
-          {
-            "name": "<LOOKUP_FAILED>",
-            "system": "<LOOKUP_FAILED>",
-            "system_release": "<LOOKUP_FAILED>",
-            "url": "https://www.opencodelists.org/codelistcodelists/nhsd-transplant-replacement-of-organ-spl-hes-opcs4.csv",
-            "variables": {
-              "analysis/dataset_definition.py": {
-                "github_url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/analysis/dataset_definition.py",
-                "variables": [
-                  "solid_organ_transplant_nhsd_new"
-                ]
-              }
-            }
-          },
-          {
-            "name": "<LOOKUP_FAILED>",
-            "system": "<LOOKUP_FAILED>",
-            "system_release": "<LOOKUP_FAILED>",
-            "url": "https://www.opencodelists.org/codelistcodelists/nhsd-transplant-thymus-gland-spl-hes-opcs4.csv",
-            "variables": {
-              "analysis/dataset_definition.py": {
-                "github_url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/analysis/dataset_definition.py",
-                "variables": [
-                  "solid_organ_transplant_nhsd_new"
-                ]
-              }
-            }
-          },
-          {
-            "name": "<LOOKUP_FAILED>",
-            "system": "<LOOKUP_FAILED>",
-            "system_release": "<LOOKUP_FAILED>",
-            "url": "https://www.opencodelists.org/codelistcodelists/nhsd-transplant-conjunctiva-y-codes-spl-hes-opcs4.csv",
-            "variables": {
-              "analysis/dataset_definition.py": {
-                "github_url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/analysis/dataset_definition.py",
-                "variables": [
-                  "solid_organ_transplant_nhsd_new"
-                ]
-              }
-            }
-          },
-          {
-            "name": "<LOOKUP_FAILED>",
-            "system": "<LOOKUP_FAILED>",
-            "system_release": "<LOOKUP_FAILED>",
-            "url": "https://www.opencodelists.org/codelistcodelists/nhsd-transplant-conjunctiva-spl-hes-opcs4.csv",
-            "variables": {
-              "analysis/dataset_definition.py": {
-                "github_url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/analysis/dataset_definition.py",
-                "variables": [
-                  "solid_organ_transplant_nhsd_new"
-                ]
-              }
-            }
-          },
-          {
-            "name": "<LOOKUP_FAILED>",
-            "system": "<LOOKUP_FAILED>",
-            "system_release": "<LOOKUP_FAILED>",
-            "url": "https://www.opencodelists.org/codelistcodelists/nhsd-transplant-stomach-spl-hes-opcs4.csv",
-            "variables": {
-              "analysis/dataset_definition.py": {
-                "github_url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/analysis/dataset_definition.py",
-                "variables": [
-                  "solid_organ_transplant_nhsd_new"
-                ]
-              }
-            }
-          },
-          {
-            "name": "<LOOKUP_FAILED>",
-            "system": "<LOOKUP_FAILED>",
-            "system_release": "<LOOKUP_FAILED>",
-            "url": "https://www.opencodelists.org/codelistcodelists/nhsd-transplant-ileum_1-y-codes-spl-hes-opcs4.csv",
-            "variables": {
-              "analysis/dataset_definition.py": {
-                "github_url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/analysis/dataset_definition.py",
-                "variables": [
-                  "solid_organ_transplant_nhsd_new"
-                ]
-              }
-            }
-          },
-          {
-            "name": "<LOOKUP_FAILED>",
-            "system": "<LOOKUP_FAILED>",
-            "system_release": "<LOOKUP_FAILED>",
-            "url": "https://www.opencodelists.org/codelistcodelists/nhsd-transplant-ileum_1-spl-hes-opcs4.csv",
-            "variables": {
-              "analysis/dataset_definition.py": {
-                "github_url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/analysis/dataset_definition.py",
-                "variables": [
-                  "solid_organ_transplant_nhsd_new"
-                ]
-              }
-            }
-          },
-          {
-            "name": "<LOOKUP_FAILED>",
-            "system": "<LOOKUP_FAILED>",
-            "system_release": "<LOOKUP_FAILED>",
-            "url": "https://www.opencodelists.org/codelistcodelists/nhsd-transplant-ileum_2-y-codes-spl-hes-opcs4.csv",
-            "variables": {
-              "analysis/dataset_definition.py": {
-                "github_url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/analysis/dataset_definition.py",
-                "variables": [
-                  "solid_organ_transplant_nhsd_new"
-                ]
-              }
-            }
-          },
-          {
-            "name": "<LOOKUP_FAILED>",
-            "system": "<LOOKUP_FAILED>",
-            "system_release": "<LOOKUP_FAILED>",
-            "url": "https://www.opencodelists.org/codelistcodelists/nhsd-transplant-ileum_2-spl-hes-opcs4.csv",
-            "variables": {
-              "analysis/dataset_definition.py": {
-                "github_url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/analysis/dataset_definition.py",
-                "variables": [
-                  "solid_organ_transplant_nhsd_new"
-                ]
-              }
-            }
-          }
-        ]
+        "codelists": []
       },
       "inline_codelists": {
         "codelists": [
@@ -23561,6 +23412,9 @@
           }
         ]
       },
+      "local_codelists": {
+        "codelists": []
+      },
       "newer_version": {
         "codelists": []
       },
@@ -23569,6 +23423,433 @@
       },
       "potentially_missing_codes": {
         "codelists": []
+      },
+      "unintentional_local_codelists": {
+        "codelists": [
+          {
+            "url": "codelists/opensafely-chemotherapy-or-radiotherapy-snomed.csv",
+            "variables": {
+              "analysis/dataset_definition.py": {
+                "github_url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/analysis/dataset_definition.py",
+                "variables": [
+                  "cancer_opensafely_snomed_ever"
+                ]
+              }
+            }
+          },
+          {
+            "url": "codelists/user-bangzheng-cancer-excluding-lung-and-haematological-snomed-new.csv",
+            "variables": {
+              "analysis/dataset_definition.py": {
+                "github_url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/analysis/dataset_definition.py",
+                "variables": [
+                  "cancer_opensafely_snomed_ever"
+                ]
+              }
+            }
+          },
+          {
+            "url": "codelists/opensafely-lung-cancer-snomed.csv",
+            "variables": {
+              "analysis/dataset_definition.py": {
+                "github_url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/analysis/dataset_definition.py",
+                "variables": [
+                  "cancer_opensafely_snomed_ever"
+                ]
+              }
+            }
+          },
+          {
+            "url": "codelists/opensafely-chronic-cardiac-disease-snomed.csv",
+            "variables": {
+              "analysis/dataset_definition.py": {
+                "github_url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/analysis/dataset_definition.py",
+                "variables": [
+                  "chronic_cardiac_disease"
+                ]
+              }
+            }
+          },
+          {
+            "url": "codelists/opensafely-chronic-respiratory-disease-snomed.csv",
+            "variables": {
+              "analysis/dataset_definition.py": {
+                "github_url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/analysis/dataset_definition.py",
+                "variables": [
+                  "chronic_respiratory_disease"
+                ]
+              }
+            }
+          },
+          {
+            "url": "codelists/user-Louis-ckd-stage.csv",
+            "variables": {
+              "analysis/dataset_definition.py": {
+                "github_url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/analysis/dataset_definition.py",
+                "variables": [
+                  "ckd_primis_stage"
+                ]
+              }
+            }
+          },
+          {
+            "url": "codelists/nhsd-ckd-stage-5-snomed-ct.csv",
+            "variables": {
+              "analysis/dataset_definition.py": {
+                "github_url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/analysis/dataset_definition.py",
+                "variables": [
+                  "ckd_stage_5_nhsd"
+                ]
+              }
+            }
+          },
+          {
+            "url": "codelists/nhsd-ckd-stage-5-icd-10.csv",
+            "variables": {
+              "analysis/dataset_definition.py": {
+                "github_url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/analysis/dataset_definition.py",
+                "variables": [
+                  "ckd_stage_5_nhsd"
+                ]
+              }
+            }
+          },
+          {
+            "url": "codelists/primis-covid19-vacc-uptake-ckd35.csv",
+            "variables": {
+              "analysis/dataset_definition.py": {
+                "github_url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/analysis/dataset_definition.py",
+                "variables": [
+                  "ckd_stages_3_5"
+                ]
+              }
+            }
+          },
+          {
+            "url": "codelists/opensafely-covid-identification-in-primary-care-probable-covid-sequelae.csv",
+            "variables": {
+              "analysis/dataset_definition.py": {
+                "github_url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/analysis/dataset_definition.py",
+                "variables": [
+                  "covid_primary_care_date",
+                  "covid_primary_care_date00"
+                ]
+              }
+            }
+          },
+          {
+            "url": "codelists/opensafely-covid-identification-in-primary-care-probable-covid-positive-test.csv",
+            "variables": {
+              "analysis/dataset_definition.py": {
+                "github_url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/analysis/dataset_definition.py",
+                "variables": [
+                  "covid_primary_care_date",
+                  "covid_primary_care_date00"
+                ]
+              }
+            }
+          },
+          {
+            "url": "codelists/opensafely-covid-identification-in-primary-care-probable-covid-clinical-code.csv",
+            "variables": {
+              "analysis/dataset_definition.py": {
+                "github_url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/analysis/dataset_definition.py",
+                "variables": [
+                  "covid_primary_care_date",
+                  "covid_primary_care_date00"
+                ]
+              }
+            }
+          },
+          {
+            "url": "codelists/opensafely-diabetes-snomed.csv",
+            "variables": {
+              "analysis/dataset_definition.py": {
+                "github_url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/analysis/dataset_definition.py",
+                "variables": [
+                  "diabetes"
+                ]
+              }
+            }
+          },
+          {
+            "url": "codelists/opensafely-ethnicity-snomed-0removed-2e641f61.csv",
+            "variables": {
+              "analysis/dataset_definition.py": {
+                "github_url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/analysis/dataset_definition.py",
+                "variables": [
+                  "ethnicity"
+                ]
+              }
+            }
+          },
+          {
+            "url": "codelists/nhsd-haematopoietic-stem-cell-transplant-snomed.csv",
+            "variables": {
+              "analysis/dataset_definition.py": {
+                "github_url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/analysis/dataset_definition.py",
+                "variables": [
+                  "haematological_disease_nhsd_ever"
+                ]
+              }
+            }
+          },
+          {
+            "url": "codelists/nhsd-haematopoietic-stem-cell-transplant-icd-10.csv",
+            "variables": {
+              "analysis/dataset_definition.py": {
+                "github_url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/analysis/dataset_definition.py",
+                "variables": [
+                  "haematological_disease_nhsd_ever"
+                ]
+              }
+            }
+          },
+          {
+            "url": "codelists/nhsd-haematopoietic-stem-cell-transplant-opcs4.csv",
+            "variables": {
+              "analysis/dataset_definition.py": {
+                "github_url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/analysis/dataset_definition.py",
+                "variables": [
+                  "haematological_disease_nhsd_ever"
+                ]
+              }
+            }
+          },
+          {
+            "url": "codelists/nhsd-haematological-malignancies-snomed.csv",
+            "variables": {
+              "analysis/dataset_definition.py": {
+                "github_url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/analysis/dataset_definition.py",
+                "variables": [
+                  "haematological_disease_nhsd_ever"
+                ]
+              }
+            }
+          },
+          {
+            "url": "codelists/nhsd-haematological-malignancies-icd-10.csv",
+            "variables": {
+              "analysis/dataset_definition.py": {
+                "github_url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/analysis/dataset_definition.py",
+                "variables": [
+                  "haematological_disease_nhsd_ever"
+                ]
+              }
+            }
+          },
+          {
+            "url": "codelists/nhsd-sickle-spl-atriskv4-snomed-ct.csv",
+            "variables": {
+              "analysis/dataset_definition.py": {
+                "github_url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/analysis/dataset_definition.py",
+                "variables": [
+                  "haematological_disease_nhsd_ever"
+                ]
+              }
+            }
+          },
+          {
+            "url": "codelists/nhsd-sickle-spl-hes-icd-10.csv",
+            "variables": {
+              "analysis/dataset_definition.py": {
+                "github_url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/analysis/dataset_definition.py",
+                "variables": [
+                  "haematological_disease_nhsd_ever"
+                ]
+              }
+            }
+          },
+          {
+            "url": "codelists/opensafely-hypertension-snomed.csv",
+            "variables": {
+              "analysis/dataset_definition.py": {
+                "github_url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/analysis/dataset_definition.py",
+                "variables": [
+                  "hypertension"
+                ]
+              }
+            }
+          },
+          {
+            "url": "codelists/nhsd-immunosuppresant-drugs-pra-dmd.csv",
+            "variables": {
+              "analysis/dataset_definition.py": {
+                "github_url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/analysis/dataset_definition.py",
+                "variables": [
+                  "immunosuppresant_drugs_nhsd"
+                ]
+              }
+            }
+          },
+          {
+            "url": "codelists/user-bangzheng-nhsd-immunosupression-pcdcluster-snomed-ct-new.csv",
+            "variables": {
+              "analysis/dataset_definition.py": {
+                "github_url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/analysis/dataset_definition.py",
+                "variables": [
+                  "immunosupression_nhsd_new"
+                ]
+              }
+            }
+          },
+          {
+            "url": "codelists/nhsd-liver-cirrhosis.csv",
+            "variables": {
+              "analysis/dataset_definition.py": {
+                "github_url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/analysis/dataset_definition.py",
+                "variables": [
+                  "liver_disease_nhsd"
+                ]
+              }
+            }
+          },
+          {
+            "url": "codelists/nhsd-liver-cirrhosis-icd-10.csv",
+            "variables": {
+              "analysis/dataset_definition.py": {
+                "github_url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/analysis/dataset_definition.py",
+                "variables": [
+                  "liver_disease_nhsd"
+                ]
+              }
+            }
+          },
+          {
+            "url": "codelists/nhsd-oral-steroid-drugs-pra-dmd.csv",
+            "variables": {
+              "analysis/dataset_definition.py": {
+                "github_url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/analysis/dataset_definition.py",
+                "variables": [
+                  "oral_steroid_drug_nhsd_12m_count",
+                  "oral_steroid_drug_nhsd_3m_count",
+                  "oral_steroid_drugs_nhsd"
+                ]
+              }
+            }
+          },
+          {
+            "url": "codelists/user-bangzheng-nhsd-transplant-spl-atriskv4-snomed-ct-new.csv",
+            "variables": {
+              "analysis/dataset_definition.py": {
+                "github_url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/analysis/dataset_definition.py",
+                "variables": [
+                  "solid_organ_transplant_nhsd_new"
+                ]
+              }
+            }
+          },
+          {
+            "url": "codelists/nhsd-transplant-spl-hes-opcs4.csv",
+            "variables": {
+              "analysis/dataset_definition.py": {
+                "github_url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/analysis/dataset_definition.py",
+                "variables": [
+                  "solid_organ_transplant_nhsd_new"
+                ]
+              }
+            }
+          },
+          {
+            "url": "codelists/nhsd-transplant-replacement-of-organ-spl-hes-opcs4.csv",
+            "variables": {
+              "analysis/dataset_definition.py": {
+                "github_url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/analysis/dataset_definition.py",
+                "variables": [
+                  "solid_organ_transplant_nhsd_new"
+                ]
+              }
+            }
+          },
+          {
+            "url": "codelists/nhsd-transplant-thymus-gland-spl-hes-opcs4.csv",
+            "variables": {
+              "analysis/dataset_definition.py": {
+                "github_url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/analysis/dataset_definition.py",
+                "variables": [
+                  "solid_organ_transplant_nhsd_new"
+                ]
+              }
+            }
+          },
+          {
+            "url": "codelists/nhsd-transplant-conjunctiva-y-codes-spl-hes-opcs4.csv",
+            "variables": {
+              "analysis/dataset_definition.py": {
+                "github_url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/analysis/dataset_definition.py",
+                "variables": [
+                  "solid_organ_transplant_nhsd_new"
+                ]
+              }
+            }
+          },
+          {
+            "url": "codelists/nhsd-transplant-conjunctiva-spl-hes-opcs4.csv",
+            "variables": {
+              "analysis/dataset_definition.py": {
+                "github_url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/analysis/dataset_definition.py",
+                "variables": [
+                  "solid_organ_transplant_nhsd_new"
+                ]
+              }
+            }
+          },
+          {
+            "url": "codelists/nhsd-transplant-stomach-spl-hes-opcs4.csv",
+            "variables": {
+              "analysis/dataset_definition.py": {
+                "github_url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/analysis/dataset_definition.py",
+                "variables": [
+                  "solid_organ_transplant_nhsd_new"
+                ]
+              }
+            }
+          },
+          {
+            "url": "codelists/nhsd-transplant-ileum_1-y-codes-spl-hes-opcs4.csv",
+            "variables": {
+              "analysis/dataset_definition.py": {
+                "github_url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/analysis/dataset_definition.py",
+                "variables": [
+                  "solid_organ_transplant_nhsd_new"
+                ]
+              }
+            }
+          },
+          {
+            "url": "codelists/nhsd-transplant-ileum_1-spl-hes-opcs4.csv",
+            "variables": {
+              "analysis/dataset_definition.py": {
+                "github_url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/analysis/dataset_definition.py",
+                "variables": [
+                  "solid_organ_transplant_nhsd_new"
+                ]
+              }
+            }
+          },
+          {
+            "url": "codelists/nhsd-transplant-ileum_2-y-codes-spl-hes-opcs4.csv",
+            "variables": {
+              "analysis/dataset_definition.py": {
+                "github_url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/analysis/dataset_definition.py",
+                "variables": [
+                  "solid_organ_transplant_nhsd_new"
+                ]
+              }
+            }
+          },
+          {
+            "url": "codelists/nhsd-transplant-ileum_2-spl-hes-opcs4.csv",
+            "variables": {
+              "analysis/dataset_definition.py": {
+                "github_url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/analysis/dataset_definition.py",
+                "variables": [
+                  "solid_organ_transplant_nhsd_new"
+                ]
+              }
+            }
+          }
+        ]
       },
       "unused_codelists": {
         "codelists": []
@@ -23581,6 +23862,9 @@
       "inline_codelists": {
         "codelists": []
       },
+      "local_codelists": {
+        "codelists": []
+      },
       "newer_version": {
         "codelists": []
       },
@@ -23588,6 +23872,9 @@
         "codelists": []
       },
       "potentially_missing_codes": {
+        "codelists": []
+      },
+      "unintentional_local_codelists": {
         "codelists": []
       },
       "unused_codelists": {
@@ -23789,6 +24076,9 @@
       "inline_codelists": {
         "codelists": []
       },
+      "local_codelists": {
+        "codelists": []
+      },
       "newer_version": {
         "codelists": []
       },
@@ -23796,6 +24086,9 @@
         "codelists": []
       },
       "potentially_missing_codes": {
+        "codelists": []
+      },
+      "unintentional_local_codelists": {
         "codelists": []
       },
       "unused_codelists": {
@@ -23886,6 +24179,9 @@
         "codelists": []
       },
       "inline_codelists": {
+        "codelists": []
+      },
+      "local_codelists": {
         "codelists": []
       },
       "newer_version": {
@@ -23986,6 +24282,9 @@
             }
           }
         ]
+      },
+      "unintentional_local_codelists": {
+        "codelists": []
       },
       "unused_codelists": {
         "codelists": [
@@ -24165,6 +24464,9 @@
       "inline_codelists": {
         "codelists": []
       },
+      "local_codelists": {
+        "codelists": []
+      },
       "newer_version": {
         "codelists": []
       },
@@ -24277,6 +24579,9 @@
             }
           }
         ]
+      },
+      "unintentional_local_codelists": {
+        "codelists": []
       },
       "unused_codelists": {
         "codelists": [
