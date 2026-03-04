@@ -117,7 +117,8 @@ def _get_latest_codelist_data():
                                             ][file_name] = variable_content
                                     else:
                                         unintentional_local_codelists[url] = {
-                                            "url": url,
+                                            "file": url,
+                                            "url": make_github_url(repo_name, url, sha),
                                             "variables": variable_object,
                                         }
                                 else:
@@ -135,7 +136,8 @@ def _get_latest_codelist_data():
                                             ] = variable_content
                                     else:
                                         local_codelists[url] = {
-                                            "url": url,
+                                            "file": url,
+                                            "url": make_github_url(repo_name, url, sha),
                                             "variables": variable_object,
                                         }
                             elif codelist_info[0]:

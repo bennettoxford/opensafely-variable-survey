@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-03-04 10:45:22",
+  "generated_at": "2026-03-04 16:23:49",
   "latest_releases": {
     "bnf": "86 (2024-09-02) (valid from 2024-09-02)",
     "ctv3": "2018-04-01 with TPP extensions 2022-11-16 (valid from 2022-11-16)",
@@ -11180,7 +11180,8 @@
       "local_codelists": {
         "codelists": [
           {
-            "url": "local_codelists/phc-lowergi-endoscopy-hrg.csv",
+            "file": "local_codelists/phc-lowergi-endoscopy-hrg.csv",
+            "url": "https://github.com/opensafely/mainroute_cancer/blob/750f9804609c613eff525a31b356582960078508/local_codelists/phc-lowergi-endoscopy-hrg.csv",
             "variables": {
               "analysis/referral_test.py": {
                 "github_url": "https://github.com/opensafely/mainroute_cancer/blob/750f9804609c613eff525a31b356582960078508/analysis/referral_test.py",
@@ -22560,7 +22561,8 @@
       "unintentional_local_codelists": {
         "codelists": [
           {
-            "url": "codelists/opensafely-cancer-excluding-lung-and-haematological-snomed.csv",
+            "file": "codelists/opensafely-cancer-excluding-lung-and-haematological-snomed.csv",
+            "url": "https://github.com/opensafely/prophy_effects_Sotro_Molnup/blob/27fafcb2ee96084780df42b0f3d5e0315d267188/codelists/opensafely-cancer-excluding-lung-and-haematological-snomed.csv",
             "variables": {
               "analysis/dataset_definition.py": {
                 "github_url": "https://github.com/opensafely/prophy_effects_Sotro_Molnup/blob/27fafcb2ee96084780df42b0f3d5e0315d267188/analysis/dataset_definition.py",
@@ -22573,7 +22575,8 @@
             }
           },
           {
-            "url": "codelists/opensafely-ethnicity-snomed-0removed.csv",
+            "file": "codelists/opensafely-ethnicity-snomed-0removed.csv",
+            "url": "https://github.com/opensafely/prophy_effects_Sotro_Molnup/blob/27fafcb2ee96084780df42b0f3d5e0315d267188/codelists/opensafely-ethnicity-snomed-0removed.csv",
             "variables": {
               "analysis/dataset_definition.py": {
                 "github_url": "https://github.com/opensafely/prophy_effects_Sotro_Molnup/blob/27fafcb2ee96084780df42b0f3d5e0315d267188/analysis/dataset_definition.py",
@@ -23427,7 +23430,8 @@
       "unintentional_local_codelists": {
         "codelists": [
           {
-            "url": "codelists/opensafely-chemotherapy-or-radiotherapy-snomed.csv",
+            "file": "codelists/opensafely-chemotherapy-or-radiotherapy-snomed.csv",
+            "url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/codelists/opensafely-chemotherapy-or-radiotherapy-snomed.csv",
             "variables": {
               "analysis/dataset_definition.py": {
                 "github_url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/analysis/dataset_definition.py",
@@ -23438,7 +23442,8 @@
             }
           },
           {
-            "url": "codelists/user-bangzheng-cancer-excluding-lung-and-haematological-snomed-new.csv",
+            "file": "codelists/user-bangzheng-cancer-excluding-lung-and-haematological-snomed-new.csv",
+            "url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/codelists/user-bangzheng-cancer-excluding-lung-and-haematological-snomed-new.csv",
             "variables": {
               "analysis/dataset_definition.py": {
                 "github_url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/analysis/dataset_definition.py",
@@ -23449,7 +23454,8 @@
             }
           },
           {
-            "url": "codelists/opensafely-lung-cancer-snomed.csv",
+            "file": "codelists/opensafely-lung-cancer-snomed.csv",
+            "url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/codelists/opensafely-lung-cancer-snomed.csv",
             "variables": {
               "analysis/dataset_definition.py": {
                 "github_url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/analysis/dataset_definition.py",
@@ -23460,7 +23466,8 @@
             }
           },
           {
-            "url": "codelists/opensafely-chronic-cardiac-disease-snomed.csv",
+            "file": "codelists/opensafely-chronic-cardiac-disease-snomed.csv",
+            "url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/codelists/opensafely-chronic-cardiac-disease-snomed.csv",
             "variables": {
               "analysis/dataset_definition.py": {
                 "github_url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/analysis/dataset_definition.py",
@@ -23471,7 +23478,8 @@
             }
           },
           {
-            "url": "codelists/opensafely-chronic-respiratory-disease-snomed.csv",
+            "file": "codelists/opensafely-chronic-respiratory-disease-snomed.csv",
+            "url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/codelists/opensafely-chronic-respiratory-disease-snomed.csv",
             "variables": {
               "analysis/dataset_definition.py": {
                 "github_url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/analysis/dataset_definition.py",
@@ -23482,7 +23490,8 @@
             }
           },
           {
-            "url": "codelists/user-Louis-ckd-stage.csv",
+            "file": "codelists/user-Louis-ckd-stage.csv",
+            "url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/codelists/user-Louis-ckd-stage.csv",
             "variables": {
               "analysis/dataset_definition.py": {
                 "github_url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/analysis/dataset_definition.py",
@@ -23493,7 +23502,8 @@
             }
           },
           {
-            "url": "codelists/nhsd-ckd-stage-5-snomed-ct.csv",
+            "file": "codelists/nhsd-ckd-stage-5-snomed-ct.csv",
+            "url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/codelists/nhsd-ckd-stage-5-snomed-ct.csv",
             "variables": {
               "analysis/dataset_definition.py": {
                 "github_url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/analysis/dataset_definition.py",
@@ -23504,7 +23514,8 @@
             }
           },
           {
-            "url": "codelists/nhsd-ckd-stage-5-icd-10.csv",
+            "file": "codelists/nhsd-ckd-stage-5-icd-10.csv",
+            "url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/codelists/nhsd-ckd-stage-5-icd-10.csv",
             "variables": {
               "analysis/dataset_definition.py": {
                 "github_url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/analysis/dataset_definition.py",
@@ -23515,7 +23526,8 @@
             }
           },
           {
-            "url": "codelists/primis-covid19-vacc-uptake-ckd35.csv",
+            "file": "codelists/primis-covid19-vacc-uptake-ckd35.csv",
+            "url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/codelists/primis-covid19-vacc-uptake-ckd35.csv",
             "variables": {
               "analysis/dataset_definition.py": {
                 "github_url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/analysis/dataset_definition.py",
@@ -23526,7 +23538,8 @@
             }
           },
           {
-            "url": "codelists/opensafely-covid-identification-in-primary-care-probable-covid-sequelae.csv",
+            "file": "codelists/opensafely-covid-identification-in-primary-care-probable-covid-sequelae.csv",
+            "url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/codelists/opensafely-covid-identification-in-primary-care-probable-covid-sequelae.csv",
             "variables": {
               "analysis/dataset_definition.py": {
                 "github_url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/analysis/dataset_definition.py",
@@ -23538,7 +23551,8 @@
             }
           },
           {
-            "url": "codelists/opensafely-covid-identification-in-primary-care-probable-covid-positive-test.csv",
+            "file": "codelists/opensafely-covid-identification-in-primary-care-probable-covid-positive-test.csv",
+            "url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/codelists/opensafely-covid-identification-in-primary-care-probable-covid-positive-test.csv",
             "variables": {
               "analysis/dataset_definition.py": {
                 "github_url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/analysis/dataset_definition.py",
@@ -23550,7 +23564,8 @@
             }
           },
           {
-            "url": "codelists/opensafely-covid-identification-in-primary-care-probable-covid-clinical-code.csv",
+            "file": "codelists/opensafely-covid-identification-in-primary-care-probable-covid-clinical-code.csv",
+            "url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/codelists/opensafely-covid-identification-in-primary-care-probable-covid-clinical-code.csv",
             "variables": {
               "analysis/dataset_definition.py": {
                 "github_url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/analysis/dataset_definition.py",
@@ -23562,7 +23577,8 @@
             }
           },
           {
-            "url": "codelists/opensafely-diabetes-snomed.csv",
+            "file": "codelists/opensafely-diabetes-snomed.csv",
+            "url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/codelists/opensafely-diabetes-snomed.csv",
             "variables": {
               "analysis/dataset_definition.py": {
                 "github_url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/analysis/dataset_definition.py",
@@ -23573,7 +23589,8 @@
             }
           },
           {
-            "url": "codelists/opensafely-ethnicity-snomed-0removed-2e641f61.csv",
+            "file": "codelists/opensafely-ethnicity-snomed-0removed-2e641f61.csv",
+            "url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/codelists/opensafely-ethnicity-snomed-0removed-2e641f61.csv",
             "variables": {
               "analysis/dataset_definition.py": {
                 "github_url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/analysis/dataset_definition.py",
@@ -23584,7 +23601,8 @@
             }
           },
           {
-            "url": "codelists/nhsd-haematopoietic-stem-cell-transplant-snomed.csv",
+            "file": "codelists/nhsd-haematopoietic-stem-cell-transplant-snomed.csv",
+            "url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/codelists/nhsd-haematopoietic-stem-cell-transplant-snomed.csv",
             "variables": {
               "analysis/dataset_definition.py": {
                 "github_url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/analysis/dataset_definition.py",
@@ -23595,7 +23613,8 @@
             }
           },
           {
-            "url": "codelists/nhsd-haematopoietic-stem-cell-transplant-icd-10.csv",
+            "file": "codelists/nhsd-haematopoietic-stem-cell-transplant-icd-10.csv",
+            "url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/codelists/nhsd-haematopoietic-stem-cell-transplant-icd-10.csv",
             "variables": {
               "analysis/dataset_definition.py": {
                 "github_url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/analysis/dataset_definition.py",
@@ -23606,7 +23625,8 @@
             }
           },
           {
-            "url": "codelists/nhsd-haematopoietic-stem-cell-transplant-opcs4.csv",
+            "file": "codelists/nhsd-haematopoietic-stem-cell-transplant-opcs4.csv",
+            "url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/codelists/nhsd-haematopoietic-stem-cell-transplant-opcs4.csv",
             "variables": {
               "analysis/dataset_definition.py": {
                 "github_url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/analysis/dataset_definition.py",
@@ -23617,7 +23637,8 @@
             }
           },
           {
-            "url": "codelists/nhsd-haematological-malignancies-snomed.csv",
+            "file": "codelists/nhsd-haematological-malignancies-snomed.csv",
+            "url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/codelists/nhsd-haematological-malignancies-snomed.csv",
             "variables": {
               "analysis/dataset_definition.py": {
                 "github_url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/analysis/dataset_definition.py",
@@ -23628,7 +23649,8 @@
             }
           },
           {
-            "url": "codelists/nhsd-haematological-malignancies-icd-10.csv",
+            "file": "codelists/nhsd-haematological-malignancies-icd-10.csv",
+            "url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/codelists/nhsd-haematological-malignancies-icd-10.csv",
             "variables": {
               "analysis/dataset_definition.py": {
                 "github_url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/analysis/dataset_definition.py",
@@ -23639,7 +23661,8 @@
             }
           },
           {
-            "url": "codelists/nhsd-sickle-spl-atriskv4-snomed-ct.csv",
+            "file": "codelists/nhsd-sickle-spl-atriskv4-snomed-ct.csv",
+            "url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/codelists/nhsd-sickle-spl-atriskv4-snomed-ct.csv",
             "variables": {
               "analysis/dataset_definition.py": {
                 "github_url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/analysis/dataset_definition.py",
@@ -23650,7 +23673,8 @@
             }
           },
           {
-            "url": "codelists/nhsd-sickle-spl-hes-icd-10.csv",
+            "file": "codelists/nhsd-sickle-spl-hes-icd-10.csv",
+            "url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/codelists/nhsd-sickle-spl-hes-icd-10.csv",
             "variables": {
               "analysis/dataset_definition.py": {
                 "github_url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/analysis/dataset_definition.py",
@@ -23661,7 +23685,8 @@
             }
           },
           {
-            "url": "codelists/opensafely-hypertension-snomed.csv",
+            "file": "codelists/opensafely-hypertension-snomed.csv",
+            "url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/codelists/opensafely-hypertension-snomed.csv",
             "variables": {
               "analysis/dataset_definition.py": {
                 "github_url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/analysis/dataset_definition.py",
@@ -23672,7 +23697,8 @@
             }
           },
           {
-            "url": "codelists/nhsd-immunosuppresant-drugs-pra-dmd.csv",
+            "file": "codelists/nhsd-immunosuppresant-drugs-pra-dmd.csv",
+            "url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/codelists/nhsd-immunosuppresant-drugs-pra-dmd.csv",
             "variables": {
               "analysis/dataset_definition.py": {
                 "github_url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/analysis/dataset_definition.py",
@@ -23683,7 +23709,8 @@
             }
           },
           {
-            "url": "codelists/user-bangzheng-nhsd-immunosupression-pcdcluster-snomed-ct-new.csv",
+            "file": "codelists/user-bangzheng-nhsd-immunosupression-pcdcluster-snomed-ct-new.csv",
+            "url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/codelists/user-bangzheng-nhsd-immunosupression-pcdcluster-snomed-ct-new.csv",
             "variables": {
               "analysis/dataset_definition.py": {
                 "github_url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/analysis/dataset_definition.py",
@@ -23694,7 +23721,8 @@
             }
           },
           {
-            "url": "codelists/nhsd-liver-cirrhosis.csv",
+            "file": "codelists/nhsd-liver-cirrhosis.csv",
+            "url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/codelists/nhsd-liver-cirrhosis.csv",
             "variables": {
               "analysis/dataset_definition.py": {
                 "github_url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/analysis/dataset_definition.py",
@@ -23705,7 +23733,8 @@
             }
           },
           {
-            "url": "codelists/nhsd-liver-cirrhosis-icd-10.csv",
+            "file": "codelists/nhsd-liver-cirrhosis-icd-10.csv",
+            "url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/codelists/nhsd-liver-cirrhosis-icd-10.csv",
             "variables": {
               "analysis/dataset_definition.py": {
                 "github_url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/analysis/dataset_definition.py",
@@ -23716,7 +23745,8 @@
             }
           },
           {
-            "url": "codelists/nhsd-oral-steroid-drugs-pra-dmd.csv",
+            "file": "codelists/nhsd-oral-steroid-drugs-pra-dmd.csv",
+            "url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/codelists/nhsd-oral-steroid-drugs-pra-dmd.csv",
             "variables": {
               "analysis/dataset_definition.py": {
                 "github_url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/analysis/dataset_definition.py",
@@ -23729,7 +23759,8 @@
             }
           },
           {
-            "url": "codelists/user-bangzheng-nhsd-transplant-spl-atriskv4-snomed-ct-new.csv",
+            "file": "codelists/user-bangzheng-nhsd-transplant-spl-atriskv4-snomed-ct-new.csv",
+            "url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/codelists/user-bangzheng-nhsd-transplant-spl-atriskv4-snomed-ct-new.csv",
             "variables": {
               "analysis/dataset_definition.py": {
                 "github_url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/analysis/dataset_definition.py",
@@ -23740,7 +23771,8 @@
             }
           },
           {
-            "url": "codelists/nhsd-transplant-spl-hes-opcs4.csv",
+            "file": "codelists/nhsd-transplant-spl-hes-opcs4.csv",
+            "url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/codelists/nhsd-transplant-spl-hes-opcs4.csv",
             "variables": {
               "analysis/dataset_definition.py": {
                 "github_url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/analysis/dataset_definition.py",
@@ -23751,7 +23783,8 @@
             }
           },
           {
-            "url": "codelists/nhsd-transplant-replacement-of-organ-spl-hes-opcs4.csv",
+            "file": "codelists/nhsd-transplant-replacement-of-organ-spl-hes-opcs4.csv",
+            "url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/codelists/nhsd-transplant-replacement-of-organ-spl-hes-opcs4.csv",
             "variables": {
               "analysis/dataset_definition.py": {
                 "github_url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/analysis/dataset_definition.py",
@@ -23762,7 +23795,8 @@
             }
           },
           {
-            "url": "codelists/nhsd-transplant-thymus-gland-spl-hes-opcs4.csv",
+            "file": "codelists/nhsd-transplant-thymus-gland-spl-hes-opcs4.csv",
+            "url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/codelists/nhsd-transplant-thymus-gland-spl-hes-opcs4.csv",
             "variables": {
               "analysis/dataset_definition.py": {
                 "github_url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/analysis/dataset_definition.py",
@@ -23773,7 +23807,8 @@
             }
           },
           {
-            "url": "codelists/nhsd-transplant-conjunctiva-y-codes-spl-hes-opcs4.csv",
+            "file": "codelists/nhsd-transplant-conjunctiva-y-codes-spl-hes-opcs4.csv",
+            "url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/codelists/nhsd-transplant-conjunctiva-y-codes-spl-hes-opcs4.csv",
             "variables": {
               "analysis/dataset_definition.py": {
                 "github_url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/analysis/dataset_definition.py",
@@ -23784,7 +23819,8 @@
             }
           },
           {
-            "url": "codelists/nhsd-transplant-conjunctiva-spl-hes-opcs4.csv",
+            "file": "codelists/nhsd-transplant-conjunctiva-spl-hes-opcs4.csv",
+            "url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/codelists/nhsd-transplant-conjunctiva-spl-hes-opcs4.csv",
             "variables": {
               "analysis/dataset_definition.py": {
                 "github_url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/analysis/dataset_definition.py",
@@ -23795,7 +23831,8 @@
             }
           },
           {
-            "url": "codelists/nhsd-transplant-stomach-spl-hes-opcs4.csv",
+            "file": "codelists/nhsd-transplant-stomach-spl-hes-opcs4.csv",
+            "url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/codelists/nhsd-transplant-stomach-spl-hes-opcs4.csv",
             "variables": {
               "analysis/dataset_definition.py": {
                 "github_url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/analysis/dataset_definition.py",
@@ -23806,7 +23843,8 @@
             }
           },
           {
-            "url": "codelists/nhsd-transplant-ileum_1-y-codes-spl-hes-opcs4.csv",
+            "file": "codelists/nhsd-transplant-ileum_1-y-codes-spl-hes-opcs4.csv",
+            "url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/codelists/nhsd-transplant-ileum_1-y-codes-spl-hes-opcs4.csv",
             "variables": {
               "analysis/dataset_definition.py": {
                 "github_url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/analysis/dataset_definition.py",
@@ -23817,7 +23855,8 @@
             }
           },
           {
-            "url": "codelists/nhsd-transplant-ileum_1-spl-hes-opcs4.csv",
+            "file": "codelists/nhsd-transplant-ileum_1-spl-hes-opcs4.csv",
+            "url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/codelists/nhsd-transplant-ileum_1-spl-hes-opcs4.csv",
             "variables": {
               "analysis/dataset_definition.py": {
                 "github_url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/analysis/dataset_definition.py",
@@ -23828,7 +23867,8 @@
             }
           },
           {
-            "url": "codelists/nhsd-transplant-ileum_2-y-codes-spl-hes-opcs4.csv",
+            "file": "codelists/nhsd-transplant-ileum_2-y-codes-spl-hes-opcs4.csv",
+            "url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/codelists/nhsd-transplant-ileum_2-y-codes-spl-hes-opcs4.csv",
             "variables": {
               "analysis/dataset_definition.py": {
                 "github_url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/analysis/dataset_definition.py",
@@ -23839,7 +23879,8 @@
             }
           },
           {
-            "url": "codelists/nhsd-transplant-ileum_2-spl-hes-opcs4.csv",
+            "file": "codelists/nhsd-transplant-ileum_2-spl-hes-opcs4.csv",
+            "url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/codelists/nhsd-transplant-ileum_2-spl-hes-opcs4.csv",
             "variables": {
               "analysis/dataset_definition.py": {
                 "github_url": "https://github.com/opensafely/tocilizumab_and_sarilumab/blob/8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370/analysis/dataset_definition.py",
