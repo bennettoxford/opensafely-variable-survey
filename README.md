@@ -155,6 +155,8 @@ just codelists --force
 
 1. Update the `rsi-codelists-analysis.json`
 
+**TODO - this is now out of data given recent changes to this file - we need to update these instructions**
+
 ```bash
 # Assumes starting from this directory and that the opencodelists repo is checked out at the same level as this one
 curr_dir=$(pwd)

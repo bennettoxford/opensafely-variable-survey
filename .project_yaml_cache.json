@@ -689,6 +689,12 @@
   "opensafely/COVID-19-vaccine-breakthrough@fa87762f001dc86725a12417745160421bd35b4f": [],
   "opensafely/COVID-19-vaccine-breakthrough@fbaa242c80d8f9e7bff1d9665b2e75fa01ac5b63": [],
   "opensafely/COVID-19-vaccine-breakthrough@fbe8064b0ebcafae79a98f7204ac4c88b7a54140": [],
+  "opensafely/COVID-19_vacci_and_MACE_after_hip_fracture@1a17022635c0dc26ef88c9fecdece8352801171c": [
+    "analysis/dataset_definition.py"
+  ],
+  "opensafely/COVID-19_vacci_and_MACE_after_hip_fracture@bb5e2b673a060c341f31cee75abba4fde0658a41": [
+    "analysis/dataset_definition.py"
+  ],
   "opensafely/COVID-19_vacci_and_MACE_after_hip_fracture@c22d2441016205fbb577e03c14b639a77fad2f61": [
     "analysis/dataset_definition.py"
   ],
@@ -1865,6 +1871,23 @@
     "analysis/25b_hes_stillbirth_dataset_definition.py",
     "analysis/25c_hes_early_loss_dataset_definition.py"
   ],
+  "opensafely/OpenPregnosis@085c5b31384e499375ce172bd3f824d21bc22b43": [
+    "analysis/01_diagnostic_event_counts.py",
+    "analysis/03a_livebirth_dataset_definition.py",
+    "analysis/03b_stillbirth_dataset_definition.py",
+    "analysis/03c_early_loss_dataset_definition.py",
+    "analysis/03d_pregnancy_start_dataset_definition.py",
+    "analysis/03e_indicator_dataset_definition.py",
+    "analysis/03f_birth_and_delivery_indicating_livebirth_dataset_definition.py",
+    "analysis/03g_mode_of_delivery_dataset_definition.py",
+    "analysis/03h_preterm_indicator_dataset_definition.py",
+    "analysis/22_hes_diagnostic_event_counts.py",
+    "analysis/25a_hes_livebirth_dataset_definition.py",
+    "analysis/25b_hes_stillbirth_dataset_definition.py",
+    "analysis/25c_hes_early_loss_dataset_definition.py",
+    "analysis/25d_hes_opcs_delivery_dataset_definition.py",
+    "analysis/25e_hes_admission_delivery_dataset_definition.py"
+  ],
   "opensafely/OpenPregnosis@12984391ca6f05b4aaa5d5de945ede905f41ca96": [
     "analysis/01_diagnostic_event_counts.py",
     "analysis/03a_livebirth_dataset_definition.py",
@@ -1916,6 +1939,23 @@
     "analysis/03b_stillbirth_dataset_definition.py",
     "analysis/03c_early_loss_dataset_definition.py",
     "analysis/03d_early_markers_dataset_definition.py"
+  ],
+  "opensafely/OpenPregnosis@40c5eb7646c2455ee7140e8247da9e8c3ac413d6": [
+    "analysis/01_diagnostic_event_counts.py",
+    "analysis/03a_livebirth_dataset_definition.py",
+    "analysis/03b_stillbirth_dataset_definition.py",
+    "analysis/03c_early_loss_dataset_definition.py",
+    "analysis/03d_pregnancy_start_dataset_definition.py",
+    "analysis/03e_indicator_dataset_definition.py",
+    "analysis/03f_birth_and_delivery_indicating_livebirth_dataset_definition.py",
+    "analysis/03g_mode_of_delivery_dataset_definition.py",
+    "analysis/03h_preterm_indicator_dataset_definition.py",
+    "analysis/22_hes_diagnostic_event_counts.py",
+    "analysis/25a_hes_livebirth_dataset_definition.py",
+    "analysis/25b_hes_stillbirth_dataset_definition.py",
+    "analysis/25c_hes_early_loss_dataset_definition.py",
+    "analysis/25d_hes_opcs_delivery_dataset_definition.py",
+    "analysis/25e_hes_admission_delivery_dataset_definition.py"
   ],
   "opensafely/OpenPregnosis@477a92cb3d45d0c9581068d8a2cae303b9a2c316": [
     "analysis/01_diagnostic_event_counts.py",
@@ -2009,6 +2049,40 @@
     "analysis/03c_early_loss_dataset_definition.py",
     "analysis/03d_pregnancy_start_dataset_definition.py",
     "analysis/03e_indicator_dataset_definition.py"
+  ],
+  "opensafely/OpenPregnosis@a66a401aa9422a389742bf708462968f013b4132": [
+    "analysis/01_diagnostic_event_counts.py",
+    "analysis/03a_livebirth_dataset_definition.py",
+    "analysis/03b_stillbirth_dataset_definition.py",
+    "analysis/03c_early_loss_dataset_definition.py",
+    "analysis/03d_pregnancy_start_dataset_definition.py",
+    "analysis/03e_indicator_dataset_definition.py",
+    "analysis/03f_birth_and_delivery_indicating_livebirth_dataset_definition.py",
+    "analysis/03g_mode_of_delivery_dataset_definition.py",
+    "analysis/03h_preterm_indicator_dataset_definition.py",
+    "analysis/22_hes_diagnostic_event_counts.py",
+    "analysis/25a_hes_livebirth_dataset_definition.py",
+    "analysis/25b_hes_stillbirth_dataset_definition.py",
+    "analysis/25c_hes_early_loss_dataset_definition.py",
+    "analysis/25d_hes_opcs_delivery_dataset_definition.py",
+    "analysis/25e_hes_admission_delivery_dataset_definition.py"
+  ],
+  "opensafely/OpenPregnosis@af46ba4c4630f4467a1bc298b6d8271b1054b7ce": [
+    "analysis/01_diagnostic_event_counts.py",
+    "analysis/03a_livebirth_dataset_definition.py",
+    "analysis/03b_stillbirth_dataset_definition.py",
+    "analysis/03c_early_loss_dataset_definition.py",
+    "analysis/03d_pregnancy_start_dataset_definition.py",
+    "analysis/03e_indicator_dataset_definition.py",
+    "analysis/03f_birth_and_delivery_indicating_livebirth_dataset_definition.py",
+    "analysis/03g_mode_of_delivery_dataset_definition.py",
+    "analysis/03h_preterm_indicator_dataset_definition.py",
+    "analysis/22_hes_diagnostic_event_counts.py",
+    "analysis/25a_hes_livebirth_dataset_definition.py",
+    "analysis/25b_hes_stillbirth_dataset_definition.py",
+    "analysis/25c_hes_early_loss_dataset_definition.py",
+    "analysis/25d_hes_opcs_delivery_dataset_definition.py",
+    "analysis/25e_hes_admission_delivery_dataset_definition.py"
   ],
   "opensafely/OpenPregnosis@b74d8049a5ed2025d3f5c20b8fb56f89c8f5e5f2": [
     "analysis/01_diagnostic_event_counts.py",
@@ -17046,6 +17120,11 @@
     "analysis/dataset_definition_dm_algo.py",
     "analysis/dataset_definition_t2dm.py"
   ],
+  "opensafely/metformin_covid@34248c2fbf6709803906a6b4639303ddbdaa4429": [
+    "analysis/dataset_definition_dm_algo.py",
+    "analysis/dataset_definition_ppa.py",
+    "analysis/dataset_definition_t2dm.py"
+  ],
   "opensafely/metformin_covid@34f89e584973504a482284a5a98e766bb168d1c6": [
     "analysis/dataset_definition_dm_algo.py",
     "analysis/dataset_definition_t2dm.py"
@@ -17095,6 +17174,11 @@
     "analysis/dataset_definition_t2dm.py"
   ],
   "opensafely/metformin_covid@5e608bee2cff3cc64b8c44814185e301bfcc82d4": [
+    "analysis/dataset_definition_dm_algo.py",
+    "analysis/dataset_definition_ppa.py",
+    "analysis/dataset_definition_t2dm.py"
+  ],
+  "opensafely/metformin_covid@6007f9a52acc9f075a7838f23c2b12c39cedc4c7": [
     "analysis/dataset_definition_dm_algo.py",
     "analysis/dataset_definition_ppa.py",
     "analysis/dataset_definition_t2dm.py"
@@ -23637,6 +23721,9 @@
   "opensafely/pharmacy-first@d585d082047938ddd5801b319069e1d06a1321fc": [
     "analysis/dataset_definition_tables.py"
   ],
+  "opensafely/pharmacy-first@da757d3dd653af4c5b678efd58963ebd815d96c3": [
+    "analysis/dataset_definition_tables.py"
+  ],
   "opensafely/pharmacy-first@dd662dbf427029d886c05e910f42b1b3032a2dcd": [
     "analysis/dataset_definition_tables.py"
   ],
@@ -24406,6 +24493,10 @@
     "analysis/dataset_definition/dataset_definition_dates.py",
     "analysis/dataset_definition/dataset_definition_prevax.py"
   ],
+  "opensafely/post-covid-cvd-methods@8f4fa2614969e2d15594182bc37f0292af099a78": [
+    "analysis/dataset_definition/dataset_definition_dates.py",
+    "analysis/dataset_definition/dataset_definition_prevax.py"
+  ],
   "opensafely/post-covid-cvd-methods@995a9ea6dbcf5f2c4cc4753490d650a218b8e9aa": [
     "analysis/dataset_definition/dataset_definition_dates.py",
     "analysis/dataset_definition/dataset_definition_prevax.py"
@@ -24497,6 +24588,12 @@
     "analysis/dataset_definition/dataset_definition_vax.py"
   ],
   "opensafely/post-covid-cvd@be30579d434bda97548ed05ea73c6e43ba43e770": [
+    "analysis/dataset_definition/dataset_definition_dates.py",
+    "analysis/dataset_definition/dataset_definition_prevax.py",
+    "analysis/dataset_definition/dataset_definition_unvax.py",
+    "analysis/dataset_definition/dataset_definition_vax.py"
+  ],
+  "opensafely/post-covid-cvd@c9319ff02e67003e4accb3b62c9c74e88097de69": [
     "analysis/dataset_definition/dataset_definition_dates.py",
     "analysis/dataset_definition/dataset_definition_prevax.py",
     "analysis/dataset_definition/dataset_definition_unvax.py",
@@ -25374,6 +25471,12 @@
   "opensafely/post-covid-mentalhealth@fd15b13cc0cb7b0a4454f8bbe4f671cca449e3c1": [],
   "opensafely/post-covid-neurodegenerative@031828b34ce55b6b88d6ef1422f7955cb7daf9cf": [],
   "opensafely/post-covid-neurodegenerative@058cb663026cc44c95d017a650ed7a31a9371df6": [],
+  "opensafely/post-covid-neurodegenerative@0bac181a3b3815ee0c8b0a910f8bb70836955e8a": [
+    "analysis/dataset_definition/dataset_definition_dates.py",
+    "analysis/dataset_definition/dataset_definition_prevax.py",
+    "analysis/dataset_definition/dataset_definition_unvax.py",
+    "analysis/dataset_definition/dataset_definition_vax.py"
+  ],
   "opensafely/post-covid-neurodegenerative@0dfcdfacf81e6162861550f21372abf02ad7b59c": [],
   "opensafely/post-covid-neurodegenerative@122946359b96fe3c569be00b8d2e287e7311dbbe": [],
   "opensafely/post-covid-neurodegenerative@18541cefabb0e8298b5ad2137503adac99f8c707": [
@@ -25555,6 +25658,12 @@
     "analysis/dataset_definition_rsd/dataset_definition_rsd_prevax.py",
     "analysis/dataset_definition_rsd/dataset_definition_rsd_unvax.py",
     "analysis/dataset_definition_rsd/dataset_definition_rsd_vax.py"
+  ],
+  "opensafely/post-covid-neurodegenerative@d51c038ca90a5cbe9c670cb0c9f04dd4e3994e4c": [
+    "analysis/dataset_definition/dataset_definition_dates.py",
+    "analysis/dataset_definition/dataset_definition_prevax.py",
+    "analysis/dataset_definition/dataset_definition_unvax.py",
+    "analysis/dataset_definition/dataset_definition_vax.py"
   ],
   "opensafely/post-covid-neurodegenerative@d72ddb7a9d9c74ab5ea8ad710c73b763cf4fbe87": [],
   "opensafely/post-covid-neurodegenerative@dd8aa8140b94174283ab25293faa5446f766bbd5": [
@@ -25884,6 +25993,12 @@
   "opensafely/post-covid-respiratory@c25a32dce0c87f168dfc99671775b66048983c09": [],
   "opensafely/post-covid-respiratory@c8e6b82f7d8f018e125a3aa5f68ac21e80a9c032": [],
   "opensafely/post-covid-respiratory@ccbdbb438aa699ac108209be052b2f409edb9f94": [
+    "analysis/dataset_definition/dataset_definition_dates.py",
+    "analysis/dataset_definition/dataset_definition_prevax.py",
+    "analysis/dataset_definition/dataset_definition_unvax.py",
+    "analysis/dataset_definition/dataset_definition_vax.py"
+  ],
+  "opensafely/post-covid-respiratory@d3472c3a39ba9acf5d91caa174278224fa460551": [
     "analysis/dataset_definition/dataset_definition_dates.py",
     "analysis/dataset_definition/dataset_definition_prevax.py",
     "analysis/dataset_definition/dataset_definition_unvax.py",
@@ -26260,6 +26375,12 @@
   "opensafely/post-covid-vaccinated@fd4fe26c05cd950999b83d535a12565554a6a0a6": [],
   "opensafely/post-covid-vaccinated@ffe4097604dd207ad8418c1a86fc17671d6474e0": [],
   "opensafely/post-covid-vax-autoimmune@5756bdf68a189c6f20c89726f69c9d34d017e040": [
+    "analysis/dataset_definition.py"
+  ],
+  "opensafely/post-infection-outcomes@a9e5d7b53ce4f81d79e0450117eecdbc40f84093": [
+    "analysis/dataset_definition.py"
+  ],
+  "opensafely/post-infection-outcomes@fec96c29b59e9fdd76710e85fc2bc770c49b3ad1": [
     "analysis/dataset_definition.py"
   ],
   "opensafely/post-vax-ae-attendance@10319f2907afd0efecf9ddde0470d5a367e507b7": [],
@@ -26705,6 +26826,9 @@
     "analysis/hyp_reg_dataset.py"
   ],
   "opensafely/raw_medicines_short_data_report@4ad1a7669507aaea5fa047b0ca00f84b6e38d98c": [
+    "analysis/dataset_definition.py"
+  ],
+  "opensafely/raw_medicines_short_data_report@902b4f4136391e308d3a819af3f46db856f621a5": [
     "analysis/dataset_definition.py"
   ],
   "opensafely/rct-test@3abf7b2c2da136732399643a2f80696309a1cf7e": [],
@@ -28177,6 +28301,7 @@
   "opensafely/tpp-dmd-checks@23134ea198c565bb934517b6c3a90845e01728d8": [],
   "opensafely/tpp-dmd-checks@5e87bf0a5c886aeac7229101b06ba690025267f9": [],
   "opensafely/tpp-dmd-checks@f05b24ddc7184a703dc4839edbd8c3663cd6c787": [],
+  "opensafely/tpp-patient-population@407f0db52914e7316a59817ab32520515799a31b": [],
   "opensafely/tpp-patient-population@4548ba9f80eaa2d51477ceb125a2220740fb8719": [],
   "opensafely/tpp-patient-population@ab2bcbb25d3702468a18861e4da31ab8e2381c5c": [],
   "opensafely/udca_covid@02c24d735cc850757c4097bbc774a349444c2ace": [],
@@ -29658,6 +29783,27 @@
   "opensafely/waning-ve-3dose@7da6f117427431ed19b23e387314ca5c1a12a253": [],
   "opensafely/waning-ve-3dose@d3c06332fc7bd2956b6d2f2a88f880766a9bb845": [],
   "opensafely/waning-ve-3dose@d72023ef1d786e9a53f5178b2b10db02f7a5fd8f": [],
+  "opensafely/winter-pressures-phase-II-rvr@03797c31e84edb46fd9788c0574297d3771aa3d7": [
+    "analysis/dataset.py"
+  ],
+  "opensafely/winter-pressures-phase-II-rvr@64ccacdc93c5e5282f0f5cde41102235f963bee9": [
+    "analysis/dataset.py"
+  ],
+  "opensafely/winter-pressures-phase-II-rvr@7496d00279ed49e787012b975b513d15c15b0ca0": [
+    "analysis/dataset.py"
+  ],
+  "opensafely/winter-pressures-phase-II-rvr@8fe99a8844e7945bcc1eae82054b3b9d6669e54d": [
+    "analysis/dataset.py"
+  ],
+  "opensafely/winter-pressures-phase-II-rvr@93592fc0f100b7f04215ff1855f982acbf50f179": [
+    "analysis/dataset.py"
+  ],
+  "opensafely/winter-pressures-phase-II-rvr@c8ca33f31eac828d65d2a199c09126df66006fdd": [
+    "analysis/dataset.py"
+  ],
+  "opensafely/winter-pressures-phase-II-rvr@e513dfeb03a67ae19f4f78fb107d427f338c920c": [
+    "analysis/dataset.py"
+  ],
   "opensafely/winter-pressures-phase-II@02f640908def0351ccc5c72d6ab6717767dc2733": [],
   "opensafely/winter-pressures-phase-II@05f1b788fae31b8fa30dd6694adf32c9f772ec07": [],
   "opensafely/winter-pressures-phase-II@0846c5c7ee14ed616011ff94e49e9c5c5194be11": [],
@@ -29665,8 +29811,17 @@
     "analysis/dataset.py"
   ],
   "opensafely/winter-pressures-phase-II@0a134958ff8d62c2fa1627bb8eaafa223fde7dd6": [],
+  "opensafely/winter-pressures-phase-II@0a37f27e1af3a3c11e6d146f9c66bc8c76883951": [
+    "analysis/dataset.py"
+  ],
   "opensafely/winter-pressures-phase-II@0cb5e642423441df65751e7b457ef0d58bf807b6": [],
+  "opensafely/winter-pressures-phase-II@0cb8e6cb788141bd972faf1607b342eea8879fbd": [
+    "analysis/dataset.py"
+  ],
   "opensafely/winter-pressures-phase-II@11b9ba2cdbfc707ae12fe960c5edac903e04894b": [
+    "analysis/dataset.py"
+  ],
+  "opensafely/winter-pressures-phase-II@1362ebfec3e4dfa83d623196869f7e665980575b": [
     "analysis/dataset.py"
   ],
   "opensafely/winter-pressures-phase-II@147bff9435cdaac96fcb81c3d0367c46192e07d4": [],
@@ -29709,11 +29864,17 @@
   "opensafely/winter-pressures-phase-II@3eea5487f6a88c0be2fd0dc9a0fbbafa8489b66c": [],
   "opensafely/winter-pressures-phase-II@415b107e8fe02286eb38939c6e6e5bd298671d09": [],
   "opensafely/winter-pressures-phase-II@428b9a7cba751e5e1f1ed225c04a3b4351ac3e0b": [],
+  "opensafely/winter-pressures-phase-II@4371a7d9d20c49d455406de5004ea84045272830": [
+    "analysis/dataset.py"
+  ],
   "opensafely/winter-pressures-phase-II@449f35964b071812ef963b6614b612d99496c8bb": [
     "analysis/dataset.py"
   ],
   "opensafely/winter-pressures-phase-II@459466f13667fd41467bd67cdb3d95f38b0f23bc": [],
   "opensafely/winter-pressures-phase-II@47f530726b89eb873419c222eb27baed8e128879": [],
+  "opensafely/winter-pressures-phase-II@480accd7a877e29c67fa83fbac671134411ac315": [
+    "analysis/dataset.py"
+  ],
   "opensafely/winter-pressures-phase-II@48d03633b553d6203f02a08a10b7baf39c3331af": [
     "analysis/dataset.py"
   ],
@@ -29749,6 +29910,9 @@
   "opensafely/winter-pressures-phase-II@80b40034ed0d4cb020fb9c27d02b3d75c8ed644b": [],
   "opensafely/winter-pressures-phase-II@832d10c4c09bf8751388259876cca6fe0d840c3a": [],
   "opensafely/winter-pressures-phase-II@85c2bef8247a07e3301048da203206f6947dc23b": [],
+  "opensafely/winter-pressures-phase-II@86466ab77329ffae1cc5e0f64025df0224bdcb24": [
+    "analysis/dataset.py"
+  ],
   "opensafely/winter-pressures-phase-II@8f8ad7d60d8bcf0cab360f0c87c2eb7440a7b2fc": [],
   "opensafely/winter-pressures-phase-II@9b95ae1ae444f879df4f64781ab8996f6579bffa": [],
   "opensafely/winter-pressures-phase-II@9bf74a9d41d07f87f520f480137a6c23c05ce95f": [],
@@ -29773,11 +29937,17 @@
   "opensafely/winter-pressures-phase-II@bf43540a4f075224dbf75ee6754af1bb3d835846": [
     "analysis/dataset.py"
   ],
+  "opensafely/winter-pressures-phase-II@bfd9067c56acd97a3adea9cea31e6d7a9b76e564": [
+    "analysis/dataset.py"
+  ],
   "opensafely/winter-pressures-phase-II@c04246a8688ee0520213d65b3063c383f6062d5b": [],
   "opensafely/winter-pressures-phase-II@c4875ce407597c34efaa3e809749547510337e86": [],
   "opensafely/winter-pressures-phase-II@c567bf0b9fc2148000aca219e31839950a939558": [],
   "opensafely/winter-pressures-phase-II@c569a58f91f0d4b277c6321b310020d4d8391a51": [],
   "opensafely/winter-pressures-phase-II@c575ca221bed0b13e1d25e2b9474144dbc65b249": [],
+  "opensafely/winter-pressures-phase-II@c588ade73d9f3f38f93f635647c1c0a92bec86d1": [
+    "analysis/dataset.py"
+  ],
   "opensafely/winter-pressures-phase-II@c753a4c2a94daafedd31f51e9cc21e754a9a3c4f": [],
   "opensafely/winter-pressures-phase-II@c9355503246a5d2d8cd1ac7ade7ac53b3e1c8c8e": [
     "analysis/dataset.py"
@@ -29814,6 +29984,9 @@
     "analysis/dataset.py"
   ],
   "opensafely/winter-pressures-phase-II@f9688f1358ad876365f7ccda484f64204915ffbf": [
+    "analysis/dataset.py"
+  ],
+  "opensafely/winter-pressures-phase-II@fadb35c83105be62389460b99beb4a03b94777b3": [
     "analysis/dataset.py"
   ],
   "opensafely/winter-pressures-phase-II@fe62ae148c9744edb173225dd86a29ae35a4210b": [
@@ -29873,6 +30046,14 @@
   "opensafely/winter-pressures@e4c47b3536c027e1623cc6a27a78c5fa942590ec": [],
   "opensafely/winter-pressures@f1e145083827a48c8078de5ddf606fc108913f02": [],
   "opensafely/winter-pressures@fbd270030d75e4d694833904ab2589d6e45a260f": [],
+  "opensafely/winter_pressures_inequalities@139535ae02aac725f727ad14771efe45d5035f04": [
+    "analysis/dataset_definition_covid.py",
+    "analysis/dataset_definition_flu_rsv.py"
+  ],
+  "opensafely/winter_pressures_inequalities@1551619175dfc2eff035a2775cf81a8c68eb9c0f": [
+    "analysis/dataset_definition_covid.py",
+    "analysis/dataset_definition_flu_rsv.py"
+  ],
   "opensafely/winter_pressures_inequalities@2196d0eb2152b90bbf78bb1ccd0416880940d347": [
     "analysis/dataset_definition_covid.py",
     "analysis/dataset_definition_flu_rsv.py"
@@ -29897,11 +30078,19 @@
     "analysis/dataset_definition_covid.py",
     "analysis/dataset_definition_flu_rsv.py"
   ],
+  "opensafely/winter_pressures_inequalities@63001af9940eb7c5b148296f9b2044c4e5cbd0bd": [
+    "analysis/dataset_definition_covid.py",
+    "analysis/dataset_definition_flu_rsv.py"
+  ],
   "opensafely/winter_pressures_inequalities@63ec47133de00612f5df106b60f5ed373492b18d": [
     "analysis/dataset_definition_covid.py",
     "analysis/dataset_definition_flu_rsv.py"
   ],
   "opensafely/winter_pressures_inequalities@73058fc9bd132b6a7dd96b8dfe87f6bc1c6ae778": [
+    "analysis/dataset_definition_covid.py",
+    "analysis/dataset_definition_flu_rsv.py"
+  ],
+  "opensafely/winter_pressures_inequalities@88be7ec00789a8978da2f33e11cb4c1268737ea7": [
     "analysis/dataset_definition_covid.py",
     "analysis/dataset_definition_flu_rsv.py"
   ],
@@ -29933,6 +30122,10 @@
     "analysis/dataset_definition_covid.py",
     "analysis/dataset_definition_flu_rsv.py"
   ],
+  "opensafely/winter_pressures_inequalities@cfe6009c4083d9b97bad05ea579a6c40cd7b8b6f": [
+    "analysis/dataset_definition_covid.py",
+    "analysis/dataset_definition_flu_rsv.py"
+  ],
   "opensafely/winter_pressures_inequalities@dbe91a77e895bd334dfc9d09a766c4e5c6f2a14d": [
     "analysis/dataset_definition_covid.py",
     "analysis/dataset_definition_flu_rsv.py"
@@ -29948,6 +30141,9 @@
   "opensafely/with-gp-consultations-curation@04f9915dfc93748ad884307aa82bc59d5f075452": [],
   "opensafely/with-gp-consultations-curation@e100cd90bd353ad2de43748c654c16e04cc3aec1": [],
   "opensafely/wp3_predicting_pressures@a72c6722c3b40515d4054285d5dfdebb526e2198": [
+    "analysis/dataset_definition.py"
+  ],
+  "opensafely/wp3_respiratory_virus_timeseries@ee8bb45f451d4e1fd8b8c454a11a074384cbe8ec": [
     "analysis/dataset_definition.py"
   ]
 }
