@@ -10,11 +10,26 @@
         "analysis/1-extract/dataset_definition.py": {
           "github_url": "https://github.com/opensafely/COMPARES-vaccines/blob/f231b4fe63bc06caba1e9888821063fb83ce0920/analysis/1-extract/dataset_definition.py",
           "variables": [
-            "ate_admitted_date",
-            "ate_date",
-            "ate_death_date",
-            "ate_prior",
-            "ate_prior_admitted"
+            [
+              "ate_admitted_date",
+              631
+            ],
+            [
+              "ate_date",
+              634
+            ],
+            [
+              "ate_death_date",
+              632
+            ],
+            [
+              "ate_prior",
+              368
+            ],
+            [
+              "ate_prior_admitted",
+              366
+            ]
           ]
         }
       }
@@ -31,11 +46,26 @@
         "analysis/1-extract/dataset_definition.py": {
           "github_url": "https://github.com/opensafely/COMPARES-vaccines-Autumn-2024/blob/f231b4fe63bc06caba1e9888821063fb83ce0920/analysis/1-extract/dataset_definition.py",
           "variables": [
-            "ate_admitted_date",
-            "ate_date",
-            "ate_death_date",
-            "ate_prior",
-            "ate_prior_admitted"
+            [
+              "ate_admitted_date",
+              null
+            ],
+            [
+              "ate_date",
+              null
+            ],
+            [
+              "ate_death_date",
+              null
+            ],
+            [
+              "ate_prior",
+              null
+            ],
+            [
+              "ate_prior_admitted",
+              null
+            ]
           ]
         }
       }
@@ -52,13 +82,19 @@
         "analysis/dataset_definition_ppa.py": {
           "github_url": "https://github.com/opensafely/metformin_covid/blob/da5f60f5e0dd5f3a2d0ae1affd5e3e83a1106e7e/analysis/dataset_definition_ppa.py",
           "variables": [
-            "cov_date_dementia"
+            [
+              "cov_date_dementia",
+              130
+            ]
           ]
         },
         "analysis/dataset_definition_t2dm.py": {
           "github_url": "https://github.com/opensafely/metformin_covid/blob/da5f60f5e0dd5f3a2d0ae1affd5e3e83a1106e7e/analysis/dataset_definition_t2dm.py",
           "variables": [
-            "cov_bin_dementia"
+            [
+              "cov_bin_dementia",
+              368
+            ]
           ]
         }
       }
@@ -75,7 +111,10 @@
         "analysis/dataset_definition.py": {
           "github_url": "https://github.com/opensafely/post-covid-vax-autoimmune/blob/5756bdf68a189c6f20c89726f69c9d34d017e040/analysis/dataset_definition.py",
           "variables": [
-            "diabetes"
+            [
+              "diabetes",
+              197
+            ]
           ]
         }
       }
@@ -90,7 +129,10 @@
         "analysis/dataset_definition.py": {
           "github_url": "https://github.com/opensafely/post-covid-vax-autoimmune/blob/5756bdf68a189c6f20c89726f69c9d34d017e040/analysis/dataset_definition.py",
           "variables": [
-            "diabetes"
+            [
+              "diabetes",
+              197
+            ]
           ]
         }
       }
@@ -107,16 +149,46 @@
         "analysis/dataset_definition.py": {
           "github_url": "https://github.com/opensafely/prophy_effects_Sotro_Molnup/blob/27fafcb2ee96084780df42b0f3d5e0315d267188/analysis/dataset_definition.py",
           "variables": [
-            "had_imid",
-            "had_imid_ever",
-            "highrisk_codelist",
-            "highrisk_codelist_ever",
-            "imid",
-            "imid_ever",
-            "immunosuppresant_drugs_nhsd",
-            "immunosuppresant_drugs_nhsd_ever",
-            "is_codelist_highrisk",
-            "is_codelist_highrisk_ever"
+            [
+              "had_imid",
+              520
+            ],
+            [
+              "had_imid_ever",
+              524
+            ],
+            [
+              "highrisk_codelist",
+              909
+            ],
+            [
+              "highrisk_codelist_ever",
+              915
+            ],
+            [
+              "imid",
+              527
+            ],
+            [
+              "imid_ever",
+              531
+            ],
+            [
+              "immunosuppresant_drugs_nhsd",
+              492
+            ],
+            [
+              "immunosuppresant_drugs_nhsd_ever",
+              509
+            ],
+            [
+              "is_codelist_highrisk",
+              906
+            ],
+            [
+              "is_codelist_highrisk_ever",
+              912
+            ]
           ]
         }
       }
@@ -131,19 +203,58 @@
         "analysis/dataset_definition.py": {
           "github_url": "https://github.com/opensafely/prophy_effects_Sotro_Molnup/blob/27fafcb2ee96084780df42b0f3d5e0315d267188/analysis/dataset_definition.py",
           "variables": [
-            "had_imid",
-            "had_imid_ever",
-            "highrisk_codelist",
-            "highrisk_codelist_ever",
-            "imid",
-            "imid_ever",
-            "is_codelist_highrisk",
-            "is_codelist_highrisk_ever",
-            "oral_steroid_drug_nhsd_12m_count",
-            "oral_steroid_drug_nhsd_3m_count",
-            "oral_steroid_drugs_nhsd",
-            "oral_steroid_drugs_nhsd_check",
-            "oral_steroid_drugs_nhsd_ever"
+            [
+              "had_imid",
+              520
+            ],
+            [
+              "had_imid_ever",
+              524
+            ],
+            [
+              "highrisk_codelist",
+              909
+            ],
+            [
+              "highrisk_codelist_ever",
+              915
+            ],
+            [
+              "imid",
+              527
+            ],
+            [
+              "imid_ever",
+              531
+            ],
+            [
+              "is_codelist_highrisk",
+              906
+            ],
+            [
+              "is_codelist_highrisk_ever",
+              912
+            ],
+            [
+              "oral_steroid_drug_nhsd_12m_count",
+              500
+            ],
+            [
+              "oral_steroid_drug_nhsd_3m_count",
+              496
+            ],
+            [
+              "oral_steroid_drugs_nhsd",
+              504
+            ],
+            [
+              "oral_steroid_drugs_nhsd_check",
+              508
+            ],
+            [
+              "oral_steroid_drugs_nhsd_ever",
+              513
+            ]
           ]
         }
       }

@@ -7,11 +7,13 @@ DATA_DIR = ROOT_DIR / "data"
 RSI_JSON_FILE = DATA_DIR / "rsi-codelists-analysis.json"
 LATEST_CODELIST_JSON_FILE = ROOT_DIR / "ehrql_codelists_latest_max.json"
 METADATA_CACHE_FILE = DATA_DIR / "codelist_metadata_cache.json"
+EHRQL_VARIABLES_JSON_FILE = DATA_DIR / "ehrql_variables.json"
 
 _rsi_data = None
 _codelists = None
 _metadata_cache = None
 _empty_cache_retry_attempted = set()
+_ehrql_variable_lines = None
 
 
 def make_ocl_url(url):
@@ -42,6 +44,40 @@ def _persist_metadata_cache():
     with open(METADATA_CACHE_FILE, "w") as f:
         json.dump(cache, f, indent=2, sort_keys=True)
         f.write("\n")
+
+
+def _get_ehrql_variable_lines():
+    global _ehrql_variable_lines
+    if _ehrql_variable_lines is None:
+        _ehrql_variable_lines = {}
+        with open(EHRQL_VARIABLES_JSON_FILE) as f:
+            json_data = json.load(f)
+
+        for repo_name, repo_data in json_data.get("projects", {}).items():
+            repo_files = repo_data.get("files", {})
+            repo_sha = repo_data.get("sha")
+            for file_name, variables in repo_files.items():
+                for variable_info in variables:
+                    if len(variable_info) < 3:
+                        continue
+                    variable_name = variable_info[0]
+                    line_number = variable_info[2]
+                    _ehrql_variable_lines[
+                        (repo_name, repo_sha, file_name, variable_name)
+                    ] = line_number
+                    _ehrql_variable_lines[(repo_name, file_name, variable_name)] = (
+                        line_number
+                    )
+
+    return _ehrql_variable_lines
+
+
+def _variable_with_line_number(repo_name, sha, file_name, variable_name):
+    variable_lines = _get_ehrql_variable_lines()
+    line_number = variable_lines.get((repo_name, sha, file_name, variable_name))
+    if line_number is None:
+        line_number = variable_lines.get((repo_name, file_name, variable_name))
+    return (variable_name, line_number)
 
 
 def _get_latest_codelist_data():
@@ -86,9 +122,12 @@ def _get_latest_codelist_data():
 
                 for file_name, variables in files.items():
                     for variable_name, codelists in variables.items():
+                        variable_with_line = _variable_with_line_number(
+                            repo_name, sha, file_name, variable_name
+                        )
                         for codelist_info in codelists:
                             variable_content = {
-                                "variables": [variable_name],
+                                "variables": [variable_with_line],
                                 "github_url": make_github_url(
                                     repo_name, file_name, sha
                                 ),
@@ -105,7 +144,7 @@ def _get_latest_codelist_data():
                                     if file_name in inline_codelists[url]["variables"]:
                                         inline_codelists[url]["variables"][file_name][
                                             "variables"
-                                        ].append(variable_name)
+                                        ].append(variable_with_line)
                                     else:
                                         inline_codelists[url]["variables"][
                                             file_name
@@ -131,7 +170,7 @@ def _get_latest_codelist_data():
                                             unintentional_local_codelists[url][
                                                 "variables"
                                             ][file_name]["variables"].append(
-                                                variable_name
+                                                variable_with_line
                                             )
                                         else:
                                             unintentional_local_codelists[url][
@@ -151,7 +190,7 @@ def _get_latest_codelist_data():
                                         ):
                                             local_codelists[url]["variables"][
                                                 file_name
-                                            ]["variables"].append(variable_name)
+                                            ]["variables"].append(variable_with_line)
                                         else:
                                             local_codelists[url]["variables"][
                                                 file_name
@@ -170,7 +209,7 @@ def _get_latest_codelist_data():
                                     if file_name in ocl_codelists[url]["variables"]:
                                         ocl_codelists[url]["variables"][file_name][
                                             "variables"
-                                        ].append(variable_name)
+                                        ].append(variable_with_line)
                                     else:
                                         ocl_codelists[url]["variables"][file_name] = (
                                             variable_content
