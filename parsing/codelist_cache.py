@@ -44,13 +44,16 @@ def get_codelist(codelist_url: str, force: bool = False) -> list[str]:
     cache_path = _get_cache_path(url)
 
     if not force and cache_path.exists():
+        print(f"Using cached codelist for {codelist_url}")
         return _get_codes_from_file(cache_path)
 
-    download_url = f"{BASE_URL}{url}download.csv"
+    download_url = f"{BASE_URL}/{url}/download.csv"
+    print(f"Downloading codelist from {download_url}")
     try:
         response = requests.get(download_url, timeout=30)
         response.raise_for_status()
     except requests.RequestException:
+        print(f"Failed to fetch codelist from {download_url}")
         return None
 
     cache_path.write_bytes(response.content)
