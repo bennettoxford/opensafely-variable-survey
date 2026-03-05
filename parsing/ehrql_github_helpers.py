@@ -514,27 +514,36 @@ def project_yaml_search(
             )
 
         try:
-            # Fast path: check index first
+            # Fast path: check index first, but only trust cache entries for current HEAD SHA
             if repo_name in cache_index:
                 entry = cache_index[repo_name]
                 index_hits += 1
+                cached_sha = entry.get("sha", "")
 
-                if entry.get("no_project_yaml"):
-                    no_project_yaml_count += 1
-                    continue
+                # If repo HEAD has moved since cache entry was written, ignore stale cache
+                # and re-evaluate this repo at the current HEAD.
+                if cached_sha == head_sha:
+                    if entry.get("no_project_yaml"):
+                        no_project_yaml_count += 1
+                        continue
 
-                if entry.get("has_ehrql"):
-                    items.append(
-                        {
-                            "repo_full_name": repo_full_name,
-                            "sha": entry.get("sha", ""),
-                        }
+                    if entry.get("has_ehrql"):
+                        items.append(
+                            {
+                                "repo_full_name": repo_full_name,
+                                "sha": head_sha,
+                            }
+                        )
+                        cached_count += 1
+                        continue
+                    else:
+                        # In index but no ehrql
+                        continue
+                elif verbose:
+                    print(
+                        f"  Cache stale for {repo_full_name}: {cached_sha[:8]} -> {head_sha[:8]}",
+                        file=sys.stderr,
                     )
-                    cached_count += 1
-                    continue
-                else:
-                    # In index but no ehrql
-                    continue
 
             # Use the same cache naming as clone_ehrql_repos: {repo_name}-{first_8_chars_of_sha}
             cache_key = f"{repo_name}-{head_sha[:8]}"

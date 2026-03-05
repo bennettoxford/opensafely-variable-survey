@@ -2,6 +2,10 @@
   "opensafely/ACT-PharmacyFirst-Protocol2-healthcare-usage@37294007f547bd95e6d166ffe855b5a229483731": [
     "analysis/dataset_definition.py"
   ],
+  "opensafely/ACT-PharmacyFirst-Protocol2-healthcare-usage@c32feecbfdf7c81c21f681d975ac6288955011fe": [
+    "analysis/dataset_definition_patients.py",
+    "analysis/dataset_definition_practices.py"
+  ],
   "opensafely/ADHD-Pre-and-Post-Covid@01764891d93983d8f1ec7d9c0f84b240cc194e6f": [
     "analysis/dataset_definition_dx_to_med_time.py"
   ],
@@ -10,6 +14,9 @@
     "analysis/dataset_definition_dx_to_med_time.py"
   ],
   "opensafely/ADHD-Pre-and-Post-Covid@03931de0a3bc746451c86f3a1c223a50b9a13b6a": [
+    "analysis/Patient_table_5_dia_to_med.py"
+  ],
+  "opensafely/ADHD-Pre-and-Post-Covid@04e76f6dc3ecea437bb276c0e344f3c27b976e0b": [
     "analysis/Patient_table_5_dia_to_med.py"
   ],
   "opensafely/ADHD-Pre-and-Post-Covid@143c25e5cb701e5ca36f7f05caea602771564a9d": [
@@ -12994,6 +13001,13 @@
     "analysis/dataset_definition_household.py",
     "analysis/dataset_definition_mothers.py"
   ],
+  "opensafely/disparities-comparison@5ce8718ae45a430372fa6d1eb7ec1ec3aebe2792": [
+    "analysis/dataset_definition.py",
+    "analysis/dataset_definition_flow_chart.py",
+    "analysis/dataset_definition_flow_chart_mothers.py",
+    "analysis/dataset_definition_household.py",
+    "analysis/dataset_definition_mothers.py"
+  ],
   "opensafely/disparities-comparison@5f027ea2952f0ed0f9b7d049eefbac966b3f217a": [
     "analysis/dataset_definition.py",
     "analysis/dataset_definition_flow_chart.py",
@@ -14384,6 +14398,9 @@
     "analysis/dataset_definition.py"
   ],
   "opensafely/early-inflammatory-arthritis@fc7d8014f40316caa24601e01c5025c469ab74e2": [],
+  "opensafely/ehrql-demo@65ce78f737caa933be27a2a96812e07b1c397c10": [
+    "analysis/dataset_definition.py"
+  ],
   "opensafely/ehrql-demo@dcff18b6acee9dcaa655a5bd1793de2e0c9cb5d8": [
     "analysis/dataset_definition.py"
   ],
@@ -17352,6 +17369,11 @@
   ],
   "opensafely/metformin_covid@d5e126884d83d8e660b8d73203e9eae71ef1a69c": [
     "analysis/dataset_definition_dm_algo.py",
+    "analysis/dataset_definition_t2dm.py"
+  ],
+  "opensafely/metformin_covid@da5f60f5e0dd5f3a2d0ae1affd5e3e83a1106e7e": [
+    "analysis/dataset_definition_dm_algo.py",
+    "analysis/dataset_definition_ppa.py",
     "analysis/dataset_definition_t2dm.py"
   ],
   "opensafely/metformin_covid@dca140b4363bb44fd0903283a0a620a557dcab50": [
@@ -23976,6 +23998,10 @@
   "opensafely/pifu-data-exploration@dadbc36c55b2a6e313a15041088f7a291c6abcce": [
     "analysis/dataset_definition.py"
   ],
+  "opensafely/pifu-data-exploration@db02a4d5d1e76a3ac33488f6b86315ea955d7cce": [
+    "analysis/dataset_definition_everyone.py",
+    "analysis/dataset_definition_rheum.py"
+  ],
   "opensafely/pifu-data-exploration@e2c708398ced4e9c1f686d63ae5539feca1e47a0": [
     "analysis/dataset_definition_everyone.py",
     "analysis/dataset_definition_explore.py",
@@ -24006,6 +24032,10 @@
   "opensafely/pifu-data-exploration@fafb62c2052ff7251c47f10a56cb11b0a8508cdb": [
     "analysis/dataset_definition.py",
     "analysis/dataset_definition_explore.py",
+    "analysis/dataset_definition_rheum.py"
+  ],
+  "opensafely/pifu-data-exploration@fdf7191344784b529eee13124d261bbeb58cfe05": [
+    "analysis/dataset_definition_everyone.py",
     "analysis/dataset_definition_rheum.py"
   ],
   "opensafely/pincer-measures-change-detection@159cc05df6c59f3056ac828dd32fb987a660313a": [],
@@ -25828,6 +25858,12 @@
     "analysis/dataset_definition/dataset_definition_vax.py"
   ],
   "opensafely/post-covid-renal@a50f5a84b55e45ce245d72dc99c04e8e34e99ad0": [],
+  "opensafely/post-covid-renal@aae42ec6e24aded998f877584f4c9d2806d4de6b": [
+    "analysis/dataset_definition/dataset_definition_dates.py",
+    "analysis/dataset_definition/dataset_definition_prevax.py",
+    "analysis/dataset_definition/dataset_definition_unvax.py",
+    "analysis/dataset_definition/dataset_definition_vax.py"
+  ],
   "opensafely/post-covid-renal@adab0c0781e34e1977af12397599ee5cd8a32122": [],
   "opensafely/post-covid-renal@b118f6d1c683f3c0c738c2500396e8b721a6552e": [],
   "opensafely/post-covid-renal@b6edcf4e57b2c54cf45318eb60667792105dfddd": [],
@@ -29853,6 +29889,9 @@
   "opensafely/winter-pressures-phase-II@26a3cff312bb58a81927e407ab24a61d9fc2eefa": [],
   "opensafely/winter-pressures-phase-II@2a97114200ab29efc6b6c1266e4931b3cff9bcc9": [],
   "opensafely/winter-pressures-phase-II@30022ebeba8f82870deca0e2c15748cea4a02637": [],
+  "opensafely/winter-pressures-phase-II@31417e2b1f745f7d2e34a5371b471e23dcc5771f": [
+    "analysis/dataset.py"
+  ],
   "opensafely/winter-pressures-phase-II@330eae892be14998c664a53fc71717b2d5d84d44": [
     "analysis/dataset.py"
   ],
