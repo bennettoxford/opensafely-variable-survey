@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-03-05 09:57:58",
+  "generated_at": "2026-03-05 15:17:14",
   "latest_releases": {
     "bnf": "86 (2024-09-02) (valid from 2024-09-02)",
     "ctv3": "2018-04-01 with TPP extensions 2022-11-16 (valid from 2022-11-16)",
@@ -12,6 +12,10 @@
   },
   "repos": {
     "opensafely/ACT-PharmacyFirst-Protocol2-healthcare-usage": {
+      "ethnicity_codelist": {
+        "current_version": "https://www.opencodelists.org/codelist/opensafely/ethnicity-snomed-0removed/2e641f61/",
+        "newer_version": "https://www.opencodelists.org/codelist/opensafely/ethnicity-snomed-0removed/22911876"
+      },
       "good": {
         "codelists": []
       },
@@ -183,24 +187,6 @@
       "newer_version": {
         "codelists": [
           {
-            "name": "ethnicity (SNOMED)",
-            "newer_version": {
-              "label": "22911876",
-              "url": "https://www.opencodelists.org/codelist/opensafely/ethnicity-snomed-0removed/22911876"
-            },
-            "system": "snomedct",
-            "system_release": "unknown",
-            "url": "https://www.opencodelists.org/codelist/opensafely/ethnicity-snomed-0removed/2e641f61/",
-            "variables": {
-              "analysis/dataset_definition_patients.py": {
-                "github_url": "https://github.com/opensafely/ACT-PharmacyFirst-Protocol2-healthcare-usage/blob/c32feecbfdf7c81c21f681d975ac6288955011fe/analysis/dataset_definition_patients.py",
-                "variables": [
-                  "ethnicity"
-                ]
-              }
-            }
-          },
-          {
             "name": "Codes indicating the patient is pregnant",
             "newer_version": {
               "label": "20250912",
@@ -366,6 +352,7 @@
       }
     },
     "opensafely/ADHD-Pre-and-Post-Covid": {
+      "ethnicity_codelist": false,
       "good": {
         "codelists": []
       },
@@ -491,6 +478,7 @@
       }
     },
     "opensafely/COMPARES-vaccines": {
+      "ethnicity_codelist": false,
       "good": {
         "codelists": [
           {
@@ -1964,6 +1952,7 @@
       }
     },
     "opensafely/COMPARES-vaccines-Autumn-2024": {
+      "ethnicity_codelist": false,
       "good": {
         "codelists": [
           {
@@ -3437,6 +3426,7 @@
       }
     },
     "opensafely/COVID-19_vacci_and_MACE_after_hip_fracture": {
+      "ethnicity_codelist": false,
       "good": {
         "codelists": [
           {
@@ -4122,6 +4112,7 @@
       }
     },
     "opensafely/JAKi-hosp": {
+      "ethnicity_codelist": false,
       "good": {
         "codelists": [
           {
@@ -4365,6 +4356,7 @@
       }
     },
     "opensafely/NeurodegenerativeDiseaseBurden": {
+      "ethnicity_codelist": false,
       "good": {
         "codelists": [
           {
@@ -4733,6 +4725,7 @@
       }
     },
     "opensafely/Pharmacy-First-protocol-2-healthcare-usage": {
+      "ethnicity_codelist": false,
       "good": {
         "codelists": []
       },
@@ -4869,6 +4862,7 @@
       }
     },
     "opensafely/Pharmacy-First-protocol-2-healthcare-usage-wm": {
+      "ethnicity_codelist": false,
       "good": {
         "codelists": []
       },
@@ -5005,6 +4999,7 @@
       }
     },
     "opensafely/airmid-data-development": {
+      "ethnicity_codelist": false,
       "good": {
         "codelists": []
       },
@@ -5031,6 +5026,7 @@
       }
     },
     "opensafely/cis-pop-validation-ehrql": {
+      "ethnicity_codelist": false,
       "good": {
         "codelists": [
           {
@@ -5197,6 +5193,7 @@
       }
     },
     "opensafely/codelist-checks-test": {
+      "ethnicity_codelist": false,
       "good": {
         "codelists": []
       },
@@ -5230,6 +5227,7 @@
       }
     },
     "opensafely/comparative-booster-spring2023": {
+      "ethnicity_codelist": false,
       "good": {
         "codelists": [
           {
@@ -6706,6 +6704,7 @@
       }
     },
     "opensafely/covid-diabetes-care": {
+      "ethnicity_codelist": false,
       "good": {
         "codelists": []
       },
@@ -6853,6 +6852,7 @@
       }
     },
     "opensafely/covid-vaccine-history": {
+      "ethnicity_codelist": false,
       "good": {
         "codelists": [
           {
@@ -7237,6 +7237,7 @@
       }
     },
     "opensafely/curation-variables-library": {
+      "ethnicity_codelist": false,
       "good": {
         "codelists": []
       },
@@ -7263,6 +7264,7 @@
       }
     },
     "opensafely/custom-medication-dictionary-test": {
+      "ethnicity_codelist": false,
       "good": {
         "codelists": []
       },
@@ -7304,6 +7306,7 @@
       }
     },
     "opensafely/dataset-definition-testing-examples": {
+      "ethnicity_codelist": false,
       "good": {
         "codelists": []
       },
@@ -7330,6 +7333,7 @@
       }
     },
     "opensafely/death-report": {
+      "ethnicity_codelist": false,
       "good": {
         "codelists": [
           {
@@ -7385,6 +7389,7 @@
       }
     },
     "opensafely/demo_repo": {
+      "ethnicity_codelist": false,
       "good": {
         "codelists": [
           {
@@ -7823,6 +7828,7 @@
       }
     },
     "opensafely/dfms-covid19-new": {
+      "ethnicity_codelist": false,
       "good": {
         "codelists": []
       },
@@ -7849,6 +7855,10 @@
       }
     },
     "opensafely/digital-access-to-primary-care": {
+      "ethnicity_codelist": {
+        "current_version": "https://www.opencodelists.org/codelist/opensafely/ethnicity-snomed-0removed/2e641f61/",
+        "newer_version": "https://www.opencodelists.org/codelist/opensafely/ethnicity-snomed-0removed/22911876"
+      },
       "good": {
         "codelists": []
       },
@@ -7859,26 +7869,7 @@
         "codelists": []
       },
       "newer_version": {
-        "codelists": [
-          {
-            "name": "ethnicity (SNOMED)",
-            "newer_version": {
-              "label": "22911876",
-              "url": "https://www.opencodelists.org/codelist/opensafely/ethnicity-snomed-0removed/22911876"
-            },
-            "system": "snomedct",
-            "system_release": "unknown",
-            "url": "https://www.opencodelists.org/codelist/opensafely/ethnicity-snomed-0removed/2e641f61/",
-            "variables": {
-              "analysis/dataset_definition.py": {
-                "github_url": "https://github.com/opensafely/digital-access-to-primary-care/blob/891399e82ee17eb1143e808130fe669b1d2693ac/analysis/dataset_definition.py",
-                "variables": [
-                  "ethnicity"
-                ]
-              }
-            }
-          }
-        ]
+        "codelists": []
       },
       "no_events": {
         "codelists": []
@@ -7941,6 +7932,7 @@
       }
     },
     "opensafely/disease_incidence": {
+      "ethnicity_codelist": false,
       "good": {
         "codelists": [
           {
@@ -8325,6 +8317,7 @@
       }
     },
     "opensafely/disparities-comparison": {
+      "ethnicity_codelist": false,
       "good": {
         "codelists": [
           {
@@ -9239,6 +9232,7 @@
       }
     },
     "opensafely/doacs-covid19-new": {
+      "ethnicity_codelist": false,
       "good": {
         "codelists": []
       },
@@ -9265,6 +9259,7 @@
       }
     },
     "opensafely/dummy-data-workshop": {
+      "ethnicity_codelist": false,
       "good": {
         "codelists": []
       },
@@ -9291,6 +9286,7 @@
       }
     },
     "opensafely/early-inflammatory-arthritis": {
+      "ethnicity_codelist": false,
       "good": {
         "codelists": [
           {
@@ -10074,6 +10070,7 @@
       }
     },
     "opensafely/ehrql-demo": {
+      "ethnicity_codelist": false,
       "good": {
         "codelists": []
       },
@@ -10155,6 +10152,7 @@
       }
     },
     "opensafely/ehrql-test-study": {
+      "ethnicity_codelist": false,
       "good": {
         "codelists": []
       },
@@ -10248,6 +10246,7 @@
       }
     },
     "opensafely/ehrql-workflow": {
+      "ethnicity_codelist": false,
       "good": {
         "codelists": []
       },
@@ -10274,6 +10273,10 @@
       }
     },
     "opensafely/end-of-life-carequality": {
+      "ethnicity_codelist": {
+        "current_version": "https://www.opencodelists.org/codelist/opensafely/ethnicity-snomed-0removed/2e641f61/",
+        "newer_version": "https://www.opencodelists.org/codelist/opensafely/ethnicity-snomed-0removed/22911876"
+      },
       "good": {
         "codelists": []
       },
@@ -10285,25 +10288,6 @@
       },
       "newer_version": {
         "codelists": [
-          {
-            "name": "ethnicity (SNOMED)",
-            "newer_version": {
-              "label": "22911876",
-              "url": "https://www.opencodelists.org/codelist/opensafely/ethnicity-snomed-0removed/22911876"
-            },
-            "system": "snomedct",
-            "system_release": "unknown",
-            "url": "https://www.opencodelists.org/codelist/opensafely/ethnicity-snomed-0removed/2e641f61/",
-            "variables": {
-              "analysis/os_reports/dataset_definition_os_reports.py": {
-                "github_url": "https://github.com/opensafely/end-of-life-carequality/blob/e5f22f9ea0d8c042f1c69a13c8507ab81a62050d/analysis/os_reports/dataset_definition_os_reports.py",
-                "variables": [
-                  "ethnicity_Combined",
-                  "latest_ethnicity_code"
-                ]
-              }
-            }
-          },
           {
             "name": "Palliative care codes",
             "newer_version": {
@@ -10704,6 +10688,7 @@
       }
     },
     "opensafely/first-coding-task": {
+      "ethnicity_codelist": false,
       "good": {
         "codelists": []
       },
@@ -10730,6 +10715,7 @@
       }
     },
     "opensafely/gh-testing-research": {
+      "ethnicity_codelist": false,
       "good": {
         "codelists": []
       },
@@ -10799,6 +10785,7 @@
       }
     },
     "opensafely/inflammatory_rheum": {
+      "ethnicity_codelist": false,
       "good": {
         "codelists": [
           {
@@ -11664,6 +11651,10 @@
       }
     },
     "opensafely/isaric-exploration": {
+      "ethnicity_codelist": {
+        "current_version": "https://www.opencodelists.org/codelist/opensafely/ethnicity-snomed-0removed/2e641f61/",
+        "newer_version": "https://www.opencodelists.org/codelist/opensafely/ethnicity-snomed-0removed/22911876"
+      },
       "good": {
         "codelists": [
           {
@@ -11858,32 +11849,7 @@
         "codelists": []
       },
       "newer_version": {
-        "codelists": [
-          {
-            "name": "ethnicity (SNOMED)",
-            "newer_version": {
-              "label": "22911876",
-              "url": "https://www.opencodelists.org/codelist/opensafely/ethnicity-snomed-0removed/22911876"
-            },
-            "system": "snomedct",
-            "system_release": "unknown",
-            "url": "https://www.opencodelists.org/codelist/opensafely/ethnicity-snomed-0removed/2e641f61/",
-            "variables": {
-              "analysis/dataset_definition_isaric.py": {
-                "github_url": "https://github.com/opensafely/isaric-exploration/blob/63b23df6f85df8991cf38a01afd73d90e59c490c/analysis/dataset_definition_isaric.py",
-                "variables": [
-                  "ethnicity_pc"
-                ]
-              },
-              "analysis/dataset_definition_sus.py": {
-                "github_url": "https://github.com/opensafely/isaric-exploration/blob/63b23df6f85df8991cf38a01afd73d90e59c490c/analysis/dataset_definition_sus.py",
-                "variables": [
-                  "ethnicity_sus"
-                ]
-              }
-            }
-          }
-        ]
+        "codelists": []
       },
       "no_events": {
         "codelists": []
@@ -12041,6 +12007,10 @@
       }
     },
     "opensafely/mainroute_cancer": {
+      "ethnicity_codelist": {
+        "current_version": "https://www.opencodelists.org/codelist/opensafely/ethnicity-snomed-0removed/2e641f61/",
+        "newer_version": "https://www.opencodelists.org/codelist/opensafely/ethnicity-snomed-0removed/22911876"
+      },
       "good": {
         "codelists": [
           {
@@ -12093,32 +12063,7 @@
         ]
       },
       "newer_version": {
-        "codelists": [
-          {
-            "name": "ethnicity (SNOMED)",
-            "newer_version": {
-              "label": "22911876",
-              "url": "https://www.opencodelists.org/codelist/opensafely/ethnicity-snomed-0removed/22911876"
-            },
-            "system": "snomedct",
-            "system_release": "unknown",
-            "url": "https://www.opencodelists.org/codelist/opensafely/ethnicity-snomed-0removed/2e641f61/",
-            "variables": {
-              "analysis/define_static_dataset.py": {
-                "github_url": "https://github.com/opensafely/mainroute_cancer/blob/750f9804609c613eff525a31b356582960078508/analysis/define_static_dataset.py",
-                "variables": [
-                  "ethnicity6"
-                ]
-              },
-              "analysis/define_static_dataset_fit.py": {
-                "github_url": "https://github.com/opensafely/mainroute_cancer/blob/750f9804609c613eff525a31b356582960078508/analysis/define_static_dataset_fit.py",
-                "variables": [
-                  "ethnicity6"
-                ]
-              }
-            }
-          }
-        ]
+        "codelists": []
       },
       "no_events": {
         "codelists": []
@@ -12321,6 +12266,7 @@
       }
     },
     "opensafely/metfin_covid": {
+      "ethnicity_codelist": false,
       "good": {
         "codelists": []
       },
@@ -12347,6 +12293,10 @@
       }
     },
     "opensafely/metformin_covid": {
+      "ethnicity_codelist": {
+        "current_version": "https://www.opencodelists.org/codelist/opensafely/ethnicity-snomed-0removed/2e641f61/",
+        "newer_version": "https://www.opencodelists.org/codelist/opensafely/ethnicity-snomed-0removed/22911876"
+      },
       "good": {
         "codelists": [
           {
@@ -13170,24 +13120,6 @@
       "newer_version": {
         "codelists": [
           {
-            "name": "ethnicity (SNOMED)",
-            "newer_version": {
-              "label": "22911876",
-              "url": "https://www.opencodelists.org/codelist/opensafely/ethnicity-snomed-0removed/22911876"
-            },
-            "system": "snomedct",
-            "system_release": "unknown",
-            "url": "https://www.opencodelists.org/codelist/opensafely/ethnicity-snomed-0removed/2e641f61/",
-            "variables": {
-              "analysis/dataset_definition_dm_algo.py": {
-                "github_url": "https://github.com/opensafely/metformin_covid/blob/da5f60f5e0dd5f3a2d0ae1affd5e3e83a1106e7e/analysis/dataset_definition_dm_algo.py",
-                "variables": [
-                  "cov_cat_ethnicity"
-                ]
-              }
-            }
-          },
-          {
             "name": "Hypertension diagnosis codes",
             "newer_version": {
               "label": "20250912",
@@ -13295,13 +13227,13 @@
             "url": "https://www.opencodelists.org/codelist/user/elsie_horne/dementia_vascular_icd10/27c5e93c/",
             "variables": {
               "analysis/dataset_definition_ppa.py": {
-                "github_url": "https://github.com/opensafely/metformin_covid/blob/d452c8dab8538d236ee428237d81bd5c5f538a1b/analysis/dataset_definition_ppa.py",
+                "github_url": "https://github.com/opensafely/metformin_covid/blob/da5f60f5e0dd5f3a2d0ae1affd5e3e83a1106e7e/analysis/dataset_definition_ppa.py",
                 "variables": [
                   "cov_date_dementia"
                 ]
               },
               "analysis/dataset_definition_t2dm.py": {
-                "github_url": "https://github.com/opensafely/metformin_covid/blob/d452c8dab8538d236ee428237d81bd5c5f538a1b/analysis/dataset_definition_t2dm.py",
+                "github_url": "https://github.com/opensafely/metformin_covid/blob/da5f60f5e0dd5f3a2d0ae1affd5e3e83a1106e7e/analysis/dataset_definition_t2dm.py",
                 "variables": [
                   "cov_bin_dementia"
                 ]
@@ -14586,6 +14518,7 @@
       }
     },
     "opensafely/migration-short-data-report": {
+      "ethnicity_codelist": false,
       "good": {
         "codelists": [
           {
@@ -14818,6 +14751,7 @@
       }
     },
     "opensafely/open-pathology": {
+      "ethnicity_codelist": false,
       "good": {
         "codelists": []
       },
@@ -14929,6 +14863,7 @@
       }
     },
     "opensafely/open-pathology-sdr": {
+      "ethnicity_codelist": false,
       "good": {
         "codelists": []
       },
@@ -15010,6 +14945,7 @@
       }
     },
     "opensafely/openprompt-cohort-profile": {
+      "ethnicity_codelist": false,
       "good": {
         "codelists": [
           {
@@ -15572,6 +15508,7 @@
       }
     },
     "opensafely/openprompt-hrqol": {
+      "ethnicity_codelist": false,
       "good": {
         "codelists": [
           {
@@ -16032,6 +15969,7 @@
       }
     },
     "opensafely/openprompt_health_utilisation": {
+      "ethnicity_codelist": false,
       "good": {
         "codelists": [
           {
@@ -16917,6 +16855,10 @@
       }
     },
     "opensafely/opioids-covid-research": {
+      "ethnicity_codelist": {
+        "current_version": "https://www.opencodelists.org/codelist/opensafely/ethnicity-snomed-0removed/2e641f61/",
+        "newer_version": "https://www.opencodelists.org/codelist/opensafely/ethnicity-snomed-0removed/22911876"
+      },
       "good": {
         "codelists": []
       },
@@ -16942,25 +16884,6 @@
                 "github_url": "https://github.com/opensafely/opioids-covid-research/blob/0e45b0d3cfc0a4ccb418fd9ce63ffdf79ca41a99/analysis/define_dataset_table.py",
                 "variables": [
                   "carehome"
-                ]
-              }
-            }
-          },
-          {
-            "name": "ethnicity (SNOMED)",
-            "newer_version": {
-              "label": "22911876",
-              "url": "https://www.opencodelists.org/codelist/opensafely/ethnicity-snomed-0removed/22911876"
-            },
-            "system": "snomedct",
-            "system_release": "unknown",
-            "url": "https://www.opencodelists.org/codelist/opensafely/ethnicity-snomed-0removed/2e641f61/",
-            "variables": {
-              "analysis/define_dataset_table.py": {
-                "github_url": "https://github.com/opensafely/opioids-covid-research/blob/0e45b0d3cfc0a4ccb418fd9ce63ffdf79ca41a99/analysis/define_dataset_table.py",
-                "variables": [
-                  "ethnicity16",
-                  "ethnicity6"
                 ]
               }
             }
@@ -17072,6 +16995,7 @@
       }
     },
     "opensafely/opioids-data-curation": {
+      "ethnicity_codelist": false,
       "good": {
         "codelists": []
       },
@@ -17098,6 +17022,7 @@
       }
     },
     "opensafely/paxlovid-test": {
+      "ethnicity_codelist": false,
       "good": {
         "codelists": [
           {
@@ -17142,6 +17067,10 @@
       }
     },
     "opensafely/pharmacy-first": {
+      "ethnicity_codelist": {
+        "current_version": "https://www.opencodelists.org/codelist/opensafely/ethnicity-snomed-0removed/2e641f61/",
+        "newer_version": "https://www.opencodelists.org/codelist/opensafely/ethnicity-snomed-0removed/22911876"
+      },
       "good": {
         "codelists": []
       },
@@ -17334,26 +17263,7 @@
         "codelists": []
       },
       "newer_version": {
-        "codelists": [
-          {
-            "name": "ethnicity (SNOMED)",
-            "newer_version": {
-              "label": "22911876",
-              "url": "https://www.opencodelists.org/codelist/opensafely/ethnicity-snomed-0removed/22911876"
-            },
-            "system": "snomedct",
-            "system_release": "unknown",
-            "url": "https://www.opencodelists.org/codelist/opensafely/ethnicity-snomed-0removed/2e641f61/",
-            "variables": {
-              "analysis/dataset_definition_tables.py": {
-                "github_url": "https://github.com/opensafely/pharmacy-first/blob/da757d3dd653af4c5b678efd58963ebd815d96c3/analysis/dataset_definition_tables.py",
-                "variables": [
-                  "ethnicity"
-                ]
-              }
-            }
-          }
-        ]
+        "codelists": []
       },
       "no_events": {
         "codelists": []
@@ -17439,6 +17349,7 @@
       }
     },
     "opensafely/pharmacy-first-data-development": {
+      "ethnicity_codelist": false,
       "good": {
         "codelists": []
       },
@@ -17514,6 +17425,7 @@
       }
     },
     "opensafely/pifu-data-exploration": {
+      "ethnicity_codelist": false,
       "good": {
         "codelists": []
       },
@@ -17540,6 +17452,7 @@
       }
     },
     "opensafely/pincer-measures": {
+      "ethnicity_codelist": false,
       "good": {
         "codelists": [
           {
@@ -17966,6 +17879,7 @@
       }
     },
     "opensafely/polypharmacy-deprescribing-dementia": {
+      "ethnicity_codelist": false,
       "good": {
         "codelists": []
       },
@@ -18213,6 +18127,7 @@
       }
     },
     "opensafely/post-covid-cvd": {
+      "ethnicity_codelist": false,
       "good": {
         "codelists": []
       },
@@ -18786,6 +18701,7 @@
       }
     },
     "opensafely/post-covid-cvd-methods": {
+      "ethnicity_codelist": false,
       "good": {
         "codelists": []
       },
@@ -19347,6 +19263,7 @@
       }
     },
     "opensafely/post-covid-neurodegenerative": {
+      "ethnicity_codelist": false,
       "good": {
         "codelists": []
       },
@@ -19884,6 +19801,7 @@
       }
     },
     "opensafely/post-covid-renal": {
+      "ethnicity_codelist": false,
       "good": {
         "codelists": []
       },
@@ -20517,6 +20435,7 @@
       }
     },
     "opensafely/post-covid-respiratory": {
+      "ethnicity_codelist": false,
       "good": {
         "codelists": []
       },
@@ -21084,6 +21003,7 @@
       }
     },
     "opensafely/post-covid-vax-autoimmune": {
+      "ethnicity_codelist": false,
       "good": {
         "codelists": [
           {
@@ -22339,6 +22259,7 @@
       }
     },
     "opensafely/prophy_effects_Sotro_Molnup": {
+      "ethnicity_codelist": false,
       "good": {
         "codelists": [
           {
@@ -23593,6 +23514,7 @@
       }
     },
     "opensafely/qof": {
+      "ethnicity_codelist": false,
       "good": {
         "codelists": []
       },
@@ -23772,6 +23694,7 @@
       }
     },
     "opensafely/raw_medicines_short_data_report": {
+      "ethnicity_codelist": false,
       "good": {
         "codelists": []
       },
@@ -23811,6 +23734,7 @@
       }
     },
     "opensafely/reduce-hf": {
+      "ethnicity_codelist": false,
       "good": {
         "codelists": []
       },
@@ -23837,6 +23761,7 @@
       }
     },
     "opensafely/research-template": {
+      "ethnicity_codelist": false,
       "good": {
         "codelists": []
       },
@@ -23863,6 +23788,7 @@
       }
     },
     "opensafely/reusable-variables": {
+      "ethnicity_codelist": false,
       "good": {
         "codelists": [
           {
@@ -24347,6 +24273,7 @@
       }
     },
     "opensafely/statins-covid": {
+      "ethnicity_codelist": false,
       "good": {
         "codelists": []
       },
@@ -24373,6 +24300,7 @@
       }
     },
     "opensafely/test-age-distribution": {
+      "ethnicity_codelist": false,
       "good": {
         "codelists": []
       },
@@ -24399,6 +24327,7 @@
       }
     },
     "opensafely/tocilizumab_and_sarilumab": {
+      "ethnicity_codelist": false,
       "good": {
         "codelists": []
       },
@@ -24909,6 +24838,7 @@
       }
     },
     "opensafely/vaccine-counts": {
+      "ethnicity_codelist": false,
       "good": {
         "codelists": []
       },
@@ -25092,6 +25022,7 @@
       }
     },
     "opensafely/vte-diagnoses-and-deaths": {
+      "ethnicity_codelist": false,
       "good": {
         "codelists": [
           {
@@ -25228,6 +25159,10 @@
       }
     },
     "opensafely/waiting-list": {
+      "ethnicity_codelist": {
+        "current_version": "https://www.opencodelists.org/codelist/opensafely/ethnicity-snomed-0removed/2e641f61/",
+        "newer_version": "https://www.opencodelists.org/codelist/opensafely/ethnicity-snomed-0removed/22911876"
+      },
       "good": {
         "codelists": []
       },
@@ -25238,26 +25173,7 @@
         "codelists": []
       },
       "newer_version": {
-        "codelists": [
-          {
-            "name": "ethnicity (SNOMED)",
-            "newer_version": {
-              "label": "22911876",
-              "url": "https://www.opencodelists.org/codelist/opensafely/ethnicity-snomed-0removed/22911876"
-            },
-            "system": "snomedct",
-            "system_release": "unknown",
-            "url": "https://www.opencodelists.org/codelist/opensafely/ethnicity-snomed-0removed/2e641f61/",
-            "variables": {
-              "analysis/dataset_definition_ortho.py": {
-                "github_url": "https://github.com/opensafely/waiting-list/blob/c0b16e129b2149551d9fa92248df86699d31ebc9/analysis/dataset_definition_ortho.py",
-                "variables": [
-                  "ethnicity6"
-                ]
-              }
-            }
-          }
-        ]
+        "codelists": []
       },
       "no_events": {
         "codelists": []
@@ -25465,6 +25381,7 @@
       }
     },
     "opensafely/winter-pressures-phase-II": {
+      "ethnicity_codelist": false,
       "good": {
         "codelists": [
           {

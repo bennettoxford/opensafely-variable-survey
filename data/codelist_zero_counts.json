@@ -50,13 +50,13 @@
       "url": "https://www.opencodelists.org/codelist/user/elsie_horne/dementia_vascular_icd10/27c5e93c/",
       "variables": {
         "analysis/dataset_definition_ppa.py": {
-          "github_url": "https://github.com/opensafely/metformin_covid/blob/d452c8dab8538d236ee428237d81bd5c5f538a1b/analysis/dataset_definition_ppa.py",
+          "github_url": "https://github.com/opensafely/metformin_covid/blob/da5f60f5e0dd5f3a2d0ae1affd5e3e83a1106e7e/analysis/dataset_definition_ppa.py",
           "variables": [
             "cov_date_dementia"
           ]
         },
         "analysis/dataset_definition_t2dm.py": {
-          "github_url": "https://github.com/opensafely/metformin_covid/blob/d452c8dab8538d236ee428237d81bd5c5f538a1b/analysis/dataset_definition_t2dm.py",
+          "github_url": "https://github.com/opensafely/metformin_covid/blob/da5f60f5e0dd5f3a2d0ae1affd5e3e83a1106e7e/analysis/dataset_definition_t2dm.py",
           "variables": [
             "cov_bin_dementia"
           ]

@@ -45,6 +45,7 @@ def main():
             "unused_codelists": {"codelists": []},
             "no_events": {"codelists": []},
             "newer_version": {"codelists": []},
+            "ethnicity_codelist": False,
             "potentially_missing_codes": {"codelists": []},
         }
 
@@ -73,9 +74,23 @@ def main():
                     "url": make_ocl_url("/" + latest_version["slug"]),
                     "label": latest_version.get("tag") or latest_version["hash"],
                 }
-                repo_output["newer_version"]["codelists"].append(
-                    codelist | {"newer_version": newer_version}
-                )
+
+                # We want to suggest to users that using the version that already has the human
+                # readable labels (instead of the numeric codes) is a good idea. However to guard
+                # against potential future releasees of the ethnicity codelist we only flag this in
+                # the very specific case where the existing version is 2e641f61 and the newer
+                # version is 22911876.
+                if codelist["url"].endswith(
+                    "opensafely/ethnicity-snomed-0removed/2e641f61/"
+                ) and newer_version["url"].endswith("/22911876"):
+                    repo_output["ethnicity_codelist"] = {
+                        "current_version": codelist["url"],
+                        "newer_version": newer_version["url"],
+                    }
+                else:
+                    repo_output["newer_version"]["codelists"].append(
+                        codelist | {"newer_version": newer_version}
+                    )
                 bad_codelists.add(codelist["url"])
             if not codelist["url"].endswith(
                 ".csv"
