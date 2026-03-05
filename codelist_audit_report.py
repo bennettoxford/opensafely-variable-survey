@@ -11,6 +11,7 @@ from codelist_newer_version_available import newer_versions
 from codelist_potentially_missing_codes import (
     codelist_version_not_compatible_with_latest_release,
 )
+from parsing.codelist_cache import get_codelist
 from parsing.codelist_helpers import (
     get_repos_with_codelists,
     lookup_codelists_by_repo,
@@ -75,6 +76,10 @@ def main():
                     "label": latest_version.get("tag") or latest_version["hash"],
                 }
 
+                # We want to see if the newer version actually has different codes
+                existing_codes = set(get_codelist(codelist["url"]))
+                newer_codes = set(get_codelist(newer_version["url"]))
+
                 # We want to suggest to users that using the version that already has the human
                 # readable labels (instead of the numeric codes) is a good idea. However to guard
                 # against potential future releasees of the ethnicity codelist we only flag this in
@@ -87,11 +92,13 @@ def main():
                         "current_version": codelist["url"],
                         "newer_version": newer_version["url"],
                     }
-                else:
+                    bad_codelists.add(codelist["url"])
+                elif existing_codes != newer_codes:
+                    # Only flag as newer version if the codes have actually changed
                     repo_output["newer_version"]["codelists"].append(
                         codelist | {"newer_version": newer_version}
                     )
-                bad_codelists.add(codelist["url"])
+                    bad_codelists.add(codelist["url"])
             if not codelist["url"].endswith(
                 ".csv"
             ) and codelist_version_not_compatible_with_latest_release(codelist["url"]):

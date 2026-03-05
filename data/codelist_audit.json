@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-03-05 15:17:14",
+  "generated_at": "2026-03-05 15:24:08",
   "latest_releases": {
     "bnf": "86 (2024-09-02) (valid from 2024-09-02)",
     "ctv3": "2018-04-01 with TPP extensions 2022-11-16 (valid from 2022-11-16)",
@@ -363,31 +363,7 @@
         "codelists": []
       },
       "newer_version": {
-        "codelists": [
-          {
-            "name": "Attention Deficit Hyperactivity disorder codes",
-            "newer_version": {
-              "label": "20250912",
-              "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/adhd_cod/20250912"
-            },
-            "system": "snomedct",
-            "system_release": "unknown",
-            "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/adhd_cod/20200812/",
-            "variables": {
-              "analysis/Patient_table_5_dia_to_med.py": {
-                "github_url": "https://github.com/opensafely/ADHD-Pre-and-Post-Covid/blob/04e76f6dc3ecea437bb276c0e344f3c27b976e0b/analysis/Patient_table_5_dia_to_med.py",
-                "variables": [
-                  "age",
-                  "age_band",
-                  "first_adhd_diagnosis_date",
-                  "first_mph_med_date",
-                  "times_between_dia_med_weeks",
-                  "year_of_medication"
-                ]
-              }
-            }
-          }
-        ]
+        "codelists": []
       },
       "no_events": {
         "codelists": []
@@ -3767,26 +3743,7 @@
         "codelists": []
       },
       "newer_version": {
-        "codelists": [
-          {
-            "name": "Hypertension diagnosis codes",
-            "newer_version": {
-              "label": "20250912",
-              "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/hyp_cod/20250912"
-            },
-            "system": "snomedct",
-            "system_release": "40.2.0 (valid from 2025-06-11)",
-            "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/hyp_cod/20250627/",
-            "variables": {
-              "analysis/dataset_definition.py": {
-                "github_url": "https://github.com/opensafely/COVID-19_vacci_and_MACE_after_hip_fracture/blob/bb5e2b673a060c341f31cee75abba4fde0658a41/analysis/dataset_definition.py",
-                "variables": [
-                  "prior_hypertension"
-                ]
-              }
-            }
-          }
-        ]
+        "codelists": []
       },
       "no_events": {
         "codelists": []
@@ -4396,26 +4353,7 @@
         "codelists": []
       },
       "newer_version": {
-        "codelists": [
-          {
-            "name": "Pregnant patients at any stage of pregnancy",
-            "newer_version": {
-              "label": "20250912",
-              "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/c19preg_cod/20250912"
-            },
-            "system": "snomedct",
-            "system_release": "40.2.0 (valid from 2025-06-11)",
-            "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/c19preg_cod/20250627/",
-            "variables": {
-              "analysis/dataset_definition/dataset_definition_2020.py": {
-                "github_url": "https://github.com/opensafely/NeurodegenerativeDiseaseBurden/blob/8519f41a58e00b06f25fb25728c8e3ac8a91af53/analysis/dataset_definition/dataset_definition_2020.py",
-                "variables": [
-                  "qa_bin_pregnancy"
-                ]
-              }
-            }
-          }
-        ]
+        "codelists": []
       },
       "no_events": {
         "codelists": []
@@ -5231,6 +5169,21 @@
       "good": {
         "codelists": [
           {
+            "name": "Patients in long-stay nursing and residential care",
+            "system": "snomedct",
+            "system_release": "36.0.0 (valid from 2023-04-19)",
+            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/longres/v2.4/",
+            "variables": {
+              "analysis/dataset_definition.py": {
+                "github_url": "https://github.com/opensafely/comparative-booster-spring2023/blob/decf6c3cda5a704615091ac4874377bc202d83fa/analysis/dataset_definition.py",
+                "variables": [
+                  "care_home_code",
+                  "housebound"
+                ]
+              }
+            }
+          },
+          {
             "name": "COVID Identification",
             "system": "icd10",
             "system_release": "unknown",
@@ -5302,6 +5255,20 @@
                 "variables": [
                   "primary_care_covid_case_0_date",
                   "primary_care_covid_case_date"
+                ]
+              }
+            }
+          },
+          {
+            "name": "BMI",
+            "system": "snomedct",
+            "system_release": "36.0.0 (valid from 2023-04-19)",
+            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/bmi/v2.4/",
+            "variables": {
+              "analysis/dataset_definition.py": {
+                "github_url": "https://github.com/opensafely/comparative-booster-spring2023/blob/decf6c3cda5a704615091ac4874377bc202d83fa/analysis/dataset_definition.py",
+                "variables": [
+                  "sev_obesity"
                 ]
               }
             }
@@ -5517,358 +5484,6 @@
       "newer_version": {
         "codelists": [
           {
-            "name": "Asplenia or Dysfunction of the Spleen codes",
-            "newer_version": {
-              "label": "v2.5",
-              "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/spln_cov/v2.5"
-            },
-            "system": "snomedct",
-            "system_release": "36.0.0 (valid from 2023-04-19)",
-            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/spln_cov/v2.4/",
-            "variables": {
-              "analysis/dataset_definition.py": {
-                "github_url": "https://github.com/opensafely/comparative-booster-spring2023/blob/decf6c3cda5a704615091ac4874377bc202d83fa/analysis/dataset_definition.py",
-                "variables": [
-                  "asplenia"
-                ]
-              }
-            }
-          },
-          {
-            "name": "Asthma Admission codes",
-            "newer_version": {
-              "label": "v2.5",
-              "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/astadm/v2.5"
-            },
-            "system": "snomedct",
-            "system_release": "36.0.0 (valid from 2023-04-19)",
-            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/astadm/v2.4/",
-            "variables": {
-              "analysis/dataset_definition.py": {
-                "github_url": "https://github.com/opensafely/comparative-booster-spring2023/blob/decf6c3cda5a704615091ac4874377bc202d83fa/analysis/dataset_definition.py",
-                "variables": [
-                  "asthma",
-                  "asthma_simple",
-                  "chronic_resp_disease"
-                ]
-              }
-            }
-          },
-          {
-            "name": "Oral prednisolone codes",
-            "newer_version": {
-              "label": "v2.5",
-              "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/astrxm2/v2.5"
-            },
-            "system": "dmd",
-            "system_release": "2023 4.2.0 (valid from 2023-04-17)",
-            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/astrxm2/v2.4/",
-            "variables": {
-              "analysis/dataset_definition.py": {
-                "github_url": "https://github.com/opensafely/comparative-booster-spring2023/blob/decf6c3cda5a704615091ac4874377bc202d83fa/analysis/dataset_definition.py",
-                "variables": [
-                  "asthma",
-                  "asthma_simple",
-                  "chronic_resp_disease"
-                ]
-              }
-            }
-          },
-          {
-            "name": "Asthma inhaler or nebuliser codes",
-            "newer_version": {
-              "label": "v2.5",
-              "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/astrxm1/v2.5"
-            },
-            "system": "dmd",
-            "system_release": "2023 4.3.0 (valid from 2023-04-24)",
-            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/astrxm1/v2.4/",
-            "variables": {
-              "analysis/dataset_definition.py": {
-                "github_url": "https://github.com/opensafely/comparative-booster-spring2023/blob/decf6c3cda5a704615091ac4874377bc202d83fa/analysis/dataset_definition.py",
-                "variables": [
-                  "asthma",
-                  "asthma_simple",
-                  "chronic_resp_disease"
-                ]
-              }
-            }
-          },
-          {
-            "name": "Patients in long-stay nursing and residential care",
-            "newer_version": {
-              "label": "v2.5",
-              "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/longres/v2.5"
-            },
-            "system": "snomedct",
-            "system_release": "36.0.0 (valid from 2023-04-19)",
-            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/longres/v2.4/",
-            "variables": {
-              "analysis/dataset_definition.py": {
-                "github_url": "https://github.com/opensafely/comparative-booster-spring2023/blob/decf6c3cda5a704615091ac4874377bc202d83fa/analysis/dataset_definition.py",
-                "variables": [
-                  "care_home_code",
-                  "housebound"
-                ]
-              }
-            }
-          },
-          {
-            "name": "Chronic heart disease codes",
-            "newer_version": {
-              "label": "v2.5",
-              "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/chd_cov/v2.5"
-            },
-            "system": "snomedct",
-            "system_release": "36.0.0 (valid from 2023-04-19)",
-            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/chd_cov/v2.4/",
-            "variables": {
-              "analysis/dataset_definition.py": {
-                "github_url": "https://github.com/opensafely/comparative-booster-spring2023/blob/decf6c3cda5a704615091ac4874377bc202d83fa/analysis/dataset_definition.py",
-                "variables": [
-                  "chronic_heart_disease"
-                ]
-              }
-            }
-          },
-          {
-            "name": "Chronic kidney disease diagnostic codes",
-            "newer_version": {
-              "label": "v2.5",
-              "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/ckd_cov/v2.5"
-            },
-            "system": "snomedct",
-            "system_release": "36.0.0 (valid from 2023-04-19)",
-            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/ckd_cov/v2.4/",
-            "variables": {
-              "analysis/dataset_definition.py": {
-                "github_url": "https://github.com/opensafely/comparative-booster-spring2023/blob/decf6c3cda5a704615091ac4874377bc202d83fa/analysis/dataset_definition.py",
-                "variables": [
-                  "chronic_kidney_disease"
-                ]
-              }
-            }
-          },
-          {
-            "name": "Chronic kidney disease codes-stages 3 - 5",
-            "newer_version": {
-              "label": "v2.5",
-              "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/ckd35/v2.5"
-            },
-            "system": "snomedct",
-            "system_release": "36.0.0 (valid from 2023-04-19)",
-            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/ckd35/v2.4/",
-            "variables": {
-              "analysis/dataset_definition.py": {
-                "github_url": "https://github.com/opensafely/comparative-booster-spring2023/blob/decf6c3cda5a704615091ac4874377bc202d83fa/analysis/dataset_definition.py",
-                "variables": [
-                  "chronic_kidney_disease"
-                ]
-              }
-            }
-          },
-          {
-            "name": "Chronic kidney disease codes - all stages",
-            "newer_version": {
-              "label": "v2.5",
-              "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/ckd15/v2.5"
-            },
-            "system": "snomedct",
-            "system_release": "36.0.0 (valid from 2023-04-19)",
-            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/ckd15/v2.4/",
-            "variables": {
-              "analysis/dataset_definition.py": {
-                "github_url": "https://github.com/opensafely/comparative-booster-spring2023/blob/decf6c3cda5a704615091ac4874377bc202d83fa/analysis/dataset_definition.py",
-                "variables": [
-                  "chronic_kidney_disease"
-                ]
-              }
-            }
-          },
-          {
-            "name": "Chronic Liver disease codes",
-            "newer_version": {
-              "label": "v2.5",
-              "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/cld/v2.5"
-            },
-            "system": "snomedct",
-            "system_release": "36.0.0 (valid from 2023-04-19)",
-            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/cld/v2.4/",
-            "variables": {
-              "analysis/dataset_definition.py": {
-                "github_url": "https://github.com/opensafely/comparative-booster-spring2023/blob/decf6c3cda5a704615091ac4874377bc202d83fa/analysis/dataset_definition.py",
-                "variables": [
-                  "chronic_liver_disease"
-                ]
-              }
-            }
-          },
-          {
-            "name": "Chronic Neurological Disease including Significant Learning Disorder",
-            "newer_version": {
-              "label": "v2.5",
-              "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/cns_cov/v2.5"
-            },
-            "system": "snomedct",
-            "system_release": "36.0.0 (valid from 2023-04-19)",
-            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/cns_cov/v2.4/",
-            "variables": {
-              "analysis/dataset_definition.py": {
-                "github_url": "https://github.com/opensafely/comparative-booster-spring2023/blob/decf6c3cda5a704615091ac4874377bc202d83fa/analysis/dataset_definition.py",
-                "variables": [
-                  "chronic_neuro_disease"
-                ]
-              }
-            }
-          },
-          {
-            "name": "Chronic Respiratory Disease",
-            "newer_version": {
-              "label": "v2.5",
-              "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/resp_cov/v2.5"
-            },
-            "system": "snomedct",
-            "system_release": "36.0.0 (valid from 2023-04-19)",
-            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/resp_cov/v2.4/",
-            "variables": {
-              "analysis/dataset_definition.py": {
-                "github_url": "https://github.com/opensafely/comparative-booster-spring2023/blob/decf6c3cda5a704615091ac4874377bc202d83fa/analysis/dataset_definition.py",
-                "variables": [
-                  "chronic_resp_disease"
-                ]
-              }
-            }
-          },
-          {
-            "name": "Addisons & hypoadrenalism",
-            "newer_version": {
-              "label": "v2.5",
-              "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/addis_cod/v2.5"
-            },
-            "system": "snomedct",
-            "system_release": "36.0.0 (valid from 2023-04-19)",
-            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/addis_cod/v2.4/",
-            "variables": {
-              "analysis/dataset_definition.py": {
-                "github_url": "https://github.com/opensafely/comparative-booster-spring2023/blob/decf6c3cda5a704615091ac4874377bc202d83fa/analysis/dataset_definition.py",
-                "variables": [
-                  "diabetes"
-                ]
-              }
-            }
-          },
-          {
-            "name": "Gestational Diabetes",
-            "newer_version": {
-              "label": "v2.5",
-              "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/gdiab_cod/v2.5"
-            },
-            "system": "snomedct",
-            "system_release": "36.0.0 (valid from 2023-04-19)",
-            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/gdiab_cod/v2.4/",
-            "variables": {
-              "analysis/dataset_definition.py": {
-                "github_url": "https://github.com/opensafely/comparative-booster-spring2023/blob/decf6c3cda5a704615091ac4874377bc202d83fa/analysis/dataset_definition.py",
-                "variables": [
-                  "diabetes"
-                ]
-              }
-            }
-          },
-          {
-            "name": "Pregnancy codes recorded in the 8.5 months before the audit run date",
-            "newer_version": {
-              "label": "v2.5",
-              "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/preg/v2.5"
-            },
-            "system": "snomedct",
-            "system_release": "36.0.0 (valid from 2023-04-19)",
-            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/preg/v2.4/",
-            "variables": {
-              "analysis/dataset_definition.py": {
-                "github_url": "https://github.com/opensafely/comparative-booster-spring2023/blob/decf6c3cda5a704615091ac4874377bc202d83fa/analysis/dataset_definition.py",
-                "variables": [
-                  "diabetes",
-                  "preg_group"
-                ]
-              }
-            }
-          },
-          {
-            "name": "Pregnancy or Delivery codes recorded in the 8.5 months before audit run date",
-            "newer_version": {
-              "label": "v2.5",
-              "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/pregdel/v2.5"
-            },
-            "system": "snomedct",
-            "system_release": "36.0.0 (valid from 2023-04-19)",
-            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/pregdel/v2.4/",
-            "variables": {
-              "analysis/dataset_definition.py": {
-                "github_url": "https://github.com/opensafely/comparative-booster-spring2023/blob/decf6c3cda5a704615091ac4874377bc202d83fa/analysis/dataset_definition.py",
-                "variables": [
-                  "diabetes",
-                  "preg_group"
-                ]
-              }
-            }
-          },
-          {
-            "name": "Diabetes resolved codes",
-            "newer_version": {
-              "label": "v2.5",
-              "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/dmres/v2.5"
-            },
-            "system": "snomedct",
-            "system_release": "36.0.0 (valid from 2023-04-19)",
-            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/dmres/v2.4/",
-            "variables": {
-              "analysis/dataset_definition.py": {
-                "github_url": "https://github.com/opensafely/comparative-booster-spring2023/blob/decf6c3cda5a704615091ac4874377bc202d83fa/analysis/dataset_definition.py",
-                "variables": [
-                  "diabetes"
-                ]
-              }
-            }
-          },
-          {
-            "name": "Diabetes diagnosis codes",
-            "newer_version": {
-              "label": "v2.5",
-              "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/diab/v2.5"
-            },
-            "system": "snomedct",
-            "system_release": "36.0.0 (valid from 2023-04-19)",
-            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/diab/v2.4/",
-            "variables": {
-              "analysis/dataset_definition.py": {
-                "github_url": "https://github.com/opensafely/comparative-booster-spring2023/blob/decf6c3cda5a704615091ac4874377bc202d83fa/analysis/dataset_definition.py",
-                "variables": [
-                  "diabetes"
-                ]
-              }
-            }
-          },
-          {
-            "name": "receiving chemotherapy or radiotherapy codes",
-            "newer_version": {
-              "label": "v2.5",
-              "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/dxt_chemo_cod/v2.5"
-            },
-            "system": "snomedct",
-            "system_release": "36.0.0 (valid from 2023-04-19)",
-            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/dxt_chemo_cod/v2.4/",
-            "variables": {
-              "analysis/dataset_definition.py": {
-                "github_url": "https://github.com/opensafely/comparative-booster-spring2023/blob/decf6c3cda5a704615091ac4874377bc202d83fa/analysis/dataset_definition.py",
-                "variables": [
-                  "dxt_chemo",
-                  "immunosuppressed"
-                ]
-              }
-            }
-          },
-          {
             "name": "Palliative care codes",
             "newer_version": {
               "label": "20250912",
@@ -5882,170 +5497,6 @@
                 "github_url": "https://github.com/opensafely/comparative-booster-spring2023/blob/decf6c3cda5a704615091ac4874377bc202d83fa/analysis/dataset_definition.py",
                 "variables": [
                   "endoflife"
-                ]
-              }
-            }
-          },
-          {
-            "name": "Immunosuppression diagnosis codes",
-            "newer_version": {
-              "label": "v2.5",
-              "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/immdx_cov/v2.5"
-            },
-            "system": "snomedct",
-            "system_release": "36.0.0 (valid from 2023-04-19)",
-            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/immdx_cov/v2.4/",
-            "variables": {
-              "analysis/dataset_definition.py": {
-                "github_url": "https://github.com/opensafely/comparative-booster-spring2023/blob/decf6c3cda5a704615091ac4874377bc202d83fa/analysis/dataset_definition.py",
-                "variables": [
-                  "immdx",
-                  "immunosuppressed"
-                ]
-              }
-            }
-          },
-          {
-            "name": "Immunosuppression medication codes",
-            "newer_version": {
-              "label": "v2.5",
-              "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/immrx/v2.5"
-            },
-            "system": "dmd",
-            "system_release": "2023 5.4.0 (valid from 2023-05-29)",
-            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/immrx/v2.4/",
-            "variables": {
-              "analysis/dataset_definition.py": {
-                "github_url": "https://github.com/opensafely/comparative-booster-spring2023/blob/decf6c3cda5a704615091ac4874377bc202d83fa/analysis/dataset_definition.py",
-                "variables": [
-                  "immrx",
-                  "immunosuppressed"
-                ]
-              }
-            }
-          },
-          {
-            "name": "Immunosuppression admin codes",
-            "newer_version": {
-              "label": "v2.5",
-              "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/immunosuppression-admin-codes/v2.5"
-            },
-            "system": "snomedct",
-            "system_release": "36.0.0 (valid from 2023-04-19)",
-            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/immunosuppression-admin-codes/v2.4/",
-            "variables": {
-              "analysis/dataset_definition.py": {
-                "github_url": "https://github.com/opensafely/comparative-booster-spring2023/blob/decf6c3cda5a704615091ac4874377bc202d83fa/analysis/dataset_definition.py",
-                "variables": [
-                  "immunosuppressed"
-                ]
-              }
-            }
-          },
-          {
-            "name": "Wider Learning Disability",
-            "newer_version": {
-              "label": "v2.5",
-              "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/learndis/v2.5"
-            },
-            "system": "snomedct",
-            "system_release": "36.0.0 (valid from 2023-04-19)",
-            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/learndis/v2.4/",
-            "variables": {
-              "analysis/dataset_definition.py": {
-                "github_url": "https://github.com/opensafely/comparative-booster-spring2023/blob/decf6c3cda5a704615091ac4874377bc202d83fa/analysis/dataset_definition.py",
-                "variables": [
-                  "learndis"
-                ]
-              }
-            }
-          },
-          {
-            "name": "Remission codes relating to Severe Mental Illness",
-            "newer_version": {
-              "label": "v2.5",
-              "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/smhres/v2.5"
-            },
-            "system": "snomedct",
-            "system_release": "36.0.0 (valid from 2023-04-19)",
-            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/smhres/v2.4/",
-            "variables": {
-              "analysis/dataset_definition.py": {
-                "github_url": "https://github.com/opensafely/comparative-booster-spring2023/blob/decf6c3cda5a704615091ac4874377bc202d83fa/analysis/dataset_definition.py",
-                "variables": [
-                  "sev_mental"
-                ]
-              }
-            }
-          },
-          {
-            "name": "Severe Mental Illness codes",
-            "newer_version": {
-              "label": "v2.5",
-              "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/sev_mental/v2.5"
-            },
-            "system": "snomedct",
-            "system_release": "36.0.0 (valid from 2023-04-19)",
-            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/sev_mental/v2.4/",
-            "variables": {
-              "analysis/dataset_definition.py": {
-                "github_url": "https://github.com/opensafely/comparative-booster-spring2023/blob/decf6c3cda5a704615091ac4874377bc202d83fa/analysis/dataset_definition.py",
-                "variables": [
-                  "sev_mental"
-                ]
-              }
-            }
-          },
-          {
-            "name": "Severe Obesity code recorded",
-            "newer_version": {
-              "label": "v2.5",
-              "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/sev_obesity/v2.5"
-            },
-            "system": "snomedct",
-            "system_release": "36.0.0 (valid from 2023-04-19)",
-            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/sev_obesity/v2.4/",
-            "variables": {
-              "analysis/dataset_definition.py": {
-                "github_url": "https://github.com/opensafely/comparative-booster-spring2023/blob/decf6c3cda5a704615091ac4874377bc202d83fa/analysis/dataset_definition.py",
-                "variables": [
-                  "sev_obesity"
-                ]
-              }
-            }
-          },
-          {
-            "name": "All BMI coded terms",
-            "newer_version": {
-              "label": "v2.5",
-              "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/bmi_stage/v2.5"
-            },
-            "system": "snomedct",
-            "system_release": "36.0.0 (valid from 2023-04-19)",
-            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/bmi_stage/v2.4/",
-            "variables": {
-              "analysis/dataset_definition.py": {
-                "github_url": "https://github.com/opensafely/comparative-booster-spring2023/blob/decf6c3cda5a704615091ac4874377bc202d83fa/analysis/dataset_definition.py",
-                "variables": [
-                  "sev_obesity"
-                ]
-              }
-            }
-          },
-          {
-            "name": "BMI",
-            "newer_version": {
-              "label": "v2.5",
-              "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/bmi/v2.5"
-            },
-            "system": "snomedct",
-            "system_release": "36.0.0 (valid from 2023-04-19)",
-            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/bmi/v2.4/",
-            "variables": {
-              "analysis/dataset_definition.py": {
-                "github_url": "https://github.com/opensafely/comparative-booster-spring2023/blob/decf6c3cda5a704615091ac4874377bc202d83fa/analysis/dataset_definition.py",
-                "variables": [
-                  "sev_obesity"
                 ]
               }
             }
@@ -7393,6 +6844,34 @@
       "good": {
         "codelists": [
           {
+            "name": "Codes for chronic obstructive pulmonary disease (COPD) review",
+            "system": "snomedct",
+            "system_release": "40.2.0 (valid from 2025-06-11)",
+            "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/copdrvw_cod/20250627/",
+            "variables": {
+              "analysis/dataset_definition.py": {
+                "github_url": "https://github.com/opensafely/demo_repo/blob/2bddcde330514a4fd4bb04dc38891f8814b91d8c/analysis/dataset_definition.py",
+                "variables": [
+                  "copd"
+                ]
+              }
+            }
+          },
+          {
+            "name": "Chronic obstructive pulmonary disease (COPD) resolved codes",
+            "system": "snomedct",
+            "system_release": "40.2.0 (valid from 2025-06-11)",
+            "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/copdres_cod/20250627/",
+            "variables": {
+              "analysis/dataset_definition.py": {
+                "github_url": "https://github.com/opensafely/demo_repo/blob/2bddcde330514a4fd4bb04dc38891f8814b91d8c/analysis/dataset_definition.py",
+                "variables": [
+                  "copd"
+                ]
+              }
+            }
+          },
+          {
             "name": "ethnicity (SNOMED)",
             "system": "snomedct",
             "system_release": "39.0.0 (valid from 2024-10-02)",
@@ -7402,6 +6881,174 @@
                 "github_url": "https://github.com/opensafely/demo_repo/blob/2bddcde330514a4fd4bb04dc38891f8814b91d8c/analysis/dataset_definition.py",
                 "variables": [
                   "latest_ethnicity_group"
+                ]
+              }
+            }
+          },
+          {
+            "name": "Branded salbutamol - AirSalb",
+            "system": "dmd",
+            "system_release": "2025 10.1.0 (valid from 2025-10-13)",
+            "url": "https://www.opencodelists.org/codelist/nhs-drug-refsets/airsbrdinhdrug_cod/20250627/",
+            "variables": {
+              "analysis/dataset_definition.py": {
+                "github_url": "https://github.com/opensafely/demo_repo/blob/2bddcde330514a4fd4bb04dc38891f8814b91d8c/analysis/dataset_definition.py",
+                "variables": [
+                  "salbutamol_quantity_y1",
+                  "salbutamol_quantity_y2"
+                ]
+              },
+              "analysis/inclusion_definition.py": {
+                "github_url": "https://github.com/opensafely/demo_repo/blob/2bddcde330514a4fd4bb04dc38891f8814b91d8c/analysis/inclusion_definition.py",
+                "variables": [
+                  "inhaler_prescribed"
+                ]
+              }
+            }
+          },
+          {
+            "name": "Branded salbutamol - Airomir",
+            "system": "dmd",
+            "system_release": "2025 10.1.0 (valid from 2025-10-13)",
+            "url": "https://www.opencodelists.org/codelist/nhs-drug-refsets/airobrdinhdrug_cod/20250627/",
+            "variables": {
+              "analysis/dataset_definition.py": {
+                "github_url": "https://github.com/opensafely/demo_repo/blob/2bddcde330514a4fd4bb04dc38891f8814b91d8c/analysis/dataset_definition.py",
+                "variables": [
+                  "salbutamol_quantity_y1",
+                  "salbutamol_quantity_y2"
+                ]
+              },
+              "analysis/inclusion_definition.py": {
+                "github_url": "https://github.com/opensafely/demo_repo/blob/2bddcde330514a4fd4bb04dc38891f8814b91d8c/analysis/inclusion_definition.py",
+                "variables": [
+                  "inhaler_prescribed"
+                ]
+              }
+            }
+          },
+          {
+            "name": "Branded salbutamol - Easyhaler",
+            "system": "dmd",
+            "system_release": "2025 10.1.0 (valid from 2025-10-13)",
+            "url": "https://www.opencodelists.org/codelist/nhs-drug-refsets/easybrdinhdrug_cod/20250627/",
+            "variables": {
+              "analysis/dataset_definition.py": {
+                "github_url": "https://github.com/opensafely/demo_repo/blob/2bddcde330514a4fd4bb04dc38891f8814b91d8c/analysis/dataset_definition.py",
+                "variables": [
+                  "salbutamol_quantity_y1",
+                  "salbutamol_quantity_y2"
+                ]
+              },
+              "analysis/inclusion_definition.py": {
+                "github_url": "https://github.com/opensafely/demo_repo/blob/2bddcde330514a4fd4bb04dc38891f8814b91d8c/analysis/inclusion_definition.py",
+                "variables": [
+                  "inhaler_prescribed"
+                ]
+              }
+            }
+          },
+          {
+            "name": "Branded salbutamol - Salamol",
+            "system": "dmd",
+            "system_release": "2025 10.1.0 (valid from 2025-10-13)",
+            "url": "https://www.opencodelists.org/codelist/nhs-drug-refsets/salabrdinhdrug_cod/20250627/",
+            "variables": {
+              "analysis/dataset_definition.py": {
+                "github_url": "https://github.com/opensafely/demo_repo/blob/2bddcde330514a4fd4bb04dc38891f8814b91d8c/analysis/dataset_definition.py",
+                "variables": [
+                  "salbutamol_quantity_y1",
+                  "salbutamol_quantity_y2"
+                ]
+              },
+              "analysis/inclusion_definition.py": {
+                "github_url": "https://github.com/opensafely/demo_repo/blob/2bddcde330514a4fd4bb04dc38891f8814b91d8c/analysis/inclusion_definition.py",
+                "variables": [
+                  "inhaler_prescribed"
+                ]
+              }
+            }
+          },
+          {
+            "name": "Branded salbutamol - Salbulin Novolizer",
+            "system": "dmd",
+            "system_release": "2025 10.1.0 (valid from 2025-10-13)",
+            "url": "https://www.opencodelists.org/codelist/nhs-drug-refsets/salbbrdinhdrug_cod/20250627/",
+            "variables": {
+              "analysis/dataset_definition.py": {
+                "github_url": "https://github.com/opensafely/demo_repo/blob/2bddcde330514a4fd4bb04dc38891f8814b91d8c/analysis/dataset_definition.py",
+                "variables": [
+                  "salbutamol_quantity_y1",
+                  "salbutamol_quantity_y2"
+                ]
+              },
+              "analysis/inclusion_definition.py": {
+                "github_url": "https://github.com/opensafely/demo_repo/blob/2bddcde330514a4fd4bb04dc38891f8814b91d8c/analysis/inclusion_definition.py",
+                "variables": [
+                  "inhaler_prescribed"
+                ]
+              }
+            }
+          },
+          {
+            "name": "Branded salbutamol - Ventolin Accuhaler",
+            "system": "dmd",
+            "system_release": "2025 10.1.0 (valid from 2025-10-13)",
+            "url": "https://www.opencodelists.org/codelist/nhs-drug-refsets/ventaccubrdinhdrug_cod/20250627/",
+            "variables": {
+              "analysis/dataset_definition.py": {
+                "github_url": "https://github.com/opensafely/demo_repo/blob/2bddcde330514a4fd4bb04dc38891f8814b91d8c/analysis/dataset_definition.py",
+                "variables": [
+                  "salbutamol_quantity_y1",
+                  "salbutamol_quantity_y2"
+                ]
+              },
+              "analysis/inclusion_definition.py": {
+                "github_url": "https://github.com/opensafely/demo_repo/blob/2bddcde330514a4fd4bb04dc38891f8814b91d8c/analysis/inclusion_definition.py",
+                "variables": [
+                  "inhaler_prescribed"
+                ]
+              }
+            }
+          },
+          {
+            "name": "Branded salbutamol - Ventolin Evohaler",
+            "system": "dmd",
+            "system_release": "2025 10.1.0 (valid from 2025-10-13)",
+            "url": "https://www.opencodelists.org/codelist/nhs-drug-refsets/ventevobrdinhdrug_cod/20250627/",
+            "variables": {
+              "analysis/dataset_definition.py": {
+                "github_url": "https://github.com/opensafely/demo_repo/blob/2bddcde330514a4fd4bb04dc38891f8814b91d8c/analysis/dataset_definition.py",
+                "variables": [
+                  "salbutamol_quantity_y1",
+                  "salbutamol_quantity_y2"
+                ]
+              },
+              "analysis/inclusion_definition.py": {
+                "github_url": "https://github.com/opensafely/demo_repo/blob/2bddcde330514a4fd4bb04dc38891f8814b91d8c/analysis/inclusion_definition.py",
+                "variables": [
+                  "inhaler_prescribed"
+                ]
+              }
+            }
+          },
+          {
+            "name": "Generic salbutamol DPI inhalers",
+            "system": "dmd",
+            "system_release": "2025 10.1.0 (valid from 2025-10-13)",
+            "url": "https://www.opencodelists.org/codelist/nhs-drug-refsets/gensalbdpinhdrug_cod/20250627/",
+            "variables": {
+              "analysis/dataset_definition.py": {
+                "github_url": "https://github.com/opensafely/demo_repo/blob/2bddcde330514a4fd4bb04dc38891f8814b91d8c/analysis/dataset_definition.py",
+                "variables": [
+                  "salbutamol_quantity_y1",
+                  "salbutamol_quantity_y2"
+                ]
+              },
+              "analysis/inclusion_definition.py": {
+                "github_url": "https://github.com/opensafely/demo_repo/blob/2bddcde330514a4fd4bb04dc38891f8814b91d8c/analysis/inclusion_definition.py",
+                "variables": [
+                  "inhaler_prescribed"
                 ]
               }
             }
@@ -7416,24 +7063,6 @@
       },
       "newer_version": {
         "codelists": [
-          {
-            "name": "Asthma diagnosis codes",
-            "newer_version": {
-              "label": "20250912",
-              "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/ast_cod/20250912"
-            },
-            "system": "snomedct",
-            "system_release": "40.2.0 (valid from 2025-06-11)",
-            "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/ast_cod/20250627/",
-            "variables": {
-              "analysis/dataset_definition.py": {
-                "github_url": "https://github.com/opensafely/demo_repo/blob/2bddcde330514a4fd4bb04dc38891f8814b91d8c/analysis/dataset_definition.py",
-                "variables": [
-                  "asthma"
-                ]
-              }
-            }
-          },
           {
             "name": "Severe asthma drug treatment codes",
             "newer_version": {
@@ -7484,267 +7113,6 @@
                 "github_url": "https://github.com/opensafely/demo_repo/blob/2bddcde330514a4fd4bb04dc38891f8814b91d8c/analysis/dataset_definition.py",
                 "variables": [
                   "copd"
-                ]
-              }
-            }
-          },
-          {
-            "name": "Codes for chronic obstructive pulmonary disease (COPD) review",
-            "newer_version": {
-              "label": "20250912",
-              "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/copdrvw_cod/20250912"
-            },
-            "system": "snomedct",
-            "system_release": "40.2.0 (valid from 2025-06-11)",
-            "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/copdrvw_cod/20250627/",
-            "variables": {
-              "analysis/dataset_definition.py": {
-                "github_url": "https://github.com/opensafely/demo_repo/blob/2bddcde330514a4fd4bb04dc38891f8814b91d8c/analysis/dataset_definition.py",
-                "variables": [
-                  "copd"
-                ]
-              }
-            }
-          },
-          {
-            "name": "Chronic obstructive pulmonary disease (COPD) resolved codes",
-            "newer_version": {
-              "label": "20250912",
-              "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/copdres_cod/20250912"
-            },
-            "system": "snomedct",
-            "system_release": "40.2.0 (valid from 2025-06-11)",
-            "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/copdres_cod/20250627/",
-            "variables": {
-              "analysis/dataset_definition.py": {
-                "github_url": "https://github.com/opensafely/demo_repo/blob/2bddcde330514a4fd4bb04dc38891f8814b91d8c/analysis/dataset_definition.py",
-                "variables": [
-                  "copd"
-                ]
-              }
-            }
-          },
-          {
-            "name": "Branded salbutamol - AirSalb",
-            "newer_version": {
-              "label": "20250912",
-              "url": "https://www.opencodelists.org/codelist/nhs-drug-refsets/airsbrdinhdrug_cod/20250912"
-            },
-            "system": "dmd",
-            "system_release": "2025 10.1.0 (valid from 2025-10-13)",
-            "url": "https://www.opencodelists.org/codelist/nhs-drug-refsets/airsbrdinhdrug_cod/20250627/",
-            "variables": {
-              "analysis/dataset_definition.py": {
-                "github_url": "https://github.com/opensafely/demo_repo/blob/2bddcde330514a4fd4bb04dc38891f8814b91d8c/analysis/dataset_definition.py",
-                "variables": [
-                  "salbutamol_quantity_y1",
-                  "salbutamol_quantity_y2"
-                ]
-              },
-              "analysis/inclusion_definition.py": {
-                "github_url": "https://github.com/opensafely/demo_repo/blob/2bddcde330514a4fd4bb04dc38891f8814b91d8c/analysis/inclusion_definition.py",
-                "variables": [
-                  "inhaler_prescribed"
-                ]
-              }
-            }
-          },
-          {
-            "name": "Branded salbutamol - Airomir",
-            "newer_version": {
-              "label": "20250912",
-              "url": "https://www.opencodelists.org/codelist/nhs-drug-refsets/airobrdinhdrug_cod/20250912"
-            },
-            "system": "dmd",
-            "system_release": "2025 10.1.0 (valid from 2025-10-13)",
-            "url": "https://www.opencodelists.org/codelist/nhs-drug-refsets/airobrdinhdrug_cod/20250627/",
-            "variables": {
-              "analysis/dataset_definition.py": {
-                "github_url": "https://github.com/opensafely/demo_repo/blob/2bddcde330514a4fd4bb04dc38891f8814b91d8c/analysis/dataset_definition.py",
-                "variables": [
-                  "salbutamol_quantity_y1",
-                  "salbutamol_quantity_y2"
-                ]
-              },
-              "analysis/inclusion_definition.py": {
-                "github_url": "https://github.com/opensafely/demo_repo/blob/2bddcde330514a4fd4bb04dc38891f8814b91d8c/analysis/inclusion_definition.py",
-                "variables": [
-                  "inhaler_prescribed"
-                ]
-              }
-            }
-          },
-          {
-            "name": "Branded salbutamol - Easyhaler",
-            "newer_version": {
-              "label": "20250912",
-              "url": "https://www.opencodelists.org/codelist/nhs-drug-refsets/easybrdinhdrug_cod/20250912"
-            },
-            "system": "dmd",
-            "system_release": "2025 10.1.0 (valid from 2025-10-13)",
-            "url": "https://www.opencodelists.org/codelist/nhs-drug-refsets/easybrdinhdrug_cod/20250627/",
-            "variables": {
-              "analysis/dataset_definition.py": {
-                "github_url": "https://github.com/opensafely/demo_repo/blob/2bddcde330514a4fd4bb04dc38891f8814b91d8c/analysis/dataset_definition.py",
-                "variables": [
-                  "salbutamol_quantity_y1",
-                  "salbutamol_quantity_y2"
-                ]
-              },
-              "analysis/inclusion_definition.py": {
-                "github_url": "https://github.com/opensafely/demo_repo/blob/2bddcde330514a4fd4bb04dc38891f8814b91d8c/analysis/inclusion_definition.py",
-                "variables": [
-                  "inhaler_prescribed"
-                ]
-              }
-            }
-          },
-          {
-            "name": "Branded salbutamol - Salamol",
-            "newer_version": {
-              "label": "20250912",
-              "url": "https://www.opencodelists.org/codelist/nhs-drug-refsets/salabrdinhdrug_cod/20250912"
-            },
-            "system": "dmd",
-            "system_release": "2025 10.1.0 (valid from 2025-10-13)",
-            "url": "https://www.opencodelists.org/codelist/nhs-drug-refsets/salabrdinhdrug_cod/20250627/",
-            "variables": {
-              "analysis/dataset_definition.py": {
-                "github_url": "https://github.com/opensafely/demo_repo/blob/2bddcde330514a4fd4bb04dc38891f8814b91d8c/analysis/dataset_definition.py",
-                "variables": [
-                  "salbutamol_quantity_y1",
-                  "salbutamol_quantity_y2"
-                ]
-              },
-              "analysis/inclusion_definition.py": {
-                "github_url": "https://github.com/opensafely/demo_repo/blob/2bddcde330514a4fd4bb04dc38891f8814b91d8c/analysis/inclusion_definition.py",
-                "variables": [
-                  "inhaler_prescribed"
-                ]
-              }
-            }
-          },
-          {
-            "name": "Branded salbutamol - Salbulin Novolizer",
-            "newer_version": {
-              "label": "20250912",
-              "url": "https://www.opencodelists.org/codelist/nhs-drug-refsets/salbbrdinhdrug_cod/20250912"
-            },
-            "system": "dmd",
-            "system_release": "2025 10.1.0 (valid from 2025-10-13)",
-            "url": "https://www.opencodelists.org/codelist/nhs-drug-refsets/salbbrdinhdrug_cod/20250627/",
-            "variables": {
-              "analysis/dataset_definition.py": {
-                "github_url": "https://github.com/opensafely/demo_repo/blob/2bddcde330514a4fd4bb04dc38891f8814b91d8c/analysis/dataset_definition.py",
-                "variables": [
-                  "salbutamol_quantity_y1",
-                  "salbutamol_quantity_y2"
-                ]
-              },
-              "analysis/inclusion_definition.py": {
-                "github_url": "https://github.com/opensafely/demo_repo/blob/2bddcde330514a4fd4bb04dc38891f8814b91d8c/analysis/inclusion_definition.py",
-                "variables": [
-                  "inhaler_prescribed"
-                ]
-              }
-            }
-          },
-          {
-            "name": "Branded salbutamol - Ventolin Accuhaler",
-            "newer_version": {
-              "label": "20250912",
-              "url": "https://www.opencodelists.org/codelist/nhs-drug-refsets/ventaccubrdinhdrug_cod/20250912"
-            },
-            "system": "dmd",
-            "system_release": "2025 10.1.0 (valid from 2025-10-13)",
-            "url": "https://www.opencodelists.org/codelist/nhs-drug-refsets/ventaccubrdinhdrug_cod/20250627/",
-            "variables": {
-              "analysis/dataset_definition.py": {
-                "github_url": "https://github.com/opensafely/demo_repo/blob/2bddcde330514a4fd4bb04dc38891f8814b91d8c/analysis/dataset_definition.py",
-                "variables": [
-                  "salbutamol_quantity_y1",
-                  "salbutamol_quantity_y2"
-                ]
-              },
-              "analysis/inclusion_definition.py": {
-                "github_url": "https://github.com/opensafely/demo_repo/blob/2bddcde330514a4fd4bb04dc38891f8814b91d8c/analysis/inclusion_definition.py",
-                "variables": [
-                  "inhaler_prescribed"
-                ]
-              }
-            }
-          },
-          {
-            "name": "Branded salbutamol - Ventolin Evohaler",
-            "newer_version": {
-              "label": "20250912",
-              "url": "https://www.opencodelists.org/codelist/nhs-drug-refsets/ventevobrdinhdrug_cod/20250912"
-            },
-            "system": "dmd",
-            "system_release": "2025 10.1.0 (valid from 2025-10-13)",
-            "url": "https://www.opencodelists.org/codelist/nhs-drug-refsets/ventevobrdinhdrug_cod/20250627/",
-            "variables": {
-              "analysis/dataset_definition.py": {
-                "github_url": "https://github.com/opensafely/demo_repo/blob/2bddcde330514a4fd4bb04dc38891f8814b91d8c/analysis/dataset_definition.py",
-                "variables": [
-                  "salbutamol_quantity_y1",
-                  "salbutamol_quantity_y2"
-                ]
-              },
-              "analysis/inclusion_definition.py": {
-                "github_url": "https://github.com/opensafely/demo_repo/blob/2bddcde330514a4fd4bb04dc38891f8814b91d8c/analysis/inclusion_definition.py",
-                "variables": [
-                  "inhaler_prescribed"
-                ]
-              }
-            }
-          },
-          {
-            "name": "Generic salbutamol MDI inhalers",
-            "newer_version": {
-              "label": "20250912",
-              "url": "https://www.opencodelists.org/codelist/nhs-drug-refsets/gensalbmdiinhdrug_cod/20250912"
-            },
-            "system": "dmd",
-            "system_release": "2025 10.1.0 (valid from 2025-10-13)",
-            "url": "https://www.opencodelists.org/codelist/nhs-drug-refsets/gensalbmdiinhdrug_cod/20250627/",
-            "variables": {
-              "analysis/dataset_definition.py": {
-                "github_url": "https://github.com/opensafely/demo_repo/blob/2bddcde330514a4fd4bb04dc38891f8814b91d8c/analysis/dataset_definition.py",
-                "variables": [
-                  "salbutamol_quantity_y1",
-                  "salbutamol_quantity_y2"
-                ]
-              },
-              "analysis/inclusion_definition.py": {
-                "github_url": "https://github.com/opensafely/demo_repo/blob/2bddcde330514a4fd4bb04dc38891f8814b91d8c/analysis/inclusion_definition.py",
-                "variables": [
-                  "inhaler_prescribed"
-                ]
-              }
-            }
-          },
-          {
-            "name": "Generic salbutamol DPI inhalers",
-            "newer_version": {
-              "label": "20250912",
-              "url": "https://www.opencodelists.org/codelist/nhs-drug-refsets/gensalbdpinhdrug_cod/20250912"
-            },
-            "system": "dmd",
-            "system_release": "2025 10.1.0 (valid from 2025-10-13)",
-            "url": "https://www.opencodelists.org/codelist/nhs-drug-refsets/gensalbdpinhdrug_cod/20250627/",
-            "variables": {
-              "analysis/dataset_definition.py": {
-                "github_url": "https://github.com/opensafely/demo_repo/blob/2bddcde330514a4fd4bb04dc38891f8814b91d8c/analysis/dataset_definition.py",
-                "variables": [
-                  "salbutamol_quantity_y1",
-                  "salbutamol_quantity_y2"
-                ]
-              },
-              "analysis/inclusion_definition.py": {
-                "github_url": "https://github.com/opensafely/demo_repo/blob/2bddcde330514a4fd4bb04dc38891f8814b91d8c/analysis/inclusion_definition.py",
-                "variables": [
-                  "inhaler_prescribed"
                 ]
               }
             }
@@ -10072,41 +9440,9 @@
     "opensafely/ehrql-demo": {
       "ethnicity_codelist": false,
       "good": {
-        "codelists": []
-      },
-      "inline_codelists": {
-        "codelists": []
-      },
-      "local_codelists": {
-        "codelists": []
-      },
-      "newer_version": {
         "codelists": [
           {
-            "name": "Depression diagnosis codes",
-            "newer_version": {
-              "label": "20250912",
-              "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/depr_cod/20250912"
-            },
-            "system": "snomedct",
-            "system_release": "39.2.0 (valid from 2024-11-27)",
-            "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/depr_cod/20241205/",
-            "variables": {
-              "analysis/dataset_definition.py": {
-                "github_url": "https://github.com/opensafely/ehrql-demo/blob/65ce78f737caa933be27a2a96812e07b1c397c10/analysis/dataset_definition.py",
-                "variables": [
-                  "has_unresolved_depression",
-                  "last_dep_diagnosis_date"
-                ]
-              }
-            }
-          },
-          {
             "name": "Depression resolved codes",
-            "newer_version": {
-              "label": "20250912",
-              "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/depres_cod/20250912"
-            },
             "system": "snomedct",
             "system_release": "39.2.0 (valid from 2024-11-27)",
             "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/depres_cod/20241205/",
@@ -10121,6 +9457,15 @@
             }
           }
         ]
+      },
+      "inline_codelists": {
+        "codelists": []
+      },
+      "local_codelists": {
+        "codelists": []
+      },
+      "newer_version": {
+        "codelists": []
       },
       "no_events": {
         "codelists": []
@@ -10954,82 +10299,6 @@
                 "variables": [
                   "cva_after_date",
                   "cva_before_date"
-                ]
-              }
-            }
-          },
-          {
-            "name": "Transient ischaemic attack (TIA) codes",
-            "newer_version": {
-              "label": "20250912",
-              "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/tia_cod/20250912"
-            },
-            "system": "snomedct",
-            "system_release": "39.2.0 (valid from 2024-11-27)",
-            "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/tia_cod/1625df86/",
-            "variables": {
-              "analysis/dataset_definition_eia.py": {
-                "github_url": "https://github.com/opensafely/inflammatory_rheum/blob/a78b321f47a6c8e99d93c6c3af376bc2b68b505e/analysis/dataset_definition_eia.py",
-                "variables": [
-                  "cva_after_date",
-                  "cva_before_date"
-                ]
-              }
-            }
-          },
-          {
-            "name": "Codes for dementia",
-            "newer_version": {
-              "label": "20250912",
-              "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/dem_cod/20250912"
-            },
-            "system": "snomedct",
-            "system_release": "39.2.0 (valid from 2024-11-27)",
-            "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/dem_cod/21b792ed/",
-            "variables": {
-              "analysis/dataset_definition_eia.py": {
-                "github_url": "https://github.com/opensafely/inflammatory_rheum/blob/a78b321f47a6c8e99d93c6c3af376bc2b68b505e/analysis/dataset_definition_eia.py",
-                "variables": [
-                  "dem_after_date",
-                  "dem_before_date"
-                ]
-              }
-            }
-          },
-          {
-            "name": "Depression diagnosis codes",
-            "newer_version": {
-              "label": "20250912",
-              "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/depr_cod/20250912"
-            },
-            "system": "snomedct",
-            "system_release": "39.2.0 (valid from 2024-11-27)",
-            "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/depr_cod/477e1261/",
-            "variables": {
-              "analysis/dataset_definition_eia.py": {
-                "github_url": "https://github.com/opensafely/inflammatory_rheum/blob/a78b321f47a6c8e99d93c6c3af376bc2b68b505e/analysis/dataset_definition_eia.py",
-                "variables": [
-                  "depr_after_date",
-                  "depr_before_date"
-                ]
-              }
-            }
-          },
-          {
-            "name": "Diabetes Type 2 codes used in National Audit",
-            "newer_version": {
-              "label": "20250912",
-              "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/dmtype2audit_cod/20250912"
-            },
-            "system": "snomedct",
-            "system_release": "39.2.0 (valid from 2024-11-27)",
-            "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/dmtype2audit_cod/130b114a/",
-            "variables": {
-              "analysis/dataset_definition_eia.py": {
-                "github_url": "https://github.com/opensafely/inflammatory_rheum/blob/a78b321f47a6c8e99d93c6c3af376bc2b68b505e/analysis/dataset_definition_eia.py",
-                "variables": [
-                  "dm_after_date",
-                  "dm_before_date"
                 ]
               }
             }
@@ -12891,6 +12160,20 @@
             }
           },
           {
+            "name": "Lifestyle intervention and advice codes",
+            "system": "snomedct",
+            "system_release": "40.2.0 (valid from 2025-06-11)",
+            "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/lifestyleint_cod/75d83d5e/",
+            "variables": {
+              "analysis/dataset_definition_t2dm.py": {
+                "github_url": "https://github.com/opensafely/metformin_covid/blob/da5f60f5e0dd5f3a2d0ae1affd5e3e83a1106e7e/analysis/dataset_definition_t2dm.py",
+                "variables": [
+                  "cov_num_countlifestyle"
+                ]
+              }
+            }
+          },
+          {
             "name": "diabetes agi",
             "system": "dmd",
             "system_release": "2025 10.0.0 (valid from 2025-10-06)",
@@ -13144,24 +12427,6 @@
             }
           },
           {
-            "name": "Lifestyle intervention and advice codes",
-            "newer_version": {
-              "label": "20250912",
-              "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/lifestyleint_cod/20250912"
-            },
-            "system": "snomedct",
-            "system_release": "40.2.0 (valid from 2025-06-11)",
-            "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/lifestyleint_cod/75d83d5e/",
-            "variables": {
-              "analysis/dataset_definition_t2dm.py": {
-                "github_url": "https://github.com/opensafely/metformin_covid/blob/da5f60f5e0dd5f3a2d0ae1affd5e3e83a1106e7e/analysis/dataset_definition_t2dm.py",
-                "variables": [
-                  "cov_num_countlifestyle"
-                ]
-              }
-            }
-          },
-          {
             "name": "Patients in long-stay nursing and residential care",
             "newer_version": {
               "label": "v2.5",
@@ -13193,24 +12458,6 @@
                 "github_url": "https://github.com/opensafely/metformin_covid/blob/da5f60f5e0dd5f3a2d0ae1affd5e3e83a1106e7e/analysis/dataset_definition_t2dm.py",
                 "variables": [
                   "elig_date_ckd_45_first"
-                ]
-              }
-            }
-          },
-          {
-            "name": "Palliative care codes",
-            "newer_version": {
-              "label": "20250912",
-              "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/palcare_cod/20250912"
-            },
-            "system": "snomedct",
-            "system_release": "39.2.0 (valid from 2024-11-27)",
-            "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/palcare_cod/7748de1e/",
-            "variables": {
-              "analysis/dataset_definition_t2dm.py": {
-                "github_url": "https://github.com/opensafely/metformin_covid/blob/da5f60f5e0dd5f3a2d0ae1affd5e3e83a1106e7e/analysis/dataset_definition_t2dm.py",
-                "variables": [
-                  "elig_date_palliative"
                 ]
               }
             }
@@ -17890,38 +17137,7 @@
         "codelists": []
       },
       "newer_version": {
-        "codelists": [
-          {
-            "name": "Dementia medication review codes",
-            "newer_version": {
-              "label": "20250912",
-              "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/demmedrvw_cod/20250912"
-            },
-            "system": "snomedct",
-            "system_release": "40.2.0 (valid from 2025-06-11)",
-            "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/demmedrvw_cod/5f1ce4d6/",
-            "variables": {
-              "analysis/dataset_definition/dataset_definition_hist.py": {
-                "github_url": "https://github.com/opensafely/polypharmacy-deprescribing-dementia/blob/7727e41ce139e39400b595336e3b80ef71218359/analysis/dataset_definition/dataset_definition_hist.py",
-                "variables": [
-                  "exp_dat_med_rev"
-                ]
-              },
-              "analysis/dataset_definition/dataset_definition_match.py": {
-                "github_url": "https://github.com/opensafely/polypharmacy-deprescribing-dementia/blob/7727e41ce139e39400b595336e3b80ef71218359/analysis/dataset_definition/dataset_definition_match.py",
-                "variables": [
-                  "exp_dat_med_rev"
-                ]
-              },
-              "analysis/dataset_definition/dataset_definition_matched_full.py": {
-                "github_url": "https://github.com/opensafely/polypharmacy-deprescribing-dementia/blob/7727e41ce139e39400b595336e3b80ef71218359/analysis/dataset_definition/dataset_definition_matched_full.py",
-                "variables": [
-                  "exp_dat_med_rev"
-                ]
-              }
-            }
-          }
-        ]
+        "codelists": []
       },
       "no_events": {
         "codelists": []
@@ -23545,24 +22761,6 @@
             }
           },
           {
-            "name": "Depression resolved codes",
-            "newer_version": {
-              "label": "20250912",
-              "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/depres_cod/20250912"
-            },
-            "system": "snomedct",
-            "system_release": "unknown",
-            "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/depres_cod/20200812/",
-            "variables": {
-              "analysis/dep_reg_dataset.py": {
-                "github_url": "https://github.com/opensafely/qof/blob/9d00aa15f04b294f88728518b7e6185a1a59b0cb/analysis/dep_reg_dataset.py",
-                "variables": [
-                  "depres_dat"
-                ]
-              }
-            }
-          },
-          {
             "name": "Hypertension diagnosis codes",
             "newer_version": {
               "label": "20250912",
@@ -23577,25 +22775,6 @@
                 "variables": [
                   "hyp_reg_r1",
                   "hyplat_dat"
-                ]
-              }
-            }
-          },
-          {
-            "name": "Hypertension resolved codes",
-            "newer_version": {
-              "label": "20250912",
-              "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/hypres_cod/20250912"
-            },
-            "system": "snomedct",
-            "system_release": "unknown",
-            "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/hypres_cod/20200812/",
-            "variables": {
-              "analysis/hyp_reg_dataset.py": {
-                "github_url": "https://github.com/opensafely/qof/blob/9d00aa15f04b294f88728518b7e6185a1a59b0cb/analysis/hyp_reg_dataset.py",
-                "variables": [
-                  "hyp_reg_r1",
-                  "hypres_dat"
                 ]
               }
             }
