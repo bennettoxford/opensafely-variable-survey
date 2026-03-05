@@ -24,12 +24,18 @@ def codelist_version_not_compatible_with_latest_release(
     ):
         print(f"Could not find codelist {codelist_slug} in opencodelists data dump")
         return False
-    codelist_version = next(
-        v
-        for v in codelist["versions"]
-        if v["slug"] == codelist_version_slug
-        or (codelist_slug + "/" + v["hash"] == codelist_version_slug)
-    )
+    try:
+        codelist_version = next(
+            v
+            for v in codelist["versions"]
+            if v["slug"] == codelist_version_slug
+            or (codelist_slug + "/" + v["hash"] == codelist_version_slug)
+        )
+    except StopIteration:
+        print(
+            f"Could not find version {codelist_version_slug} of codelist - this is because the rsi-codelists-analysis.json data dump likely hasn't been updated since this codelist was added to a repo."
+        )
+        return False
     coding_system = codelist["coding_system"]
     latest_release = latest_releases[coding_system]["release_name"]
     latest_release_in_compatible_versions = (
