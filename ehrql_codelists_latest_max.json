@@ -1,17 +1,9 @@
 {
-  "generated_at": "2026-03-03 16:06:30",
+  "generated_at": "2026-03-05 08:25:58",
   "projects": {
     "opensafely/ACT-PharmacyFirst-Protocol2-healthcare-usage": {
-      "37294007f547bd95e6d166ffe855b5a229483731": {
+      "c32feecbfdf7c81c21f681d975ac6288955011fe": {
         "_unused_codelists": [
-          [
-            "/nhsd-primary-care-domain-refsets/preg_cod/20200812/",
-            "file=codelists/nhsd-primary-care-domain-refsets-preg_cod.csv"
-          ],
-          [
-            "/opensafely/ethnicity-snomed-0removed/2e641f61/",
-            "file=codelists/opensafely-ethnicity-snomed-0removed.csv"
-          ],
           [
             "/opensafely/pharmacy-first-acute-otitis-media-treatment-full-dmd-codelist/4758f9d4/",
             "file=codelists/opensafely-pharmacy-first-acute-otitis-media-treatment-full-dmd-codelist.csv"
@@ -41,38 +33,278 @@
             "file=codelists/opensafely-pharmacy-first-urinary-tract-infection-treatment-full-dmd-codelist.csv"
           ],
           [
+            "/pharmacy-first-project/Sore-throat-and-related-conditions/387d6b40/",
+            "file=codelists/pharmacy-first-project-Sore-throat-and-related-conditions.csv"
+          ],
+          [
+            "/pharmacy-first-project/bullous-impetigo-administration-codes-for-pharmacy-first/0db01129/",
+            "file=codelists/pharmacy-first-project-bullous-impetigo-administration-codes-for-pharmacy-first.csv"
+          ],
+          [
+            "/pharmacy-first-project/impetigo-related-conditions-administration-codes-for-pharmacy-first/1de090ed/",
+            "file=codelists/pharmacy-first-project-impetigo-related-conditions-administration-codes-for-pharmacy-first.csv"
+          ],
+          [
+            "/pharmacy-first-project/otitis-media-and-related-conditions/63a96aa0/",
+            "file=codelists/pharmacy-first-project-otitis-media-and-related-conditions.csv"
+          ],
+          [
+            "/pharmacy-first-project/sinusitis-related-conditions-administration-codes-for-pharmacy-first/04d11db8/",
+            "file=codelists/pharmacy-first-project-sinusitis-related-conditions-administration-codes-for-pharmacy-first.csv"
+          ],
+          [
+            "/pharmacy-first-project/urinary-catheter-administration-codes-for-pharmacy-first/5de5456b/",
+            "file=codelists/pharmacy-first-project-urinary-catheter-administration-codes-for-pharmacy-first.csv"
+          ],
+          [
+            "/pharmacy-first-project/urinary-tract-infection-and-related-conditions/065e84d6/",
+            "file=codelists/pharmacy-first-project-urinary-tract-infection-and-related-conditions.csv"
+          ],
+          [
             "/user/chriswood/pharmacy-first-clinical-pathway-conditions/7ec97762/",
             "file=codelists/user-chriswood-pharmacy-first-clinical-pathway-conditions.csv"
           ]
         ],
-        "analysis/dataset_definition.py": {
+        "analysis/dataset_definition_patients.py": {
           "age": [],
+          "alive": [],
+          "bullous_impetigo_this_month": [],
+          "catheter_status": [],
+          "ethnicity": [
+            [
+              "/opensafely/ethnicity-snomed-0removed/2e641f61/",
+              "category_column=Grouping_16",
+              "column=snomedcode"
+            ]
+          ],
           "has_pf_consultation": [
             [
               "<inline>",
               "length=1",
-              "source=analysis/codelist.py:76",
-              "values=1577041000000109"
-            ],
-            [
-              "<inline>",
-              "length=1",
-              "source=analysis/codelist.py:78",
+              "source=analysis/codelists.py:110",
               "values=983341000000102"
             ],
             [
               "<inline>",
               "length=1",
-              "source=analysis/codelist.py:80",
+              "source=analysis/codelists.py:112",
               "values=2129921000000100"
             ]
           ],
-          "sex": []
+          "imd": [],
+          "impetigo_numerator": [
+            [
+              "<inline>",
+              "length=1",
+              "source=analysis/codelists.py:110",
+              "values=983341000000102"
+            ],
+            [
+              "<inline>",
+              "length=1",
+              "source=analysis/codelists.py:112",
+              "values=2129921000000100"
+            ],
+            [
+              "<inline>",
+              "length=1",
+              "source=analysis/codelists.py:131",
+              "values=48277006"
+            ]
+          ],
+          "include_patient_impetigo": [
+            [
+              "/nhsd-primary-care-domain-refsets/preg_cod/20200812/",
+              "category_column=term",
+              "column=code"
+            ]
+          ],
+          "include_patient_insect_bites": [
+            [
+              "/nhsd-primary-care-domain-refsets/preg_cod/20200812/",
+              "category_column=term",
+              "column=code"
+            ]
+          ],
+          "include_patient_otitis_media": [],
+          "include_patient_overall_eligible": [
+            [
+              "/nhsd-primary-care-domain-refsets/preg_cod/20200812/",
+              "category_column=term",
+              "column=code"
+            ]
+          ],
+          "include_patient_shingles": [
+            [
+              "/nhsd-primary-care-domain-refsets/preg_cod/20200812/",
+              "category_column=term",
+              "column=code"
+            ]
+          ],
+          "include_patient_sinusitis": [],
+          "include_patient_sore_throat": [
+            [
+              "/nhsd-primary-care-domain-refsets/preg_cod/20200812/",
+              "category_column=term",
+              "column=code"
+            ]
+          ],
+          "include_patient_uuti": [
+            [
+              "/nhsd-primary-care-domain-refsets/preg_cod/20200812/",
+              "category_column=term",
+              "column=code"
+            ]
+          ],
+          "index_date": [],
+          "insectbite_numerator": [
+            [
+              "<inline>",
+              "length=1",
+              "source=analysis/codelists.py:110",
+              "values=983341000000102"
+            ],
+            [
+              "<inline>",
+              "length=1",
+              "source=analysis/codelists.py:112",
+              "values=2129921000000100"
+            ],
+            [
+              "<inline>",
+              "length=1",
+              "source=analysis/codelists.py:127",
+              "values=262550002"
+            ]
+          ],
+          "otitismedia_numerator": [
+            [
+              "<inline>",
+              "length=1",
+              "source=analysis/codelists.py:110",
+              "values=983341000000102"
+            ],
+            [
+              "<inline>",
+              "length=1",
+              "source=analysis/codelists.py:112",
+              "values=2129921000000100"
+            ],
+            [
+              "<inline>",
+              "length=1",
+              "source=analysis/codelists.py:128",
+              "values=3110003"
+            ]
+          ],
+          "practice": [],
+          "pregnant_this_month": [
+            [
+              "/nhsd-primary-care-domain-refsets/preg_cod/20200812/",
+              "category_column=term",
+              "column=code"
+            ]
+          ],
+          "recurrent_impetigo_this_year": [],
+          "recurrent_uti": [],
+          "recurrent_uti_12m": [],
+          "recurrent_uti_6m": [],
+          "region": [],
+          "registered_index": [],
+          "registered_start": [],
+          "sex": [],
+          "shingles_numerator": [
+            [
+              "<inline>",
+              "length=1",
+              "source=analysis/codelists.py:110",
+              "values=983341000000102"
+            ],
+            [
+              "<inline>",
+              "length=1",
+              "source=analysis/codelists.py:112",
+              "values=2129921000000100"
+            ],
+            [
+              "<inline>",
+              "length=1",
+              "source=analysis/codelists.py:130",
+              "values=4740000"
+            ]
+          ],
+          "sinusitis_numerator": [
+            [
+              "<inline>",
+              "length=1",
+              "source=analysis/codelists.py:110",
+              "values=983341000000102"
+            ],
+            [
+              "<inline>",
+              "length=1",
+              "source=analysis/codelists.py:112",
+              "values=2129921000000100"
+            ],
+            [
+              "<inline>",
+              "length=1",
+              "source=analysis/codelists.py:126",
+              "values=15805002"
+            ]
+          ],
+          "sorethroat_numerator": [
+            [
+              "<inline>",
+              "length=1",
+              "source=analysis/codelists.py:110",
+              "values=983341000000102"
+            ],
+            [
+              "<inline>",
+              "length=1",
+              "source=analysis/codelists.py:112",
+              "values=2129921000000100"
+            ],
+            [
+              "<inline>",
+              "length=1",
+              "source=analysis/codelists.py:129",
+              "values=363746003"
+            ]
+          ],
+          "start_date": [],
+          "stp": [],
+          "uti_numerator": [
+            [
+              "<inline>",
+              "length=1",
+              "source=analysis/codelists.py:110",
+              "values=983341000000102"
+            ],
+            [
+              "<inline>",
+              "length=1",
+              "source=analysis/codelists.py:112",
+              "values=2129921000000100"
+            ],
+            [
+              "<inline>",
+              "length=1",
+              "source=analysis/codelists.py:125",
+              "values=1090711000000102"
+            ]
+          ]
+        },
+        "analysis/dataset_definition_practices.py": {
+          "practice": [],
+          "region": [],
+          "stp": []
         }
       }
     },
     "opensafely/ADHD-Pre-and-Post-Covid": {
-      "03931de0a3bc746451c86f3a1c223a50b9a13b6a": {
+      "04e76f6dc3ecea437bb276c0e344f3c27b976e0b": {
         "_unused_codelists": [
           [
             "/nhsd-primary-care-domain-refsets/adhdrem_cod/20200812/",
@@ -3362,10 +3594,1088 @@
       }
     },
     "opensafely/COVID-19_vacci_and_MACE_after_hip_fracture": {
-      "c22d2441016205fbb577e03c14b639a77fad2f61": {
-        "_unused_codelists": [],
+      "bb5e2b673a060c341f31cee75abba4fde0658a41": {
+        "_unused_codelists": [
+          [
+            "/bristol/multimorbidity_connective-tissue-disorder/52109c4b/",
+            "file=codelists/bristol-multimorbidity_connective-tissue-disorder.csv"
+          ],
+          [
+            "/bristol/multimorbidity_epilepsy/78ba0a45/",
+            "file=codelists/bristol-multimorbidity_epilepsy.csv"
+          ],
+          [
+            "/bristol/multimorbidity_hearing-loss/6c165b67/",
+            "file=codelists/bristol-multimorbidity_hearing-loss.csv"
+          ],
+          [
+            "/bristol/multimorbidity_irritable-bowel-syndrome/32f13092/",
+            "file=codelists/bristol-multimorbidity_irritable-bowel-syndrome.csv"
+          ],
+          [
+            "/bristol/multimorbidity_psychosisbipolar-disorder/19e1bd5d/",
+            "file=codelists/bristol-multimorbidity_psychosisbipolar-disorder.csv"
+          ],
+          [
+            "/nhsd-primary-care-domain-refsets/ast_cod/20250627/",
+            "file=codelists/nhsd-primary-care-domain-refsets-ast_cod.csv"
+          ],
+          [
+            "/opensafely/cardiovascular-secondary-care/20b63bd4/",
+            "file=codelists/opensafely-cardiovascular-secondary-care.csv"
+          ],
+          [
+            "/primis-covid19-vacc-uptake/bmi_stage/5dbdff42/",
+            "file=codelists/primis-covid19-vacc-uptake-bmi_stage.csv"
+          ],
+          [
+            "/primis-covid19-vacc-uptake/chd_cov/5791cbc7/",
+            "file=codelists/primis-covid19-vacc-uptake-chd_cov.csv"
+          ],
+          [
+            "/primis-covid19-vacc-uptake/ckd15/09b0b232/",
+            "file=codelists/primis-covid19-vacc-uptake-ckd15.csv"
+          ],
+          [
+            "/primis-covid19-vacc-uptake/ckd35/7980326d/",
+            "file=codelists/primis-covid19-vacc-uptake-ckd35.csv"
+          ],
+          [
+            "/primis-covid19-vacc-uptake/ckd_cov/0a7765c1/",
+            "file=codelists/primis-covid19-vacc-uptake-ckd_cov.csv"
+          ],
+          [
+            "/primis-covid19-vacc-uptake/cld/2386d8f6/",
+            "file=codelists/primis-covid19-vacc-uptake-cld.csv"
+          ],
+          [
+            "/primis-covid19-vacc-uptake/cns_cov/41fbcc17/",
+            "file=codelists/primis-covid19-vacc-uptake-cns_cov.csv"
+          ],
+          [
+            "/primis-covid19-vacc-uptake/diab/4cc6cbef/",
+            "file=codelists/primis-covid19-vacc-uptake-diab.csv"
+          ],
+          [
+            "/primis-covid19-vacc-uptake/dmres/17f5258f/",
+            "file=codelists/primis-covid19-vacc-uptake-dmres.csv"
+          ],
+          [
+            "/primis-covid19-vacc-uptake/immdx_cov/044b3246/",
+            "file=codelists/primis-covid19-vacc-uptake-immdx_cov.csv"
+          ],
+          [
+            "/primis-covid19-vacc-uptake/immrx/2572e55d/",
+            "file=codelists/primis-covid19-vacc-uptake-immrx.csv"
+          ],
+          [
+            "/primis-covid19-vacc-uptake/learndis/54df0bd1/",
+            "file=codelists/primis-covid19-vacc-uptake-learndis.csv"
+          ],
+          [
+            "/primis-covid19-vacc-uptake/sev_mental/63237f2e/",
+            "file=codelists/primis-covid19-vacc-uptake-sev_mental.csv"
+          ],
+          [
+            "/primis-covid19-vacc-uptake/sev_obesity/07c4a5cb/",
+            "file=codelists/primis-covid19-vacc-uptake-sev_obesity.csv"
+          ],
+          [
+            "/primis-covid19-vacc-uptake/smhres/70a13efc/",
+            "file=codelists/primis-covid19-vacc-uptake-smhres.csv"
+          ],
+          [
+            "/primis-covid19-vacc-uptake/spln_cov/22c02567/",
+            "file=codelists/primis-covid19-vacc-uptake-spln_cov.csv"
+          ]
+        ],
         "analysis/dataset_definition.py": {
-          "sex": []
+          "age": [
+            [
+              "<inline>",
+              "length=3",
+              "source=analysis/codelists.py:45",
+              "values=11|12|13"
+            ],
+            [
+              "/user/BillyZhongUOM/hip-fracture-icd-10/0ec29807/",
+              "column=code"
+            ],
+            [
+              "<inline>",
+              "length=5",
+              "source=analysis/codelists.py:32",
+              "values=W241|W461|W471|W191|W481"
+            ]
+          ],
+          "all_cause_death_date": [],
+          "bmi": [
+            [
+              "<inline>",
+              "length=3",
+              "source=analysis/codelists.py:45",
+              "values=11|12|13"
+            ],
+            [
+              "/user/BillyZhongUOM/hip-fracture-icd-10/0ec29807/",
+              "column=code"
+            ],
+            [
+              "<inline>",
+              "length=5",
+              "source=analysis/codelists.py:32",
+              "values=W241|W461|W471|W191|W481"
+            ],
+            [
+              "/primis-covid19-vacc-uptake/bmi/47614c03/",
+              "column=code"
+            ]
+          ],
+          "bmi_date": [
+            [
+              "<inline>",
+              "length=3",
+              "source=analysis/codelists.py:45",
+              "values=11|12|13"
+            ],
+            [
+              "/user/BillyZhongUOM/hip-fracture-icd-10/0ec29807/",
+              "column=code"
+            ],
+            [
+              "<inline>",
+              "length=5",
+              "source=analysis/codelists.py:32",
+              "values=W241|W461|W471|W191|W481"
+            ],
+            [
+              "/primis-covid19-vacc-uptake/bmi/47614c03/",
+              "column=code"
+            ]
+          ],
+          "covax_most_recent_before_index": [
+            [
+              "<inline>",
+              "length=3",
+              "source=analysis/codelists.py:45",
+              "values=11|12|13"
+            ],
+            [
+              "/user/BillyZhongUOM/hip-fracture-icd-10/0ec29807/",
+              "column=code"
+            ],
+            [
+              "<inline>",
+              "length=5",
+              "source=analysis/codelists.py:32",
+              "values=W241|W461|W471|W191|W481"
+            ]
+          ],
+          "covax_within_365d": [
+            [
+              "<inline>",
+              "length=3",
+              "source=analysis/codelists.py:45",
+              "values=11|12|13"
+            ],
+            [
+              "/user/BillyZhongUOM/hip-fracture-icd-10/0ec29807/",
+              "column=code"
+            ],
+            [
+              "<inline>",
+              "length=5",
+              "source=analysis/codelists.py:32",
+              "values=W241|W461|W471|W191|W481"
+            ]
+          ],
+          "covid_positive_before_index": [
+            [
+              "<inline>",
+              "length=3",
+              "source=analysis/codelists.py:45",
+              "values=11|12|13"
+            ],
+            [
+              "/user/BillyZhongUOM/hip-fracture-icd-10/0ec29807/",
+              "column=code"
+            ],
+            [
+              "<inline>",
+              "length=5",
+              "source=analysis/codelists.py:32",
+              "values=W241|W461|W471|W191|W481"
+            ]
+          ],
+          "covid_positive_date": [
+            [
+              "<inline>",
+              "length=3",
+              "source=analysis/codelists.py:45",
+              "values=11|12|13"
+            ],
+            [
+              "/user/BillyZhongUOM/hip-fracture-icd-10/0ec29807/",
+              "column=code"
+            ],
+            [
+              "<inline>",
+              "length=5",
+              "source=analysis/codelists.py:32",
+              "values=W241|W461|W471|W191|W481"
+            ]
+          ],
+          "cvddeath365": [
+            [
+              "<inline>",
+              "length=3",
+              "source=analysis/codelists.py:45",
+              "values=11|12|13"
+            ],
+            [
+              "/user/BillyZhongUOM/hip-fracture-icd-10/0ec29807/",
+              "column=code"
+            ],
+            [
+              "<inline>",
+              "length=5",
+              "source=analysis/codelists.py:32",
+              "values=W241|W461|W471|W191|W481"
+            ],
+            [
+              "/user/BillyZhongUOM/non_fatal_mi/7865e4c7/",
+              "column=code"
+            ],
+            [
+              "/user/BillyZhongUOM/non_fatal_stroke/5f567192/",
+              "column=code"
+            ]
+          ],
+          "cvddeath_date": [
+            [
+              "<inline>",
+              "length=3",
+              "source=analysis/codelists.py:45",
+              "values=11|12|13"
+            ],
+            [
+              "/user/BillyZhongUOM/hip-fracture-icd-10/0ec29807/",
+              "column=code"
+            ],
+            [
+              "<inline>",
+              "length=5",
+              "source=analysis/codelists.py:32",
+              "values=W241|W461|W471|W191|W481"
+            ],
+            [
+              "/user/BillyZhongUOM/non_fatal_mi/7865e4c7/",
+              "column=code"
+            ],
+            [
+              "/user/BillyZhongUOM/non_fatal_stroke/5f567192/",
+              "column=code"
+            ]
+          ],
+          "dereg_date": [
+            [
+              "<inline>",
+              "length=3",
+              "source=analysis/codelists.py:45",
+              "values=11|12|13"
+            ],
+            [
+              "/user/BillyZhongUOM/hip-fracture-icd-10/0ec29807/",
+              "column=code"
+            ],
+            [
+              "<inline>",
+              "length=5",
+              "source=analysis/codelists.py:32",
+              "values=W241|W461|W471|W191|W481"
+            ]
+          ],
+          "ethnicity6": [
+            [
+              "/opensafely/ethnicity-snomed-0removed/22911876/",
+              "category_column=Grouping_6",
+              "column=code"
+            ],
+            [
+              "<inline>",
+              "length=3",
+              "source=analysis/codelists.py:45",
+              "values=11|12|13"
+            ],
+            [
+              "/user/BillyZhongUOM/hip-fracture-icd-10/0ec29807/",
+              "column=code"
+            ],
+            [
+              "<inline>",
+              "length=5",
+              "source=analysis/codelists.py:32",
+              "values=W241|W461|W471|W191|W481"
+            ]
+          ],
+          "ethnicity_sus": [],
+          "fluvax_most_recent_before_index": [
+            [
+              "<inline>",
+              "length=3",
+              "source=analysis/codelists.py:45",
+              "values=11|12|13"
+            ],
+            [
+              "/user/BillyZhongUOM/hip-fracture-icd-10/0ec29807/",
+              "column=code"
+            ],
+            [
+              "<inline>",
+              "length=5",
+              "source=analysis/codelists.py:32",
+              "values=W241|W461|W471|W191|W481"
+            ]
+          ],
+          "fluvax_within_365d": [
+            [
+              "<inline>",
+              "length=3",
+              "source=analysis/codelists.py:45",
+              "values=11|12|13"
+            ],
+            [
+              "/user/BillyZhongUOM/hip-fracture-icd-10/0ec29807/",
+              "column=code"
+            ],
+            [
+              "<inline>",
+              "length=5",
+              "source=analysis/codelists.py:32",
+              "values=W241|W461|W471|W191|W481"
+            ]
+          ],
+          "gp_registration_start": [
+            [
+              "<inline>",
+              "length=3",
+              "source=analysis/codelists.py:45",
+              "values=11|12|13"
+            ],
+            [
+              "/user/BillyZhongUOM/hip-fracture-icd-10/0ec29807/",
+              "column=code"
+            ],
+            [
+              "<inline>",
+              "length=5",
+              "source=analysis/codelists.py:32",
+              "values=W241|W461|W471|W191|W481"
+            ]
+          ],
+          "hf_admission_method": [
+            [
+              "<inline>",
+              "length=3",
+              "source=analysis/codelists.py:45",
+              "values=11|12|13"
+            ],
+            [
+              "/user/BillyZhongUOM/hip-fracture-icd-10/0ec29807/",
+              "column=code"
+            ],
+            [
+              "<inline>",
+              "length=5",
+              "source=analysis/codelists.py:32",
+              "values=W241|W461|W471|W191|W481"
+            ]
+          ],
+          "hf_discharge_date": [
+            [
+              "<inline>",
+              "length=3",
+              "source=analysis/codelists.py:45",
+              "values=11|12|13"
+            ],
+            [
+              "/user/BillyZhongUOM/hip-fracture-icd-10/0ec29807/",
+              "column=code"
+            ],
+            [
+              "<inline>",
+              "length=5",
+              "source=analysis/codelists.py:32",
+              "values=W241|W461|W471|W191|W481"
+            ]
+          ],
+          "hf_primary_diagnosis": [
+            [
+              "<inline>",
+              "length=3",
+              "source=analysis/codelists.py:45",
+              "values=11|12|13"
+            ],
+            [
+              "/user/BillyZhongUOM/hip-fracture-icd-10/0ec29807/",
+              "column=code"
+            ],
+            [
+              "<inline>",
+              "length=5",
+              "source=analysis/codelists.py:32",
+              "values=W241|W461|W471|W191|W481"
+            ]
+          ],
+          "imd_quintile": [
+            [
+              "<inline>",
+              "length=3",
+              "source=analysis/codelists.py:45",
+              "values=11|12|13"
+            ],
+            [
+              "/user/BillyZhongUOM/hip-fracture-icd-10/0ec29807/",
+              "column=code"
+            ],
+            [
+              "<inline>",
+              "length=5",
+              "source=analysis/codelists.py:32",
+              "values=W241|W461|W471|W191|W481"
+            ]
+          ],
+          "index_date": [
+            [
+              "<inline>",
+              "length=3",
+              "source=analysis/codelists.py:45",
+              "values=11|12|13"
+            ],
+            [
+              "/user/BillyZhongUOM/hip-fracture-icd-10/0ec29807/",
+              "column=code"
+            ],
+            [
+              "<inline>",
+              "length=5",
+              "source=analysis/codelists.py:32",
+              "values=W241|W461|W471|W191|W481"
+            ]
+          ],
+          "mace365": [
+            [
+              "/user/BillyZhongUOM/non_fatal_mi/7865e4c7/",
+              "column=code"
+            ],
+            [
+              "<inline>",
+              "length=3",
+              "source=analysis/codelists.py:45",
+              "values=11|12|13"
+            ],
+            [
+              "/user/BillyZhongUOM/hip-fracture-icd-10/0ec29807/",
+              "column=code"
+            ],
+            [
+              "<inline>",
+              "length=5",
+              "source=analysis/codelists.py:32",
+              "values=W241|W461|W471|W191|W481"
+            ],
+            [
+              "/nhsd-primary-care-domain-refsets/mi_cod/20250912/",
+              "column=code"
+            ],
+            [
+              "/user/BillyZhongUOM/non_fatal_stroke/5f567192/",
+              "column=code"
+            ],
+            [
+              "/nhsd-primary-care-domain-refsets/strk_cod/20250912/",
+              "column=code"
+            ]
+          ],
+          "mace_date": [
+            [
+              "/user/BillyZhongUOM/non_fatal_mi/7865e4c7/",
+              "column=code"
+            ],
+            [
+              "<inline>",
+              "length=3",
+              "source=analysis/codelists.py:45",
+              "values=11|12|13"
+            ],
+            [
+              "/user/BillyZhongUOM/hip-fracture-icd-10/0ec29807/",
+              "column=code"
+            ],
+            [
+              "<inline>",
+              "length=5",
+              "source=analysis/codelists.py:32",
+              "values=W241|W461|W471|W191|W481"
+            ],
+            [
+              "/nhsd-primary-care-domain-refsets/mi_cod/20250912/",
+              "column=code"
+            ],
+            [
+              "/user/BillyZhongUOM/non_fatal_stroke/5f567192/",
+              "column=code"
+            ],
+            [
+              "/nhsd-primary-care-domain-refsets/strk_cod/20250912/",
+              "column=code"
+            ]
+          ],
+          "mi365": [
+            [
+              "/user/BillyZhongUOM/non_fatal_mi/7865e4c7/",
+              "column=code"
+            ],
+            [
+              "<inline>",
+              "length=3",
+              "source=analysis/codelists.py:45",
+              "values=11|12|13"
+            ],
+            [
+              "/user/BillyZhongUOM/hip-fracture-icd-10/0ec29807/",
+              "column=code"
+            ],
+            [
+              "<inline>",
+              "length=5",
+              "source=analysis/codelists.py:32",
+              "values=W241|W461|W471|W191|W481"
+            ],
+            [
+              "/nhsd-primary-care-domain-refsets/mi_cod/20250912/",
+              "column=code"
+            ]
+          ],
+          "mi_date": [
+            [
+              "/user/BillyZhongUOM/non_fatal_mi/7865e4c7/",
+              "column=code"
+            ],
+            [
+              "<inline>",
+              "length=3",
+              "source=analysis/codelists.py:45",
+              "values=11|12|13"
+            ],
+            [
+              "/user/BillyZhongUOM/hip-fracture-icd-10/0ec29807/",
+              "column=code"
+            ],
+            [
+              "<inline>",
+              "length=5",
+              "source=analysis/codelists.py:32",
+              "values=W241|W461|W471|W191|W481"
+            ],
+            [
+              "/nhsd-primary-care-domain-refsets/mi_cod/20250912/",
+              "column=code"
+            ]
+          ],
+          "neg_con_1": [
+            [
+              "<inline>",
+              "length=11",
+              "source=analysis/codelists.py:123",
+              "values=C711|C712|C718|C719|C721|C731|C741|C742|C748|C749|C751"
+            ],
+            [
+              "<inline>",
+              "length=3",
+              "source=analysis/codelists.py:45",
+              "values=11|12|13"
+            ],
+            [
+              "/user/BillyZhongUOM/hip-fracture-icd-10/0ec29807/",
+              "column=code"
+            ],
+            [
+              "<inline>",
+              "length=5",
+              "source=analysis/codelists.py:32",
+              "values=W241|W461|W471|W191|W481"
+            ]
+          ],
+          "neg_con_1_date": [
+            [
+              "<inline>",
+              "length=11",
+              "source=analysis/codelists.py:123",
+              "values=C711|C712|C718|C719|C721|C731|C741|C742|C748|C749|C751"
+            ],
+            [
+              "<inline>",
+              "length=3",
+              "source=analysis/codelists.py:45",
+              "values=11|12|13"
+            ],
+            [
+              "/user/BillyZhongUOM/hip-fracture-icd-10/0ec29807/",
+              "column=code"
+            ],
+            [
+              "<inline>",
+              "length=5",
+              "source=analysis/codelists.py:32",
+              "values=W241|W461|W471|W191|W481"
+            ]
+          ],
+          "prior_af": [
+            [
+              "/bristol/multimorbidity_atrial-fibrillation/0f16bd85/",
+              "column=code"
+            ],
+            [
+              "<inline>",
+              "length=3",
+              "source=analysis/codelists.py:45",
+              "values=11|12|13"
+            ],
+            [
+              "/user/BillyZhongUOM/hip-fracture-icd-10/0ec29807/",
+              "column=code"
+            ],
+            [
+              "<inline>",
+              "length=5",
+              "source=analysis/codelists.py:32",
+              "values=W241|W461|W471|W191|W481"
+            ]
+          ],
+          "prior_alcohol_problems": [
+            [
+              "/bristol/multimorbidity_alcoholproblems/625d5706/",
+              "column=code"
+            ],
+            [
+              "<inline>",
+              "length=3",
+              "source=analysis/codelists.py:45",
+              "values=11|12|13"
+            ],
+            [
+              "/user/BillyZhongUOM/hip-fracture-icd-10/0ec29807/",
+              "column=code"
+            ],
+            [
+              "<inline>",
+              "length=5",
+              "source=analysis/codelists.py:32",
+              "values=W241|W461|W471|W191|W481"
+            ]
+          ],
+          "prior_cancer": [
+            [
+              "/bristol/multimorbidity_cancer/7e1f8a31/",
+              "column=code"
+            ],
+            [
+              "<inline>",
+              "length=3",
+              "source=analysis/codelists.py:45",
+              "values=11|12|13"
+            ],
+            [
+              "/user/BillyZhongUOM/hip-fracture-icd-10/0ec29807/",
+              "column=code"
+            ],
+            [
+              "<inline>",
+              "length=5",
+              "source=analysis/codelists.py:32",
+              "values=W241|W461|W471|W191|W481"
+            ]
+          ],
+          "prior_ckd": [
+            [
+              "/bristol/multimorbidity_chronic-kidney-disease/651016fc/",
+              "column=code"
+            ],
+            [
+              "<inline>",
+              "length=3",
+              "source=analysis/codelists.py:45",
+              "values=11|12|13"
+            ],
+            [
+              "/user/BillyZhongUOM/hip-fracture-icd-10/0ec29807/",
+              "column=code"
+            ],
+            [
+              "<inline>",
+              "length=5",
+              "source=analysis/codelists.py:32",
+              "values=W241|W461|W471|W191|W481"
+            ]
+          ],
+          "prior_copd": [
+            [
+              "/bristol/multimorbidity_copd/11c97d7b/",
+              "column=code"
+            ],
+            [
+              "<inline>",
+              "length=3",
+              "source=analysis/codelists.py:45",
+              "values=11|12|13"
+            ],
+            [
+              "/user/BillyZhongUOM/hip-fracture-icd-10/0ec29807/",
+              "column=code"
+            ],
+            [
+              "<inline>",
+              "length=5",
+              "source=analysis/codelists.py:32",
+              "values=W241|W461|W471|W191|W481"
+            ]
+          ],
+          "prior_cvd": [
+            [
+              "/bristol/multimorbidity_atrial-fibrillation/0f16bd85/",
+              "column=code"
+            ],
+            [
+              "/bristol/multimorbidity_heart-failure/4c00a3c7/",
+              "column=code"
+            ],
+            [
+              "<inline>",
+              "length=3",
+              "source=analysis/codelists.py:45",
+              "values=11|12|13"
+            ],
+            [
+              "/user/BillyZhongUOM/hip-fracture-icd-10/0ec29807/",
+              "column=code"
+            ],
+            [
+              "<inline>",
+              "length=5",
+              "source=analysis/codelists.py:32",
+              "values=W241|W461|W471|W191|W481"
+            ],
+            [
+              "/bristol/multimorbidity_coronary-heart-disease/6b200f80/",
+              "column=code"
+            ],
+            [
+              "/bristol/multimorbidity_stroketransient-ischemic-attack/39012916/",
+              "column=code"
+            ]
+          ],
+          "prior_dementia": [
+            [
+              "/bristol/multimorbidity_dementia/43e863e5/",
+              "column=code"
+            ],
+            [
+              "<inline>",
+              "length=3",
+              "source=analysis/codelists.py:45",
+              "values=11|12|13"
+            ],
+            [
+              "/user/BillyZhongUOM/hip-fracture-icd-10/0ec29807/",
+              "column=code"
+            ],
+            [
+              "<inline>",
+              "length=5",
+              "source=analysis/codelists.py:32",
+              "values=W241|W461|W471|W191|W481"
+            ]
+          ],
+          "prior_depression": [
+            [
+              "/bristol/multimorbidity_anxietydepression/67c2d6f2/",
+              "column=code"
+            ],
+            [
+              "<inline>",
+              "length=3",
+              "source=analysis/codelists.py:45",
+              "values=11|12|13"
+            ],
+            [
+              "/user/BillyZhongUOM/hip-fracture-icd-10/0ec29807/",
+              "column=code"
+            ],
+            [
+              "<inline>",
+              "length=5",
+              "source=analysis/codelists.py:32",
+              "values=W241|W461|W471|W191|W481"
+            ]
+          ],
+          "prior_diabetes": [
+            [
+              "/bristol/multimorbidity_diabetes/2ad8f0b0/",
+              "column=code"
+            ],
+            [
+              "<inline>",
+              "length=3",
+              "source=analysis/codelists.py:45",
+              "values=11|12|13"
+            ],
+            [
+              "/user/BillyZhongUOM/hip-fracture-icd-10/0ec29807/",
+              "column=code"
+            ],
+            [
+              "<inline>",
+              "length=5",
+              "source=analysis/codelists.py:32",
+              "values=W241|W461|W471|W191|W481"
+            ]
+          ],
+          "prior_frac": [
+            [
+              "/user/BillyZhongUOM/hip-fracture-icd-10/0ec29807/",
+              "column=code"
+            ],
+            [
+              "<inline>",
+              "length=3",
+              "source=analysis/codelists.py:45",
+              "values=11|12|13"
+            ],
+            [
+              "<inline>",
+              "length=5",
+              "source=analysis/codelists.py:32",
+              "values=W241|W461|W471|W191|W481"
+            ]
+          ],
+          "prior_heart_failure": [
+            [
+              "/bristol/multimorbidity_heart-failure/4c00a3c7/",
+              "column=code"
+            ],
+            [
+              "<inline>",
+              "length=3",
+              "source=analysis/codelists.py:45",
+              "values=11|12|13"
+            ],
+            [
+              "/user/BillyZhongUOM/hip-fracture-icd-10/0ec29807/",
+              "column=code"
+            ],
+            [
+              "<inline>",
+              "length=5",
+              "source=analysis/codelists.py:32",
+              "values=W241|W461|W471|W191|W481"
+            ]
+          ],
+          "prior_hypertension": [
+            [
+              "/nhsd-primary-care-domain-refsets/hyp_cod/20250627/",
+              "column=code"
+            ],
+            [
+              "<inline>",
+              "length=3",
+              "source=analysis/codelists.py:45",
+              "values=11|12|13"
+            ],
+            [
+              "/user/BillyZhongUOM/hip-fracture-icd-10/0ec29807/",
+              "column=code"
+            ],
+            [
+              "<inline>",
+              "length=5",
+              "source=analysis/codelists.py:32",
+              "values=W241|W461|W471|W191|W481"
+            ]
+          ],
+          "prior_mi": [
+            [
+              "/nhsd-primary-care-domain-refsets/mi_cod/20250912/",
+              "column=code"
+            ],
+            [
+              "<inline>",
+              "length=3",
+              "source=analysis/codelists.py:45",
+              "values=11|12|13"
+            ],
+            [
+              "/user/BillyZhongUOM/hip-fracture-icd-10/0ec29807/",
+              "column=code"
+            ],
+            [
+              "<inline>",
+              "length=5",
+              "source=analysis/codelists.py:32",
+              "values=W241|W461|W471|W191|W481"
+            ]
+          ],
+          "prior_stroke": [
+            [
+              "/nhsd-primary-care-domain-refsets/strk_cod/20250912/",
+              "column=code"
+            ],
+            [
+              "<inline>",
+              "length=3",
+              "source=analysis/codelists.py:45",
+              "values=11|12|13"
+            ],
+            [
+              "/user/BillyZhongUOM/hip-fracture-icd-10/0ec29807/",
+              "column=code"
+            ],
+            [
+              "<inline>",
+              "length=5",
+              "source=analysis/codelists.py:32",
+              "values=W241|W461|W471|W191|W481"
+            ]
+          ],
+          "region": [
+            [
+              "<inline>",
+              "length=3",
+              "source=analysis/codelists.py:45",
+              "values=11|12|13"
+            ],
+            [
+              "/user/BillyZhongUOM/hip-fracture-icd-10/0ec29807/",
+              "column=code"
+            ],
+            [
+              "<inline>",
+              "length=5",
+              "source=analysis/codelists.py:32",
+              "values=W241|W461|W471|W191|W481"
+            ]
+          ],
+          "rural_urban": [
+            [
+              "<inline>",
+              "length=3",
+              "source=analysis/codelists.py:45",
+              "values=11|12|13"
+            ],
+            [
+              "/user/BillyZhongUOM/hip-fracture-icd-10/0ec29807/",
+              "column=code"
+            ],
+            [
+              "<inline>",
+              "length=5",
+              "source=analysis/codelists.py:32",
+              "values=W241|W461|W471|W191|W481"
+            ]
+          ],
+          "sex": [],
+          "smoking_status": [
+            [
+              "<inline>",
+              "length=3",
+              "source=analysis/codelists.py:45",
+              "values=11|12|13"
+            ],
+            [
+              "/user/BillyZhongUOM/hip-fracture-icd-10/0ec29807/",
+              "column=code"
+            ],
+            [
+              "<inline>",
+              "length=5",
+              "source=analysis/codelists.py:32",
+              "values=W241|W461|W471|W191|W481"
+            ],
+            [
+              "/opensafely/smoking-clear-snomed/6bedfe70/",
+              "column=id"
+            ]
+          ],
+          "stroke365": [
+            [
+              "/user/BillyZhongUOM/non_fatal_stroke/5f567192/",
+              "column=code"
+            ],
+            [
+              "<inline>",
+              "length=3",
+              "source=analysis/codelists.py:45",
+              "values=11|12|13"
+            ],
+            [
+              "/user/BillyZhongUOM/hip-fracture-icd-10/0ec29807/",
+              "column=code"
+            ],
+            [
+              "<inline>",
+              "length=5",
+              "source=analysis/codelists.py:32",
+              "values=W241|W461|W471|W191|W481"
+            ],
+            [
+              "/nhsd-primary-care-domain-refsets/strk_cod/20250912/",
+              "column=code"
+            ]
+          ],
+          "stroke_date": [
+            [
+              "/user/BillyZhongUOM/non_fatal_stroke/5f567192/",
+              "column=code"
+            ],
+            [
+              "<inline>",
+              "length=3",
+              "source=analysis/codelists.py:45",
+              "values=11|12|13"
+            ],
+            [
+              "/user/BillyZhongUOM/hip-fracture-icd-10/0ec29807/",
+              "column=code"
+            ],
+            [
+              "<inline>",
+              "length=5",
+              "source=analysis/codelists.py:32",
+              "values=W241|W461|W471|W191|W481"
+            ],
+            [
+              "/nhsd-primary-care-domain-refsets/strk_cod/20250912/",
+              "column=code"
+            ]
+          ],
+          "surgery_type": [
+            [
+              "<inline>",
+              "length=3",
+              "source=analysis/codelists.py:45",
+              "values=11|12|13"
+            ],
+            [
+              "/user/BillyZhongUOM/hip-fracture-icd-10/0ec29807/",
+              "column=code"
+            ],
+            [
+              "<inline>",
+              "length=5",
+              "source=analysis/codelists.py:32",
+              "values=W241|W461|W471|W191|W481"
+            ]
+          ]
         }
       }
     },
@@ -4657,7 +5967,7 @@
       }
     },
     "opensafely/covid-vaccine-history": {
-      "747ca1cb7dc5bb3902368502ece91bc18698431b": {
+      "fa6af18ee7da704a4a5cc54cf0ab9e7a894478c6": {
         "_unused_codelists": [
           [
             "/nhsd-primary-care-domain-refsets/carehome_cod/20250627/",
@@ -5499,7 +6809,7 @@
       }
     },
     "opensafely/disparities-comparison": {
-      "0329924ae0774c9f23dd60068a72f2685d87fcc0": {
+      "5ce8718ae45a430372fa6d1eb7ec1ec3aebe2792": {
         "_unused_codelists": [
           [
             "/bristol/asthma_exacerbations_snomed/137bfd26/",
@@ -7162,7 +8472,7 @@
       }
     },
     "opensafely/ehrql-demo": {
-      "dcff18b6acee9dcaa655a5bd1793de2e0c9cb5d8": {
+      "65ce78f737caa933be27a2a96812e07b1c397c10": {
         "_unused_codelists": [],
         "analysis/dataset_definition.py": {
           "age": [],
@@ -7187,12 +8497,6 @@
           "last_dep_resolved_date": [
             [
               "/nhsd-primary-care-domain-refsets/depres_cod/20241205/",
-              "column=code"
-            ]
-          ],
-          "latests_phq9_score": [
-            [
-              "/nhsd-primary-care-domain-refsets/depr_cod/20241205/",
               "column=code"
             ]
           ]
@@ -7556,7 +8860,7 @@
       }
     },
     "opensafely/inflammatory_rheum": {
-      "b74162a887a0cf5f8ab27919a342c45fb0fa9fa4": {
+      "a78b321f47a6c8e99d93c6c3af376bc2b68b505e": {
         "_unused_codelists": [
           [
             "/opensafely/smoking-unclear/2020-04-29/",
@@ -7587,7 +8891,7 @@
             "file=codelists/user-markdrussell-giant-cell-arteritis.csv"
           ],
           [
-            "/user/markdrussell/inflammatory-myositis-secondary-care/7ad5af04/",
+            "/user/markdrussell/inflammatory-myositis-secondary-care/61aa8c3f/",
             "file=codelists/user-markdrussell-inflammatory-myositis-secondary-care.csv"
           ],
           [
@@ -8600,7 +9904,7 @@
       }
     },
     "opensafely/metformin_covid": {
-      "d452c8dab8538d236ee428237d81bd5c5f538a1b": {
+      "da5f60f5e0dd5f3a2d0ae1affd5e3e83a1106e7e": {
         "_unused_codelists": [
           [
             "/opensafely/covid-identification/2020-06-03/",
@@ -10147,151 +11451,317 @@
       }
     },
     "opensafely/migration-short-data-report": {
-      "a4fa03d662418a62820c352e20116ecfd451613b": {
-        "_unused_codelists": [
-          [
-            "/user/YaminaB/english-not-main-language/2e48fb38/",
-            "file=codelists/user-YaminaB-english-not-main-language.csv"
-          ],
-          [
-            "/user/YaminaB/uk-visa/4eb363bd/",
-            "file=codelists/user-YaminaB-uk-visa.csv"
-          ]
-        ],
-        "analysis/create_cohorts/dataset_definition_census_cohorts.py": {
-          "TPP_death_date": [],
+      "8c027b06cdceb0bbe7d3d37b15f08d6c7e1a3674": {
+        "_unused_codelists": [],
+        "analysis/dataset_definition_census_cohorts.py": {
           "age_band": [],
-          "age_on_census_date": [],
-          "date_of_first_migration_code": [],
-          "date_of_first_practice_registration": [],
-          "has_asylum_or_refugee_migrant_code": [],
-          "has_cob_migrant_code": [],
-          "has_interpreter_migrant_code": [],
           "imd_decile": [],
           "imd_quintile": [],
-          "latest_ethnicity_code": [],
-          "latest_ethnicity_group": [],
-          "msoa_code": [],
-          "number_of_migration_codes": [],
-          "ons_death_date": [],
-          "region": [],
-          "sex": [],
-          "time_to_first_migration_code": [],
-          "year_of_birth": [],
-          "year_of_birth_band": []
-        },
-        "analysis/create_cohorts/dataset_definition_full_study_cohort.py": {
-          "TPP_death_date": [],
-          "date_of_first_migration_code": [
+          "latest_ethnicity_16_level_group": [
             [
-              "/user/YaminaB/migration-status/1f473d49/",
+              "/opensafely/ethnicity-snomed-0removed/22911876/",
+              "category_column=Label_16",
               "column=code"
             ]
           ],
-          "date_of_first_practice_registration": [],
-          "has_asylum_or_refugee_migrant_code": [
+          "latest_ethnicity_6_level_group": [
             [
-              "/user/YaminaB/asylum-seeker-or-refugee/35a3f088/",
+              "/opensafely/ethnicity-snomed-0removed/22911876/",
+              "category_column=Label_6",
+              "column=code"
+            ],
+            [
+              "/opensafely/ethnicity-snomed-0removed/22911876/",
+              "category_column=Label_16",
               "column=code"
             ]
           ],
-          "has_cob_migrant_code": [
-            [
-              "/user/YaminaB/born-outside-the-uk/0637ca14/",
-              "column=code"
-            ]
-          ],
-          "has_interpreter_migrant_code": [
-            [
-              "/user/YaminaB/interpreter-required/3856b07e/",
-              "column=code"
-            ]
-          ],
-          "imd_decile": [],
-          "imd_quintile": [],
           "latest_ethnicity_code": [
             [
               "/opensafely/ethnicity-snomed-0removed/22911876/",
-              "category_column=Label_6",
+              "category_column=Label_16",
               "column=code"
             ]
           ],
-          "latest_ethnicity_group": [
+          "mig_status_2_cat": [
+            [
+              "/opensafely/migration-status/4095ab22/",
+              "column=code"
+            ],
+            [
+              "/opensafely/born-in-the-uk/4aa36068/",
+              "column=code"
+            ],
+            [
+              "/opensafely/born-outside-the-uk/1d23465b/",
+              "column=code"
+            ],
+            [
+              "/opensafely/immigration-status-excl-refugee-asylum/1ca8661b/",
+              "column=code"
+            ],
+            [
+              "/opensafely/asylum-or-refugee-status/209cb9e0/",
+              "column=code"
+            ],
+            [
+              "/opensafely/english-not-main-language/5c450c53/",
+              "column=code"
+            ],
+            [
+              "/opensafely/interpreter-required/556e6040/",
+              "column=code"
+            ]
+          ],
+          "mig_status_3_cat": [
+            [
+              "/opensafely/migration-status/4095ab22/",
+              "column=code"
+            ],
+            [
+              "/opensafely/born-in-the-uk/4aa36068/",
+              "column=code"
+            ],
+            [
+              "/opensafely/born-outside-the-uk/1d23465b/",
+              "column=code"
+            ],
+            [
+              "/opensafely/immigration-status-excl-refugee-asylum/1ca8661b/",
+              "column=code"
+            ],
+            [
+              "/opensafely/asylum-or-refugee-status/209cb9e0/",
+              "column=code"
+            ],
+            [
+              "/opensafely/english-not-main-language/5c450c53/",
+              "column=code"
+            ],
+            [
+              "/opensafely/interpreter-required/556e6040/",
+              "column=code"
+            ],
             [
               "/opensafely/ethnicity-snomed-0removed/22911876/",
-              "category_column=Label_6",
+              "category_column=Label_16",
               "column=code"
             ]
           ],
-          "msoa_code": [],
-          "number_of_migration_codes": [
+          "mig_status_6_cat": [
             [
-              "/user/YaminaB/migration-status/1f473d49/",
+              "/opensafely/migration-status/4095ab22/",
+              "column=code"
+            ],
+            [
+              "/opensafely/born-in-the-uk/4aa36068/",
+              "column=code"
+            ],
+            [
+              "/opensafely/born-outside-the-uk/1d23465b/",
+              "column=code"
+            ],
+            [
+              "/opensafely/immigration-status-excl-refugee-asylum/1ca8661b/",
+              "column=code"
+            ],
+            [
+              "/opensafely/asylum-or-refugee-status/209cb9e0/",
+              "column=code"
+            ],
+            [
+              "/opensafely/english-not-main-language/5c450c53/",
+              "column=code"
+            ],
+            [
+              "/opensafely/interpreter-required/556e6040/",
+              "column=code"
+            ],
+            [
+              "/opensafely/ethnicity-snomed-0removed/22911876/",
+              "category_column=Label_16",
               "column=code"
             ]
           ],
-          "ons_death_date": [],
           "region": [],
-          "sex": [],
-          "time_to_first_migration_code": [
+          "sex": []
+        },
+        "analysis/dataset_definition_full_study_cohort.py": {
+          "date_of_birth": [],
+          "date_of_death": [],
+          "date_of_earliest_date_of_uk_entry_code": [],
+          "date_of_entry_and_other_migration_code": [
             [
-              "/user/YaminaB/migration-status/1f473d49/",
+              "/opensafely/migration-status/4095ab22/",
               "column=code"
             ]
           ],
-          "year_of_birth": [],
-          "year_of_birth_band": []
-        },
-        "analysis/create_cohorts/dataset_definition_km_time_to_first_migration_code.py": {
-          "TPP_death_date": [],
-          "baseline_date": [],
-          "censor_date": [],
-          "date_of_deregistration": [],
           "date_of_first_migration_code": [
             [
-              "/user/YaminaB/migration-status/1f473d49/",
+              "/opensafely/migration-status/4095ab22/",
               "column=code"
             ]
           ],
           "date_of_first_practice_registration": [],
-          "has_a_migration_code": [
-            [
-              "/user/YaminaB/migration-status/1f473d49/",
-              "column=code"
-            ]
-          ],
-          "number_of_migration_codes": [
-            [
-              "/user/YaminaB/migration-status/1f473d49/",
-              "column=code"
-            ]
-          ],
-          "ons_death_date": [],
-          "processed_first_migration_code_date": [
-            [
-              "/user/YaminaB/migration-status/1f473d49/",
-              "column=code"
-            ]
-          ],
-          "sex": [],
-          "year_of_birth": [],
-          "year_of_birth_band": []
-        },
-        "analysis/create_cohorts/population_denominator_cohort.py": {
-          "TPP_death_date": [],
+          "has_date_of_uk_entry": [],
+          "has_date_of_uk_entry_at_any_time": [],
           "imd_decile": [],
           "imd_quintile": [],
-          "latest_ethnicity_code": [
+          "latest_ethnicity_16_level_group": [
+            [
+              "/opensafely/ethnicity-snomed-0removed/22911876/",
+              "category_column=Label_16",
+              "column=code"
+            ]
+          ],
+          "latest_ethnicity_6_level_group": [
             [
               "/opensafely/ethnicity-snomed-0removed/22911876/",
               "category_column=Label_6",
               "column=code"
+            ],
+            [
+              "/opensafely/ethnicity-snomed-0removed/22911876/",
+              "category_column=Label_16",
+              "column=code"
             ]
           ],
-          "msoa_code": [],
-          "ons_death_date": [],
+          "latest_ethnicity_code": [
+            [
+              "/opensafely/ethnicity-snomed-0removed/22911876/",
+              "category_column=Label_16",
+              "column=code"
+            ]
+          ],
+          "mig_status_2_cat": [
+            [
+              "/opensafely/migration-status/4095ab22/",
+              "column=code"
+            ],
+            [
+              "/opensafely/born-in-the-uk/4aa36068/",
+              "column=code"
+            ],
+            [
+              "/opensafely/born-outside-the-uk/1d23465b/",
+              "column=code"
+            ],
+            [
+              "/opensafely/immigration-status-excl-refugee-asylum/1ca8661b/",
+              "column=code"
+            ],
+            [
+              "/opensafely/asylum-or-refugee-status/209cb9e0/",
+              "column=code"
+            ],
+            [
+              "/opensafely/english-not-main-language/5c450c53/",
+              "column=code"
+            ],
+            [
+              "/opensafely/interpreter-required/556e6040/",
+              "column=code"
+            ]
+          ],
+          "mig_status_3_cat": [
+            [
+              "/opensafely/migration-status/4095ab22/",
+              "column=code"
+            ],
+            [
+              "/opensafely/born-in-the-uk/4aa36068/",
+              "column=code"
+            ],
+            [
+              "/opensafely/born-outside-the-uk/1d23465b/",
+              "column=code"
+            ],
+            [
+              "/opensafely/immigration-status-excl-refugee-asylum/1ca8661b/",
+              "column=code"
+            ],
+            [
+              "/opensafely/asylum-or-refugee-status/209cb9e0/",
+              "column=code"
+            ],
+            [
+              "/opensafely/english-not-main-language/5c450c53/",
+              "column=code"
+            ],
+            [
+              "/opensafely/interpreter-required/556e6040/",
+              "column=code"
+            ],
+            [
+              "/opensafely/ethnicity-snomed-0removed/22911876/",
+              "category_column=Label_16",
+              "column=code"
+            ]
+          ],
+          "mig_status_6_cat": [
+            [
+              "/opensafely/migration-status/4095ab22/",
+              "column=code"
+            ],
+            [
+              "/opensafely/born-in-the-uk/4aa36068/",
+              "column=code"
+            ],
+            [
+              "/opensafely/born-outside-the-uk/1d23465b/",
+              "column=code"
+            ],
+            [
+              "/opensafely/immigration-status-excl-refugee-asylum/1ca8661b/",
+              "column=code"
+            ],
+            [
+              "/opensafely/asylum-or-refugee-status/209cb9e0/",
+              "column=code"
+            ],
+            [
+              "/opensafely/english-not-main-language/5c450c53/",
+              "column=code"
+            ],
+            [
+              "/opensafely/interpreter-required/556e6040/",
+              "column=code"
+            ],
+            [
+              "/opensafely/ethnicity-snomed-0removed/22911876/",
+              "category_column=Label_16",
+              "column=code"
+            ]
+          ],
+          "number_of_date_of_uk_entry_codes": [],
+          "number_of_date_of_uk_entry_codes_at_any_time": [],
+          "number_of_migration_codes": [
+            [
+              "/opensafely/migration-status/4095ab22/",
+              "column=code"
+            ]
+          ],
+          "number_of_migration_codes_at_any_time": [
+            [
+              "/opensafely/migration-status/4095ab22/",
+              "column=code"
+            ]
+          ],
           "region": [],
           "sex": [],
+          "temporality_of_date_of_uk_entry_code": [],
+          "time_to_first_migration_code_days": [
+            [
+              "/opensafely/migration-status/4095ab22/",
+              "column=code"
+            ]
+          ],
+          "time_to_first_migration_code_months": [
+            [
+              "/opensafely/migration-status/4095ab22/",
+              "column=code"
+            ]
+          ],
           "year_of_birth": [],
           "year_of_birth_band": []
         }
@@ -12190,7 +13660,7 @@
       }
     },
     "opensafely/pharmacy-first": {
-      "6ea42364eff04b7d0265a9ac58b54ea1303a2fe8": {
+      "da757d3dd653af4c5b678efd58963ebd815d96c3": {
         "_unused_codelists": [
           [
             "/nhsd-primary-care-domain-refsets/preg_cod/20200812/",
@@ -12486,36 +13956,8 @@
       }
     },
     "opensafely/pifu-data-exploration": {
-      "338a53855d29eef77a62c1b1c9d093a445519a74": {
-        "_unused_codelists": [],
-        "analysis/dataset_definition_explore.py": {
-          "any_opa": [],
-          "attendance_status": [],
-          "consultation_medium_used": [],
-          "count_all": [],
-          "count_all_attended": [],
-          "count_rheum": [],
-          "count_rheum_attended": [],
-          "count_same_day": [],
-          "count_same_day_attended": [],
-          "count_same_day_rheum": [],
-          "count_same_day_rheum_attended": [],
-          "first_attendance": [],
-          "outcome_of_attendance": [],
-          "pfu": [],
-          "rheum_any_opa": [],
-          "rheum_attendance_status": [],
-          "rheum_consultation_medium_used": [],
-          "rheum_first_attendance": [],
-          "rheum_outcome_of_attendance": [],
-          "rheum_pfu": [],
-          "rheum_rrr_date": [],
-          "rheum_rrr_year": [],
-          "rheum_treatment_function_code": [],
-          "rrr_date": [],
-          "rrr_year": [],
-          "treatment_function_code": []
-        }
+      "db02a4d5d1e76a3ac33488f6b86315ea955d7cce": {
+        "_unused_codelists": []
       }
     },
     "opensafely/pincer-measures": {
@@ -13142,7 +14584,7 @@
       }
     },
     "opensafely/post-covid-cvd": {
-      "971231dafb07385d11d5b13abd933b8e8d82f6c3": {
+      "c9319ff02e67003e4accb3b62c9c74e88097de69": {
         "_unused_codelists": [
           [
             "/nhsd-primary-care-domain-refsets/hyp_cod/20210127/",
@@ -13538,7 +14980,7 @@
       }
     },
     "opensafely/post-covid-cvd-methods": {
-      "31178c5323b1ba7e43bfff5ee08ea1d3800c4506": {
+      "8f4fa2614969e2d15594182bc37f0292af099a78": {
         "_unused_codelists": [
           [
             "/nhsd-primary-care-domain-refsets/hyp_cod/20210127/",
@@ -13916,7 +15358,7 @@
       }
     },
     "opensafely/post-covid-neurodegenerative": {
-      "57178c40e7518e98da143bcb4cb0013d9e1cd35b": {
+      "0bac181a3b3815ee0c8b0a910f8bb70836955e8a": {
         "_unused_codelists": [
           [
             "/bristol/alzheimers-disease-icd10-v13/290893d9/",
@@ -14288,7 +15730,7 @@
       }
     },
     "opensafely/post-covid-renal": {
-      "a2a1c6c99eab2a1b9c675ac124ba6bd7cf3ff755": {
+      "aae42ec6e24aded998f877584f4c9d2806d4de6b": {
         "_unused_codelists": [
           [
             "/bristol/acute-kidney-injury-snomed/6593d4d2/",
@@ -14724,7 +16166,7 @@
       }
     },
     "opensafely/post-covid-respiratory": {
-      "022c626a653db401b95bfb514c7145f489b22cf7": {
+      "d3472c3a39ba9acf5d91caa174278224fa460551": {
         "_unused_codelists": [
           [
             "/bristol/asthma/3a558edf/",
@@ -18219,10 +19661,25 @@
       }
     },
     "opensafely/raw_medicines_short_data_report": {
-      "4ad1a7669507aaea5fa047b0ca00f84b6e38d98c": {
-        "_unused_codelists": [],
+      "902b4f4136391e308d3a819af3f46db856f621a5": {
+        "_unused_codelists": [
+          [
+            "/user/emprestige/all-statins-dmd/58cb98ce/",
+            "file=codelists/user-emprestige-all-statins-dmd.csv"
+          ],
+          [
+            "/user/emprestige/codeine-for-pain-dmd/295f725a/",
+            "file=codelists/user-emprestige-codeine-for-pain-dmd.csv"
+          ]
+        ],
         "analysis/dataset_definition.py": {
-          "sex": []
+          "concordant_dates": [],
+          "discordant_dates": [],
+          "meds_rep_id_no": [],
+          "meds_row_no": [],
+          "rep_ids_differ": [],
+          "repeats_rep_id_no": [],
+          "repeats_row_no": []
         }
       }
     },
@@ -19168,7 +20625,7 @@
       }
     },
     "opensafely/winter-pressures-phase-II": {
-      "7fc04d51fbf9f4517b2a436ddded4d4f622f2b73": {
+      "31417e2b1f745f7d2e34a5371b471e23dcc5771f": {
         "_unused_codelists": [
           [
             "/bristol/antidepressants-snomedct/677f55d2/",

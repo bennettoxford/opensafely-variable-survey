@@ -6,9 +6,12 @@ ROOT_DIR = Path(__file__).parent.parent
 DATA_DIR = ROOT_DIR / "data"
 RSI_JSON_FILE = DATA_DIR / "rsi-codelists-analysis.json"
 LATEST_CODELIST_JSON_FILE = ROOT_DIR / "ehrql_codelists_latest_max.json"
+METADATA_CACHE_FILE = DATA_DIR / "codelist_metadata_cache.json"
 
 _rsi_data = None
 _codelists = None
+_metadata_cache = None
+_empty_cache_retry_attempted = set()
 
 
 def make_ocl_url(url):
@@ -20,6 +23,25 @@ def make_github_url(repo_name, filepath, sha, line_number=None):
     if line_number:
         url += f"#L{line_number}"
     return url
+
+
+def _get_metadata_cache():
+    global _metadata_cache
+    if _metadata_cache is None:
+        if METADATA_CACHE_FILE.exists():
+            with open(METADATA_CACHE_FILE) as f:
+                _metadata_cache = json.load(f)
+        else:
+            _metadata_cache = {}
+
+    return _metadata_cache
+
+
+def _persist_metadata_cache():
+    cache = _get_metadata_cache()
+    with open(METADATA_CACHE_FILE, "w") as f:
+        json.dump(cache, f, indent=2, sort_keys=True)
+        f.write("\n")
 
 
 def _get_latest_codelist_data():
@@ -117,7 +139,8 @@ def _get_latest_codelist_data():
                                             ][file_name] = variable_content
                                     else:
                                         unintentional_local_codelists[url] = {
-                                            "url": url,
+                                            "file": url,
+                                            "url": make_github_url(repo_name, url, sha),
                                             "variables": variable_object,
                                         }
                                 else:
@@ -135,7 +158,8 @@ def _get_latest_codelist_data():
                                             ] = variable_content
                                     else:
                                         local_codelists[url] = {
-                                            "url": url,
+                                            "file": url,
+                                            "url": make_github_url(repo_name, url, sha),
                                             "variables": variable_object,
                                         }
                             elif codelist_info[0]:
@@ -256,6 +280,14 @@ def lookup_codelist_metadata(url_path):
         entry = rsi_data.get(url_path.strip("/").split("/")[-1])
 
     if not entry:
+        metadata_cache = _get_metadata_cache()
+        if url_path in metadata_cache:
+            cached_entry = metadata_cache[url_path]
+            if cached_entry:
+                return cached_entry
+            if url_path in _empty_cache_retry_attempted:
+                return cached_entry
+            _empty_cache_retry_attempted.add(url_path)
         # It might be an issue with a codelist with multiple handles
         # Let's query OCL and see if we get a 302
         ocl_url = make_ocl_url(url_path)
@@ -270,13 +302,19 @@ def lookup_codelist_metadata(url_path):
             )
             if response.status_code == 200 and response.url != ocl_url_no_version:
                 redirected_slug = response.url.split("/codelist/")[1]
-                entry = rsi_data.get("/" + redirected_slug)
+                entry = rsi_data.get("/" + redirected_slug, {})
+                metadata_cache[url_path] = entry
+                _persist_metadata_cache()
         except Exception as e:
             print(f"Error occurred while fetching OCL data for {url_path}: {e}")
+            metadata_cache[url_path] = {}
+            _persist_metadata_cache()
             return {}
 
         if not entry:
             print(f"Metadata lookup failed for {url_path}")
+            metadata_cache[url_path] = {}
+            _persist_metadata_cache()
             return {}
 
     return entry

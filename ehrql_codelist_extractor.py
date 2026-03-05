@@ -319,6 +319,39 @@ def collect_codelists(
         verbose=verbose,
     )
 
+    # Keep cached output aligned with this run's target repo/SHA set.
+    # This prevents older SHAs from lingering in latest-mode output while still
+    # allowing multiple SHAs when --csv is used.
+    target_sha_set_by_repo: dict[str, set[str]] = {}
+    for repo, sha, _ in target_repos_shas:
+        target_sha_set_by_repo.setdefault(repo, set()).add(sha)
+
+    filtered_existing_data: dict[str, dict[str, dict]] = {}
+    dropped_cached_shas = 0
+    for repo_name, sha_dict in existing_data.items():
+        if repo_name not in target_sha_set_by_repo:
+            dropped_cached_shas += len(sha_dict)
+            continue
+
+        allowed_shas = target_sha_set_by_repo[repo_name]
+        kept_sha_dict = {
+            sha: files_data
+            for sha, files_data in sha_dict.items()
+            if sha in allowed_shas
+        }
+        dropped_cached_shas += len(sha_dict) - len(kept_sha_dict)
+
+        if kept_sha_dict:
+            filtered_existing_data[repo_name] = kept_sha_dict
+
+    existing_data = filtered_existing_data
+
+    if not silent and dropped_cached_shas:
+        print(
+            f"Dropped {dropped_cached_shas} cached SHAs not in current target set",
+            file=sys.stderr,
+        )
+
     # Filter out repos/SHAs that are already cached or have no dataset files
     uncached_repos_shas = []
     skipped_no_files = 0

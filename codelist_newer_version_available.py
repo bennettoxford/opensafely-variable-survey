@@ -21,12 +21,18 @@ def newer_versions(codelist_version_url: str) -> list[dict[str, str]]:
     ):
         print(f"Could not find codelist {codelist_slug} in opencodelists data dump")
         return []
-    codelist_version = next(
-        v
-        for v in codelist["versions"]
-        if v["slug"] == codelist_version_slug
-        or (codelist_slug + "/" + v["hash"] == codelist_version_slug)
-    )
+    try:
+        codelist_version = next(
+            v
+            for v in codelist["versions"]
+            if v["slug"] == codelist_version_slug
+            or (codelist_slug + "/" + v["hash"] == codelist_version_slug)
+        )
+    except StopIteration:
+        print(
+            f"Could not find version {codelist_version_slug} of codelist - this is because the rsi-codelists-analysis.json data dump likely hasn't been updated since this codelist was added to a repo."
+        )
+        return []
     return _newer_versions(codelist, codelist_version)
 
 
