@@ -93,6 +93,16 @@ def main():
                         "newer_version": newer_version["url"],
                     }
                     bad_codelists.add(codelist["url"])
+
+                    # The 2e641f61 version is always "incompatible" because it has an "unknown"
+                    # SNOMED release. At the time of writing the 22911876 version is compatible
+                    # with the latest SNOMED release. As long as that is still the case, we can
+                    # avoid flagging the 2e641f61 version as potentially missing codes.
+                    if not codelist_version_not_compatible_with_latest_release(
+                        newer_version["url"]
+                    ):
+                        continue
+
                 elif existing_codes != newer_codes:
                     # Only flag as newer version if the codes have actually changed
                     repo_output["newer_version"]["codelists"].append(

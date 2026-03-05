@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-03-05 16:07:28",
+  "generated_at": "2026-03-05 16:38:00",
   "latest_releases": {
     "bnf": "86 (2024-09-02) (valid from 2024-09-02)",
     "ctv3": "2018-04-01 with TPP extensions 2022-11-16 (valid from 2022-11-16)",
@@ -307,23 +307,6 @@
       },
       "potentially_missing_codes": {
         "codelists": [
-          {
-            "name": "ethnicity (SNOMED)",
-            "system": "snomedct",
-            "system_release": "unknown",
-            "url": "https://www.opencodelists.org/codelist/opensafely/ethnicity-snomed-0removed/2e641f61/",
-            "variables": {
-              "analysis/dataset_definition_patients.py": {
-                "github_url": "https://github.com/opensafely/ACT-PharmacyFirst-Protocol2-healthcare-usage/blob/c32feecbfdf7c81c21f681d975ac6288955011fe/analysis/dataset_definition_patients.py",
-                "variables": [
-                  [
-                    "ethnicity",
-                    77
-                  ]
-                ]
-              }
-            }
-          },
           {
             "name": "Codes indicating the patient is pregnant",
             "system": "snomedct",
@@ -10293,23 +10276,6 @@
                 ]
               }
             }
-          },
-          {
-            "name": "ethnicity (SNOMED)",
-            "system": "snomedct",
-            "system_release": "unknown",
-            "url": "https://www.opencodelists.org/codelist/opensafely/ethnicity-snomed-0removed/2e641f61/",
-            "variables": {
-              "analysis/dataset_definition.py": {
-                "github_url": "https://github.com/opensafely/digital-access-to-primary-care/blob/891399e82ee17eb1143e808130fe669b1d2693ac/analysis/dataset_definition.py",
-                "variables": [
-                  [
-                    "ethnicity",
-                    136
-                  ]
-                ]
-              }
-            }
           }
         ]
       },
@@ -13743,27 +13709,6 @@
             }
           },
           {
-            "name": "ethnicity (SNOMED)",
-            "system": "snomedct",
-            "system_release": "unknown",
-            "url": "https://www.opencodelists.org/codelist/opensafely/ethnicity-snomed-0removed/2e641f61/",
-            "variables": {
-              "analysis/os_reports/dataset_definition_os_reports.py": {
-                "github_url": "https://github.com/opensafely/end-of-life-carequality/blob/e5f22f9ea0d8c042f1c69a13c8507ab81a62050d/analysis/os_reports/dataset_definition_os_reports.py",
-                "variables": [
-                  [
-                    "ethnicity_Combined",
-                    113
-                  ],
-                  [
-                    "latest_ethnicity_code",
-                    98
-                  ]
-                ]
-              }
-            }
-          },
-          {
             "name": "Community nursing",
             "system": "snomedct",
             "system_release": "unknown",
@@ -15417,34 +15362,7 @@
         "codelists": []
       },
       "potentially_missing_codes": {
-        "codelists": [
-          {
-            "name": "ethnicity (SNOMED)",
-            "system": "snomedct",
-            "system_release": "unknown",
-            "url": "https://www.opencodelists.org/codelist/opensafely/ethnicity-snomed-0removed/2e641f61/",
-            "variables": {
-              "analysis/dataset_definition_isaric.py": {
-                "github_url": "https://github.com/opensafely/isaric-exploration/blob/63b23df6f85df8991cf38a01afd73d90e59c490c/analysis/dataset_definition_isaric.py",
-                "variables": [
-                  [
-                    "ethnicity_pc",
-                    164
-                  ]
-                ]
-              },
-              "analysis/dataset_definition_sus.py": {
-                "github_url": "https://github.com/opensafely/isaric-exploration/blob/63b23df6f85df8991cf38a01afd73d90e59c490c/analysis/dataset_definition_sus.py",
-                "variables": [
-                  [
-                    "ethnicity_sus",
-                    106
-                  ]
-                ]
-              }
-            }
-          }
-        ]
+        "codelists": []
       },
       "unintentional_local_codelists": {
         "codelists": []
@@ -15715,32 +15633,6 @@
                   [
                     "colorectal_ca_diag_date",
                     34
-                  ]
-                ]
-              }
-            }
-          },
-          {
-            "name": "ethnicity (SNOMED)",
-            "system": "snomedct",
-            "system_release": "unknown",
-            "url": "https://www.opencodelists.org/codelist/opensafely/ethnicity-snomed-0removed/2e641f61/",
-            "variables": {
-              "analysis/define_static_dataset.py": {
-                "github_url": "https://github.com/opensafely/mainroute_cancer/blob/750f9804609c613eff525a31b356582960078508/analysis/define_static_dataset.py",
-                "variables": [
-                  [
-                    "ethnicity6",
-                    74
-                  ]
-                ]
-              },
-              "analysis/define_static_dataset_fit.py": {
-                "github_url": "https://github.com/opensafely/mainroute_cancer/blob/750f9804609c613eff525a31b356582960078508/analysis/define_static_dataset_fit.py",
-                "variables": [
-                  [
-                    "ethnicity6",
-                    75
                   ]
                 ]
               }
@@ -17192,23 +17084,6 @@
       },
       "potentially_missing_codes": {
         "codelists": [
-          {
-            "name": "ethnicity (SNOMED)",
-            "system": "snomedct",
-            "system_release": "unknown",
-            "url": "https://www.opencodelists.org/codelist/opensafely/ethnicity-snomed-0removed/2e641f61/",
-            "variables": {
-              "analysis/dataset_definition_dm_algo.py": {
-                "github_url": "https://github.com/opensafely/metformin_covid/blob/da5f60f5e0dd5f3a2d0ae1affd5e3e83a1106e7e/analysis/dataset_definition_dm_algo.py",
-                "variables": [
-                  [
-                    "cov_cat_ethnicity",
-                    66
-                  ]
-                ]
-              }
-            }
-          },
           {
             "name": "Other or nonspecific diabetes",
             "system": "ctv3",
@@ -22152,27 +22027,6 @@
                 ]
               }
             }
-          },
-          {
-            "name": "ethnicity (SNOMED)",
-            "system": "snomedct",
-            "system_release": "unknown",
-            "url": "https://www.opencodelists.org/codelist/opensafely/ethnicity-snomed-0removed/2e641f61/",
-            "variables": {
-              "analysis/define_dataset_table.py": {
-                "github_url": "https://github.com/opensafely/opioids-covid-research/blob/0e45b0d3cfc0a4ccb418fd9ce63ffdf79ca41a99/analysis/define_dataset_table.py",
-                "variables": [
-                  [
-                    "ethnicity16",
-                    97
-                  ],
-                  [
-                    "ethnicity6",
-                    126
-                  ]
-                ]
-              }
-            }
           }
         ]
       },
@@ -22624,25 +22478,7 @@
         "codelists": []
       },
       "potentially_missing_codes": {
-        "codelists": [
-          {
-            "name": "ethnicity (SNOMED)",
-            "system": "snomedct",
-            "system_release": "unknown",
-            "url": "https://www.opencodelists.org/codelist/opensafely/ethnicity-snomed-0removed/2e641f61/",
-            "variables": {
-              "analysis/dataset_definition_tables.py": {
-                "github_url": "https://github.com/opensafely/pharmacy-first/blob/da757d3dd653af4c5b678efd58963ebd815d96c3/analysis/dataset_definition_tables.py",
-                "variables": [
-                  [
-                    "ethnicity",
-                    49
-                  ]
-                ]
-              }
-            }
-          }
-        ]
+        "codelists": []
       },
       "unintentional_local_codelists": {
         "codelists": []
@@ -32652,23 +32488,6 @@
                   [
                     "cancer",
                     286
-                  ]
-                ]
-              }
-            }
-          },
-          {
-            "name": "ethnicity (SNOMED)",
-            "system": "snomedct",
-            "system_release": "unknown",
-            "url": "https://www.opencodelists.org/codelist/opensafely/ethnicity-snomed-0removed/2e641f61/",
-            "variables": {
-              "analysis/dataset_definition_ortho.py": {
-                "github_url": "https://github.com/opensafely/waiting-list/blob/c0b16e129b2149551d9fa92248df86699d31ebc9/analysis/dataset_definition_ortho.py",
-                "variables": [
-                  [
-                    "ethnicity6",
-                    270
                   ]
                 ]
               }
