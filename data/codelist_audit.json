@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-03-05 16:38:00",
+  "generated_at": "2026-03-06 09:21:40",
   "latest_releases": {
     "bnf": "86 (2024-09-02) (valid from 2024-09-02)",
     "ctv3": "2018-04-01 with TPP extensions 2022-11-16 (valid from 2022-11-16)",
@@ -8170,6 +8170,35 @@
       "newer_version": {
         "codelists": [
           {
+            "name": "Asthma Diagnosis code",
+            "newer_version": {
+              "label": "v2.5",
+              "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/ast/v2.5"
+            },
+            "system": "snomedct",
+            "system_release": "36.0.0 (valid from 2023-04-19)",
+            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/ast/v2.4/",
+            "variables": {
+              "analysis/dataset_definition.py": {
+                "github_url": "https://github.com/opensafely/comparative-booster-spring2023/blob/decf6c3cda5a704615091ac4874377bc202d83fa/analysis/dataset_definition.py",
+                "variables": [
+                  [
+                    "asthma",
+                    379
+                  ],
+                  [
+                    "asthma_simple",
+                    414
+                  ],
+                  [
+                    "chronic_resp_disease",
+                    426
+                  ]
+                ]
+              }
+            }
+          },
+          {
             "name": "Palliative care codes",
             "newer_version": {
               "label": "20250912",
@@ -10980,33 +11009,7 @@
         "codelists": []
       },
       "newer_version": {
-        "codelists": [
-          {
-            "name": "Asthma Diagnosis code",
-            "newer_version": {
-              "label": "v2.4",
-              "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/ast/v2.4"
-            },
-            "system": "snomedct",
-            "system_release": "36.0.0 (valid from 2023-04-19)",
-            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/ast/v2.5/",
-            "variables": {
-              "analysis/dataset_definition.py": {
-                "github_url": "https://github.com/opensafely/disparities-comparison/blob/5ce8718ae45a430372fa6d1eb7ec1ec3aebe2792/analysis/dataset_definition.py",
-                "variables": [
-                  [
-                    "has_asthma",
-                    null
-                  ],
-                  [
-                    "has_other_resp",
-                    null
-                  ]
-                ]
-              }
-            }
-          }
-        ]
+        "codelists": []
       },
       "no_events": {
         "codelists": []
@@ -30775,33 +30778,7 @@
         "codelists": []
       },
       "newer_version": {
-        "codelists": [
-          {
-            "name": "Asthma Diagnosis code",
-            "newer_version": {
-              "label": "v2.4",
-              "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/ast/v2.4"
-            },
-            "system": "snomedct",
-            "system_release": "36.0.0 (valid from 2023-04-19)",
-            "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/ast/v2.5/",
-            "variables": {
-              "analysis/PRIMIS/dataset_definition.py": {
-                "github_url": "https://github.com/opensafely/reusable-variables/blob/1d643fb1fcf9d35e608fdf2e67b90781276cd72e/analysis/PRIMIS/dataset_definition.py",
-                "variables": [
-                  [
-                    "crd",
-                    29
-                  ],
-                  [
-                    "primis_atrisk",
-                    41
-                  ]
-                ]
-              }
-            }
-          }
-        ]
+        "codelists": []
       },
       "no_events": {
         "codelists": []
