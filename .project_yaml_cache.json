@@ -10151,6 +10151,11 @@
     "analysis/1-extract/dataset_definition_snapshot.py",
     "analysis/1-extract/dataset_definition_varying.py"
   ],
+  "opensafely/covid-vaccine-history@b29dc287d679d1c5ebd939488e6293811261c098": [
+    "analysis/1-extract/dataset_definition_fixed.py",
+    "analysis/1-extract/dataset_definition_snapshot.py",
+    "analysis/1-extract/dataset_definition_varying.py"
+  ],
   "opensafely/covid-vaccine-history@baba7752a8cf03750662222913ac3c84456e6334": [
     "analysis/dataset_definition_fixed.py",
     "analysis/dataset_definition_snapshot.py",
@@ -10172,6 +10177,11 @@
     "analysis/dataset_definition_varying.py"
   ],
   "opensafely/covid-vaccine-history@eea5df6dd781c6bc9bdd4ed090c312a7792b31b1": [
+    "analysis/1-extract/dataset_definition_fixed.py",
+    "analysis/1-extract/dataset_definition_snapshot.py",
+    "analysis/1-extract/dataset_definition_varying.py"
+  ],
+  "opensafely/covid-vaccine-history@f908ce6235d5c050808b91ac0169eef6707a4411": [
     "analysis/1-extract/dataset_definition_fixed.py",
     "analysis/1-extract/dataset_definition_snapshot.py",
     "analysis/1-extract/dataset_definition_varying.py"

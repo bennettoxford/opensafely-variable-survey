@@ -133,6 +133,73 @@ class VariableRecord:
     qm_node: str
 
 
+def _normalize_row_value_for_json(value: Any) -> Any:
+    """Recursively convert tuples to lists for stable JSON-compatible rows."""
+
+    if isinstance(value, tuple):
+        return [_normalize_row_value_for_json(item) for item in value]
+    if isinstance(value, list):
+        return [_normalize_row_value_for_json(item) for item in value]
+    return value
+
+
+def _canonical_row_key(value: Any) -> Any:
+    """Build a canonical comparable key across list/tuple shape differences."""
+
+    if isinstance(value, (list, tuple)):
+        return tuple(_canonical_row_key(item) for item in value)
+    return value
+
+
+def _append_unique_variable_row(
+    out_map: dict[str, dict[str, Any]],
+    project_name: str,
+    project_sha: str,
+    file_name: str,
+    row: list[Any],
+) -> None:
+    """Append a variable row if an identical row is not already present.
+
+    This guards against duplicate rows when the same dataset variable is
+    encountered multiple times for the same project/file (for example when
+    replaying runs or processing equivalent SHAs).
+    """
+
+    out_map.setdefault(project_name, {})
+    out_map[project_name].setdefault("sha", project_sha)
+    out_map[project_name].setdefault("files", {})
+    out_map[project_name]["files"].setdefault(file_name, [])
+
+    existing_rows = out_map[project_name]["files"][file_name]
+    normalized_row = _normalize_row_value_for_json(row)
+    normalized_key = _canonical_row_key(normalized_row)
+
+    # Existing cached rows come from JSON (lists), while fresh rows may include
+    # tuples (for line_no); compare via canonical keys to avoid false misses.
+    if not any(
+        _canonical_row_key(existing) == normalized_key for existing in existing_rows
+    ):
+        existing_rows.append(normalized_row)
+
+
+def _dedupe_output_rows(out_map: dict[str, dict[str, Any]]) -> None:
+    """Normalize and dedupe variable rows for every project/file in-place."""
+
+    for project_data in out_map.values():
+        files_map = project_data.get("files", {})
+        for file_name, rows in files_map.items():
+            unique_rows: list[Any] = []
+            seen_keys: set[Any] = set()
+            for row in rows:
+                normalized_row = _normalize_row_value_for_json(row)
+                row_key = _canonical_row_key(normalized_row)
+                if row_key in seen_keys:
+                    continue
+                seen_keys.add(row_key)
+                unique_rows.append(normalized_row)
+            files_map[file_name] = unique_rows
+
+
 def setup_spoofs(silent: bool = False, verbose: bool = False) -> None:
     # Grab the ehrql module so we can spoof bits of it
     global ehrql_mod
@@ -994,20 +1061,21 @@ def collect(
             # Also capture the full compacted node for debugging/diffing (use compacted version for determinism)
             full_qm_out_map[expr_hash] = r.qm_node
 
-        proj = r.project_name
-        out_map.setdefault(proj, {})
-        out_map[proj].setdefault("sha", r.project_sha)
-        out_map[proj].setdefault("files", {})
-        out_map[proj]["files"].setdefault(r.file_name, [])
-        out_map[proj]["files"][r.file_name].append(
-            [
+        _append_unique_variable_row(
+            out_map=out_map,
+            project_name=r.project_name,
+            project_sha=r.project_sha,
+            file_name=r.file_name,
+            row=[
                 r.variable_name,
                 r.series_type,
                 r.line_no,
                 expr_hash,
                 expr_hash_without_codes,
-            ]
+            ],
         )
+
+    _dedupe_output_rows(out_map)
 
     json_data = {
         # current UK timestamp without milliseconds (i.e. BST or GMT rather than always UTC)
