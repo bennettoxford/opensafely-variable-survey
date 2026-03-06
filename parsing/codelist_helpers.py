@@ -159,7 +159,13 @@ def _get_latest_codelist_data():
                                     }
                             elif codelist_info[0] and codelist_info[0].endswith(".csv"):
                                 url = codelist_info[0]
-                                if url.startswith("codelists/"):
+                                if (
+                                    url.startswith("codelists/")
+                                    and "/" not in url[len("codelists/") :]
+                                ):
+                                    # codelist is in the codelists/ directory, but not a sub directory
+                                    # this is dangerous because these files will be removed if the
+                                    # cli tool is run. Also will cause the CI to fail.
                                     if url in unintentional_local_codelists:
                                         if (
                                             file_name
@@ -183,6 +189,9 @@ def _get_latest_codelist_data():
                                             "variables": variable_object,
                                         }
                                 else:
+                                    # Local codelist, not in the codelists/ directory (could be in a subdirectory)
+                                    # This is what we recommend if you do local codelists so should be dealth with
+                                    # separately from the "unintentional" local codelists.
                                     if url in local_codelists:
                                         if (
                                             file_name

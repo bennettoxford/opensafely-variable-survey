@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-03-06 15:46:59",
+  "generated_at": "2026-03-06 16:07:57",
   "latest_releases": {
     "bnf": "86 (2024-09-02) (valid from 2024-09-02)",
     "ctv3": "2018-04-01 with TPP extensions 2022-11-16 (valid from 2022-11-16)",
@@ -7498,7 +7498,43 @@
         "codelists": []
       },
       "local_codelists": {
-        "codelists": []
+        "codelists": [
+          {
+            "file": "codelists/local/neuro_codelist_msa_icd.csv",
+            "url": "https://github.com/opensafely/NeurodegenerativeDiseaseBurden/blob/8519f41a58e00b06f25fb25728c8e3ac8a91af53/codelists/local/neuro_codelist_msa_icd.csv",
+            "variables": {
+              "analysis/dataset_definition/dataset_definition_2020.py": {
+                "github_url": "https://github.com/opensafely/NeurodegenerativeDiseaseBurden/blob/8519f41a58e00b06f25fb25728c8e3ac8a91af53/analysis/dataset_definition/dataset_definition_2020.py",
+                "variables": [
+                  [
+                    "out_date_msa",
+                    104
+                  ],
+                  [
+                    "out_date_msa",
+                    104
+                  ],
+                  [
+                    "out_date_msa_death",
+                    101
+                  ],
+                  [
+                    "out_date_msa_sus",
+                    99
+                  ],
+                  [
+                    "out_date_msa_tpp",
+                    96
+                  ],
+                  [
+                    "out_date_msa_tpp",
+                    96
+                  ]
+                ]
+              }
+            }
+          }
+        ]
       },
       "newer_version": {
         "codelists": []
@@ -8110,43 +8146,7 @@
         ]
       },
       "unintentional_local_codelists": {
-        "codelists": [
-          {
-            "file": "codelists/local/neuro_codelist_msa_icd.csv",
-            "url": "https://github.com/opensafely/NeurodegenerativeDiseaseBurden/blob/8519f41a58e00b06f25fb25728c8e3ac8a91af53/codelists/local/neuro_codelist_msa_icd.csv",
-            "variables": {
-              "analysis/dataset_definition/dataset_definition_2020.py": {
-                "github_url": "https://github.com/opensafely/NeurodegenerativeDiseaseBurden/blob/8519f41a58e00b06f25fb25728c8e3ac8a91af53/analysis/dataset_definition/dataset_definition_2020.py",
-                "variables": [
-                  [
-                    "out_date_msa",
-                    104
-                  ],
-                  [
-                    "out_date_msa",
-                    104
-                  ],
-                  [
-                    "out_date_msa_death",
-                    101
-                  ],
-                  [
-                    "out_date_msa_sus",
-                    99
-                  ],
-                  [
-                    "out_date_msa_tpp",
-                    96
-                  ],
-                  [
-                    "out_date_msa_tpp",
-                    96
-                  ]
-                ]
-              }
-            }
-          }
-        ]
+        "codelists": []
       },
       "unused_codelists": {
         "codelists": []
