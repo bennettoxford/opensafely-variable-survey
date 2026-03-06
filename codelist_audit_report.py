@@ -11,6 +11,7 @@ from codelist_newer_version_available import newer_versions
 from codelist_potentially_missing_codes import (
     codelist_version_not_compatible_with_latest_release,
 )
+from parsing.codelist_cache import get_codelist
 from parsing.codelist_helpers import (
     get_repos_with_codelists,
     lookup_codelists_by_repo,
@@ -45,6 +46,7 @@ def main():
             "unused_codelists": {"codelists": []},
             "no_events": {"codelists": []},
             "newer_version": {"codelists": []},
+            "ethnicity_codelist": False,
             "potentially_missing_codes": {"codelists": []},
         }
 
@@ -73,10 +75,40 @@ def main():
                     "url": make_ocl_url("/" + latest_version["slug"]),
                     "label": latest_version.get("tag") or latest_version["hash"],
                 }
-                repo_output["newer_version"]["codelists"].append(
-                    codelist | {"newer_version": newer_version}
-                )
-                bad_codelists.add(codelist["url"])
+
+                # We want to see if the newer version actually has different codes
+                existing_codes = set(get_codelist(codelist["url"]))
+                newer_codes = set(get_codelist(newer_version["url"]))
+
+                # We want to suggest to users that using the version that already has the human
+                # readable labels (instead of the numeric codes) is a good idea. However to guard
+                # against potential future releasees of the ethnicity codelist we only flag this in
+                # the very specific case where the existing version is 2e641f61 and the newer
+                # version is 22911876.
+                if codelist["url"].endswith(
+                    "opensafely/ethnicity-snomed-0removed/2e641f61/"
+                ) and newer_version["url"].endswith("/22911876"):
+                    repo_output["ethnicity_codelist"] = {
+                        "current_version": codelist["url"],
+                        "newer_version": newer_version["url"],
+                    }
+                    bad_codelists.add(codelist["url"])
+
+                    # The 2e641f61 version is always "incompatible" because it has an "unknown"
+                    # SNOMED release. At the time of writing the 22911876 version is compatible
+                    # with the latest SNOMED release. As long as that is still the case, we can
+                    # avoid flagging the 2e641f61 version as potentially missing codes.
+                    if not codelist_version_not_compatible_with_latest_release(
+                        newer_version["url"]
+                    ):
+                        continue
+
+                elif existing_codes != newer_codes:
+                    # Only flag as newer version if the codes have actually changed
+                    repo_output["newer_version"]["codelists"].append(
+                        codelist | {"newer_version": newer_version}
+                    )
+                    bad_codelists.add(codelist["url"])
             if not codelist["url"].endswith(
                 ".csv"
             ) and codelist_version_not_compatible_with_latest_release(codelist["url"]):
