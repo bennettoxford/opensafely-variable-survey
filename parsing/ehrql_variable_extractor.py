@@ -3367,6 +3367,19 @@ class VariableExtractor:
                         self._merge_variable_codelists(
                             variable_codelists, vars_from_func
                         )
+                elif func_name in import_collector.imported_modules:
+                    module_name, original_name = import_collector.imported_modules[
+                        func_name
+                    ]
+                    target_name = original_name or func_name
+                    vars_from_func = (
+                        self._extract_codelists_from_imported_function_call(
+                            module_name,
+                            target_name,
+                            node,
+                        )
+                    )
+                    self._merge_variable_codelists(variable_codelists, vars_from_func)
 
             # Imported module helper call: module.helper(dataset, ...)
             elif isinstance(node.func, ast.Attribute) and isinstance(
@@ -3391,7 +3404,45 @@ class VariableExtractor:
                             variable_codelists, vars_from_func
                         )
 
+        # Pass 6: Dynamic variable fallback for loop/getattr/add_column patterns
+        if self._should_apply_dynamic_fallback(tree):
+            dynamic_results = self.extract_codelist_calls_alt()
+            self._merge_variable_codelists(variable_codelists, dynamic_results)
+
         return variable_codelists
+
+    def _should_apply_dynamic_fallback(self, tree: ast.AST) -> bool:
+        """Detect whether dynamic extraction fallback should run.
+
+        We only invoke the heavier dynamic extractor when we see patterns that
+        the default static passes often miss, such as dynamic add_column names
+        or getattr-based lookups used in loops.
+        """
+
+        for node in ast.walk(tree):
+            if isinstance(node, ast.Call):
+                # dataset.add_column(<dynamic_name>, ...)
+                if (
+                    isinstance(node.func, ast.Attribute)
+                    and node.func.attr == "add_column"
+                    and len(node.args) >= 1
+                ):
+                    first_arg = node.args[0]
+                    if not (
+                        isinstance(first_arg, ast.Constant)
+                        and isinstance(first_arg.value, str)
+                    ):
+                        return True
+
+                # getattr(..., f"{name}_suffix") or other non-constant attr lookups
+                if isinstance(node.func, ast.Name) and node.func.id == "getattr":
+                    if len(node.args) >= 2 and not (
+                        isinstance(node.args[1], ast.Constant)
+                        and isinstance(node.args[1].value, str)
+                    ):
+                        return True
+
+        return False
 
     def _resolve_string_literal_expr(
         self,

@@ -36,8 +36,19 @@ def newer_versions(codelist_version_url: str) -> list[dict[str, str]]:
     return _newer_versions(codelist, codelist_version)
 
 
+def _fix_version(v: dict) -> dict:
+    # Sometimes the most recent version of a codelist isn't the one created most recently
+    # Easiest thing is to just hard code this as it's a really small number of things.
+    if v["slug"] == "primis-covid19-vacc-uptake/ast/v2.5":
+        # hour newer than actual to make it ahead of v2.4
+        return v | {"created_at": "2024-01-03 13:46:24.952480+00:00"}
+    return v
+
+
 def _newer_versions(codelist: dict, codelist_version: dict) -> list[dict]:
-    published_versions = [v for v in codelist["versions"] if v["status"] == "published"]
+    published_versions = [
+        _fix_version(v) for v in codelist["versions"] if v["status"] == "published"
+    ]
     return [
         v
         for v in published_versions

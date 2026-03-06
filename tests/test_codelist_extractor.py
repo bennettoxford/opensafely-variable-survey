@@ -769,6 +769,65 @@ ckd_cov = codelist_from_csv("codelists/ckd_cov.csv", column="code")
         assert any(call[0] == "codelists/ckd_cov.csv" for call in ckd_calls), ckd_calls
 
 
+def test_dataset_calls_star_imported_helper_that_adds_columns():
+    """Extract codelists when helper comes from `from module import *`."""
+
+    dataset_code = """
+from ehrql import create_dataset
+from variables import *
+
+dataset = create_dataset()
+primis_variables(dataset, "2024-01-01", var_name_suffix="")
+"""
+
+    variables_code = """
+import codelists
+
+def has_prior_event(codelist, index_date):
+    return records.where(records.code.is_in(codelist)).exists_for_patient()
+
+def is_immunosuppressed(index_date):
+    return has_prior_event(codelists.immadm, index_date)
+
+def has_ckd(index_date):
+    return has_prior_event(codelists.ckd_cov, index_date)
+
+def primis_variables(dataset, index_date, var_name_suffix=""):
+    dataset.add_column(f"immunosuppressed{var_name_suffix}", is_immunosuppressed(index_date))
+    dataset.add_column(f"ckd{var_name_suffix}", has_ckd(index_date))
+"""
+
+    codelists_code = """
+from ehrql import codelist_from_csv
+
+immadm = codelist_from_csv("codelists/immadm.csv", column="code")
+ckd_cov = codelist_from_csv("codelists/ckd_cov.csv", column="code")
+"""
+
+    with tempfile.TemporaryDirectory() as tmpdir:
+        repo_root = pathlib.Path(tmpdir)
+
+        file_path = repo_root / "dataset_definition.py"
+        file_path.write_text(dataset_code)
+
+        variables_path = repo_root / "variables.py"
+        variables_path.write_text(variables_code)
+
+        codelists_path = repo_root / "codelists.py"
+        codelists_path.write_text(codelists_code)
+
+        codelists_result = extract_variable_codelists(file_path, repo_root)
+
+        assert "immunosuppressed" in codelists_result
+        assert "ckd" in codelists_result
+
+        imm_calls = codelists_result["immunosuppressed"]
+        ckd_calls = codelists_result["ckd"]
+
+        assert any(call[0] == "codelists/immadm.csv" for call in imm_calls), imm_calls
+        assert any(call[0] == "codelists/ckd_cov.csv" for call in ckd_calls), ckd_calls
+
+
 def test_imported_function_tracing_ignores_nested_function_returns():
     """Nested helper returns in imported functions must not leak unrelated codelists."""
 
@@ -851,6 +910,122 @@ colorectal_codes = codelist_from_csv("codelists/colorectal.csv", column="code")
         assert "codelists/ethnicity.csv" in call_paths, calls
         assert "codelists/fit.csv" not in call_paths, calls
         assert "codelists/colorectal.csv" not in call_paths, calls
+
+
+def test_default_extractor_handles_dynamic_getattr_loop_variables():
+    """Default extractor should capture dynamic loop-defined variables.
+
+    Regression for disease_incidence-style patterns where variables are created
+    using dataset.add_column(f"{disease}_...", ...) and codelists are resolved
+    via getattr(codelists, f"{disease}_...").
+    """
+
+    dataset_code = """
+from ehrql import create_dataset, minimum_of, maximum_of
+from ehrql.tables.tpp import clinical_events, apcs, patients
+import codelists_ehrQL as codelists
+
+diseases = ["asthma"]
+codelist_types = ["snomed", "icd", "resolved"]
+
+dataset = create_dataset()
+dataset.date_of_death = patients.date_of_death
+
+def first_code_in_period_snomed(dx_codelist):
+    return clinical_events.where(clinical_events.snomedct_code.is_in(dx_codelist)).first_for_patient()
+
+def first_code_in_period_icd(dx_codelist):
+    return apcs.where(apcs.primary_diagnosis.is_in(dx_codelist)).first_for_patient()
+
+def last_code_in_period_snomed(dx_codelist):
+    return clinical_events.where(clinical_events.snomedct_code.is_in(dx_codelist)).last_for_patient()
+
+def last_code_in_period_icd(dx_codelist):
+    return apcs.where(apcs.primary_diagnosis.is_in(dx_codelist)).last_for_patient()
+
+def preceding_registration(dx_date):
+    return registrations.where(registrations.start_date.is_on_or_before(dx_date))
+
+for disease in diseases:
+    snomed_inc_date = {}
+    snomed_last_date = {}
+    icd_inc_date = {}
+    icd_last_date = {}
+    last_date = {}
+
+    for codelist_type in codelist_types:
+        if codelist_type == "snomed":
+            disease_codelist = getattr(codelists, f"{disease}_snomed")
+            snomed_inc_date[f"{disease}_snomed_inc_date"] = first_code_in_period_snomed(disease_codelist).date
+            snomed_last_date[f"{disease}_snomed_last_date"] = last_code_in_period_snomed(disease_codelist).date
+        elif codelist_type == "icd":
+            disease_codelist = getattr(codelists, f"{disease}_icd")
+            icd_inc_date[f"{disease}_icd_inc_date"] = first_code_in_period_icd(disease_codelist).admission_date
+            icd_last_date[f"{disease}_icd_last_date"] = last_code_in_period_icd(disease_codelist).admission_date
+        elif codelist_type == "resolved":
+            disease_codelist = getattr(codelists, f"{disease}_resolved")
+            dataset.add_column(f"{disease}_resolved_date", last_code_in_period_snomed(disease_codelist).date)
+
+    dataset.add_column(
+        f"{disease}_inc_date",
+        minimum_of(
+            snomed_inc_date[f"{disease}_snomed_inc_date"],
+            icd_inc_date[f"{disease}_icd_inc_date"],
+        ),
+    )
+    dataset.add_column(
+        f"{disease}_pre_reg",
+        preceding_registration(getattr(dataset, f"{disease}_inc_date")).exists_for_patient(),
+    )
+    dataset.add_column(
+        f"{disease}_alive_inc",
+        (
+            dataset.date_of_death.is_after(getattr(dataset, f"{disease}_inc_date"))
+            | dataset.date_of_death.is_null()
+        ).when_null_then(False),
+    )
+
+    last_date[f"{disease}_last_date"] = maximum_of(
+        snomed_last_date[f"{disease}_snomed_last_date"],
+        icd_last_date[f"{disease}_icd_last_date"],
+    )
+    dataset.add_column(
+        f"{disease}_resolved",
+        (getattr(dataset, f"{disease}_resolved_date") > last_date[f"{disease}_last_date"]).when_null_then(False),
+    )
+"""
+
+    codelists_code = """
+from ehrql import codelist_from_csv
+
+asthma_snomed = codelist_from_csv("codelists/asthma_snomed.csv", column="code")
+asthma_icd = codelist_from_csv("codelists/asthma_icd.csv", column="code")
+asthma_resolved = codelist_from_csv("codelists/asthma_resolved.csv", column="code")
+"""
+
+    with tempfile.TemporaryDirectory() as tmpdir:
+        repo_root = pathlib.Path(tmpdir)
+
+        file_path = repo_root / "dataset_definition.py"
+        file_path.write_text(dataset_code)
+
+        codelists_path = repo_root / "codelists_ehrQL.py"
+        codelists_path.write_text(codelists_code)
+
+        result = extract_variable_codelists(file_path, repo_root)
+
+        assert "asthma_inc_date" in result
+        assert "asthma_pre_reg" in result
+        assert "asthma_alive_inc" in result
+        assert "asthma_resolved_date" in result
+        assert "asthma_resolved" in result
+
+        inc_paths = [call[0] for call in result["asthma_inc_date"]]
+        assert "codelists/asthma_snomed.csv" in inc_paths
+        assert "codelists/asthma_icd.csv" in inc_paths
+
+        resolved_paths = [call[0] for call in result["asthma_resolved"]]
+        assert "codelists/asthma_resolved.csv" in resolved_paths
 
 
 def test_parse_codelists_json_url_mapping():

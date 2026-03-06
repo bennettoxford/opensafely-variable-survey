@@ -12,7 +12,152 @@ import tempfile
 
 import pytest
 
+from ehrql_extractor import _append_unique_variable_row, _dedupe_output_rows
 from parsing.ehrql_variable_extractor import extract_variable_line_numbers
+
+
+def test_append_unique_variable_row_deduplicates_identical_rows():
+    out_map = {}
+
+    row = [
+        "immunosuppressed",
+        "BoolPatientSeries",
+        ("analysis/1-extract/variables_function.py", 304),
+        "35a27270f8855224",
+        "c97f906bf84579ea",
+    ]
+
+    for _ in range(3):
+        _append_unique_variable_row(
+            out_map=out_map,
+            project_name="opensafely/covid-vaccine-history",
+            project_sha="abc123",
+            file_name="analysis/1-extract/dataset_definition_snapshot.py",
+            row=row,
+        )
+
+    rows = out_map["opensafely/covid-vaccine-history"]["files"][
+        "analysis/1-extract/dataset_definition_snapshot.py"
+    ]
+    assert len(rows) == 1
+    assert rows[0] == [
+        "immunosuppressed",
+        "BoolPatientSeries",
+        ["analysis/1-extract/variables_function.py", 304],
+        "35a27270f8855224",
+        "c97f906bf84579ea",
+    ]
+
+
+def test_append_unique_variable_row_keeps_distinct_rows():
+    out_map = {}
+
+    base_kwargs = dict(
+        out_map=out_map,
+        project_name="opensafely/covid-vaccine-history",
+        project_sha="abc123",
+        file_name="analysis/1-extract/dataset_definition_snapshot.py",
+    )
+
+    _append_unique_variable_row(
+        **base_kwargs,
+        row=[
+            "immunosuppressed",
+            "BoolPatientSeries",
+            ("analysis/1-extract/variables_function.py", 304),
+            "35a27270f8855224",
+            "c97f906bf84579ea",
+        ],
+    )
+    _append_unique_variable_row(
+        **base_kwargs,
+        row=[
+            "immunosuppressed_prior",
+            "BoolPatientSeries",
+            ("analysis/1-extract/variables_function.py", 304),
+            "35a27270f8855224",
+            "c97f906bf84579ea",
+        ],
+    )
+
+    rows = out_map["opensafely/covid-vaccine-history"]["files"][
+        "analysis/1-extract/dataset_definition_snapshot.py"
+    ]
+    assert len(rows) == 2
+
+
+def test_append_unique_variable_row_deduplicates_when_line_no_type_differs():
+    """Rows should dedupe even if cached JSON uses list but runtime uses tuple."""
+
+    out_map = {
+        "opensafely/covid-vaccine-history": {
+            "sha": "abc123",
+            "files": {
+                "analysis/1-extract/dataset_definition_snapshot.py": [
+                    [
+                        "immunosuppressed",
+                        "BoolPatientSeries",
+                        ["analysis/1-extract/variables_function.py", 304],
+                        "35a27270f8855224",
+                        "c97f906bf84579ea",
+                    ]
+                ]
+            },
+        }
+    }
+
+    _append_unique_variable_row(
+        out_map=out_map,
+        project_name="opensafely/covid-vaccine-history",
+        project_sha="abc123",
+        file_name="analysis/1-extract/dataset_definition_snapshot.py",
+        row=[
+            "immunosuppressed",
+            "BoolPatientSeries",
+            ("analysis/1-extract/variables_function.py", 304),
+            "35a27270f8855224",
+            "c97f906bf84579ea",
+        ],
+    )
+
+    rows = out_map["opensafely/covid-vaccine-history"]["files"][
+        "analysis/1-extract/dataset_definition_snapshot.py"
+    ]
+    assert len(rows) == 1
+
+
+def test_dedupe_output_rows_removes_existing_duplicates_in_place():
+    out_map = {
+        "opensafely/covid-vaccine-history": {
+            "sha": "abc123",
+            "files": {
+                "analysis/1-extract/dataset_definition_snapshot.py": [
+                    [
+                        "immunosuppressed",
+                        "BoolPatientSeries",
+                        ["analysis/1-extract/variables_function.py", 304],
+                        "35a27270f8855224",
+                        "c97f906bf84579ea",
+                    ],
+                    [
+                        "immunosuppressed",
+                        "BoolPatientSeries",
+                        ("analysis/1-extract/variables_function.py", 304),
+                        "35a27270f8855224",
+                        "c97f906bf84579ea",
+                    ],
+                ]
+            },
+        }
+    }
+
+    _dedupe_output_rows(out_map)
+
+    rows = out_map["opensafely/covid-vaccine-history"]["files"][
+        "analysis/1-extract/dataset_definition_snapshot.py"
+    ]
+    assert len(rows) == 1
+    assert rows[0][2] == ["analysis/1-extract/variables_function.py", 304]
 
 
 class TestPass1LocalFunction:
