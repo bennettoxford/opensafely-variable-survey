@@ -2,6 +2,11 @@
   "opensafely/ACT-PharmacyFirst-Protocol2-healthcare-usage@37294007f547bd95e6d166ffe855b5a229483731": [
     "analysis/dataset_definition.py"
   ],
+  "opensafely/ACT-PharmacyFirst-Protocol2-healthcare-usage@7e2be9801ec20b6ffe36319ee4afb09a29469618": [
+    "analysis/dataset_definition_patients.py",
+    "analysis/dataset_definition_practices.py",
+    "analysis/dataset_definition_pregnancy.py"
+  ],
   "opensafely/ACT-PharmacyFirst-Protocol2-healthcare-usage@c32feecbfdf7c81c21f681d975ac6288955011fe": [
     "analysis/dataset_definition_patients.py",
     "analysis/dataset_definition_practices.py"
@@ -10176,6 +10181,11 @@
     "analysis/dataset_definition_snapshot.py",
     "analysis/dataset_definition_varying.py"
   ],
+  "opensafely/covid-vaccine-history@d3237236ec87ff8e03905d8b2f14f9f7c45665c8": [
+    "analysis/1-extract/dataset_definition_fixed.py",
+    "analysis/1-extract/dataset_definition_snapshot.py",
+    "analysis/1-extract/dataset_definition_varying.py"
+  ],
   "opensafely/covid-vaccine-history@eea5df6dd781c6bc9bdd4ed090c312a7792b31b1": [
     "analysis/1-extract/dataset_definition_fixed.py",
     "analysis/1-extract/dataset_definition_snapshot.py",
@@ -17441,9 +17451,19 @@
     "analysis/dataset_definition_dm_algo.py",
     "analysis/dataset_definition_t2dm.py"
   ],
+  "opensafely/migration-short-data-report@4e669124dcf246b502022bbcc119127db68a9dc8": [
+    "analysis/dataset_definition_census_cohorts.py",
+    "analysis/dataset_definition_full_study_cohort.py",
+    "analysis/dataset_definition_migration_code_before_birth_cohort.py"
+  ],
   "opensafely/migration-short-data-report@8c027b06cdceb0bbe7d3d37b15f08d6c7e1a3674": [
     "analysis/dataset_definition_census_cohorts.py",
     "analysis/dataset_definition_full_study_cohort.py"
+  ],
+  "opensafely/migration-short-data-report@a00933fbddaf36229d6771a02eb29a7a5aa71427": [
+    "analysis/dataset_definition_census_cohorts.py",
+    "analysis/dataset_definition_full_study_cohort.py",
+    "analysis/dataset_definition_migration_code_before_birth_cohort.py"
   ],
   "opensafely/migration-short-data-report@a4fa03d662418a62820c352e20116ecfd451613b": [
     "analysis/code_usage/generate_migration_event_level_dataset.py",
@@ -23942,6 +23962,10 @@
     "analysis/dataset_definition_explore.py",
     "analysis/dataset_definition_rheum.py"
   ],
+  "opensafely/pifu-data-exploration@a0cfe17e93c79327dda7aff77be09b66a775e772": [
+    "analysis/dataset_definition_everyone.py",
+    "analysis/dataset_definition_rheum.py"
+  ],
   "opensafely/pifu-data-exploration@a3239e58aabf52924fd8926d972a8c9166e0a021": [
     "analysis/dataset_definition_everyone.py",
     "analysis/dataset_definition_explore.py",
@@ -24526,6 +24550,10 @@
     "analysis/dataset_definition/dataset_definition_prevax.py"
   ],
   "opensafely/post-covid-cvd-methods@70f8c4f726146b3462e402864d1052c1e5775477": [
+    "analysis/dataset_definition/dataset_definition_dates.py",
+    "analysis/dataset_definition/dataset_definition_prevax.py"
+  ],
+  "opensafely/post-covid-cvd-methods@74d7732b28a98720fa384886bf8290f159511854": [
     "analysis/dataset_definition/dataset_definition_dates.py",
     "analysis/dataset_definition/dataset_definition_prevax.py"
   ],
@@ -29929,6 +29957,9 @@
   ],
   "opensafely/winter-pressures-phase-II@4b5e39065e932332b57a19ca9bb0bf4c783e84d2": [],
   "opensafely/winter-pressures-phase-II@4b88a3d26cf3c3542462f0bec6a634ce943b4ffd": [],
+  "opensafely/winter-pressures-phase-II@4d95049d8d6058f9a79458520393edd8ebf43345": [
+    "analysis/dataset.py"
+  ],
   "opensafely/winter-pressures-phase-II@5088f6891efdc895638a63f22a1a60a2a34666ca": [
     "analysis/dataset.py"
   ],

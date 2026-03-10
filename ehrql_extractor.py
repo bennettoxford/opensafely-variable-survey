@@ -134,21 +134,18 @@ class VariableRecord:
 
 
 def _normalize_row_value_for_json(value: Any) -> Any:
-    """Recursively convert tuples to lists for stable JSON-compatible rows."""
+    """Normalize a row for JSON output.
 
-    if isinstance(value, tuple):
-        return [_normalize_row_value_for_json(item) for item in value]
-    if isinstance(value, list):
-        return [_normalize_row_value_for_json(item) for item in value]
-    return value
+    Only row[2] can be a tuple (file, line); convert it to a list.
+    """
 
+    if not isinstance(value, list):
+        return value
 
-def _canonical_row_key(value: Any) -> Any:
-    """Build a canonical comparable key across list/tuple shape differences."""
-
-    if isinstance(value, (list, tuple)):
-        return tuple(_canonical_row_key(item) for item in value)
-    return value
+    row = list(value)
+    if len(row) > 2 and isinstance(row[2], tuple):
+        row[2] = list(row[2])
+    return row
 
 
 def _append_unique_variable_row(
@@ -158,46 +155,50 @@ def _append_unique_variable_row(
     file_name: str,
     row: list[Any],
 ) -> None:
-    """Append a variable row if an identical row is not already present.
-
-    This guards against duplicate rows when the same dataset variable is
-    encountered multiple times for the same project/file (for example when
-    replaying runs or processing equivalent SHAs).
-    """
+    """Upsert a variable row keyed by variable name for a project/file."""
 
     out_map.setdefault(project_name, {})
     out_map[project_name].setdefault("sha", project_sha)
     out_map[project_name].setdefault("files", {})
-    out_map[project_name]["files"].setdefault(file_name, [])
+    out_map[project_name]["files"].setdefault(file_name, {})
 
-    existing_rows = out_map[project_name]["files"][file_name]
     normalized_row = _normalize_row_value_for_json(row)
-    normalized_key = _canonical_row_key(normalized_row)
+    if not isinstance(normalized_row, list) or not normalized_row:
+        return
+    variable_name = normalized_row[0]
 
-    # Existing cached rows come from JSON (lists), while fresh rows may include
-    # tuples (for line_no); compare via canonical keys to avoid false misses.
-    if not any(
-        _canonical_row_key(existing) == normalized_key for existing in existing_rows
-    ):
-        existing_rows.append(normalized_row)
+    rows_by_variable = out_map[project_name]["files"][file_name]
+    if isinstance(rows_by_variable, list):
+        rows_by_variable = {
+            existing[0]: _normalize_row_value_for_json(existing)
+            for existing in rows_by_variable
+            if isinstance(existing, list) and existing
+        }
+        out_map[project_name]["files"][file_name] = rows_by_variable
+
+    rows_by_variable[variable_name] = normalized_row
 
 
 def _dedupe_output_rows(out_map: dict[str, dict[str, Any]]) -> None:
-    """Normalize and dedupe variable rows for every project/file in-place."""
+    """Convert per-file variable maps into output lists."""
 
     for project_data in out_map.values():
         files_map = project_data.get("files", {})
         for file_name, rows in files_map.items():
-            unique_rows: list[Any] = []
-            seen_keys: set[Any] = set()
-            for row in rows:
-                normalized_row = _normalize_row_value_for_json(row)
-                row_key = _canonical_row_key(normalized_row)
-                if row_key in seen_keys:
-                    continue
-                seen_keys.add(row_key)
-                unique_rows.append(normalized_row)
-            files_map[file_name] = unique_rows
+            if isinstance(rows, dict):
+                files_map[file_name] = [
+                    _normalize_row_value_for_json(row) for row in rows.values()
+                ]
+                continue
+
+            # Backward compatibility for list-based cached data.
+            if isinstance(rows, list):
+                unique_rows: dict[str, list[Any]] = {}
+                for row in rows:
+                    normalized_row = _normalize_row_value_for_json(row)
+                    if isinstance(normalized_row, list) and normalized_row:
+                        unique_rows.setdefault(normalized_row[0], normalized_row)
+                files_map[file_name] = list(unique_rows.values())
 
 
 def setup_spoofs(silent: bool = False, verbose: bool = False) -> None:
@@ -388,6 +389,8 @@ def setup_spoofs(silent: bool = False, verbose: bool = False) -> None:
             # NEVER redirect our internal cache files or output files
             if (
                 file_str.endswith(".project_yaml_cache.json")
+                or file_str.endswith(".repo_heads_cache.json")
+                or file_str.endswith("ehrql_repos_index.json")
                 or file_str.endswith("ehrql_variables.json")
                 or file_str.endswith("ehrql_codelists.json")
             ):
@@ -1025,6 +1028,15 @@ def collect(
                 "sha": sha,
                 "files": files_data,
             }
+
+    # For repos processed in this run, discard any cached rows before appending.
+    # This ensures deletions/renames in current code are reflected in the output.
+    for repo_name, (head_sha, _files, _repo_local_dir) in all_dataset_files.items():
+        repo_full = repo_name.split("@")[0]
+        out_map[repo_full] = {
+            "sha": head_sha,
+            "files": {},
+        }
 
     if not silent and existing_data:
         cached_count = sum(len(shas) for shas in existing_data.values())

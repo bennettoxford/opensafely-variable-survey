@@ -1,0 +1,1250 @@
+{
+  "last_checked_at": "2026-03-10T14:31:22.105626Z",
+  "last_full_sync_at": "2026-03-10T11:16:35.317243Z",
+  "repos": {
+    ".github": {
+      "pushed_at": "2024-02-19T17:35:46Z",
+      "sha": "a363ab5bf2fc0b68324a9622bd6bab3fc85b18b7"
+    },
+    "ACT-PharmacyFirst-Protocol2-healthcare-usage": {
+      "pushed_at": "2026-03-10T14:25:18Z",
+      "sha": "7e2be9801ec20b6ffe36319ee4afb09a29469618"
+    },
+    "ADHD-Pre-and-Post-Covid": {
+      "pushed_at": "2026-02-18T20:22:55Z",
+      "sha": "04e76f6dc3ecea437bb276c0e344f3c27b976e0b"
+    },
+    "ADTinj": {
+      "pushed_at": "2024-06-20T22:54:49Z",
+      "sha": "ebb8193324f222051fe53c5122f1beb2c7229757"
+    },
+    "BMI-and-Metabolic-Markers": {
+      "pushed_at": "2024-08-21T14:08:54Z",
+      "sha": "7f87448b96470e7ab1c5019ef38245a5afb13590"
+    },
+    "CIS-pop-validation": {
+      "pushed_at": "2023-06-02T08:09:45Z",
+      "sha": "7708d17c24891c8992ccf9bba0f221fd9eed1122"
+    },
+    "COMPARES-vaccines": {
+      "pushed_at": "2025-12-16T21:49:18Z",
+      "sha": "f231b4fe63bc06caba1e9888821063fb83ce0920"
+    },
+    "COMPARES-vaccines-Autumn-2024": {
+      "pushed_at": "2026-03-09T17:49:58Z",
+      "sha": "f231b4fe63bc06caba1e9888821063fb83ce0920"
+    },
+    "COVID-19-vaccine-breakthrough": {
+      "pushed_at": "2022-06-27T12:28:53Z",
+      "sha": "f0c4f7eb12e78b7b12404a6f7e1c1367dea6cf87"
+    },
+    "COVID-19_vacci_and_MACE_after_hip_fracture": {
+      "pushed_at": "2026-02-26T14:11:13Z",
+      "sha": "bb5e2b673a060c341f31cee75abba4fde0658a41"
+    },
+    "CareHomePrescribing": {
+      "pushed_at": "2023-02-13T13:52:16Z",
+      "sha": "49db5c812dadd2bee3775f7ad0c068943807ebce"
+    },
+    "DISECT_UK_India_COVID": {
+      "pushed_at": "2024-04-09T12:11:13Z",
+      "sha": "be9e834979b3d7ace9ce6b55f21b917d2571e832"
+    },
+    "Ethnicity-2nd-wave": {
+      "pushed_at": "2022-05-06T11:41:09Z",
+      "sha": "994698492f7f0d6328a40469eeebeef6dc367e3d"
+    },
+    "FLUCATS": {
+      "pushed_at": "2024-07-08T10:16:26Z",
+      "sha": "b4499eae1b0a2139469bae970d9ed83c8550b627"
+    },
+    "Factors-associated-with-COVID-19-vaccination": {
+      "pushed_at": "2022-05-06T11:41:49Z",
+      "sha": "969dbbe4c58e7c7391acf7c97f61fcab307b362e"
+    },
+    "GermDefence": {
+      "pushed_at": "2023-12-07T11:35:12Z",
+      "sha": "4b3fb09a3e7d54f9de73cbb0ebb307dd6ed75a0e"
+    },
+    "HEST_OS_study": {
+      "pushed_at": "2023-03-20T16:54:32Z",
+      "sha": "9145f8d3ca6085b58524842eb86199599b527fed"
+    },
+    "HbA1c-levels": {
+      "pushed_at": "2022-06-08T09:22:12Z",
+      "sha": "e067d55e9564bc85d5204cee297e829adeb8e460"
+    },
+    "JAKi-hosp": {
+      "pushed_at": "2026-01-01T11:10:42Z",
+      "sha": "c99cabb85bf38b102902339f44d0534f1c40535d"
+    },
+    "LT-repeat-antimicrobial-prescribing": {
+      "pushed_at": "2023-07-09T21:23:32Z",
+      "sha": "de254ab4f6a4d3ae2e70fd0e2bb7307979f335eb"
+    },
+    "MH_emergencies": {
+      "pushed_at": "2024-06-20T21:55:02Z",
+      "sha": "73fd9cd135012e55d70f70c14a681bae2960313f"
+    },
+    "MH_pandemic": {
+      "pushed_at": "2023-07-04T11:00:55Z",
+      "sha": "4607588afd927be5ea963c6cacfc1514d39aa486"
+    },
+    "NICE-audit-BP": {
+      "pushed_at": "2022-05-05T16:03:59Z",
+      "sha": "d643dba5cbc542aee132bddb7bae9f672d54ae61"
+    },
+    "NICE-audit-lipids": {
+      "pushed_at": "2022-05-26T09:48:25Z",
+      "sha": "77d3573fe5c4734b461ba5b328adf84496b4131f"
+    },
+    "NeurodegenerativeDiseaseBurden": {
+      "pushed_at": "2026-03-05T16:34:47Z",
+      "sha": "8519f41a58e00b06f25fb25728c8e3ac8a91af53"
+    },
+    "OS_OC_v001-research": {
+      "pushed_at": "2021-10-19T15:35:33Z",
+      "sha": "0aa679033a00e96e142fd4b16920cd292800e62a"
+    },
+    "OS_VidGroupClinic_v001-research": {
+      "pushed_at": "2023-12-01T11:59:25Z",
+      "sha": "98b51720201455fa7f3e6299510e9febb28e37ab"
+    },
+    "PSA2021": {
+      "pushed_at": "2024-05-02T13:29:16Z",
+      "sha": "0f2f1578fb82461ffe67499e78adcc2ad158126d"
+    },
+    "PaCa_Enzyme_Rx": {
+      "pushed_at": "2024-06-06T22:01:41Z",
+      "sha": "1f8a55918e35e2526c02f0c88e11f733f8a94ab1"
+    },
+    "Pancreatic_cancer": {
+      "pushed_at": "2024-06-19T18:43:35Z",
+      "sha": "e2035a56988beded7356245a350a3624d66871bb"
+    },
+    "Paxlovid-and-sotrovimab": {
+      "pushed_at": "2024-01-23T12:38:39Z",
+      "sha": "46ea10f5358a42207c889d638df2bf19f9dc913a"
+    },
+    "Paxlovid_sotrovimab_molnupiravir_followup": {
+      "pushed_at": "2024-03-25T11:25:46Z",
+      "sha": "854a69375fa181b165a438f46f819f2049595471"
+    },
+    "Pharmacy-First-protocol-2-healthcare-usage": {
+      "pushed_at": "2025-12-09T14:20:32Z",
+      "sha": "345f27ea01e11cd2e9f50f7045b50ec171b3bae6"
+    },
+    "Pharmacy-First-protocol-2-healthcare-usage-wm": {
+      "pushed_at": "2026-02-23T09:59:00Z",
+      "sha": "a07b0c2ae9d6e8b5fe923db4170cf7b0a7c6f910"
+    },
+    "PostOpCovid": {
+      "pushed_at": "2024-06-19T10:38:28Z",
+      "sha": "3f559abb1c7d4629096608508b10c3ac29f0c3e3"
+    },
+    "Post_covid_nice_compliance": {
+      "pushed_at": "2023-03-20T17:02:29Z",
+      "sha": "14129f16f74813fd89ced99a13bf866bf398a965"
+    },
+    "ProstateCancerPrevalence": {
+      "pushed_at": "2024-06-16T17:22:35Z",
+      "sha": "20160467b9ee33c597e27ddd5b99977bd2f862cb"
+    },
+    "Published-Protocols": {
+      "pushed_at": "2022-07-18T11:05:41Z",
+      "sha": "2e869822aec3f48b9a72dd4479ed0433e64df4b3"
+    },
+    "RA_outcomes": {
+      "pushed_at": "2024-05-30T13:24:16Z",
+      "sha": "1b1169c2e0b5d8ffc26beb2e1e6f156bf57feee7"
+    },
+    "RiskFactorsWinterInfections": {
+      "pushed_at": "2026-01-01T14:02:01Z",
+      "sha": "3ddf7e3b5422f1eb177eedf439981746db0d36f5"
+    },
+    "SA_carehomerx": {
+      "pushed_at": "2023-09-06T14:16:31Z",
+      "sha": "1437cd8979dc3ead6d64d156b9228e62c0662ca5"
+    },
+    "SGTF-617-research": {
+      "pushed_at": "2023-03-28T12:57:26Z",
+      "sha": "cceda0b64a1aff3ac5bde9d366254fa08a2897f6"
+    },
+    "SGTF-CFR-research": {
+      "pushed_at": "2021-11-16T12:23:46Z",
+      "sha": "4163e86b22b9a7056476db57ab8f88d37a1f65a7"
+    },
+    "SGTF-Omi-research": {
+      "pushed_at": "2023-03-28T10:01:50Z",
+      "sha": "5c7d9cf3838d27c6cc1ac673901a64cc57a7877a"
+    },
+    "SLE-Outcomes-OS": {
+      "pushed_at": "2023-10-01T13:30:20Z",
+      "sha": "e890d315392331061528890931f781ddd1a84de6"
+    },
+    "SRO-Measures": {
+      "pushed_at": "2024-02-27T11:42:09Z",
+      "sha": "fd91afc549caa932c8b6f6bef548212fd7bc55bc"
+    },
+    "SRO-pulse-oximetry": {
+      "pushed_at": "2023-01-27T11:25:50Z",
+      "sha": "3bab1d415336338ff25f5462023af8c56b8fa7d3"
+    },
+    "SRO-smr": {
+      "pushed_at": "2023-03-30T14:58:29Z",
+      "sha": "d06a0e8197f0894922abacf2c1e4dbc3918d56dc"
+    },
+    "Safety-Sotrovimab-Paxlovid-Molnupiravir": {
+      "pushed_at": "2023-12-13T18:53:59Z",
+      "sha": "86fca94662b39af7702fcf3304e2d5d3024702fa"
+    },
+    "Shared-Care-Monitoring": {
+      "pushed_at": "2023-06-13T13:38:39Z",
+      "sha": "2b4ce72810d9e9f5839aacc2077dabadc02e6676"
+    },
+    "T1DM_covid_research": {
+      "pushed_at": "2023-01-25T10:46:39Z",
+      "sha": "fba4abf7b18f501a0b1363ee0110ae6107948046"
+    },
+    "Uptake-of-NHS-home-interventions-during-COVID-19": {
+      "pushed_at": "2023-09-04T17:52:34Z",
+      "sha": "e20b4537d409239ea904e1b96cd8e445a7f8cdeb"
+    },
+    "absolute-risks-covid-research": {
+      "pushed_at": "2022-05-06T11:27:57Z",
+      "sha": "3dfcaf385a0b3861daa733879e20e976fa83a5d8"
+    },
+    "action-test-research": {
+      "pushed_at": "2021-01-20T11:48:10Z",
+      "sha": "667ac46294cc462c72926e2275798defde849fb4"
+    },
+    "airmid-data-development": {
+      "pushed_at": "2023-10-01T11:14:21Z",
+      "sha": "5b29a5360353edb1b1a431bd2d1398c9b4ea47e9"
+    },
+    "amr-uom-brit": {
+      "pushed_at": "2024-06-06T22:03:38Z",
+      "sha": "59ef7ca778d4971d98d7c1f39f6ac3269f8b3645"
+    },
+    "antibody-and-antiviral-deployment": {
+      "pushed_at": "2024-11-06T12:01:42Z",
+      "sha": "6136fa43cd923a38e5fec06ec5ca966700c3d89a"
+    },
+    "anticoagulant-switching-research": {
+      "pushed_at": "2022-06-10T11:04:09Z",
+      "sha": "86d05a48d6d8d38219511ef8213446629a838587"
+    },
+    "anticoagulants-research": {
+      "pushed_at": "2022-05-06T11:31:22Z",
+      "sha": "cd38ff3f94944f53e2e864f5df6f0b0e6fd904a2"
+    },
+    "antidepressant-prescribing-lda": {
+      "pushed_at": "2024-05-16T12:58:28Z",
+      "sha": "87245f1506f4c5d29817ca01854c6faa60de0c90"
+    },
+    "antidepressants": {
+      "pushed_at": "2023-02-02T15:16:57Z",
+      "sha": "938ff7b49286c65a7c11e843327f6734236318cd"
+    },
+    "antimicrobial-stewardship": {
+      "pushed_at": "2023-04-19T15:36:55Z",
+      "sha": "9b8b546d75affaaf6ead847975f65d6e9c448342"
+    },
+    "antipsychotics-prescribing-during-COVID-19": {
+      "pushed_at": "2023-10-04T08:46:52Z",
+      "sha": "92565c4c74df7b31e24fbb64129131549f9b3e60"
+    },
+    "appointments-short-data-report": {
+      "pushed_at": "2024-08-02T12:50:54Z",
+      "sha": "6691bdf156847ab3d2a4a6fd0e155042807b5f1a"
+    },
+    "asthma_indicators_qof": {
+      "pushed_at": "2024-01-31T10:38:17Z",
+      "sha": "6b639d90a2990bf242e61df0b3caf60dba8a1c08"
+    },
+    "asthma_sro": {
+      "pushed_at": "2024-02-05T16:03:30Z",
+      "sha": "d75f6bef3b9992c2a5ee94efb6feb4e98b1a11c2"
+    },
+    "avoidable_hospitalisations_trends": {
+      "pushed_at": "2024-01-09T17:08:23Z",
+      "sha": "80752c3c264101d211f93cfad6c7b6d2865b2073"
+    },
+    "benbc-test": {
+      "pushed_at": "2022-05-06T11:32:17Z",
+      "sha": "fcdd761c0b7863512550e61b79431585cef84a6d"
+    },
+    "bias": {
+      "pushed_at": "2024-09-09T09:57:27Z",
+      "sha": "8549bdb9ba52c6c33cf6fc579f21b574c9028f59"
+    },
+    "blank-dmd-investigation": {
+      "pushed_at": "2025-12-01T07:23:05Z",
+      "sha": "4b3689c86ba91e80235904c466be9f17c18da099"
+    },
+    "blood-pressure-sro": {
+      "pushed_at": "2023-05-03T13:07:51Z",
+      "sha": "2a58a100730ee4f2b5c51642a44bad51ba0e10ae"
+    },
+    "bmi-short-data-report": {
+      "pushed_at": "2024-01-19T11:36:40Z",
+      "sha": "787f125859f2f80b959bd8b7b43591554b4d1bd2"
+    },
+    "booster-effectiveness": {
+      "pushed_at": "2023-10-13T11:10:52Z",
+      "sha": "80cd1678d63a4354a44c9cb37f0eee5d3ab48486"
+    },
+    "booster-effectiveness-autumn-2022": {
+      "pushed_at": "2025-12-01T07:37:25Z",
+      "sha": "4d2989d18987a05c42eca50388f8a1faf4584af0"
+    },
+    "carehome-noncarehome-death-research": {
+      "pushed_at": "2022-05-06T11:34:57Z",
+      "sha": "6bbc158cabd0d8903b42b8a321d1feddd6acf17d"
+    },
+    "carehomes-mortality-research": {
+      "pushed_at": "2022-06-09T21:39:24Z",
+      "sha": "9ffaa2db82067d5cc5f3a61fda9ae941dcfe9e32"
+    },
+    "carehomes-research": {
+      "pushed_at": "2022-06-09T21:35:21Z",
+      "sha": "cb26e0eb1ba9e22ef70d8f72590b67eb79c86d13"
+    },
+    "carehomes-short-data-report": {
+      "pushed_at": "2022-05-26T01:46:42Z",
+      "sha": "2b989cd3ea10d290d4981969629f7d4102bf590e"
+    },
+    "cis-pop-validation-ehrql": {
+      "pushed_at": "2023-11-21T17:26:45Z",
+      "sha": "cce4f0bfaffa5370b00f847fbcfe742c7a13aeeb"
+    },
+    "ckd-coverage-ve": {
+      "pushed_at": "2022-12-19T19:50:57Z",
+      "sha": "760345055dc1d39a7480137cfaeeeee3bb688e7d"
+    },
+    "ckd-healthcare-use": {
+      "pushed_at": "2024-11-28T11:45:50Z",
+      "sha": "3f49d610b1077997caefdeb5d252153beb39cb31"
+    },
+    "codelist-checks-test": {
+      "pushed_at": "2023-12-01T10:59:21Z",
+      "sha": "2213e5fa147188fb41f0886aa0f6ec3093d53544"
+    },
+    "codelist-development": {
+      "pushed_at": "2024-09-10T08:52:56Z",
+      "sha": "9698b400c22441772d68f376875743435eff303a"
+    },
+    "codelist-development-workshop-demo": {
+      "pushed_at": "2024-11-12T10:56:11Z",
+      "sha": "55855256ad78170da0787593d825a45edc03b254"
+    },
+    "cohort-extractor-demo": {
+      "pushed_at": "2022-05-06T12:34:59Z",
+      "sha": "25523b644b8307a9deda37db167cfd90783c9fd7"
+    },
+    "comparative-booster": {
+      "pushed_at": "2023-11-24T14:35:25Z",
+      "sha": "bca54292baa80e967187ca28988d4897ae88aedc"
+    },
+    "comparative-booster-ehrql-poc": {
+      "pushed_at": "2023-03-30T15:39:38Z",
+      "sha": "adcd0853aa637f49808469ae755cdf41ff3fc024"
+    },
+    "comparative-booster-spring2023": {
+      "pushed_at": "2024-09-20T14:42:15Z",
+      "sha": "decf6c3cda5a704615091ac4874377bc202d83fa"
+    },
+    "comparative-ve-research": {
+      "pushed_at": "2022-05-06T11:36:01Z",
+      "sha": "cf3118545d18a5777dc43d153a6261bd68de56bd"
+    },
+    "covid-aki-outcomes": {
+      "pushed_at": "2022-11-03T12:16:52Z",
+      "sha": "705471d3331074926d525aefeb80d92447f2eed4"
+    },
+    "covid-collateral-research": {
+      "pushed_at": "2023-05-30T09:09:38Z",
+      "sha": "0520f7c795beac8a612d2ff5f560c4a5e8c0e81e"
+    },
+    "covid-diabetes-care": {
+      "pushed_at": "2023-10-25T10:08:19Z",
+      "sha": "d78d87bbba2bd006148aaadd4c1a8e6ba6783103"
+    },
+    "covid-diabetes-outcomes": {
+      "pushed_at": "2023-04-17T10:09:51Z",
+      "sha": "c5709a188614456e6994a786b503fd0de1756454"
+    },
+    "covid-risk-immunocompromised": {
+      "pushed_at": "2025-07-14T14:25:29Z",
+      "sha": "eabdfb61787df46190b37740d76e98aef20a6591"
+    },
+    "covid-therapeutics-notebook": {
+      "pushed_at": "2024-07-04T13:47:42Z",
+      "sha": "ff6d3afa85fb0c4ccf172f995118f4d0067a87ed"
+    },
+    "covid-unvaccinated-aimpaper": {
+      "pushed_at": "2023-10-27T12:05:42Z",
+      "sha": "2836dddb762e4f4927334e75392ee0e7f66c41c4"
+    },
+    "covid-vaccine-declined-variation": {
+      "pushed_at": "2023-04-20T15:28:04Z",
+      "sha": "1181a17d589ec3c8392c02169e57e9943ef3a578"
+    },
+    "covid-vaccine-effectiveness-research": {
+      "pushed_at": "2023-04-25T15:54:41Z",
+      "sha": "6d8b0e11d9f32732457ed73f969dd0bf291f1965"
+    },
+    "covid-vaccine-effectiveness-seqtrial": {
+      "pushed_at": "2023-01-27T11:56:14Z",
+      "sha": "93a62e9ab68479ee9dc70a295f75525df161521e"
+    },
+    "covid-vaccine-effectiveness-sequential-vs-single": {
+      "pushed_at": "2023-05-17T09:33:46Z",
+      "sha": "46c1314fe25b17d3e04d355e832e853b1464b531"
+    },
+    "covid-vaccine-history": {
+      "pushed_at": "2026-03-10T11:26:52Z",
+      "sha": "d3237236ec87ff8e03905d8b2f14f9f7c45665c8"
+    },
+    "covid-vaccine-neuro-research": {
+      "pushed_at": "2023-10-30T12:13:28Z",
+      "sha": "2168bed1ca10e8d0aa7f22d48d15ce2a82aaa605"
+    },
+    "covid-vaccine-not-received": {
+      "pushed_at": "2022-05-06T11:38:01Z",
+      "sha": "df2a79c6aff196d1ec13116c3b840189e21984af"
+    },
+    "covid-vaccine-research-template": {
+      "pushed_at": "2022-05-06T11:38:18Z",
+      "sha": "08c6ef10606a24cf1e1fa385a599e761581a8ed2"
+    },
+    "covid-ve-change-over-time": {
+      "pushed_at": "2023-01-06T09:18:59Z",
+      "sha": "33696ec8ee829f85d2faa69997501cb149ccf478"
+    },
+    "covid-vs-noncovid-deaths-research": {
+      "pushed_at": "2022-05-06T11:38:42Z",
+      "sha": "99d9a2c191a2397156f3f5ba698e20e08b26e333"
+    },
+    "covid19-vaccine-coverage-tpp-emis": {
+      "pushed_at": "2022-05-06T11:36:18Z",
+      "sha": "5b7c48629d2696787aed5c30d048f6cc2d88c5b0"
+    },
+    "covid19-vaccine-uptake-ethnicity-imd": {
+      "pushed_at": "2023-10-01T08:15:09Z",
+      "sha": "bccd0422052889532317e9af42e473e47d06fa76"
+    },
+    "covid_collateral_hf": {
+      "pushed_at": "2025-12-01T00:13:22Z",
+      "sha": "7596d2a94ac569d87be54510d86e63626f01a366"
+    },
+    "covid_collateral_imd": {
+      "pushed_at": "2024-02-21T16:30:33Z",
+      "sha": "b12864d3678bec7cc4ccad7ab2687425d5924f8d"
+    },
+    "covid_determinants": {
+      "pushed_at": "2023-09-28T14:43:55Z",
+      "sha": "3eb2145353bd4c769219bcfe0ec5e2d1680c64a6"
+    },
+    "covid_mortality_over_time": {
+      "pushed_at": "2023-05-16T19:19:59Z",
+      "sha": "775d322511d818ad881e82b31ad50981f7acb783"
+    },
+    "curation-variables-library": {
+      "pushed_at": "2025-12-01T14:28:53Z",
+      "sha": "fddc6fb3479afa9ebcabf5badb6105d9ba4313bf"
+    },
+    "custom-medication-dictionary-test": {
+      "pushed_at": "2023-10-01T10:17:25Z",
+      "sha": "b2275ff487cbab7bb9a0641f86cbe675766b3255"
+    },
+    "data-notebooks-andrea": {
+      "pushed_at": "2023-04-20T13:37:41Z",
+      "sha": "f4f5d815151a20693659eb746536ee7d1e7c259d"
+    },
+    "database-notebooks": {
+      "pushed_at": "2023-05-04T11:59:13Z",
+      "sha": "656d1b6bc77d749238f7bbf6ed8b2e66fab9b18d"
+    },
+    "databricks-test": {
+      "pushed_at": "2022-05-06T11:39:06Z",
+      "sha": "d5b4ac1ba207a02a429fffdbb060d0aacf94df96"
+    },
+    "dataset-definition-testing-examples": {
+      "pushed_at": "2025-07-16T09:32:21Z",
+      "sha": "88cdea8ae88c08f9ce9b4f112a8603277440f635"
+    },
+    "dataset-directory": {
+      "pushed_at": "2023-04-11T10:06:20Z",
+      "sha": "ee36e2cf39d9d85d74e0d3cf77cacfa70141446b"
+    },
+    "date-window-test": {
+      "pushed_at": "2023-02-22T11:02:03Z",
+      "sha": "85a02099a0c92cc46445387f7e803f09cd091a91"
+    },
+    "death-report": {
+      "pushed_at": "2026-01-28T15:45:55Z",
+      "sha": "6abcf6371b0da686bf1ad415bcc9ed9a79fb64ce"
+    },
+    "deaths-at-home-covid19": {
+      "pushed_at": "2023-08-21T14:50:37Z",
+      "sha": "b0cf90c1b75d5ae0f933c02f5b4e464767f02d35"
+    },
+    "demo_repo": {
+      "pushed_at": "2026-02-16T10:39:33Z",
+      "sha": "2bddcde330514a4fd4bb04dc38891f8814b91d8c"
+    },
+    "dfms-covid19": {
+      "pushed_at": "2023-11-06T15:25:40Z",
+      "sha": "79e0ff6e82c7879eb70eb2d15239cb2b7bb3233a"
+    },
+    "dfms-covid19-new": {
+      "pushed_at": "2025-12-01T08:59:48Z",
+      "sha": "bafd9a0b790bfa7697b3d9f2fbfebd3f39634ed5"
+    },
+    "diamorphine-blank-code-check": {
+      "pushed_at": "2025-12-01T05:43:20Z",
+      "sha": "835ba22e599387aad20741b68b94c30209492728"
+    },
+    "digital-access-to-primary-care": {
+      "pushed_at": "2025-12-01T16:59:21Z",
+      "sha": "891399e82ee17eb1143e808130fe669b1d2693ac"
+    },
+    "disease_incidence": {
+      "pushed_at": "2026-02-06T13:07:00Z",
+      "sha": "1c21e91a57280bba362a30b612b35cee516b328d"
+    },
+    "disparities-comparison": {
+      "pushed_at": "2026-02-23T16:38:17Z",
+      "sha": "5ce8718ae45a430372fa6d1eb7ec1ec3aebe2792"
+    },
+    "dmd_codelist_investigation": {
+      "pushed_at": "2023-09-11T14:26:12Z",
+      "sha": "07d11c8804e4c6d793ffc9f9003c2b7aae931562"
+    },
+    "doacs-covid19": {
+      "pushed_at": "2024-04-08T13:54:25Z",
+      "sha": "ae18c5a0df9b813c6abe5b8ad4021814733edcf9"
+    },
+    "doacs-covid19-new": {
+      "pushed_at": "2025-12-01T21:58:12Z",
+      "sha": "37de7381c20e0e496ec5781aa473d708eb9b9b2d"
+    },
+    "documentation": {
+      "pushed_at": "2026-03-10T12:31:37Z",
+      "sha": "772d476b1c2f208448c9350c8b0fec9664c33e48"
+    },
+    "drug-monitoring-sro": {
+      "pushed_at": "2022-05-06T11:40:19Z",
+      "sha": "a325f19f4f2e64ef27c81547272e0e82eff3828f"
+    },
+    "dummy-data-workshop": {
+      "pushed_at": "2024-12-01T09:11:20Z",
+      "sha": "1bb88e02c51757c3904b053867394a3fb559e1d2"
+    },
+    "early-inflammatory-arthritis": {
+      "pushed_at": "2023-11-14T15:10:13Z",
+      "sha": "069e61712fcc9a0c2ec2804ff36a9b773073291c"
+    },
+    "ehrql-demo": {
+      "pushed_at": "2026-02-11T13:53:24Z",
+      "sha": "65ce78f737caa933be27a2a96812e07b1c397c10"
+    },
+    "ehrql-test-study": {
+      "pushed_at": "2026-02-21T12:54:30Z",
+      "sha": "07d5f283bb66f52a49933b016cf8dc144cfc7180"
+    },
+    "ehrql-tutorial": {
+      "pushed_at": "2026-01-30T10:34:17Z",
+      "sha": "095f2431a728578e487c3fb8411b423b9edded10"
+    },
+    "ehrql-workflow": {
+      "pushed_at": "2025-12-01T10:13:02Z",
+      "sha": "29bba0a6e44738a1b1dab4998cbead749981d688"
+    },
+    "emis-qa": {
+      "pushed_at": "2022-05-06T11:40:36Z",
+      "sha": "0b4951409dfbefdb07fdc0c81ac8a37da458c553"
+    },
+    "emis-smoke-tests": {
+      "pushed_at": "2022-05-06T11:40:51Z",
+      "sha": "4f4f2b9df3abccc5fe0c214f1abdf102d172b4cf"
+    },
+    "end-of-life-carequality": {
+      "pushed_at": "2024-06-18T11:09:46Z",
+      "sha": "e5f22f9ea0d8c042f1c69a13c8507ab81a62050d"
+    },
+    "ethnicity-covid-3rd-wave": {
+      "pushed_at": "2023-03-14T11:25:45Z",
+      "sha": "84ee42ad2bc1dad0dbc7bd50f071af3a12f5c5fe"
+    },
+    "ethnicity-covid-research": {
+      "pushed_at": "2024-07-15T15:27:56Z",
+      "sha": "769a66a7f8de6ddc6ad1d57cacc620d7583cd835"
+    },
+    "ethnicity-short-data-report": {
+      "pushed_at": "2024-07-03T15:08:40Z",
+      "sha": "4077ecde1563a756849d1afe1c6fc203cd21bc31"
+    },
+    "first-coding-task": {
+      "pushed_at": "2025-12-01T17:06:41Z",
+      "sha": "8a64accea2c05f7e9c577fd45fe34a49148a84fa"
+    },
+    "gh-testing-research": {
+      "pushed_at": "2024-07-30T16:10:00Z",
+      "sha": "f5b9233ff1327fb12aa08bffe6d14bbe893b3f4c"
+    },
+    "gitpod-test": {
+      "pushed_at": "2023-10-01T05:42:03Z",
+      "sha": "af98a1df85d0e0d5224e09bd290b6343a40bca5b"
+    },
+    "gitpodtest": {
+      "pushed_at": "2023-10-01T21:05:29Z",
+      "sha": "e4347dcb01d4cb15927e645e84392286d97eb23e"
+    },
+    "gout": {
+      "pushed_at": "2025-12-01T17:22:49Z",
+      "sha": "89bc725ebdc88909187a07ad8565db98dc5eaef6"
+    },
+    "hdruk-os-covid-paeds": {
+      "pushed_at": "2023-05-03T11:35:42Z",
+      "sha": "19e52d891545a4cf1d4db7bea8788e0e89862d98"
+    },
+    "hepatitis_in_children": {
+      "pushed_at": "2023-11-02T11:55:53Z",
+      "sha": "33170d35a22ff4dca8c548048aa36d721c13f090"
+    },
+    "hh-classification-research": {
+      "pushed_at": "2022-06-16T10:18:44Z",
+      "sha": "a603874d6422e3e0fbc3c1484faa7c198f0f3e08"
+    },
+    "highcostdrugs-research": {
+      "pushed_at": "2022-05-06T11:43:10Z",
+      "sha": "44523b8c052d5682d48d8492144c5ea387cef3e6"
+    },
+    "hiv-research": {
+      "pushed_at": "2021-07-20T15:17:26Z",
+      "sha": "380915bf5dbf4e46f2f9616d7e86211d06423b69"
+    },
+    "hospital-disruption-research": {
+      "pushed_at": "2022-05-24T09:00:02Z",
+      "sha": "33fe4e4f7fb50bc93ccb4b6860ef0ead7cc8fd10"
+    },
+    "households-research": {
+      "pushed_at": "2023-11-16T12:19:49Z",
+      "sha": "89cddf61b24b32bfb0b06c39bb4b4bf5638f3285"
+    },
+    "households-short-data-report": {
+      "pushed_at": "2023-01-09T10:05:14Z",
+      "sha": "ef399badfb7af645baee455e7a4b395ef490f174"
+    },
+    "hydroxychloroquine-research": {
+      "pushed_at": "2021-05-21T18:15:30Z",
+      "sha": "78f3fda7906703b0bab97a30f4bc72a693c6a0aa"
+    },
+    "hypertension-sro": {
+      "pushed_at": "2024-07-14T08:47:01Z",
+      "sha": "743c24a75546a68aceef3d6b286c2d46839d94a5"
+    },
+    "ics-research": {
+      "pushed_at": "2021-02-01T13:13:58Z",
+      "sha": "0faaea7f40dafb748677d034138850062dd05061"
+    },
+    "imd-breakdown": {
+      "pushed_at": "2023-04-20T11:39:37Z",
+      "sha": "1328cd4ce3807b727aaa9642a00239018babe3f1"
+    },
+    "immunosuppressant-meds-research": {
+      "pushed_at": "2022-06-16T10:08:25Z",
+      "sha": "53795269ec5a4cecb65e160652c034808379e4c3"
+    },
+    "inflammatory_rheum": {
+      "pushed_at": "2026-02-07T20:41:59Z",
+      "sha": "a78b321f47a6c8e99d93c6c3af376bc2b68b505e"
+    },
+    "interactive": {
+      "pushed_at": "2023-04-12T11:40:03Z",
+      "sha": "8be90495ecb64542620bd579b7f33c129d490c6e"
+    },
+    "isaric-exploration": {
+      "pushed_at": "2025-12-01T13:33:46Z",
+      "sha": "63b23df6f85df8991cf38a01afd73d90e59c490c"
+    },
+    "job-server-repo-tests": {
+      "pushed_at": "2022-05-06T13:46:05Z",
+      "sha": "c3a452a640c46a091a00a6b38a610a30615db088"
+    },
+    "jobs-archive": {
+      "pushed_at": "2020-12-21T11:50:57Z",
+      "sha": "966982b46ec595876ce54a3c925aae31a40cf531"
+    },
+    "late-covid-vaccine-uptake": {
+      "pushed_at": "2023-10-01T06:51:48Z",
+      "sha": "663886add84626a359bf1cf27d13657a338a8ce5"
+    },
+    "lockdown-and-vulnerable-groups": {
+      "pushed_at": "2023-12-04T16:01:45Z",
+      "sha": "a7bd5e7e3a0cd72ba3946631560e279ad114831c"
+    },
+    "lone_households": {
+      "pushed_at": "2024-08-18T15:33:08Z",
+      "sha": "4d8ddc3a2a584a3989f467dd2aceb5f9a21d5db1"
+    },
+    "long-covid": {
+      "pushed_at": "2022-07-18T15:10:28Z",
+      "sha": "d44629d020e2687171264d6b42bb81a6aa92f07e"
+    },
+    "long-covid-diagnosis-interval": {
+      "pushed_at": "2024-01-29T19:49:34Z",
+      "sha": "4c432e7de8fa9868b811c03b981fb17f7e1a9839"
+    },
+    "long-covid-historical-health": {
+      "pushed_at": "2022-06-28T20:03:36Z",
+      "sha": "69314c42972b5aa5f65ade3011845cd8d3717021"
+    },
+    "long-covid-risk-factors-and-prediction": {
+      "pushed_at": "2024-11-26T12:33:04Z",
+      "sha": "b405cf5ed235b436eed9899f79142812ba96c320"
+    },
+    "long-covid-sick-notes": {
+      "pushed_at": "2024-07-10T11:48:19Z",
+      "sha": "970152d7fca1e58b4fdce98c7fc31273be7b1375"
+    },
+    "long-covid-symptoms": {
+      "pushed_at": "2025-03-05T16:54:12Z",
+      "sha": "b1a38bc33acdc5609e8378571d239ccbc1fec511"
+    },
+    "mab-av-non-users": {
+      "pushed_at": "2023-12-15T13:33:18Z",
+      "sha": "91dd52cba97f61a833004fed33f5427f5304c77c"
+    },
+    "mainroute_cancer": {
+      "pushed_at": "2025-12-01T17:36:00Z",
+      "sha": "750f9804609c613eff525a31b356582960078508"
+    },
+    "mechanical-valve-anticoag": {
+      "pushed_at": "2022-09-24T06:50:59Z",
+      "sha": "1f158504ba5a74470b11c8d73311fb2859d67cb7"
+    },
+    "med-safety-PoC": {
+      "pushed_at": "2023-04-04T07:54:01Z",
+      "sha": "346d32bab9cc337f9befadbac5271a1da549c7f1"
+    },
+    "medication-reviews": {
+      "pushed_at": "2023-09-18T13:02:03Z",
+      "sha": "055debcf05445195d135fdd9825a440e5d58dd3c"
+    },
+    "metfin_covid": {
+      "pushed_at": "2025-12-01T05:15:43Z",
+      "sha": "44effa6dd060b8d300c520fc91d7d095ffb3bd30"
+    },
+    "metformin_covid": {
+      "pushed_at": "2026-02-22T18:47:42Z",
+      "sha": "da5f60f5e0dd5f3a2d0ae1affd5e3e83a1106e7e"
+    },
+    "migration-short-data-report": {
+      "pushed_at": "2026-03-10T13:46:10Z",
+      "sha": "4e669124dcf246b502022bbcc119127db68a9dc8"
+    },
+    "mv-dummy-data": {
+      "pushed_at": "2023-07-07T09:09:03Z",
+      "sha": "e20ad3436e3f9142b6c2650a959338b861da78fc"
+    },
+    "nhs-covid-vaccination-coverage": {
+      "pushed_at": "2023-02-24T10:40:22Z",
+      "sha": "e5cb2e9edb0c8be2cd5d2bd60976c7075adef2da"
+    },
+    "nhsx-demo": {
+      "pushed_at": "2022-05-24T10:11:58Z",
+      "sha": "0c78385e433ddc8a541427ba5cc9b6f8a8a851a3"
+    },
+    "non-specific-immunity-research": {
+      "pushed_at": "2022-06-09T21:43:23Z",
+      "sha": "36668fbaa2c96ae690d3906dc4ba733d4168dfde"
+    },
+    "nsaids-covid-research": {
+      "pushed_at": "2021-01-29T16:11:40Z",
+      "sha": "49efddc2f69ae685a805aa4a96d72a0eace0fa4b"
+    },
+    "ons-cis-data-development": {
+      "pushed_at": "2023-10-01T10:42:54Z",
+      "sha": "37f8fcb5c0beeb2e85b3ed562f6e473662517301"
+    },
+    "open-pathology": {
+      "pushed_at": "2025-12-15T11:12:51Z",
+      "sha": "9c408aa1af2edd033bfadfe3674e5b1224d5c7ef"
+    },
+    "open-pathology-sdr": {
+      "pushed_at": "2026-01-15T15:33:44Z",
+      "sha": "aede77462641a715be76f2daae089bf3300cb429"
+    },
+    "openprompt-cohort-profile": {
+      "pushed_at": "2023-12-18T12:55:23Z",
+      "sha": "90d44ee26d30cd6c20b040721149719623c787be"
+    },
+    "openprompt-hrqol": {
+      "pushed_at": "2025-12-01T02:16:56Z",
+      "sha": "71f904943e31bb620716e37699b8026f434de2a0"
+    },
+    "openprompt-vaccine-long-covid": {
+      "pushed_at": "2023-11-14T09:52:01Z",
+      "sha": "8ff300a62cbaeb704c10c7aa7830aa1b6438236c"
+    },
+    "openprompt_health_utilisation": {
+      "pushed_at": "2024-05-02T15:10:23Z",
+      "sha": "1051dd9b84071aab6a6353d4801d8e6c17f3af63"
+    },
+    "opensafely-internal-interactive": {
+      "pushed_at": "2023-05-26T10:45:11Z",
+      "sha": "fc3252e2de8d41cc84141e06e817444c16c9656c"
+    },
+    "opioids-covid-research": {
+      "pushed_at": "2026-01-22T15:28:59Z",
+      "sha": "0e45b0d3cfc0a4ccb418fd9ce63ffdf79ca41a99"
+    },
+    "opioids-data-curation": {
+      "pushed_at": "2026-01-22T15:31:08Z",
+      "sha": "33f622b8847cc8e43934223087028b23766cc168"
+    },
+    "oral-anticoagulant-covid": {
+      "pushed_at": "2023-03-21T14:51:47Z",
+      "sha": "f44a4134efe1176c25f1f8ac8d806a94a7881134"
+    },
+    "os-demo-research": {
+      "pushed_at": "2025-04-04T10:16:15Z",
+      "sha": "9b93f11a49f0f15fd89959cf9e69601fa6c54910"
+    },
+    "os-sch-children-2021": {
+      "pushed_at": "2023-03-24T09:35:53Z",
+      "sha": "53857fa67e44f4cb8cc50bb23a319df2fac0dea4"
+    },
+    "output-explorer-test-repo": {
+      "pushed_at": "2021-08-19T15:32:40Z",
+      "sha": "7a6f60e8e74b9c93a9c6322b3151ee437fa4be61"
+    },
+    "pan_can_survive": {
+      "pushed_at": "2023-09-20T12:08:53Z",
+      "sha": "4ec520371bbfd145753f09dcdfab3741cbe93e6f"
+    },
+    "pathology-comparators-short-report": {
+      "pushed_at": "2024-10-09T11:16:32Z",
+      "sha": "bd9cd700c912f15d6fa33190e030f95aec2cb0ad"
+    },
+    "pax-non-users": {
+      "pushed_at": "2026-01-01T22:02:17Z",
+      "sha": "2dbf044472efdcfeb86f8fc2c8eea222e7eefe32"
+    },
+    "paxlovid-test": {
+      "pushed_at": "2025-12-01T03:03:04Z",
+      "sha": "79a6ae7067a59084f45ad12f12ee685993e3eb8b"
+    },
+    "pharmacy-first": {
+      "pushed_at": "2026-02-20T12:51:08Z",
+      "sha": "da757d3dd653af4c5b678efd58963ebd815d96c3"
+    },
+    "pharmacy-first-data-development": {
+      "pushed_at": "2025-12-01T15:03:30Z",
+      "sha": "8292eaa8743e474c2112a2ce03c0519264ef0271"
+    },
+    "pifu-data-exploration": {
+      "pushed_at": "2026-03-09T16:22:49Z",
+      "sha": "a0cfe17e93c79327dda7aff77be09b66a775e772"
+    },
+    "pincer-measures": {
+      "pushed_at": "2023-09-21T15:55:36Z",
+      "sha": "2e1589432d5ae2a9ac7d9b3bfecaae7db909776e"
+    },
+    "pincer-measures-change-detection": {
+      "pushed_at": "2023-02-03T14:47:07Z",
+      "sha": "ef802b96058d35360b2d7e61b3ae56d27933d377"
+    },
+    "polypharmacy-deprescribing-dementia": {
+      "pushed_at": "2026-03-06T11:40:02Z",
+      "sha": "7727e41ce139e39400b595336e3b80ef71218359"
+    },
+    "population-outcomes-burden-research": {
+      "pushed_at": "2021-04-06T16:23:09Z",
+      "sha": "5dda0a106bfd017a691a9dc678892e8d00b33e0b"
+    },
+    "post-admission-admissions-research": {
+      "pushed_at": "2022-02-01T10:24:59Z",
+      "sha": "a8d12abcf75bfbb31c98b4d5f95fcf8eed063693"
+    },
+    "post-covid-autoimmune": {
+      "pushed_at": "2024-06-24T09:54:39Z",
+      "sha": "8d7f8d7c61895742b618b01ebc54fadedccc4744"
+    },
+    "post-covid-bristol": {
+      "pushed_at": "2022-04-21T08:49:11Z",
+      "sha": "47ddcf1ec481667533af55660bb83eab0a4d2b83"
+    },
+    "post-covid-cvd": {
+      "pushed_at": "2026-02-26T16:39:23Z",
+      "sha": "c9319ff02e67003e4accb3b62c9c74e88097de69"
+    },
+    "post-covid-cvd-methods": {
+      "pushed_at": "2026-03-10T10:42:56Z",
+      "sha": "74d7732b28a98720fa384886bf8290f159511854"
+    },
+    "post-covid-cvd-methods-redux": {
+      "pushed_at": "2024-02-22T11:47:53Z",
+      "sha": "cc839e47f712d76dd7e2b4a27a083a07355df122"
+    },
+    "post-covid-diabetes": {
+      "pushed_at": "2024-06-18T11:49:13Z",
+      "sha": "fc4a5a9ffa831f47ab25f253f29f5cd4d04b5d76"
+    },
+    "post-covid-gastrointestinal": {
+      "pushed_at": "2024-07-17T14:43:59Z",
+      "sha": "96326c47d6cbaa4ced748776dd1cf73cc2a2aaf8"
+    },
+    "post-covid-kidney-outcomes": {
+      "pushed_at": "2025-07-12T14:27:06Z",
+      "sha": "f8d18938ee5aa784bc6e0592f8b5311db9e93054"
+    },
+    "post-covid-mentalhealth": {
+      "pushed_at": "2025-08-11T09:42:20Z",
+      "sha": "ddb50bd8fc9e4e1a9855dc9f9a03991487c908aa"
+    },
+    "post-covid-neurodegenerative": {
+      "pushed_at": "2026-03-06T16:06:42Z",
+      "sha": "0bac181a3b3815ee0c8b0a910f8bb70836955e8a"
+    },
+    "post-covid-outcomes-research": {
+      "pushed_at": "2022-04-21T14:58:53Z",
+      "sha": "f3b58c7167659873c74fbc4694bbb542682711e2"
+    },
+    "post-covid-pre-vaccinated-cardiovascular": {
+      "pushed_at": "2024-02-28T10:24:29Z",
+      "sha": "43db56f5a98c7aff401f192ce89ef50b9b80e7dc"
+    },
+    "post-covid-renal": {
+      "pushed_at": "2026-03-09T22:58:40Z",
+      "sha": "aae42ec6e24aded998f877584f4c9d2806d4de6b"
+    },
+    "post-covid-respiratory": {
+      "pushed_at": "2026-02-26T15:39:06Z",
+      "sha": "d3472c3a39ba9acf5d91caa174278224fa460551"
+    },
+    "post-covid-respiratory-incident-events": {
+      "pushed_at": "2024-09-26T09:15:12Z",
+      "sha": "01e199c43d4b2570d3c62a79e3164f32a24f4868"
+    },
+    "post-covid-unvaccinated": {
+      "pushed_at": "2023-08-22T14:11:27Z",
+      "sha": "4a5eed5a6c5913e44de8dc1a3403232c99974b9b"
+    },
+    "post-covid-vaccinated": {
+      "pushed_at": "2024-02-28T10:21:13Z",
+      "sha": "145aa57cd9b098fc325fff1c5d6a64078eaf07ac"
+    },
+    "post-covid-vax-autoimmune": {
+      "pushed_at": "2025-12-01T04:18:57Z",
+      "sha": "5756bdf68a189c6f20c89726f69c9d34d017e040"
+    },
+    "post-vax-ae-attendance": {
+      "pushed_at": "2023-01-27T11:51:33Z",
+      "sha": "59b0bce79c68df3ab766bf6bbae833f88e24990c"
+    },
+    "post-vax-outcomes-report": {
+      "pushed_at": "2023-01-27T10:22:50Z",
+      "sha": "99707f97cf50a022ded4ab561a2dc431759d653d"
+    },
+    "primary-care-covid-codes-research": {
+      "pushed_at": "2022-06-26T19:56:03Z",
+      "sha": "f913c6aa36007b487ab7b00f02d20908c59d7985"
+    },
+    "primis-codelist-prevalence": {
+      "pushed_at": "2025-08-12T13:39:07Z",
+      "sha": "26ef188f19e8a75328eafd8c6eb51eb9576e7b0d"
+    },
+    "primis-covid-vacc-uptake-spec": {
+      "pushed_at": "2021-02-08T09:40:41Z",
+      "sha": "bc50f67cc0187180c1b42d8608dd709f93c6b4fd"
+    },
+    "principle-inhaler-uptake": {
+      "pushed_at": "2022-06-17T09:52:18Z",
+      "sha": "d353d565677733775374f2e169c318b581f40aca"
+    },
+    "prophy_effects_Sotro_Molnup": {
+      "pushed_at": "2026-01-07T21:57:32Z",
+      "sha": "27fafcb2ee96084780df42b0f3d5e0315d267188"
+    },
+    "qof": {
+      "pushed_at": "2025-12-01T13:48:09Z",
+      "sha": "9d00aa15f04b294f88728518b7e6185a1a59b0cb"
+    },
+    "qof-diabetes": {
+      "pushed_at": "2024-02-22T13:06:00Z",
+      "sha": "c2293619c2971493b11dfdc3e47c5978ffb44b4f"
+    },
+    "qof-utilities": {
+      "pushed_at": "2024-03-06T14:01:55Z",
+      "sha": "eef207d16f38ebd862f7311f5b591150623b607e"
+    },
+    "raw-data-plausibility-checks": {
+      "pushed_at": "2024-03-25T17:33:42Z",
+      "sha": "10b21430fa8b96beca1477e0190c6bbc7edabed7"
+    },
+    "raw_medicines_short_data_report": {
+      "pushed_at": "2026-02-17T08:48:12Z",
+      "sha": "902b4f4136391e308d3a819af3f46db856f621a5"
+    },
+    "rct-test": {
+      "pushed_at": "2023-04-20T14:13:55Z",
+      "sha": "8b5267ce6b1faf54db73e5f6146cc5830b3d9ae6"
+    },
+    "reduce-hf": {
+      "pushed_at": "2025-12-01T00:36:50Z",
+      "sha": "df670d1346b6e5b010fbb16037d3fd7567860c27"
+    },
+    "reinfection": {
+      "pushed_at": "2023-04-27T11:05:10Z",
+      "sha": "e6384ab8ca3714e961978e2a71cf106a597ee012"
+    },
+    "release-process-test": {
+      "pushed_at": "2022-02-07T13:51:22Z",
+      "sha": "c0235ff951bf876aa45e936464acbb94a1366a36"
+    },
+    "renal-short-data-report": {
+      "pushed_at": "2024-01-19T14:21:27Z",
+      "sha": "acefdadf580c3179e0446a1c51b38a712bcd78ad"
+    },
+    "representativeness": {
+      "pushed_at": "2023-07-17T09:28:22Z",
+      "sha": "cd1bb2b703703533f2a295ec635e02423db1c517"
+    },
+    "research-template": {
+      "pushed_at": "2025-12-02T16:37:47Z",
+      "sha": "7928dfdca97a461534b1177b732732f2d5b948ae"
+    },
+    "restoration-observatory-data-driven": {
+      "pushed_at": "2024-07-12T09:45:38Z",
+      "sha": "056447e298e5a9b4bfbd6a72023c10b5d68f9ce6"
+    },
+    "reusable-variables": {
+      "pushed_at": "2025-12-16T21:47:44Z",
+      "sha": "1d643fb1fcf9d35e608fdf2e67b90781276cd72e"
+    },
+    "reverse-engineer-r-docker": {
+      "pushed_at": "2025-06-16T18:01:34Z",
+      "sha": "4963da2cacce94e2192d03943f6388ff51e478e2"
+    },
+    "risk-factors-research": {
+      "pushed_at": "2024-06-06T11:19:11Z",
+      "sha": "38e2723fd2da19d8605d6ff7f48bf7a6ccd98957"
+    },
+    "risk-prediction-research": {
+      "pushed_at": "2023-06-26T09:56:55Z",
+      "sha": "f156ccec20399f8bc4e16ee5ca292a0325b6e55b"
+    },
+    "roadmap": {
+      "pushed_at": "2022-07-04T13:40:33Z",
+      "sha": "2133dffdb252d944392ee56bbb9a2b055c0ff7da"
+    },
+    "school-age-children-and-covid": {
+      "pushed_at": "2021-01-29T14:26:07Z",
+      "sha": "6bdfe5ba28e99851916b1710c4313815faf74616"
+    },
+    "school-age-children-and-covid2": {
+      "pushed_at": "2021-08-13T09:15:53Z",
+      "sha": "c48741a1b0538b4ed23473a1a108f52f01c748a6"
+    },
+    "second-line-diabetes-covid-research": {
+      "pushed_at": "2023-03-16T12:12:20Z",
+      "sha": "47ae0f6196864a320e104fde108ee2939469e7ed"
+    },
+    "shielding-evaluation": {
+      "pushed_at": "2025-12-19T03:20:01Z",
+      "sha": "895bc0be747158567076f0ca8eae4cb0df541c5b"
+    },
+    "sotrovimab-and-molnupiravir": {
+      "pushed_at": "2024-06-28T15:41:40Z",
+      "sha": "d2098bfe8259449eb1cee5cde78e8ab0fbfe3e20"
+    },
+    "sro-gastro": {
+      "pushed_at": "2023-09-21T22:13:54Z",
+      "sha": "5cdadc405d9aa95dee4c7dcfcc0d3562b87f7ae5"
+    },
+    "sro-measures-demo": {
+      "pushed_at": "2022-03-23T10:01:20Z",
+      "sha": "984e8f35c4f78d2241471993ad22ed1a68496b5d"
+    },
+    "sro-template": {
+      "pushed_at": "2022-04-11T14:34:40Z",
+      "sha": "34239692c7cd0ac8992f4c1205255c1f23e5c619"
+    },
+    "statins-covid": {
+      "pushed_at": "2025-12-01T14:26:46Z",
+      "sha": "6745d7584b719ed832ec9790952e06fbbf0fac69"
+    },
+    "strepa_scarlet": {
+      "pushed_at": "2025-12-01T11:22:38Z",
+      "sha": "6a1e818ce4334e124008e78763540c8a14b46af9"
+    },
+    "suicide-deaths-pcc": {
+      "pushed_at": "2022-06-24T15:44:10Z",
+      "sha": "499c2858982e10bcc2a6a1ab66f195e38a4e10a7"
+    },
+    "surg-covid-safely": {
+      "pushed_at": "2023-01-27T16:06:40Z",
+      "sha": "1cad9fb3db9732a8483f1f3b2a57980b5504f31f"
+    },
+    "test-age-distribution": {
+      "pushed_at": "2025-10-07T15:06:24Z",
+      "sha": "d267c6d9841da2791a1a44e7384bd5ccfc832b92"
+    },
+    "test-point-and-click": {
+      "pushed_at": "2023-03-21T15:03:06Z",
+      "sha": "ff2f6647ade46603fa6744cfb3e5bd522a85dd66"
+    },
+    "the-impact-of-covid-19-on-prescribing-of-antimicrobials-interactive": {
+      "pushed_at": "2024-04-22T16:01:12Z",
+      "sha": "95b70f8f4b3d91746985ebb41fac94b5a0deab96"
+    },
+    "the-impact-of-covid-19-on-the-care-of-people-with-sickle-cell-disease-interactive": {
+      "pushed_at": "2023-04-27T11:30:25Z",
+      "sha": "7395891b891c1f9efbc8f0cdc4eb4b08009255df"
+    },
+    "therapeutics-data-exploration": {
+      "pushed_at": "2025-12-01T02:22:50Z",
+      "sha": "47a6d43c2d80181a38411858457d8d3bcd5c6f77"
+    },
+    "tncc_ve": {
+      "pushed_at": "2022-05-25T09:48:20Z",
+      "sha": "f2ce88317f913008d750766fecb8ef6d9aa5862b"
+    },
+    "tocilizumab_and_sarilumab": {
+      "pushed_at": "2026-01-30T13:47:06Z",
+      "sha": "8e12ccaf14f21c0bf6df3bdb306e6ce73bb0f370"
+    },
+    "tpp-code-counts": {
+      "pushed_at": "2026-03-06T15:48:29Z",
+      "sha": "8bd92732a29ec8b3df6770f96077fc8732fdac21"
+    },
+    "tpp-ctv3": {
+      "pushed_at": "2024-08-01T18:28:37Z",
+      "sha": "a082fd8230c1342de72dde12d3b10e4b50439a73"
+    },
+    "tpp-database-categorical-columns": {
+      "pushed_at": "2024-11-13T17:06:02Z",
+      "sha": "fd18e0ce5836b5276fcd9fdfae5b8fdbee71cfbf"
+    },
+    "tpp-database-history": {
+      "pushed_at": "2025-12-15T09:37:00Z",
+      "sha": "f91d18794a1a674788497d136383c4a2bbd5e2bb"
+    },
+    "tpp-database-import-dates": {
+      "pushed_at": "2025-12-24T11:32:38Z",
+      "sha": "04104d31eeaad2298cf4d9d561831145292ea428"
+    },
+    "tpp-database-schema": {
+      "pushed_at": "2026-01-12T08:17:06Z",
+      "sha": "212e715121ddf4c27c1b3e3b79301e7e0b9db340"
+    },
+    "tpp-dmd-checks": {
+      "pushed_at": "2024-08-02T12:44:43Z",
+      "sha": "5e87bf0a5c886aeac7229101b06ba690025267f9"
+    },
+    "tpp-patient-population": {
+      "pushed_at": "2026-02-24T15:13:35Z",
+      "sha": "407f0db52914e7316a59817ab32520515799a31b"
+    },
+    "tpp-sql-notebook": {
+      "pushed_at": "2021-02-11T15:57:48Z",
+      "sha": "b1a45f33bc6606c537a0308e97599d08afffc76d"
+    },
+    "udca_covid": {
+      "pushed_at": "2025-12-01T06:26:32Z",
+      "sha": "44925aa9c8f140e8464a13196c5b92fb44fcd8cd"
+    },
+    "unknown-codes-investigation": {
+      "pushed_at": "2023-02-15T15:42:07Z",
+      "sha": "8f87207b387051b73c0cc896080d0878b87e4cef"
+    },
+    "uom_pregnancy_tx_pathways": {
+      "pushed_at": "2025-02-05T14:20:28Z",
+      "sha": "b1cc3b582ba259ed6b81d7c90bd7c1ef7e8327ae"
+    },
+    "vaccination-names": {
+      "pushed_at": "2025-12-01T18:11:16Z",
+      "sha": "789f1c7c51bd66faa9c355f1a3fbe96263604c99"
+    },
+    "vaccine-characteristics-research": {
+      "pushed_at": "2023-01-25T11:01:07Z",
+      "sha": "030ad6c32e8c9c989433db25aff00d66d5949bbf"
+    },
+    "vaccine-counts": {
+      "pushed_at": "2023-11-09T21:46:12Z",
+      "sha": "ebbb74c95f5589977a9284dd156ad5e4be11e64c"
+    },
+    "vaccine-effectiveness-3dose": {
+      "pushed_at": "2024-01-04T09:23:44Z",
+      "sha": "bc11c10567e3337f8e78c9208939cf6da32ed0b6"
+    },
+    "vaccine-effectiveness-4dose": {
+      "pushed_at": "2023-10-01T01:09:04Z",
+      "sha": "c8564ffe8ea4a19a2d47671fd62d6ed3fd98888f"
+    },
+    "vaccine-effectiveness-hospital-admissions-validation": {
+      "pushed_at": "2023-11-15T11:39:18Z",
+      "sha": "d8bf693e9c0c23c432dc2a525b4358e571466e4d"
+    },
+    "vaccine-effectiveness-in-kids": {
+      "pushed_at": "2024-01-12T18:24:44Z",
+      "sha": "f851f58046d6b1e9051b115a79777cdbe90e17a9"
+    },
+    "vaccine-eligibility": {
+      "pushed_at": "2021-02-23T14:46:19Z",
+      "sha": "d5db71969c0601e8422b3b22e04f2b2c029eee86"
+    },
+    "vaccine-neuro-cohort": {
+      "pushed_at": "2023-10-25T10:39:40Z",
+      "sha": "b3a8ee640055aa99b4cafc2ed2a7d1ec2afeccfd"
+    },
+    "vaccine-rd-research": {
+      "pushed_at": "2025-02-28T10:19:21Z",
+      "sha": "0532b1affa27d1bb70f6ad795b016a520ec28716"
+    },
+    "variable-library": {
+      "pushed_at": "2021-03-16T19:29:59Z",
+      "sha": "9ca155b318aeaf04c5dd0d8ec754e443b4ff51cb"
+    },
+    "vax-fourth-dose-RD": {
+      "pushed_at": "2025-12-01T05:06:24Z",
+      "sha": "43bcfac72d28aa1f8ea9eee6cd23715b66fa7f7e"
+    },
+    "vte-diagnoses-and-deaths": {
+      "pushed_at": "2024-02-23T16:28:14Z",
+      "sha": "67bee1ad3220ecd26369498ced8d1d55f3732a2c"
+    },
+    "waiting-list": {
+      "pushed_at": "2026-01-22T15:34:21Z",
+      "sha": "c0b16e129b2149551d9fa92248df86699d31ebc9"
+    },
+    "waning-ve-2dose-1year": {
+      "pushed_at": "2023-08-15T17:11:48Z",
+      "sha": "042d5d255fb1e8abefe7e6dfad730e2410562183"
+    },
+    "waning-ve-2dose-cancer": {
+      "pushed_at": "2022-10-06T09:24:47Z",
+      "sha": "6f2ffc93e85f1979334ab1dbafd28e11a24ab7a6"
+    },
+    "waning-ve-3dose": {
+      "pushed_at": "2023-04-25T09:05:40Z",
+      "sha": "9251d8a6f64dffdc8a4a7705abf668db0c0bedc7"
+    },
+    "winter-pressures": {
+      "pushed_at": "2025-12-02T01:04:18Z",
+      "sha": "cf66ad0b42b29e6db0bdf20154b6a7cd078f184d"
+    },
+    "winter-pressures-phase-II": {
+      "pushed_at": "2026-03-06T16:08:57Z",
+      "sha": "4d95049d8d6058f9a79458520393edd8ebf43345"
+    },
+    "with-gp-consultations-curation": {
+      "pushed_at": "2022-10-05T14:55:32Z",
+      "sha": "e100cd90bd353ad2de43748c654c16e04cc3aec1"
+    }
+  }
+}

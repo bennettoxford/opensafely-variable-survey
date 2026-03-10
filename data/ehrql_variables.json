@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-03-06 11:49:01",
+  "generated_at": "2026-03-10 13:52:47",
   "projects": {
     "opensafely/ACT-PharmacyFirst-Protocol2-healthcare-usage": {
       "files": {
@@ -7,246 +7,302 @@
           [
             "age",
             "IntPatientSeries",
-            74,
+            76,
             "515d5d26c6826fc5",
             "515d5d26c6826fc5"
           ],
           [
             "alive",
             "BoolPatientSeries",
-            72,
+            74,
             "356676b6370a8d00",
             "356676b6370a8d00"
           ],
           [
             "bullous_impetigo_this_month",
             "BoolPatientSeries",
-            123,
-            "afc50307aedf3f43",
-            "afc50307aedf3f43"
+            141,
+            "b56d145cf862f4b8",
+            "d8e6452c17e9352e"
           ],
           [
             "catheter_status",
             "BoolPatientSeries",
-            141,
-            "afc50307aedf3f43",
-            "afc50307aedf3f43"
+            159,
+            "8c60ee56ca455b91",
+            "d8e6452c17e9352e"
+          ],
+          [
+            "date_of_birth",
+            "DatePatientSeries",
+            77,
+            "e099149c724d935f",
+            "e099149c724d935f"
           ],
           [
             "ethnicity",
             "StrPatientSeries",
-            77,
+            80,
             "6f9e6a21618446b2",
             "6d10b45baec88ef9"
           ],
           [
             "has_pf_consultation",
             "BoolPatientSeries",
-            94,
-            "53b1eaed5359dc3b",
+            97,
+            "d65b20be84067be6",
             "618267d52ca51718"
           ],
           [
             "imd",
             "StrPatientSeries",
-            76,
+            79,
             "9cd64cd5f4f2e0a8",
             "9cd64cd5f4f2e0a8"
           ],
           [
+            "impetigo_GP_numerator",
+            "BoolPatientSeries",
+            120,
+            "997267335185c0d2",
+            "5d2ec6a50fa73ef9"
+          ],
+          [
             "impetigo_numerator",
             "BoolPatientSeries",
-            101,
-            "0c8ea0c70ff106e8",
+            104,
+            "997267335185c0d2",
             "5d2ec6a50fa73ef9"
           ],
           [
             "include_patient_impetigo",
             "BoolPatientSeries",
-            233,
-            "33a3d3b715e1a677",
-            "15d6829e0c43e151"
+            251,
+            "d571a7c972d3501b",
+            "a91e425b1230cdfa"
           ],
           [
             "include_patient_insect_bites",
             "BoolPatientSeries",
-            210,
-            "a191ea6ba4e36846",
+            228,
+            "c84e3e0be29a1621",
             "f6c05ddbcfd78a8d"
           ],
           [
             "include_patient_otitis_media",
             "BoolPatientSeries",
-            182,
+            200,
             "4038bf8cae42acd0",
             "4038bf8cae42acd0"
           ],
           [
             "include_patient_overall_eligible",
             "BoolPatientSeries",
-            256,
-            "2462cb2582cc805a",
-            "cea62b202e0f82cc"
+            274,
+            "29b99e698a2be55c",
+            "05feb5bbcc57ab57"
           ],
           [
             "include_patient_shingles",
             "BoolPatientSeries",
-            220,
-            "732ab6140a2c6780",
+            238,
+            "f03f0e036df7633a",
             "35f7fd31a34586b5"
           ],
           [
             "include_patient_sinusitis",
             "BoolPatientSeries",
-            190,
+            208,
             "8dde67dc8f66efba",
             "8dde67dc8f66efba"
           ],
           [
             "include_patient_sore_throat",
             "BoolPatientSeries",
-            200,
-            "0c719915292e9da3",
+            218,
+            "4ffcf4468a53f8a3",
             "9f4a4f0d2107dee4"
           ],
           [
             "include_patient_uuti",
             "BoolPatientSeries",
-            247,
-            "9b7797fde7d8c47a",
-            "95cc2e32528311e0"
+            265,
+            "ac09481b87efbe49",
+            "f284553fe5bd7a0e"
           ],
           [
             "index_date",
-            "StrPatientSeries",
-            69,
-            "9ef4999ef7d9c33d",
-            "9ef4999ef7d9c33d"
+            "DatePatientSeries",
+            71,
+            "625a20a9ba7a4896",
+            "625a20a9ba7a4896"
+          ],
+          [
+            "insectbite_GP_numerator",
+            "BoolPatientSeries",
+            116,
+            "ebb8c5c106d5fad0",
+            "5d2ec6a50fa73ef9"
           ],
           [
             "insectbite_numerator",
             "BoolPatientSeries",
-            97,
-            "5d70fff0e19276a5",
+            100,
+            "ebb8c5c106d5fad0",
+            "5d2ec6a50fa73ef9"
+          ],
+          [
+            "otitismedia_GP_numerator",
+            "BoolPatientSeries",
+            117,
+            "dae4a878bf0a6df9",
             "5d2ec6a50fa73ef9"
           ],
           [
             "otitismedia_numerator",
             "BoolPatientSeries",
-            98,
-            "774ceaa4fa8fb440",
+            101,
+            "dae4a878bf0a6df9",
             "5d2ec6a50fa73ef9"
           ],
           [
             "practice",
             "IntPatientSeries",
-            79,
+            82,
             "215d2cd53b2710ae",
             "215d2cd53b2710ae"
           ],
           [
             "pregnant_this_month",
             "BoolPatientSeries",
-            116,
-            "899e4cfd83810ff2",
+            134,
+            "63b9e8c045a6b1d9",
             "d8e6452c17e9352e"
           ],
           [
             "recurrent_impetigo_this_year",
             "BoolPatientSeries",
-            133,
-            "afc50307aedf3f43",
-            "afc50307aedf3f43"
+            151,
+            "5438325332b916ac",
+            "c5e544730c43b5b5"
           ],
           [
             "recurrent_uti",
             "BoolPatientSeries",
-            160,
-            "0da38e6a0264a1c1",
-            "0da38e6a0264a1c1"
+            178,
+            "1d6dfbb093f24ace",
+            "7b0547c1ced7ff34"
           ],
           [
             "recurrent_uti_12m",
             "BoolPatientSeries",
-            159,
-            "afc50307aedf3f43",
-            "afc50307aedf3f43"
+            177,
+            "fbbd815a1177d3b6",
+            "29428d4ef099ed6a"
           ],
           [
             "recurrent_uti_6m",
             "BoolPatientSeries",
-            158,
-            "afc50307aedf3f43",
-            "afc50307aedf3f43"
+            176,
+            "4ab853c51cebe9c4",
+            "c5e544730c43b5b5"
           ],
           [
             "region",
             "StrPatientSeries",
-            81,
+            84,
             "c93ea0c014fa812a",
             "c93ea0c014fa812a"
           ],
           [
             "registered_index",
             "BoolPatientSeries",
-            71,
+            73,
             "2222b7f3be874bdb",
             "2222b7f3be874bdb"
           ],
           [
             "registered_start",
             "BoolPatientSeries",
-            70,
+            72,
             "2222b7f3be874bdb",
             "2222b7f3be874bdb"
           ],
           [
             "sex",
             "StrPatientSeries",
-            73,
+            75,
             "a0751b8b98a9ec41",
             "a0751b8b98a9ec41"
           ],
           [
+            "shingles_GP_numerator",
+            "BoolPatientSeries",
+            119,
+            "ba8b2cbd4b4e89db",
+            "5d2ec6a50fa73ef9"
+          ],
+          [
             "shingles_numerator",
             "BoolPatientSeries",
-            100,
-            "d297029c75a24e14",
+            103,
+            "ba8b2cbd4b4e89db",
+            "5d2ec6a50fa73ef9"
+          ],
+          [
+            "sinusitis_GP_numerator",
+            "BoolPatientSeries",
+            115,
+            "97fafa9462b13b65",
             "5d2ec6a50fa73ef9"
           ],
           [
             "sinusitis_numerator",
             "BoolPatientSeries",
-            96,
-            "c99498a598139c60",
+            99,
+            "97fafa9462b13b65",
+            "5d2ec6a50fa73ef9"
+          ],
+          [
+            "sorethroat_GP_numerator",
+            "BoolPatientSeries",
+            118,
+            "24ffa332face5ccd",
             "5d2ec6a50fa73ef9"
           ],
           [
             "sorethroat_numerator",
             "BoolPatientSeries",
-            99,
-            "a2635db9fbce4710",
+            102,
+            "24ffa332face5ccd",
             "5d2ec6a50fa73ef9"
           ],
           [
             "start_date",
             "StrPatientSeries",
-            68,
-            "009a73331933eec0",
-            "009a73331933eec0"
+            70,
+            "c876a263e23c6a56",
+            "c876a263e23c6a56"
           ],
           [
             "stp",
             "StrPatientSeries",
-            80,
+            83,
             "90794f74ab2affe8",
             "90794f74ab2affe8"
           ],
           [
+            "uti_GP_numerator",
+            "BoolPatientSeries",
+            114,
+            "16bdf51857bb27ff",
+            "5d2ec6a50fa73ef9"
+          ],
+          [
             "uti_numerator",
             "BoolPatientSeries",
-            95,
-            "fe760770940cbc26",
+            98,
+            "16bdf51857bb27ff",
             "5d2ec6a50fa73ef9"
           ]
         ],
@@ -254,27 +310,120 @@
           [
             "practice",
             "IntPatientSeries",
-            35,
+            36,
             "215d2cd53b2710ae",
             "215d2cd53b2710ae"
           ],
           [
             "region",
             "StrPatientSeries",
-            37,
+            38,
             "c93ea0c014fa812a",
             "c93ea0c014fa812a"
           ],
           [
             "stp",
             "StrPatientSeries",
-            36,
+            37,
             "90794f74ab2affe8",
             "90794f74ab2affe8"
           ]
+        ],
+        "analysis/dataset_definition_pregnancy.py": [
+          [
+            "age",
+            "IntPatientSeries",
+            115,
+            "515d5d26c6826fc5",
+            "515d5d26c6826fc5"
+          ],
+          [
+            "ck_diff_edd_end_current",
+            "IntPatientSeries",
+            109,
+            "df7473c02bc62f3b",
+            "655d30e1cfb315d8"
+          ],
+          [
+            "ck_diff_edd_end_recent",
+            "IntPatientSeries",
+            108,
+            "fd0d3c9418c40149",
+            "e81aa371940350fd"
+          ],
+          [
+            "ck_diff_new_preg",
+            "IntPatientSeries",
+            96,
+            "278d7c6a00007613",
+            "3e8ee10c169ce79e"
+          ],
+          [
+            "ck_diff_preg_ends",
+            "IntPatientSeries",
+            103,
+            "d137688dc885fb30",
+            "a99d0c7704be2b0c"
+          ],
+          [
+            "ck_pregnancy_future",
+            "DatePatientSeries",
+            90,
+            "2919bf4bfdd13026",
+            "5acd284eaa43a46c"
+          ],
+          [
+            "pregnancy_code",
+            "DatePatientSeries",
+            52,
+            "57ad23ff2a0b65e4",
+            "e31387e3f6b175a2"
+          ],
+          [
+            "pregnancy_edd",
+            "DatePatientSeries",
+            42,
+            "0cb9c2a61700f03c",
+            "d889751e2363db86"
+          ],
+          [
+            "pregnancy_end",
+            "DatePatientSeries",
+            31,
+            "581d419dc1d9b428",
+            "e31387e3f6b175a2"
+          ],
+          [
+            "pregnancy_end_recent",
+            "DatePatientSeries",
+            18,
+            "ddc4d49f4ef7a762",
+            "e95d176a4f1bab66"
+          ],
+          [
+            "pregnant",
+            "StrPatientSeries",
+            61,
+            "1355cf0c27d9e20b",
+            "b3ae1adda4d7a5f3"
+          ],
+          [
+            "pregnant_flag",
+            "IntPatientSeries",
+            79,
+            "d463b4775dee2bd6",
+            "b7ea55a15c16b94c"
+          ],
+          [
+            "sex",
+            "StrPatientSeries",
+            114,
+            "a0751b8b98a9ec41",
+            "a0751b8b98a9ec41"
+          ]
         ]
       },
-      "sha": "c32feecbfdf7c81c21f681d975ac6288955011fe"
+      "sha": "7e2be9801ec20b6ffe36319ee4afb09a29469618"
     },
     "opensafely/ADHD-Pre-and-Post-Covid": {
       "files": {
@@ -1610,6 +1759,10 @@
           ]
         ]
       },
+      "sha": "f231b4fe63bc06caba1e9888821063fb83ce0920"
+    },
+    "opensafely/COMPARES-vaccines-Autumn-2024": {
+      "files": {},
       "sha": "f231b4fe63bc06caba1e9888821063fb83ce0920"
     },
     "opensafely/COVID-19_vacci_and_MACE_after_hip_fracture": {
@@ -7151,7 +7304,7 @@
           ]
         ]
       },
-      "sha": "b29dc287d679d1c5ebd939488e6293811261c098"
+      "sha": "d3237236ec87ff8e03905d8b2f14f9f7c45665c8"
     },
     "opensafely/curation-variables-library": {
       "files": {
@@ -7180,6 +7333,10 @@
         ]
       },
       "sha": "b2275ff487cbab7bb9a0641f86cbe675766b3255"
+    },
+    "opensafely/dataset-definition-testing-examples": {
+      "files": {},
+      "sha": "88cdea8ae88c08f9ce9b4f112a8603277440f635"
     },
     "opensafely/death-report": {
       "files": {
@@ -17688,22 +17845,29 @@
             "any_migrant",
             "BoolPatientSeries",
             -1,
-            "eed3a10a969a2d91",
-            "3a5729308856fa25"
+            "13080723e84fcb16",
+            "a74ed5e4bf6a571b"
           ],
           [
             "born_in_uk",
             "BoolPatientSeries",
             -1,
-            "4e91bd24e8a096fe",
-            "3a5729308856fa25"
+            "fcc39d47134e06ef",
+            "a74ed5e4bf6a571b"
+          ],
+          [
+            "british_ethnicities",
+            "BoolPatientSeries",
+            -1,
+            "5b00285d338275bb",
+            "a74ed5e4bf6a571b"
           ],
           [
             "english_not_main_language",
             "BoolPatientSeries",
             -1,
-            "7b3fa5847c0ef1ec",
-            "3a5729308856fa25"
+            "a23b2fe87c9b850d",
+            "a74ed5e4bf6a571b"
           ],
           [
             "imd_decile",
@@ -17723,15 +17887,15 @@
             "immig_status_excl_refugee_asylum",
             "BoolPatientSeries",
             -1,
-            "681b44be7a4b87c5",
-            "3a5729308856fa25"
+            "66f30126194b9775",
+            "a74ed5e4bf6a571b"
           ],
           [
             "interpreter_required",
             "BoolPatientSeries",
             -1,
-            "462185fd1dfabee3",
-            "3a5729308856fa25"
+            "f498cd232b974a1c",
+            "a74ed5e4bf6a571b"
           ],
           [
             "latest_ethnicity_16_level_group",
@@ -17758,36 +17922,36 @@
             "mig_status_2_cat",
             "StrPatientSeries",
             106,
-            "d877e1c507b9acf0",
-            "9c35fa0a46918c8f"
+            "8eff19f8dcb04133",
+            "4a9b33565bfb6dfc"
           ],
           [
             "mig_status_3_cat",
             "StrPatientSeries",
             108,
-            "8ad22a7701c87b90",
-            "9dbfe716dc3f3e23"
+            "25a5aacaa0732c5f",
+            "ed3279c69d25b0ce"
           ],
           [
             "mig_status_6_cat",
             "StrPatientSeries",
-            113,
-            "734796db414505dc",
-            "fbb9ae9fa7fd4f3f"
+            111,
+            "36dc55030c78fd0d",
+            "9520e574378c4cdf"
           ],
           [
             "not_born_in_uk",
             "BoolPatientSeries",
             -1,
-            "3c7743537a3e41ef",
-            "3a5729308856fa25"
+            "419a70ae586ff46a",
+            "a74ed5e4bf6a571b"
           ],
           [
             "refugee_asylum_status",
             "BoolPatientSeries",
             -1,
-            "dc3b64360c18b606",
-            "3a5729308856fa25"
+            "bf88ded4c15e2b88",
+            "a74ed5e4bf6a571b"
           ],
           [
             "region",
@@ -17809,15 +17973,22 @@
             "any_migrant",
             "BoolPatientSeries",
             -1,
-            "eed3a10a969a2d91",
-            "3a5729308856fa25"
+            "13080723e84fcb16",
+            "a74ed5e4bf6a571b"
           ],
           [
             "born_in_uk",
             "BoolPatientSeries",
             -1,
-            "4e91bd24e8a096fe",
-            "3a5729308856fa25"
+            "fcc39d47134e06ef",
+            "a74ed5e4bf6a571b"
+          ],
+          [
+            "british_ethnicities",
+            "BoolPatientSeries",
+            -1,
+            "5b00285d338275bb",
+            "a74ed5e4bf6a571b"
           ],
           [
             "date_of_birth",
@@ -17836,23 +18007,23 @@
           [
             "date_of_earliest_date_of_uk_entry_code",
             "DatePatientSeries",
-            203,
-            "13001b4600db4c9b",
-            "03af6832498bc1db"
+            201,
+            "3bff98125cbf1f78",
+            "ea1c433386a6d7c4"
           ],
           [
             "date_of_entry_and_other_migration_code",
             "StrPatientSeries",
-            215,
-            "18cc2f216b94f1f6",
-            "772e0e52885be918"
+            213,
+            "ca7b32117f1c45da",
+            "824a89092cdaefea"
           ],
           [
             "date_of_first_migration_code",
             "DatePatientSeries",
-            227,
-            "2e922b0924c20755",
-            "03af6832498bc1db"
+            226,
+            "08517f331c8f989b",
+            "ea1c433386a6d7c4"
           ],
           [
             "date_of_first_practice_registration",
@@ -17865,20 +18036,20 @@
             "english_not_main_language",
             "BoolPatientSeries",
             -1,
-            "7b3fa5847c0ef1ec",
-            "3a5729308856fa25"
+            "a23b2fe87c9b850d",
+            "a74ed5e4bf6a571b"
           ],
           [
             "has_date_of_uk_entry",
             "BoolPatientSeries",
-            180,
-            "327b2909dd51c3c9",
-            "3a5729308856fa25"
+            177,
+            "0383cc162955ce0a",
+            "a74ed5e4bf6a571b"
           ],
           [
             "has_date_of_uk_entry_at_any_time",
             "BoolPatientSeries",
-            172,
+            169,
             "6547a1d883a77cfa",
             "c23347b8b09f382f"
           ],
@@ -17900,15 +18071,15 @@
             "immig_status_excl_refugee_asylum",
             "BoolPatientSeries",
             -1,
-            "681b44be7a4b87c5",
-            "3a5729308856fa25"
+            "66f30126194b9775",
+            "a74ed5e4bf6a571b"
           ],
           [
             "interpreter_required",
             "BoolPatientSeries",
             -1,
-            "462185fd1dfabee3",
-            "3a5729308856fa25"
+            "f498cd232b974a1c",
+            "a74ed5e4bf6a571b"
           ],
           [
             "latest_ethnicity_16_level_group",
@@ -17935,64 +18106,64 @@
             "mig_status_2_cat",
             "StrPatientSeries",
             132,
-            "d877e1c507b9acf0",
-            "9c35fa0a46918c8f"
+            "8eff19f8dcb04133",
+            "4a9b33565bfb6dfc"
           ],
           [
             "mig_status_3_cat",
             "StrPatientSeries",
             134,
-            "3fc4ff26efba0992",
-            "099ea529385770ce"
+            "25a5aacaa0732c5f",
+            "ed3279c69d25b0ce"
           ],
           [
             "mig_status_6_cat",
             "StrPatientSeries",
-            139,
-            "88575144f67b15fc",
-            "b8de7e4baf5423c4"
+            137,
+            "36dc55030c78fd0d",
+            "9520e574378c4cdf"
           ],
           [
             "not_born_in_uk",
             "BoolPatientSeries",
             -1,
-            "3c7743537a3e41ef",
-            "3a5729308856fa25"
+            "419a70ae586ff46a",
+            "a74ed5e4bf6a571b"
           ],
           [
             "number_of_date_of_uk_entry_codes",
             "IntPatientSeries",
-            184,
-            "67a3813d6a8b30a9",
-            "1ce4811fea2fad49"
+            181,
+            "000123c0cfabbba4",
+            "44cf3cfff129f1f1"
           ],
           [
             "number_of_date_of_uk_entry_codes_at_any_time",
             "IntPatientSeries",
-            191,
+            188,
             "d6b7ab761b6f6bb1",
             "fffb5d978c9e6491"
           ],
           [
             "number_of_migration_codes",
             "IntPatientSeries",
-            152,
-            "03e5807ed59ab1b4",
-            "1ce4811fea2fad49"
+            149,
+            "8c5dcb1d20b8ff32",
+            "44cf3cfff129f1f1"
           ],
           [
             "number_of_migration_codes_at_any_time",
             "IntPatientSeries",
-            159,
-            "03e5807ed59ab1b4",
-            "1ce4811fea2fad49"
+            156,
+            "8c5dcb1d20b8ff32",
+            "44cf3cfff129f1f1"
           ],
           [
             "refugee_asylum_status",
             "BoolPatientSeries",
             -1,
-            "dc3b64360c18b606",
-            "3a5729308856fa25"
+            "bf88ded4c15e2b88",
+            "a74ed5e4bf6a571b"
           ],
           [
             "region",
@@ -18011,23 +18182,37 @@
           [
             "temporality_of_date_of_uk_entry_code",
             "StrPatientSeries",
-            207,
-            "e25900d0cb12edff",
-            "fa08783b9abe40ca"
+            205,
+            "6966e6c7e776695b",
+            "d380b6ec5bbccfb2"
           ],
           [
-            "time_to_first_migration_code_days",
+            "time_from_1st_pracreg_first_migration_code_days",
+            "IntPatientSeries",
+            231,
+            "997da7c9085ff075",
+            "f34082150c3216e3"
+          ],
+          [
+            "time_from_1st_pracreg_first_migration_code_months",
             "IntPatientSeries",
             232,
-            "418ff10b0ff933df",
-            "b616cd061112daf0"
+            "c6145199eb60226b",
+            "6e52ead229eb3a67"
           ],
           [
-            "time_to_first_migration_code_months",
+            "time_from_birth_first_migration_code_days",
             "IntPatientSeries",
-            233,
-            "1040794a10373b22",
-            "fc874517d46de48d"
+            239,
+            "c53c6cf98ee23ec2",
+            "b176d3cfe7cd264c"
+          ],
+          [
+            "time_from_birth_first_migration_code_months",
+            "IntPatientSeries",
+            240,
+            "af3e922e021ad378",
+            "6a17758c607aefdc"
           ],
           [
             "year_of_birth",
@@ -18043,9 +18228,67 @@
             "dce4dfb506853f71",
             "dce4dfb506853f71"
           ]
+        ],
+        "analysis/dataset_definition_migration_code_before_birth_cohort.py": [
+          [
+            "any_migrant",
+            "BoolPatientSeries",
+            -1,
+            "c55120763ce30d85",
+            "72083cb88f0487ea"
+          ],
+          [
+            "born_in_uk",
+            "BoolPatientSeries",
+            -1,
+            "0e98cd125752ed00",
+            "72083cb88f0487ea"
+          ],
+          [
+            "british_ethnicities",
+            "BoolPatientSeries",
+            -1,
+            "3a1f1d3fbdfd25c0",
+            "72083cb88f0487ea"
+          ],
+          [
+            "english_not_main_language",
+            "BoolPatientSeries",
+            -1,
+            "b0f28b388d08501a",
+            "72083cb88f0487ea"
+          ],
+          [
+            "immig_status_excl_refugee_asylum",
+            "BoolPatientSeries",
+            -1,
+            "ec0d3251aba535ad",
+            "72083cb88f0487ea"
+          ],
+          [
+            "interpreter_required",
+            "BoolPatientSeries",
+            -1,
+            "93b33d635644f55e",
+            "72083cb88f0487ea"
+          ],
+          [
+            "not_born_in_uk",
+            "BoolPatientSeries",
+            -1,
+            "4d054089caf51360",
+            "72083cb88f0487ea"
+          ],
+          [
+            "refugee_asylum_status",
+            "BoolPatientSeries",
+            -1,
+            "bb6c089fa01eda8d",
+            "72083cb88f0487ea"
+          ]
         ]
       },
-      "sha": "8c027b06cdceb0bbe7d3d37b15f08d6c7e1a3674"
+      "sha": "4e669124dcf246b502022bbcc119127db68a9dc8"
     },
     "opensafely/open-pathology": {
       "files": {
@@ -33297,7 +33540,7 @@
           ]
         ]
       },
-      "sha": "db02a4d5d1e76a3ac33488f6b86315ea955d7cce"
+      "sha": "a0cfe17e93c79327dda7aff77be09b66a775e772"
     },
     "opensafely/pincer-measures": {
       "files": {
@@ -38816,42 +39059,42 @@
           [
             "end_prevax_exposure",
             "DatePatientSeries",
-            69,
+            72,
             "729207a9fe4b0c8a",
             "88386c064d3b5dd1"
           ],
           [
             "end_prevax_outcome",
             "DatePatientSeries",
-            78,
+            81,
             "0d710a46e9512b2c",
             "0d710a46e9512b2c"
           ],
           [
             "end_unvax_exposure",
             "DatePatientSeries",
-            127,
+            130,
             "888648d5ad3d64fa",
             "4acbfeca168465da"
           ],
           [
             "end_unvax_outcome",
             "DatePatientSeries",
-            135,
+            138,
             "660f81d929a1be9f",
             "b7528d3772f270ab"
           ],
           [
             "end_vax_exposure",
             "DatePatientSeries",
-            99,
+            102,
             "93e763f08358bad5",
             "93e763f08358bad5"
           ],
           [
             "end_vax_outcome",
             "DatePatientSeries",
-            106,
+            109,
             "877075d128715857",
             "877075d128715857"
           ],
@@ -38868,21 +39111,21 @@
           [
             "index_prevax",
             "DatePatientSeries",
-            59,
+            62,
             "89f22efb0225fb1b",
             "89f22efb0225fb1b"
           ],
           [
             "index_unvax",
             "DatePatientSeries",
-            114,
+            117,
             "015a26cedd442536",
             "6ef173793b62e9a8"
           ],
           [
             "index_vax",
             "DatePatientSeries",
-            86,
+            89,
             "5b62bcd786d7570c",
             "5b62bcd786d7570c"
           ],
@@ -39123,7 +39366,7 @@
             "DatePatientSeries",
             [
               "analysis/dataset_definition/dataset_definition_cohorts.py",
-              87
+              88
             ],
             "29e22d9e2d8e9dc4",
             "29e22d9e2d8e9dc4"
@@ -39411,14 +39654,14 @@
           [
             "end_date_exposure",
             "DatePatientSeries",
-            25,
+            28,
             "f0290d5b086e5776",
             "f0290d5b086e5776"
           ],
           [
             "end_date_outcome",
             "DatePatientSeries",
-            26,
+            29,
             "318e44f2f5e0258d",
             "318e44f2f5e0258d"
           ],
@@ -39435,7 +39678,7 @@
           [
             "index_date",
             "DatePatientSeries",
-            24,
+            27,
             "33c593f888862fc5",
             "33c593f888862fc5"
           ],
@@ -39614,7 +39857,7 @@
             "StrPatientSeries",
             [
               "analysis/dataset_definition/dataset_definition_cohorts.py",
-              73
+              74
             ],
             "b980d9edfe9bd3df",
             "b980d9edfe9bd3df"
@@ -39624,7 +39867,7 @@
             "DatePatientSeries",
             [
               "analysis/dataset_definition/dataset_definition_cohorts.py",
-              81
+              82
             ],
             "be4d09e0873a696a",
             "be4d09e0873a696a"
@@ -39634,7 +39877,7 @@
             "DatePatientSeries",
             [
               "analysis/dataset_definition/dataset_definition_cohorts.py",
-              82
+              83
             ],
             "4cba92a16fc01d66",
             "4cba92a16fc01d66"
@@ -39644,7 +39887,7 @@
             "DatePatientSeries",
             [
               "analysis/dataset_definition/dataset_definition_cohorts.py",
-              83
+              84
             ],
             "7057bd034bd21b8a",
             "7057bd034bd21b8a"
@@ -39654,7 +39897,7 @@
             "DatePatientSeries",
             [
               "analysis/dataset_definition/dataset_definition_cohorts.py",
-              84
+              85
             ],
             "e0d305b8b84fe7ed",
             "e0d305b8b84fe7ed"
@@ -39664,7 +39907,7 @@
             "DatePatientSeries",
             [
               "analysis/dataset_definition/dataset_definition_cohorts.py",
-              85
+              86
             ],
             "a8af8315f30dd44e",
             "a8af8315f30dd44e"
@@ -39674,7 +39917,7 @@
             "DatePatientSeries",
             [
               "analysis/dataset_definition/dataset_definition_cohorts.py",
-              86
+              87
             ],
             "a7ceea693b40e1d6",
             "a7ceea693b40e1d6"
@@ -39684,7 +39927,7 @@
             "DatePatientSeries",
             [
               "analysis/dataset_definition/dataset_definition_cohorts.py",
-              78
+              79
             ],
             "7c4906f313a7448b",
             "7c4906f313a7448b"
@@ -39694,7 +39937,7 @@
             "DatePatientSeries",
             [
               "analysis/dataset_definition/dataset_definition_cohorts.py",
-              79
+              80
             ],
             "57a9da7a73db6dfe",
             "57a9da7a73db6dfe"
@@ -39704,7 +39947,7 @@
             "DatePatientSeries",
             [
               "analysis/dataset_definition/dataset_definition_cohorts.py",
-              80
+              81
             ],
             "4a0d0849aa952ce6",
             "4a0d0849aa952ce6"
@@ -39714,7 +39957,7 @@
             "DatePatientSeries",
             [
               "analysis/dataset_definition/dataset_definition_cohorts.py",
-              75
+              76
             ],
             "cc9f70c458d568ab",
             "cc9f70c458d568ab"
@@ -39724,7 +39967,7 @@
             "DatePatientSeries",
             [
               "analysis/dataset_definition/dataset_definition_cohorts.py",
-              76
+              77
             ],
             "06aef7b0885e664d",
             "06aef7b0885e664d"
@@ -39734,7 +39977,7 @@
             "DatePatientSeries",
             [
               "analysis/dataset_definition/dataset_definition_cohorts.py",
-              77
+              78
             ],
             "d9e20b7b8aee7863",
             "d9e20b7b8aee7863"
@@ -39744,14 +39987,14 @@
             "DatePatientSeries",
             [
               "analysis/dataset_definition/dataset_definition_cohorts.py",
-              74
+              75
             ],
             "18c5aeb06432f5fe",
             "18c5aeb06432f5fe"
           ]
         ]
       },
-      "sha": "8f4fa2614969e2d15594182bc37f0292af099a78"
+      "sha": "74d7732b28a98720fa384886bf8290f159511854"
     },
     "opensafely/post-covid-neurodegenerative": {
       "files": {
@@ -53662,6 +53905,531 @@
         ]
       },
       "sha": "c0b16e129b2149551d9fa92248df86699d31ebc9"
+    },
+    "opensafely/winter-pressures-phase-II": {
+      "files": {
+        "analysis/dataset.py": [
+          [
+            "alt_test",
+            "IntPatientSeries",
+            -1,
+            "ef90c596971a46b9",
+            "2b85727c55c99248"
+          ],
+          [
+            "antibiotic_pres",
+            "IntPatientSeries",
+            -1,
+            "c51f24737638d401",
+            "deddd40452003a04"
+          ],
+          [
+            "antidepressant_pres",
+            "IntPatientSeries",
+            -1,
+            "220ad4983f153952",
+            "2b85727c55c99248"
+          ],
+          [
+            "appt_alt_test",
+            "IntPatientSeries",
+            233,
+            "97a94e96b80b8125",
+            "fad98abda57fa26a"
+          ],
+          [
+            "appt_asthma_review",
+            "IntPatientSeries",
+            233,
+            "db1a71510e87ba6f",
+            "fad98abda57fa26a"
+          ],
+          [
+            "appt_chol_test",
+            "IntPatientSeries",
+            233,
+            "dcdf74dec6cc1c2a",
+            "fad98abda57fa26a"
+          ],
+          [
+            "appt_copd_review",
+            "IntPatientSeries",
+            233,
+            "6f3012aa87256015",
+            "fad98abda57fa26a"
+          ],
+          [
+            "appt_covid_sensitive",
+            "BoolPatientSeries",
+            233,
+            "16cd1e23cb514490",
+            "bcff7121678eec27"
+          ],
+          [
+            "appt_covid_specific",
+            "BoolPatientSeries",
+            233,
+            "e003c8f8514b6740",
+            "8d1ccf12c5c84738"
+          ],
+          [
+            "appt_cvd_10yr",
+            "IntPatientSeries",
+            233,
+            "1cfbce513f97db43",
+            "fad98abda57fa26a"
+          ],
+          [
+            "appt_flu_sensitive",
+            "BoolPatientSeries",
+            233,
+            "3acd0604d130de3f",
+            "134262b47d23f491"
+          ],
+          [
+            "appt_flu_specific",
+            "BoolPatientSeries",
+            233,
+            "5a98f00956cf365b",
+            "8d1ccf12c5c84738"
+          ],
+          [
+            "appt_hba1c_test",
+            "IntPatientSeries",
+            233,
+            "57b4d396bf860185",
+            "fad98abda57fa26a"
+          ],
+          [
+            "appt_overall_resp_sensitive",
+            "BoolPatientSeries",
+            233,
+            "696de808582e1613",
+            "19bb771eeeebd50c"
+          ],
+          [
+            "appt_rbc_test",
+            "IntPatientSeries",
+            233,
+            "e9b925d3818b1a23",
+            "fad98abda57fa26a"
+          ],
+          [
+            "appt_rsv_sensitive",
+            "BoolPatientSeries",
+            233,
+            "c8c49c37007a4564",
+            "0f56c9fa9f59b5ff"
+          ],
+          [
+            "appt_rsv_specific",
+            "BoolPatientSeries",
+            233,
+            "827dee4f6913f1a6",
+            "8d1ccf12c5c84738"
+          ],
+          [
+            "appt_sick_notes",
+            "IntPatientSeries",
+            328,
+            "51452ab2a5203e30",
+            "fad98abda57fa26a"
+          ],
+          [
+            "appt_sodium_test",
+            "IntPatientSeries",
+            233,
+            "5d83a19a4b2d7d1b",
+            "fad98abda57fa26a"
+          ],
+          [
+            "appt_sro_deprioritized",
+            "IntPatientSeries",
+            239,
+            "b5a0145399ff0d86",
+            "011c6527adb13a2b"
+          ],
+          [
+            "appt_sro_prioritized",
+            "IntPatientSeries",
+            235,
+            "734dbcd53195de58",
+            "e7fa21435f54435e"
+          ],
+          [
+            "appt_sys_bp_test",
+            "IntPatientSeries",
+            233,
+            "71b26b09b6186ae0",
+            "fad98abda57fa26a"
+          ],
+          [
+            "appt_thy_test",
+            "IntPatientSeries",
+            233,
+            "5e43261d82e84321",
+            "fad98abda57fa26a"
+          ],
+          [
+            "asthma_review",
+            "IntPatientSeries",
+            -1,
+            "2281ccb84a84f2eb",
+            "2b85727c55c99248"
+          ],
+          [
+            "back_pain_opioid",
+            "IntPatientSeries",
+            -1,
+            "639ab43c8395931b",
+            "b40fe7de67f5d449"
+          ],
+          [
+            "call_from_gp",
+            "IntPatientSeries",
+            175,
+            "487e45af073448db",
+            "2b85727c55c99248"
+          ],
+          [
+            "call_from_patient",
+            "IntPatientSeries",
+            172,
+            "e001c6b0e0e3cc02",
+            "2b85727c55c99248"
+          ],
+          [
+            "cancelled_app",
+            "IntPatientSeries",
+            -1,
+            "b8555709a449e608",
+            "b8555709a449e608"
+          ],
+          [
+            "carehome",
+            "BoolPatientSeries",
+            103,
+            "eaa9c187be3625e2",
+            "eaa9c187be3625e2"
+          ],
+          [
+            "chest_abx",
+            "IntPatientSeries",
+            -1,
+            "2502e1e8817e9c08",
+            "deddd40452003a04"
+          ],
+          [
+            "chest_inf_abx",
+            "IntPatientSeries",
+            -1,
+            "70b171745d96a405",
+            "b40fe7de67f5d449"
+          ],
+          [
+            "chol_test",
+            "IntPatientSeries",
+            -1,
+            "17d8185e421bf7cb",
+            "2b85727c55c99248"
+          ],
+          [
+            "comorbid_asthma",
+            "BoolPatientSeries",
+            140,
+            "7e37c329bc745352",
+            "48955ec13d01f9c3"
+          ],
+          [
+            "comorbid_chronic_resp",
+            "BoolPatientSeries",
+            151,
+            "1dc6f49a2d70a756",
+            "3a5729308856fa25"
+          ],
+          [
+            "comorbid_copd",
+            "BoolPatientSeries",
+            137,
+            "206881832c1766ac",
+            "48955ec13d01f9c3"
+          ],
+          [
+            "comorbid_dm",
+            "BoolPatientSeries",
+            143,
+            "b39f373fc7d3fe61",
+            "48955ec13d01f9c3"
+          ],
+          [
+            "comorbid_htn",
+            "BoolPatientSeries",
+            146,
+            "059bfb157fa60c0f",
+            "48955ec13d01f9c3"
+          ],
+          [
+            "comorbid_immuno",
+            "BoolPatientSeries",
+            154,
+            "e3450688fd7c615b",
+            "3a5729308856fa25"
+          ],
+          [
+            "copd_review",
+            "IntPatientSeries",
+            -1,
+            "4f9c1c85634a4d32",
+            "2b85727c55c99248"
+          ],
+          [
+            "covid_sensitive",
+            "BoolPatientSeries",
+            266,
+            "60128a025f725857",
+            "94e7475be326e878"
+          ],
+          [
+            "covid_specific",
+            "BoolPatientSeries",
+            -1,
+            "f686132fc2c4e78f",
+            "d8e6452c17e9352e"
+          ],
+          [
+            "cvd_10yr",
+            "IntPatientSeries",
+            -1,
+            "ed8675278d959a4f",
+            "2b85727c55c99248"
+          ],
+          [
+            "emergency_care",
+            "IntPatientSeries",
+            181,
+            "0ad538179a33eb6a",
+            "0ad538179a33eb6a"
+          ],
+          [
+            "ethnicity",
+            "StrPatientSeries",
+            82,
+            "7ddd305f4320dd92",
+            "1bb5fdb629c54c35"
+          ],
+          [
+            "flu_sensitive",
+            "BoolPatientSeries",
+            246,
+            "7ed2bc1eeaad0321",
+            "19055ddb1ee07c49"
+          ],
+          [
+            "flu_specific",
+            "BoolPatientSeries",
+            -1,
+            "949538a50ae99cdd",
+            "d8e6452c17e9352e"
+          ],
+          [
+            "follow_up_app",
+            "BoolPatientSeries",
+            186,
+            "0fdce308d9c40804",
+            "0fdce308d9c40804"
+          ],
+          [
+            "hba1c_test",
+            "IntPatientSeries",
+            -1,
+            "982530efb3d8d401",
+            "2b85727c55c99248"
+          ],
+          [
+            "ili",
+            "BoolPatientSeries",
+            276,
+            "dcbde094c8a44228",
+            "f88115dfa992095b"
+          ],
+          [
+            "online_consult",
+            "IntPatientSeries",
+            169,
+            "bf64742ce1d53c96",
+            "2b85727c55c99248"
+          ],
+          [
+            "opioid_pres",
+            "IntPatientSeries",
+            -1,
+            "f263f13744cc5e8a",
+            "f1143498259a95c6"
+          ],
+          [
+            "overall_resp_sensitive",
+            "BoolPatientSeries",
+            288,
+            "e281763ccb3858db",
+            "586dad99e174d59b"
+          ],
+          [
+            "pneum_abx",
+            "IntPatientSeries",
+            -1,
+            "32fa521d240923ea",
+            "b40fe7de67f5d449"
+          ],
+          [
+            "practice_id",
+            "IntPatientSeries",
+            118,
+            "215d2cd53b2710ae",
+            "215d2cd53b2710ae"
+          ],
+          [
+            "rbc_test",
+            "IntPatientSeries",
+            -1,
+            "c43cddfc270a83c9",
+            "2b85727c55c99248"
+          ],
+          [
+            "region",
+            "StrPatientSeries",
+            121,
+            "c93ea0c014fa812a",
+            "c93ea0c014fa812a"
+          ],
+          [
+            "rsv_sensitive",
+            "BoolPatientSeries",
+            256,
+            "60b2587d9e63fba8",
+            "b29b3ab23cfea5c8"
+          ],
+          [
+            "rsv_specific",
+            "BoolPatientSeries",
+            -1,
+            "5b1259095569abbf",
+            "d8e6452c17e9352e"
+          ],
+          [
+            "rur_urb_class",
+            "IntPatientSeries",
+            113,
+            "256d8b01df48c82e",
+            "256d8b01df48c82e"
+          ],
+          [
+            "secondary_appt",
+            "IntPatientSeries",
+            339,
+            "0fa8441ba16cf0e2",
+            "0fa8441ba16cf0e2"
+          ],
+          [
+            "secondary_referral",
+            "BoolPatientSeries",
+            336,
+            "0e1ef8f366570e5c",
+            "0e1ef8f366570e5c"
+          ],
+          [
+            "seen_in_interval",
+            "IntPatientSeries",
+            165,
+            "afc9f960bc90ab3d",
+            "afc9f960bc90ab3d"
+          ],
+          [
+            "sick_notes",
+            "IntPatientSeries",
+            322,
+            "831ea962e25f454e",
+            "2b85727c55c99248"
+          ],
+          [
+            "sodium_test",
+            "IntPatientSeries",
+            -1,
+            "eee3fb8fab5d7bd4",
+            "2b85727c55c99248"
+          ],
+          [
+            "sro_deprioritized",
+            "IntPatientSeries",
+            223,
+            "11600ac661e56f72",
+            "25f1bf661d917137"
+          ],
+          [
+            "sro_prioritized",
+            "IntPatientSeries",
+            222,
+            "dd20c72452b7bf4e",
+            "410918ad0ea36098"
+          ],
+          [
+            "start_in_interval",
+            "IntPatientSeries",
+            166,
+            "e79f16bf2855ea52",
+            "e79f16bf2855ea52"
+          ],
+          [
+            "sys_bp_test",
+            "IntPatientSeries",
+            -1,
+            "69930a69e22387be",
+            "2b85727c55c99248"
+          ],
+          [
+            "tele_consult",
+            "IntPatientSeries",
+            178,
+            "923ba81554ef7a53",
+            "2b85727c55c99248"
+          ],
+          [
+            "thy_test",
+            "IntPatientSeries",
+            -1,
+            "d1789bea38564c86",
+            "2b85727c55c99248"
+          ],
+          [
+            "vax_app",
+            "IntPatientSeries",
+            189,
+            "95a108fe27c2d54d",
+            "95a108fe27c2d54d"
+          ],
+          [
+            "vax_app_covid",
+            "IntPatientSeries",
+            193,
+            "acd24a3839d86ff9",
+            "01f2421c361fde86"
+          ],
+          [
+            "vax_app_flu",
+            "IntPatientSeries",
+            190,
+            "f5f5ddbae5ba86f7",
+            "01f2421c361fde86"
+          ],
+          [
+            "waiting_app",
+            "IntPatientSeries",
+            -1,
+            "e3f505931f6dd1db",
+            "e3f505931f6dd1db"
+          ]
+        ]
+      },
+      "sha": "4d95049d8d6058f9a79458520393edd8ebf43345"
     }
   }
 }
