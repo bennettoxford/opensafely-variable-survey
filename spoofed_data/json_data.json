@@ -37,5 +37,24 @@
   "season7_start_date": "2022-09-01",
   "season7_end_date": "2023-08-31",
   "season8_start_date": "2023-09-01",
-  "season8_end_date": "2024-08-31"
+  "season8_end_date": "2024-08-31",
+  "base_dtype_dict": {
+    "measure": "category",
+    "interval_start": "string",
+    "numerator": "int64",
+    "denominator": "int64"
+  },
+  "sro_dict": {
+    "sodium_test": "codelists/opensafely-sodium-tests-numerical-value.csv",
+    "alt_test": "codelists/opensafely-alanine-aminotransferase-alt-tests.csv",
+    "sys_bp_test": "codelists/opensafely-systolic-blood-pressure-qof.csv",
+    "chol_test": "codelists/opensafely-cholesterol-tests.csv",
+    "rbc_test": "codelists/opensafely-red-blood-cell-rbc-tests.csv",
+    "hba1c_test": "codelists/opensafely-glycated-haemoglobin-hba1c-tests.csv",
+    "cvd_10yr": "codelists/opensafely-cvd-risk-assessment-score-qof.csv",
+    "thy_test": "codelists/opensafely-thyroid-stimulating-hormone-tsh-testing.csv",
+    "asthma_review": "codelists/opensafely-asthma-annual-review-qof.csv",
+    "copd_review": "codelists/opensafely-chronic-obstructive-pulmonary-disease-copd-review-qof.csv"
+  },
+  "prioritized": ["copd_review", "asthma_review"]
 }

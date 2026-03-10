@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-03-10 12:12:50",
+  "generated_at": "2026-03-10 14:31:24",
   "projects": {
     "opensafely/ACT-PharmacyFirst-Protocol2-healthcare-usage": {
       "7e2be9801ec20b6ffe36319ee4afb09a29469618": "6287dd3696d74183"
@@ -116,7 +116,7 @@
       "da5f60f5e0dd5f3a2d0ae1affd5e3e83a1106e7e": "bee52e6e8d7ec08c"
     },
     "opensafely/migration-short-data-report": {
-      "a00933fbddaf36229d6771a02eb29a7a5aa71427": "c601b7bd3a68f0d1"
+      "4e669124dcf246b502022bbcc119127db68a9dc8": "c601b7bd3a68f0d1"
     },
     "opensafely/open-pathology": {
       "9c408aa1af2edd033bfadfe3674e5b1224d5c7ef": "c6478fe546b3005c"

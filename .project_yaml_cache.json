@@ -17451,6 +17451,11 @@
     "analysis/dataset_definition_dm_algo.py",
     "analysis/dataset_definition_t2dm.py"
   ],
+  "opensafely/migration-short-data-report@4e669124dcf246b502022bbcc119127db68a9dc8": [
+    "analysis/dataset_definition_census_cohorts.py",
+    "analysis/dataset_definition_full_study_cohort.py",
+    "analysis/dataset_definition_migration_code_before_birth_cohort.py"
+  ],
   "opensafely/migration-short-data-report@8c027b06cdceb0bbe7d3d37b15f08d6c7e1a3674": [
     "analysis/dataset_definition_census_cohorts.py",
     "analysis/dataset_definition_full_study_cohort.py"

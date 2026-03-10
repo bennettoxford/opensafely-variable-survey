@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-03-10 12:13:31",
+  "generated_at": "2026-03-10 14:34:22",
   "latest_releases": {
     "bnf": "86 (2024-09-02) (valid from 2024-09-02)",
     "ctv3": "2018-04-01 with TPP extensions 2022-11-16 (valid from 2022-11-16)",
@@ -25496,7 +25496,7 @@
             "url": "https://www.opencodelists.org/codelist/opensafely/ethnicity-snomed-0removed/22911876/",
             "variables": {
               "analysis/dataset_definition_census_cohorts.py": {
-                "github_url": "https://github.com/opensafely/migration-short-data-report/blob/a00933fbddaf36229d6771a02eb29a7a5aa71427/analysis/dataset_definition_census_cohorts.py",
+                "github_url": "https://github.com/opensafely/migration-short-data-report/blob/4e669124dcf246b502022bbcc119127db68a9dc8/analysis/dataset_definition_census_cohorts.py",
                 "variables": [
                   [
                     "latest_ethnicity_16_level_group",
@@ -25517,7 +25517,7 @@
                 ]
               },
               "analysis/dataset_definition_full_study_cohort.py": {
-                "github_url": "https://github.com/opensafely/migration-short-data-report/blob/a00933fbddaf36229d6771a02eb29a7a5aa71427/analysis/dataset_definition_full_study_cohort.py",
+                "github_url": "https://github.com/opensafely/migration-short-data-report/blob/4e669124dcf246b502022bbcc119127db68a9dc8/analysis/dataset_definition_full_study_cohort.py",
                 "variables": [
                   [
                     "latest_ethnicity_16_level_group",
@@ -25562,7 +25562,7 @@
             "url": "https://www.opencodelists.org/codelist/opensafely/migration-status/4095ab22/",
             "variables": {
               "analysis/dataset_definition_census_cohorts.py": {
-                "github_url": "https://github.com/opensafely/migration-short-data-report/blob/a00933fbddaf36229d6771a02eb29a7a5aa71427/analysis/dataset_definition_census_cohorts.py",
+                "github_url": "https://github.com/opensafely/migration-short-data-report/blob/4e669124dcf246b502022bbcc119127db68a9dc8/analysis/dataset_definition_census_cohorts.py",
                 "variables": [
                   [
                     "mig_status_2_cat",
@@ -25579,7 +25579,7 @@
                 ]
               },
               "analysis/dataset_definition_full_study_cohort.py": {
-                "github_url": "https://github.com/opensafely/migration-short-data-report/blob/a00933fbddaf36229d6771a02eb29a7a5aa71427/analysis/dataset_definition_full_study_cohort.py",
+                "github_url": "https://github.com/opensafely/migration-short-data-report/blob/4e669124dcf246b502022bbcc119127db68a9dc8/analysis/dataset_definition_full_study_cohort.py",
                 "variables": [
                   [
                     "date_of_entry_and_other_migration_code",
@@ -25636,7 +25636,7 @@
             "url": "https://www.opencodelists.org/codelist/opensafely/born-in-the-uk/4aa36068/",
             "variables": {
               "analysis/dataset_definition_census_cohorts.py": {
-                "github_url": "https://github.com/opensafely/migration-short-data-report/blob/a00933fbddaf36229d6771a02eb29a7a5aa71427/analysis/dataset_definition_census_cohorts.py",
+                "github_url": "https://github.com/opensafely/migration-short-data-report/blob/4e669124dcf246b502022bbcc119127db68a9dc8/analysis/dataset_definition_census_cohorts.py",
                 "variables": [
                   [
                     "mig_status_2_cat",
@@ -25653,7 +25653,7 @@
                 ]
               },
               "analysis/dataset_definition_full_study_cohort.py": {
-                "github_url": "https://github.com/opensafely/migration-short-data-report/blob/a00933fbddaf36229d6771a02eb29a7a5aa71427/analysis/dataset_definition_full_study_cohort.py",
+                "github_url": "https://github.com/opensafely/migration-short-data-report/blob/4e669124dcf246b502022bbcc119127db68a9dc8/analysis/dataset_definition_full_study_cohort.py",
                 "variables": [
                   [
                     "mig_status_2_cat",
@@ -25678,7 +25678,7 @@
             "url": "https://www.opencodelists.org/codelist/opensafely/born-outside-the-uk/1d23465b/",
             "variables": {
               "analysis/dataset_definition_census_cohorts.py": {
-                "github_url": "https://github.com/opensafely/migration-short-data-report/blob/a00933fbddaf36229d6771a02eb29a7a5aa71427/analysis/dataset_definition_census_cohorts.py",
+                "github_url": "https://github.com/opensafely/migration-short-data-report/blob/4e669124dcf246b502022bbcc119127db68a9dc8/analysis/dataset_definition_census_cohorts.py",
                 "variables": [
                   [
                     "mig_status_2_cat",
@@ -25695,7 +25695,7 @@
                 ]
               },
               "analysis/dataset_definition_full_study_cohort.py": {
-                "github_url": "https://github.com/opensafely/migration-short-data-report/blob/a00933fbddaf36229d6771a02eb29a7a5aa71427/analysis/dataset_definition_full_study_cohort.py",
+                "github_url": "https://github.com/opensafely/migration-short-data-report/blob/4e669124dcf246b502022bbcc119127db68a9dc8/analysis/dataset_definition_full_study_cohort.py",
                 "variables": [
                   [
                     "mig_status_2_cat",
@@ -25720,7 +25720,7 @@
             "url": "https://www.opencodelists.org/codelist/opensafely/immigration-status-excl-refugee-asylum/1ca8661b/",
             "variables": {
               "analysis/dataset_definition_census_cohorts.py": {
-                "github_url": "https://github.com/opensafely/migration-short-data-report/blob/a00933fbddaf36229d6771a02eb29a7a5aa71427/analysis/dataset_definition_census_cohorts.py",
+                "github_url": "https://github.com/opensafely/migration-short-data-report/blob/4e669124dcf246b502022bbcc119127db68a9dc8/analysis/dataset_definition_census_cohorts.py",
                 "variables": [
                   [
                     "mig_status_2_cat",
@@ -25737,7 +25737,7 @@
                 ]
               },
               "analysis/dataset_definition_full_study_cohort.py": {
-                "github_url": "https://github.com/opensafely/migration-short-data-report/blob/a00933fbddaf36229d6771a02eb29a7a5aa71427/analysis/dataset_definition_full_study_cohort.py",
+                "github_url": "https://github.com/opensafely/migration-short-data-report/blob/4e669124dcf246b502022bbcc119127db68a9dc8/analysis/dataset_definition_full_study_cohort.py",
                 "variables": [
                   [
                     "mig_status_2_cat",
@@ -25762,7 +25762,7 @@
             "url": "https://www.opencodelists.org/codelist/opensafely/asylum-or-refugee-status/209cb9e0/",
             "variables": {
               "analysis/dataset_definition_census_cohorts.py": {
-                "github_url": "https://github.com/opensafely/migration-short-data-report/blob/a00933fbddaf36229d6771a02eb29a7a5aa71427/analysis/dataset_definition_census_cohorts.py",
+                "github_url": "https://github.com/opensafely/migration-short-data-report/blob/4e669124dcf246b502022bbcc119127db68a9dc8/analysis/dataset_definition_census_cohorts.py",
                 "variables": [
                   [
                     "mig_status_2_cat",
@@ -25779,7 +25779,7 @@
                 ]
               },
               "analysis/dataset_definition_full_study_cohort.py": {
-                "github_url": "https://github.com/opensafely/migration-short-data-report/blob/a00933fbddaf36229d6771a02eb29a7a5aa71427/analysis/dataset_definition_full_study_cohort.py",
+                "github_url": "https://github.com/opensafely/migration-short-data-report/blob/4e669124dcf246b502022bbcc119127db68a9dc8/analysis/dataset_definition_full_study_cohort.py",
                 "variables": [
                   [
                     "mig_status_2_cat",
@@ -25804,7 +25804,7 @@
             "url": "https://www.opencodelists.org/codelist/opensafely/english-not-main-language/5c450c53/",
             "variables": {
               "analysis/dataset_definition_census_cohorts.py": {
-                "github_url": "https://github.com/opensafely/migration-short-data-report/blob/a00933fbddaf36229d6771a02eb29a7a5aa71427/analysis/dataset_definition_census_cohorts.py",
+                "github_url": "https://github.com/opensafely/migration-short-data-report/blob/4e669124dcf246b502022bbcc119127db68a9dc8/analysis/dataset_definition_census_cohorts.py",
                 "variables": [
                   [
                     "mig_status_2_cat",
@@ -25821,7 +25821,7 @@
                 ]
               },
               "analysis/dataset_definition_full_study_cohort.py": {
-                "github_url": "https://github.com/opensafely/migration-short-data-report/blob/a00933fbddaf36229d6771a02eb29a7a5aa71427/analysis/dataset_definition_full_study_cohort.py",
+                "github_url": "https://github.com/opensafely/migration-short-data-report/blob/4e669124dcf246b502022bbcc119127db68a9dc8/analysis/dataset_definition_full_study_cohort.py",
                 "variables": [
                   [
                     "mig_status_2_cat",
@@ -25846,7 +25846,7 @@
             "url": "https://www.opencodelists.org/codelist/opensafely/interpreter-required/556e6040/",
             "variables": {
               "analysis/dataset_definition_census_cohorts.py": {
-                "github_url": "https://github.com/opensafely/migration-short-data-report/blob/a00933fbddaf36229d6771a02eb29a7a5aa71427/analysis/dataset_definition_census_cohorts.py",
+                "github_url": "https://github.com/opensafely/migration-short-data-report/blob/4e669124dcf246b502022bbcc119127db68a9dc8/analysis/dataset_definition_census_cohorts.py",
                 "variables": [
                   [
                     "mig_status_2_cat",
@@ -25863,7 +25863,7 @@
                 ]
               },
               "analysis/dataset_definition_full_study_cohort.py": {
-                "github_url": "https://github.com/opensafely/migration-short-data-report/blob/a00933fbddaf36229d6771a02eb29a7a5aa71427/analysis/dataset_definition_full_study_cohort.py",
+                "github_url": "https://github.com/opensafely/migration-short-data-report/blob/4e669124dcf246b502022bbcc119127db68a9dc8/analysis/dataset_definition_full_study_cohort.py",
                 "variables": [
                   [
                     "mig_status_2_cat",
@@ -25888,7 +25888,7 @@
             "url": "https://www.opencodelists.org/codelist/opensafely/british-ethnicities/6a897fb0/",
             "variables": {
               "analysis/dataset_definition_census_cohorts.py": {
-                "github_url": "https://github.com/opensafely/migration-short-data-report/blob/a00933fbddaf36229d6771a02eb29a7a5aa71427/analysis/dataset_definition_census_cohorts.py",
+                "github_url": "https://github.com/opensafely/migration-short-data-report/blob/4e669124dcf246b502022bbcc119127db68a9dc8/analysis/dataset_definition_census_cohorts.py",
                 "variables": [
                   [
                     "mig_status_2_cat",
@@ -25905,7 +25905,7 @@
                 ]
               },
               "analysis/dataset_definition_full_study_cohort.py": {
-                "github_url": "https://github.com/opensafely/migration-short-data-report/blob/a00933fbddaf36229d6771a02eb29a7a5aa71427/analysis/dataset_definition_full_study_cohort.py",
+                "github_url": "https://github.com/opensafely/migration-short-data-report/blob/4e669124dcf246b502022bbcc119127db68a9dc8/analysis/dataset_definition_full_study_cohort.py",
                 "variables": [
                   [
                     "mig_status_2_cat",
@@ -46846,11 +46846,11 @@
                 "variables": [
                   [
                     "covid_sensitive",
-                    null
+                    266
                   ],
                   [
                     "overall_resp_sensitive",
-                    null
+                    288
                   ]
                 ]
               }
@@ -46867,7 +46867,7 @@
                 "variables": [
                   [
                     "ethnicity",
-                    null
+                    82
                   ]
                 ]
               }
@@ -46884,15 +46884,15 @@
                 "variables": [
                   [
                     "flu_sensitive",
-                    null
+                    246
                   ],
                   [
                     "ili",
-                    null
+                    276
                   ],
                   [
                     "overall_resp_sensitive",
-                    null
+                    288
                   ]
                 ]
               }
@@ -46925,11 +46925,11 @@
                 "variables": [
                   [
                     "covid_sensitive",
-                    null
+                    266
                   ],
                   [
                     "overall_resp_sensitive",
-                    null
+                    288
                   ]
                 ]
               }
@@ -46946,15 +46946,15 @@
                 "variables": [
                   [
                     "flu_sensitive",
-                    null
+                    246
                   ],
                   [
                     "ili",
-                    null
+                    276
                   ],
                   [
                     "overall_resp_sensitive",
-                    null
+                    288
                   ]
                 ]
               }
@@ -46971,7 +46971,7 @@
                 "variables": [
                   [
                     "online_consult",
-                    null
+                    169
                   ]
                 ]
               }
@@ -46988,7 +46988,7 @@
                 "variables": [
                   [
                     "overall_resp_sensitive",
-                    null
+                    288
                   ]
                 ]
               }
@@ -47005,7 +47005,7 @@
                 "variables": [
                   [
                     "overall_resp_sensitive",
-                    null
+                    288
                   ]
                 ]
               }
@@ -47022,11 +47022,11 @@
                 "variables": [
                   [
                     "overall_resp_sensitive",
-                    null
+                    288
                   ],
                   [
                     "rsv_sensitive",
-                    null
+                    256
                   ]
                 ]
               }
@@ -47043,11 +47043,11 @@
                 "variables": [
                   [
                     "overall_resp_sensitive",
-                    null
+                    288
                   ],
                   [
                     "rsv_sensitive",
-                    null
+                    256
                   ]
                 ]
               }
