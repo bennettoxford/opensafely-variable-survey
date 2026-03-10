@@ -1,12 +1,16 @@
 {
-  "generated_at": "2026-03-06 12:09:01",
+  "generated_at": "2026-03-10 12:12:50",
   "projects": {
     "opensafely/ACT-PharmacyFirst-Protocol2-healthcare-usage": {
-      "c32feecbfdf7c81c21f681d975ac6288955011fe": {
+      "7e2be9801ec20b6ffe36319ee4afb09a29469618": {
         "_unused_codelists": [
           [
             "/opensafely/pharmacy-first-acute-otitis-media-treatment-full-dmd-codelist/4758f9d4/",
             "file=codelists/opensafely-pharmacy-first-acute-otitis-media-treatment-full-dmd-codelist.csv"
+          ],
+          [
+            "/opensafely/pharmacy-first-clinical-pathway-conditions/7ec97762/",
+            "file=codelists/opensafely-pharmacy-first-clinical-pathway-conditions.csv"
           ],
           [
             "/opensafely/pharmacy-first-impetigo-treatment-full-dmd-codelist/20051342/",
@@ -37,91 +41,136 @@
             "file=codelists/pharmacy-first-project-Sore-throat-and-related-conditions.csv"
           ],
           [
-            "/pharmacy-first-project/bullous-impetigo-administration-codes-for-pharmacy-first/0db01129/",
-            "file=codelists/pharmacy-first-project-bullous-impetigo-administration-codes-for-pharmacy-first.csv"
-          ],
-          [
-            "/pharmacy-first-project/impetigo-related-conditions-administration-codes-for-pharmacy-first/1de090ed/",
-            "file=codelists/pharmacy-first-project-impetigo-related-conditions-administration-codes-for-pharmacy-first.csv"
+            "/pharmacy-first-project/insect-bites-and-related-conditions-administration-codes-for-pharmacy-first/6d9ae4ef/",
+            "file=codelists/pharmacy-first-project-insect-bites-and-related-conditions-administration-codes-for-pharmacy-first.csv"
           ],
           [
             "/pharmacy-first-project/otitis-media-and-related-conditions/63a96aa0/",
             "file=codelists/pharmacy-first-project-otitis-media-and-related-conditions.csv"
           ],
           [
+            "/pharmacy-first-project/shingles-and-related-conditions-for-pharmacy-first/1672c9a3/",
+            "file=codelists/pharmacy-first-project-shingles-and-related-conditions-for-pharmacy-first.csv"
+          ],
+          [
             "/pharmacy-first-project/sinusitis-related-conditions-administration-codes-for-pharmacy-first/04d11db8/",
             "file=codelists/pharmacy-first-project-sinusitis-related-conditions-administration-codes-for-pharmacy-first.csv"
-          ],
-          [
-            "/pharmacy-first-project/urinary-catheter-administration-codes-for-pharmacy-first/5de5456b/",
-            "file=codelists/pharmacy-first-project-urinary-catheter-administration-codes-for-pharmacy-first.csv"
-          ],
-          [
-            "/pharmacy-first-project/urinary-tract-infection-and-related-conditions/065e84d6/",
-            "file=codelists/pharmacy-first-project-urinary-tract-infection-and-related-conditions.csv"
-          ],
-          [
-            "/user/chriswood/pharmacy-first-clinical-pathway-conditions/7ec97762/",
-            "file=codelists/user-chriswood-pharmacy-first-clinical-pathway-conditions.csv"
           ]
         ],
         "analysis/dataset_definition_patients.py": {
           "age": [],
           "alive": [],
-          "bullous_impetigo_this_month": [],
-          "catheter_status": [],
+          "bullous_impetigo_this_month": [
+            [
+              "/pharmacy-first-project/bullous-impetigo-administration-codes-for-pharmacy-first/0db01129/",
+              "column=code"
+            ]
+          ],
+          "catheter_status": [
+            [
+              "/pharmacy-first-project/urinary-catheter-administration-codes-for-pharmacy-first/5de5456b/",
+              "column=code"
+            ]
+          ],
+          "date_of_birth": [],
           "ethnicity": [
             [
-              "/opensafely/ethnicity-snomed-0removed/2e641f61/",
+              "/opensafely/ethnicity-snomed-0removed/22911876/",
               "category_column=Grouping_16",
-              "column=snomedcode"
+              "column=code"
             ]
           ],
           "has_pf_consultation": [
             [
               "<inline>",
               "length=1",
-              "source=analysis/codelists.py:110",
+              "source=analysis/codelists.py:131",
               "values=983341000000102"
             ],
             [
               "<inline>",
               "length=1",
-              "source=analysis/codelists.py:112",
+              "source=analysis/codelists.py:133",
               "values=2129921000000100"
+            ],
+            [
+              "<inline>",
+              "length=1",
+              "source=analysis/codelists.py:129",
+              "values=1577041000000109"
             ]
           ],
           "imd": [],
-          "impetigo_numerator": [
-            [
-              "<inline>",
-              "length=1",
-              "source=analysis/codelists.py:110",
-              "values=983341000000102"
-            ],
-            [
-              "<inline>",
-              "length=1",
-              "source=analysis/codelists.py:112",
-              "values=2129921000000100"
-            ],
+          "impetigo_GP_numerator": [
             [
               "<inline>",
               "length=1",
               "source=analysis/codelists.py:131",
+              "values=983341000000102"
+            ],
+            [
+              "<inline>",
+              "length=1",
+              "source=analysis/codelists.py:133",
+              "values=2129921000000100"
+            ],
+            [
+              "<inline>",
+              "length=1",
+              "source=analysis/codelists.py:129",
+              "values=1577041000000109"
+            ],
+            [
+              "<inline>",
+              "length=1",
+              "source=analysis/codelists.py:149",
+              "values=48277006"
+            ]
+          ],
+          "impetigo_numerator": [
+            [
+              "<inline>",
+              "length=1",
+              "source=analysis/codelists.py:131",
+              "values=983341000000102"
+            ],
+            [
+              "<inline>",
+              "length=1",
+              "source=analysis/codelists.py:133",
+              "values=2129921000000100"
+            ],
+            [
+              "<inline>",
+              "length=1",
+              "source=analysis/codelists.py:129",
+              "values=1577041000000109"
+            ],
+            [
+              "<inline>",
+              "length=1",
+              "source=analysis/codelists.py:149",
               "values=48277006"
             ]
           ],
           "include_patient_impetigo": [
             [
-              "/nhsd-primary-care-domain-refsets/preg_cod/20200812/",
+              "/pharmacy-first-project/bullous-impetigo-administration-codes-for-pharmacy-first/0db01129/",
+              "column=code"
+            ],
+            [
+              "/pharmacy-first-project/impetigo-related-conditions-administration-codes-for-pharmacy-first/1de090ed/",
+              "column=code"
+            ],
+            [
+              "/nhsd-primary-care-domain-refsets/preg_cod/5846c42a/",
               "category_column=term",
               "column=code"
             ]
           ],
           "include_patient_insect_bites": [
             [
-              "/nhsd-primary-care-domain-refsets/preg_cod/20200812/",
+              "/nhsd-primary-care-domain-refsets/preg_cod/5846c42a/",
               "category_column=term",
               "column=code"
             ]
@@ -129,14 +178,30 @@
           "include_patient_otitis_media": [],
           "include_patient_overall_eligible": [
             [
-              "/nhsd-primary-care-domain-refsets/preg_cod/20200812/",
+              "/pharmacy-first-project/urinary-tract-infection-and-related-conditions/065e84d6/",
+              "column=code"
+            ],
+            [
+              "/nhsd-primary-care-domain-refsets/preg_cod/5846c42a/",
               "category_column=term",
+              "column=code"
+            ],
+            [
+              "/pharmacy-first-project/urinary-catheter-administration-codes-for-pharmacy-first/5de5456b/",
+              "column=code"
+            ],
+            [
+              "/pharmacy-first-project/bullous-impetigo-administration-codes-for-pharmacy-first/0db01129/",
+              "column=code"
+            ],
+            [
+              "/pharmacy-first-project/impetigo-related-conditions-administration-codes-for-pharmacy-first/1de090ed/",
               "column=code"
             ]
           ],
           "include_patient_shingles": [
             [
-              "/nhsd-primary-care-domain-refsets/preg_cod/20200812/",
+              "/nhsd-primary-care-domain-refsets/preg_cod/5846c42a/",
               "category_column=term",
               "column=code"
             ]
@@ -144,154 +209,374 @@
           "include_patient_sinusitis": [],
           "include_patient_sore_throat": [
             [
-              "/nhsd-primary-care-domain-refsets/preg_cod/20200812/",
+              "/nhsd-primary-care-domain-refsets/preg_cod/5846c42a/",
               "category_column=term",
               "column=code"
             ]
           ],
           "include_patient_uuti": [
             [
-              "/nhsd-primary-care-domain-refsets/preg_cod/20200812/",
+              "/pharmacy-first-project/urinary-tract-infection-and-related-conditions/065e84d6/",
+              "column=code"
+            ],
+            [
+              "/nhsd-primary-care-domain-refsets/preg_cod/5846c42a/",
               "category_column=term",
+              "column=code"
+            ],
+            [
+              "/pharmacy-first-project/urinary-catheter-administration-codes-for-pharmacy-first/5de5456b/",
               "column=code"
             ]
           ],
           "index_date": [],
-          "insectbite_numerator": [
+          "insectbite_GP_numerator": [
             [
               "<inline>",
               "length=1",
-              "source=analysis/codelists.py:110",
+              "source=analysis/codelists.py:131",
               "values=983341000000102"
             ],
             [
               "<inline>",
               "length=1",
-              "source=analysis/codelists.py:112",
-              "values=2129921000000100"
-            ],
-            [
-              "<inline>",
-              "length=1",
-              "source=analysis/codelists.py:127",
-              "values=262550002"
-            ]
-          ],
-          "otitismedia_numerator": [
-            [
-              "<inline>",
-              "length=1",
-              "source=analysis/codelists.py:110",
-              "values=983341000000102"
-            ],
-            [
-              "<inline>",
-              "length=1",
-              "source=analysis/codelists.py:112",
-              "values=2129921000000100"
-            ],
-            [
-              "<inline>",
-              "length=1",
-              "source=analysis/codelists.py:128",
-              "values=3110003"
-            ]
-          ],
-          "practice": [],
-          "pregnant_this_month": [
-            [
-              "/nhsd-primary-care-domain-refsets/preg_cod/20200812/",
-              "category_column=term",
-              "column=code"
-            ]
-          ],
-          "recurrent_impetigo_this_year": [],
-          "recurrent_uti": [],
-          "recurrent_uti_12m": [],
-          "recurrent_uti_6m": [],
-          "region": [],
-          "registered_index": [],
-          "registered_start": [],
-          "sex": [],
-          "shingles_numerator": [
-            [
-              "<inline>",
-              "length=1",
-              "source=analysis/codelists.py:110",
-              "values=983341000000102"
-            ],
-            [
-              "<inline>",
-              "length=1",
-              "source=analysis/codelists.py:112",
-              "values=2129921000000100"
-            ],
-            [
-              "<inline>",
-              "length=1",
-              "source=analysis/codelists.py:130",
-              "values=4740000"
-            ]
-          ],
-          "sinusitis_numerator": [
-            [
-              "<inline>",
-              "length=1",
-              "source=analysis/codelists.py:110",
-              "values=983341000000102"
-            ],
-            [
-              "<inline>",
-              "length=1",
-              "source=analysis/codelists.py:112",
-              "values=2129921000000100"
-            ],
-            [
-              "<inline>",
-              "length=1",
-              "source=analysis/codelists.py:126",
-              "values=15805002"
-            ]
-          ],
-          "sorethroat_numerator": [
-            [
-              "<inline>",
-              "length=1",
-              "source=analysis/codelists.py:110",
-              "values=983341000000102"
-            ],
-            [
-              "<inline>",
-              "length=1",
-              "source=analysis/codelists.py:112",
+              "source=analysis/codelists.py:133",
               "values=2129921000000100"
             ],
             [
               "<inline>",
               "length=1",
               "source=analysis/codelists.py:129",
-              "values=363746003"
-            ]
-          ],
-          "start_date": [],
-          "stp": [],
-          "uti_numerator": [
+              "values=1577041000000109"
+            ],
             [
               "<inline>",
               "length=1",
-              "source=analysis/codelists.py:110",
+              "source=analysis/codelists.py:145",
+              "values=262550002"
+            ]
+          ],
+          "insectbite_numerator": [
+            [
+              "<inline>",
+              "length=1",
+              "source=analysis/codelists.py:131",
               "values=983341000000102"
             ],
             [
               "<inline>",
               "length=1",
-              "source=analysis/codelists.py:112",
+              "source=analysis/codelists.py:133",
               "values=2129921000000100"
             ],
             [
               "<inline>",
               "length=1",
-              "source=analysis/codelists.py:125",
+              "source=analysis/codelists.py:129",
+              "values=1577041000000109"
+            ],
+            [
+              "<inline>",
+              "length=1",
+              "source=analysis/codelists.py:145",
+              "values=262550002"
+            ]
+          ],
+          "otitismedia_GP_numerator": [
+            [
+              "<inline>",
+              "length=1",
+              "source=analysis/codelists.py:131",
+              "values=983341000000102"
+            ],
+            [
+              "<inline>",
+              "length=1",
+              "source=analysis/codelists.py:133",
+              "values=2129921000000100"
+            ],
+            [
+              "<inline>",
+              "length=1",
+              "source=analysis/codelists.py:129",
+              "values=1577041000000109"
+            ],
+            [
+              "<inline>",
+              "length=1",
+              "source=analysis/codelists.py:146",
+              "values=3110003"
+            ]
+          ],
+          "otitismedia_numerator": [
+            [
+              "<inline>",
+              "length=1",
+              "source=analysis/codelists.py:131",
+              "values=983341000000102"
+            ],
+            [
+              "<inline>",
+              "length=1",
+              "source=analysis/codelists.py:133",
+              "values=2129921000000100"
+            ],
+            [
+              "<inline>",
+              "length=1",
+              "source=analysis/codelists.py:129",
+              "values=1577041000000109"
+            ],
+            [
+              "<inline>",
+              "length=1",
+              "source=analysis/codelists.py:146",
+              "values=3110003"
+            ]
+          ],
+          "practice": [],
+          "pregnant_this_month": [
+            [
+              "/nhsd-primary-care-domain-refsets/preg_cod/5846c42a/",
+              "category_column=term",
+              "column=code"
+            ]
+          ],
+          "recurrent_impetigo_this_year": [
+            [
+              "/pharmacy-first-project/impetigo-related-conditions-administration-codes-for-pharmacy-first/1de090ed/",
+              "column=code"
+            ]
+          ],
+          "recurrent_uti": [
+            [
+              "/pharmacy-first-project/urinary-tract-infection-and-related-conditions/065e84d6/",
+              "column=code"
+            ]
+          ],
+          "recurrent_uti_12m": [
+            [
+              "/pharmacy-first-project/urinary-tract-infection-and-related-conditions/065e84d6/",
+              "column=code"
+            ]
+          ],
+          "recurrent_uti_6m": [
+            [
+              "/pharmacy-first-project/urinary-tract-infection-and-related-conditions/065e84d6/",
+              "column=code"
+            ]
+          ],
+          "region": [],
+          "registered_index": [],
+          "registered_start": [],
+          "sex": [],
+          "shingles_GP_numerator": [
+            [
+              "<inline>",
+              "length=1",
+              "source=analysis/codelists.py:131",
+              "values=983341000000102"
+            ],
+            [
+              "<inline>",
+              "length=1",
+              "source=analysis/codelists.py:133",
+              "values=2129921000000100"
+            ],
+            [
+              "<inline>",
+              "length=1",
+              "source=analysis/codelists.py:129",
+              "values=1577041000000109"
+            ],
+            [
+              "<inline>",
+              "length=1",
+              "source=analysis/codelists.py:148",
+              "values=4740000"
+            ]
+          ],
+          "shingles_numerator": [
+            [
+              "<inline>",
+              "length=1",
+              "source=analysis/codelists.py:131",
+              "values=983341000000102"
+            ],
+            [
+              "<inline>",
+              "length=1",
+              "source=analysis/codelists.py:133",
+              "values=2129921000000100"
+            ],
+            [
+              "<inline>",
+              "length=1",
+              "source=analysis/codelists.py:129",
+              "values=1577041000000109"
+            ],
+            [
+              "<inline>",
+              "length=1",
+              "source=analysis/codelists.py:148",
+              "values=4740000"
+            ]
+          ],
+          "sinusitis_GP_numerator": [
+            [
+              "<inline>",
+              "length=1",
+              "source=analysis/codelists.py:131",
+              "values=983341000000102"
+            ],
+            [
+              "<inline>",
+              "length=1",
+              "source=analysis/codelists.py:133",
+              "values=2129921000000100"
+            ],
+            [
+              "<inline>",
+              "length=1",
+              "source=analysis/codelists.py:129",
+              "values=1577041000000109"
+            ],
+            [
+              "<inline>",
+              "length=1",
+              "source=analysis/codelists.py:144",
+              "values=15805002"
+            ]
+          ],
+          "sinusitis_numerator": [
+            [
+              "<inline>",
+              "length=1",
+              "source=analysis/codelists.py:131",
+              "values=983341000000102"
+            ],
+            [
+              "<inline>",
+              "length=1",
+              "source=analysis/codelists.py:133",
+              "values=2129921000000100"
+            ],
+            [
+              "<inline>",
+              "length=1",
+              "source=analysis/codelists.py:129",
+              "values=1577041000000109"
+            ],
+            [
+              "<inline>",
+              "length=1",
+              "source=analysis/codelists.py:144",
+              "values=15805002"
+            ]
+          ],
+          "sorethroat_GP_numerator": [
+            [
+              "<inline>",
+              "length=1",
+              "source=analysis/codelists.py:131",
+              "values=983341000000102"
+            ],
+            [
+              "<inline>",
+              "length=1",
+              "source=analysis/codelists.py:133",
+              "values=2129921000000100"
+            ],
+            [
+              "<inline>",
+              "length=1",
+              "source=analysis/codelists.py:129",
+              "values=1577041000000109"
+            ],
+            [
+              "<inline>",
+              "length=1",
+              "source=analysis/codelists.py:147",
+              "values=363746003"
+            ]
+          ],
+          "sorethroat_numerator": [
+            [
+              "<inline>",
+              "length=1",
+              "source=analysis/codelists.py:131",
+              "values=983341000000102"
+            ],
+            [
+              "<inline>",
+              "length=1",
+              "source=analysis/codelists.py:133",
+              "values=2129921000000100"
+            ],
+            [
+              "<inline>",
+              "length=1",
+              "source=analysis/codelists.py:129",
+              "values=1577041000000109"
+            ],
+            [
+              "<inline>",
+              "length=1",
+              "source=analysis/codelists.py:147",
+              "values=363746003"
+            ]
+          ],
+          "start_date": [],
+          "stp": [],
+          "uti_GP_numerator": [
+            [
+              "<inline>",
+              "length=1",
+              "source=analysis/codelists.py:131",
+              "values=983341000000102"
+            ],
+            [
+              "<inline>",
+              "length=1",
+              "source=analysis/codelists.py:133",
+              "values=2129921000000100"
+            ],
+            [
+              "<inline>",
+              "length=1",
+              "source=analysis/codelists.py:129",
+              "values=1577041000000109"
+            ],
+            [
+              "<inline>",
+              "length=1",
+              "source=analysis/codelists.py:143",
+              "values=1090711000000102"
+            ]
+          ],
+          "uti_numerator": [
+            [
+              "<inline>",
+              "length=1",
+              "source=analysis/codelists.py:131",
+              "values=983341000000102"
+            ],
+            [
+              "<inline>",
+              "length=1",
+              "source=analysis/codelists.py:133",
+              "values=2129921000000100"
+            ],
+            [
+              "<inline>",
+              "length=1",
+              "source=analysis/codelists.py:129",
+              "values=1577041000000109"
+            ],
+            [
+              "<inline>",
+              "length=1",
+              "source=analysis/codelists.py:143",
               "values=1090711000000102"
             ]
           ]
@@ -300,6 +585,122 @@
           "practice": [],
           "region": [],
           "stp": []
+        },
+        "analysis/dataset_definition_pregnancy.py": {
+          "age": [],
+          "ck_diff_edd_end_current": [
+            [
+              "/pharmacy-first-project/no-longer-pregnant-administration-codes-for-pharmacy-first/11f0383d/",
+              "category_column=term",
+              "column=code"
+            ],
+            [
+              "/user/VickiPalin/pregnancy_edd_snomed/64193fae/",
+              "column=code"
+            ]
+          ],
+          "ck_diff_edd_end_recent": [
+            [
+              "/pharmacy-first-project/no-longer-pregnant-administration-codes-for-pharmacy-first/11f0383d/",
+              "category_column=term",
+              "column=code"
+            ],
+            [
+              "/user/VickiPalin/pregnancy_edd_snomed/64193fae/",
+              "column=code"
+            ]
+          ],
+          "ck_diff_new_preg": [
+            [
+              "/nhsd-primary-care-domain-refsets/preg_cod/5846c42a/",
+              "category_column=term",
+              "column=code"
+            ],
+            [
+              "/pharmacy-first-project/no-longer-pregnant-administration-codes-for-pharmacy-first/11f0383d/",
+              "category_column=term",
+              "column=code"
+            ]
+          ],
+          "ck_diff_preg_ends": [
+            [
+              "/pharmacy-first-project/no-longer-pregnant-administration-codes-for-pharmacy-first/11f0383d/",
+              "category_column=term",
+              "column=code"
+            ]
+          ],
+          "ck_pregnancy_future": [
+            [
+              "/nhsd-primary-care-domain-refsets/preg_cod/5846c42a/",
+              "category_column=term",
+              "column=code"
+            ],
+            [
+              "/pharmacy-first-project/no-longer-pregnant-administration-codes-for-pharmacy-first/11f0383d/",
+              "category_column=term",
+              "column=code"
+            ]
+          ],
+          "pregnancy_code": [
+            [
+              "/nhsd-primary-care-domain-refsets/preg_cod/5846c42a/",
+              "category_column=term",
+              "column=code"
+            ]
+          ],
+          "pregnancy_edd": [
+            [
+              "/user/VickiPalin/pregnancy_edd_snomed/64193fae/",
+              "column=code"
+            ]
+          ],
+          "pregnancy_end": [
+            [
+              "/pharmacy-first-project/no-longer-pregnant-administration-codes-for-pharmacy-first/11f0383d/",
+              "category_column=term",
+              "column=code"
+            ]
+          ],
+          "pregnancy_end_recent": [
+            [
+              "/pharmacy-first-project/no-longer-pregnant-administration-codes-for-pharmacy-first/11f0383d/",
+              "category_column=term",
+              "column=code"
+            ]
+          ],
+          "pregnant": [
+            [
+              "/pharmacy-first-project/no-longer-pregnant-administration-codes-for-pharmacy-first/11f0383d/",
+              "category_column=term",
+              "column=code"
+            ],
+            [
+              "/nhsd-primary-care-domain-refsets/preg_cod/5846c42a/",
+              "category_column=term",
+              "column=code"
+            ],
+            [
+              "/user/VickiPalin/pregnancy_edd_snomed/64193fae/",
+              "column=code"
+            ]
+          ],
+          "pregnant_flag": [
+            [
+              "/pharmacy-first-project/no-longer-pregnant-administration-codes-for-pharmacy-first/11f0383d/",
+              "category_column=term",
+              "column=code"
+            ],
+            [
+              "/nhsd-primary-care-domain-refsets/preg_cod/5846c42a/",
+              "category_column=term",
+              "column=code"
+            ],
+            [
+              "/user/VickiPalin/pregnancy_edd_snomed/64193fae/",
+              "column=code"
+            ]
+          ],
+          "sex": []
         }
       }
     },
@@ -6622,7 +7023,7 @@
       }
     },
     "opensafely/covid-vaccine-history": {
-      "b29dc287d679d1c5ebd939488e6293811261c098": {
+      "d3237236ec87ff8e03905d8b2f14f9f7c45665c8": {
         "_unused_codelists": [
           [
             "/nhsd-primary-care-domain-refsets/carehome_cod/20250627/",
@@ -15536,7 +15937,7 @@
       }
     },
     "opensafely/migration-short-data-report": {
-      "8c027b06cdceb0bbe7d3d37b15f08d6c7e1a3674": {
+      "a00933fbddaf36229d6771a02eb29a7a5aa71427": {
         "_unused_codelists": [],
         "analysis/dataset_definition_census_cohorts.py": {
           "age_band": [],
@@ -15596,6 +15997,10 @@
             [
               "/opensafely/interpreter-required/556e6040/",
               "column=code"
+            ],
+            [
+              "/opensafely/british-ethnicities/6a897fb0/",
+              "column=code"
             ]
           ],
           "mig_status_3_cat": [
@@ -15628,8 +16033,7 @@
               "column=code"
             ],
             [
-              "/opensafely/ethnicity-snomed-0removed/22911876/",
-              "category_column=Label_16",
+              "/opensafely/british-ethnicities/6a897fb0/",
               "column=code"
             ]
           ],
@@ -15663,8 +16067,7 @@
               "column=code"
             ],
             [
-              "/opensafely/ethnicity-snomed-0removed/22911876/",
-              "category_column=Label_16",
+              "/opensafely/british-ethnicities/6a897fb0/",
               "column=code"
             ]
           ],
@@ -15746,6 +16149,10 @@
             [
               "/opensafely/interpreter-required/556e6040/",
               "column=code"
+            ],
+            [
+              "/opensafely/british-ethnicities/6a897fb0/",
+              "column=code"
             ]
           ],
           "mig_status_3_cat": [
@@ -15778,8 +16185,7 @@
               "column=code"
             ],
             [
-              "/opensafely/ethnicity-snomed-0removed/22911876/",
-              "category_column=Label_16",
+              "/opensafely/british-ethnicities/6a897fb0/",
               "column=code"
             ]
           ],
@@ -15813,8 +16219,7 @@
               "column=code"
             ],
             [
-              "/opensafely/ethnicity-snomed-0removed/22911876/",
-              "category_column=Label_16",
+              "/opensafely/british-ethnicities/6a897fb0/",
               "column=code"
             ]
           ],
@@ -15835,13 +16240,25 @@
           "region": [],
           "sex": [],
           "temporality_of_date_of_uk_entry_code": [],
-          "time_to_first_migration_code_days": [
+          "time_from_1st_pracreg_first_migration_code_days": [
             [
               "/opensafely/migration-status/4095ab22/",
               "column=code"
             ]
           ],
-          "time_to_first_migration_code_months": [
+          "time_from_1st_pracreg_first_migration_code_months": [
+            [
+              "/opensafely/migration-status/4095ab22/",
+              "column=code"
+            ]
+          ],
+          "time_from_birth_first_migration_code_days": [
+            [
+              "/opensafely/migration-status/4095ab22/",
+              "column=code"
+            ]
+          ],
+          "time_from_birth_first_migration_code_months": [
             [
               "/opensafely/migration-status/4095ab22/",
               "column=code"
@@ -24859,7 +25276,7 @@
       }
     },
     "opensafely/pifu-data-exploration": {
-      "db02a4d5d1e76a3ac33488f6b86315ea955d7cce": {
+      "a0cfe17e93c79327dda7aff77be09b66a775e772": {
         "_unused_codelists": []
       }
     },
@@ -25897,7 +26314,7 @@
       }
     },
     "opensafely/post-covid-cvd-methods": {
-      "8f4fa2614969e2d15594182bc37f0292af099a78": {
+      "74d7732b28a98720fa384886bf8290f159511854": {
         "_unused_codelists": [
           [
             "/nhsd-primary-care-domain-refsets/hyp_cod/20210127/",
@@ -32278,7 +32695,7 @@
       }
     },
     "opensafely/winter-pressures-phase-II": {
-      "31417e2b1f745f7d2e34a5371b471e23dcc5771f": {
+      "4d95049d8d6058f9a79458520393edd8ebf43345": {
         "_unused_codelists": [
           [
             "/bristol/antidepressants-snomedct/677f55d2/",

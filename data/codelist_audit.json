@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-03-06 16:07:57",
+  "generated_at": "2026-03-10 12:13:31",
   "latest_releases": {
     "bnf": "86 (2024-09-02) (valid from 2024-09-02)",
     "ctv3": "2018-04-01 with TPP extensions 2022-11-16 (valid from 2022-11-16)",
@@ -12,12 +12,200 @@
   },
   "repos": {
     "opensafely/ACT-PharmacyFirst-Protocol2-healthcare-usage": {
-      "ethnicity_codelist": {
-        "current_version": "https://www.opencodelists.org/codelist/opensafely/ethnicity-snomed-0removed/2e641f61/",
-        "newer_version": "https://www.opencodelists.org/codelist/opensafely/ethnicity-snomed-0removed/22911876"
-      },
+      "ethnicity_codelist": false,
       "good": {
-        "codelists": []
+        "codelists": [
+          {
+            "name": "Urinary catheter administration codes for Pharmacy First",
+            "system": "snomedct",
+            "system_release": "41.2.0 (valid from 2025-11-26)",
+            "url": "https://www.opencodelists.org/codelist/pharmacy-first-project/urinary-catheter-administration-codes-for-pharmacy-first/5de5456b/",
+            "variables": {
+              "analysis/dataset_definition_patients.py": {
+                "github_url": "https://github.com/opensafely/ACT-PharmacyFirst-Protocol2-healthcare-usage/blob/7e2be9801ec20b6ffe36319ee4afb09a29469618/analysis/dataset_definition_patients.py",
+                "variables": [
+                  [
+                    "catheter_status",
+                    159
+                  ],
+                  [
+                    "include_patient_overall_eligible",
+                    274
+                  ],
+                  [
+                    "include_patient_uuti",
+                    265
+                  ]
+                ]
+              }
+            }
+          },
+          {
+            "name": "ethnicity (SNOMED)",
+            "system": "snomedct",
+            "system_release": "39.0.0 (valid from 2024-10-02)",
+            "url": "https://www.opencodelists.org/codelist/opensafely/ethnicity-snomed-0removed/22911876/",
+            "variables": {
+              "analysis/dataset_definition_patients.py": {
+                "github_url": "https://github.com/opensafely/ACT-PharmacyFirst-Protocol2-healthcare-usage/blob/7e2be9801ec20b6ffe36319ee4afb09a29469618/analysis/dataset_definition_patients.py",
+                "variables": [
+                  [
+                    "ethnicity",
+                    80
+                  ]
+                ]
+              }
+            }
+          },
+          {
+            "name": "Codes indicating the patient is pregnant",
+            "system": "snomedct",
+            "system_release": "41.0.0 (valid from 2025-10-01)",
+            "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/preg_cod/5846c42a/",
+            "variables": {
+              "analysis/dataset_definition_patients.py": {
+                "github_url": "https://github.com/opensafely/ACT-PharmacyFirst-Protocol2-healthcare-usage/blob/7e2be9801ec20b6ffe36319ee4afb09a29469618/analysis/dataset_definition_patients.py",
+                "variables": [
+                  [
+                    "include_patient_impetigo",
+                    251
+                  ],
+                  [
+                    "include_patient_insect_bites",
+                    228
+                  ],
+                  [
+                    "include_patient_overall_eligible",
+                    274
+                  ],
+                  [
+                    "include_patient_shingles",
+                    238
+                  ],
+                  [
+                    "include_patient_sore_throat",
+                    218
+                  ],
+                  [
+                    "include_patient_uuti",
+                    265
+                  ],
+                  [
+                    "pregnant_this_month",
+                    134
+                  ]
+                ]
+              },
+              "analysis/dataset_definition_pregnancy.py": {
+                "github_url": "https://github.com/opensafely/ACT-PharmacyFirst-Protocol2-healthcare-usage/blob/7e2be9801ec20b6ffe36319ee4afb09a29469618/analysis/dataset_definition_pregnancy.py",
+                "variables": [
+                  [
+                    "ck_diff_new_preg",
+                    96
+                  ],
+                  [
+                    "ck_pregnancy_future",
+                    90
+                  ],
+                  [
+                    "pregnancy_code",
+                    52
+                  ],
+                  [
+                    "pregnant",
+                    61
+                  ],
+                  [
+                    "pregnant_flag",
+                    79
+                  ]
+                ]
+              }
+            }
+          },
+          {
+            "name": "No longer pregnant administration-codes-for-pharmacy-first",
+            "system": "snomedct",
+            "system_release": "41.2.0 (valid from 2025-11-26)",
+            "url": "https://www.opencodelists.org/codelist/pharmacy-first-project/no-longer-pregnant-administration-codes-for-pharmacy-first/11f0383d/",
+            "variables": {
+              "analysis/dataset_definition_pregnancy.py": {
+                "github_url": "https://github.com/opensafely/ACT-PharmacyFirst-Protocol2-healthcare-usage/blob/7e2be9801ec20b6ffe36319ee4afb09a29469618/analysis/dataset_definition_pregnancy.py",
+                "variables": [
+                  [
+                    "ck_diff_edd_end_current",
+                    109
+                  ],
+                  [
+                    "ck_diff_edd_end_recent",
+                    108
+                  ],
+                  [
+                    "ck_diff_new_preg",
+                    96
+                  ],
+                  [
+                    "ck_diff_preg_ends",
+                    103
+                  ],
+                  [
+                    "ck_pregnancy_future",
+                    90
+                  ],
+                  [
+                    "pregnancy_end",
+                    31
+                  ],
+                  [
+                    "pregnancy_end_recent",
+                    18
+                  ],
+                  [
+                    "pregnant",
+                    61
+                  ],
+                  [
+                    "pregnant_flag",
+                    79
+                  ]
+                ]
+              }
+            }
+          },
+          {
+            "name": "pregnancy_edd_snomed",
+            "system": "snomedct",
+            "system_release": "35.2.0 (valid from 2022-11-30)",
+            "url": "https://www.opencodelists.org/codelist/user/VickiPalin/pregnancy_edd_snomed/64193fae/",
+            "variables": {
+              "analysis/dataset_definition_pregnancy.py": {
+                "github_url": "https://github.com/opensafely/ACT-PharmacyFirst-Protocol2-healthcare-usage/blob/7e2be9801ec20b6ffe36319ee4afb09a29469618/analysis/dataset_definition_pregnancy.py",
+                "variables": [
+                  [
+                    "ck_diff_edd_end_current",
+                    109
+                  ],
+                  [
+                    "ck_diff_edd_end_recent",
+                    108
+                  ],
+                  [
+                    "pregnancy_edd",
+                    42
+                  ],
+                  [
+                    "pregnant",
+                    61
+                  ],
+                  [
+                    "pregnant_flag",
+                    79
+                  ]
+                ]
+              }
+            }
+          }
+        ]
       },
       "inline_codelists": {
         "codelists": [
@@ -26,43 +214,71 @@
               "983341000000102"
             ],
             "file": "analysis/codelists.py",
-            "line": "110",
-            "url": "https://github.com/opensafely/ACT-PharmacyFirst-Protocol2-healthcare-usage/blob/c32feecbfdf7c81c21f681d975ac6288955011fe/analysis/codelists.py#L110",
+            "line": "131",
+            "url": "https://github.com/opensafely/ACT-PharmacyFirst-Protocol2-healthcare-usage/blob/7e2be9801ec20b6ffe36319ee4afb09a29469618/analysis/codelists.py#L131",
             "variables": {
               "analysis/dataset_definition_patients.py": {
-                "github_url": "https://github.com/opensafely/ACT-PharmacyFirst-Protocol2-healthcare-usage/blob/c32feecbfdf7c81c21f681d975ac6288955011fe/analysis/dataset_definition_patients.py",
+                "github_url": "https://github.com/opensafely/ACT-PharmacyFirst-Protocol2-healthcare-usage/blob/7e2be9801ec20b6ffe36319ee4afb09a29469618/analysis/dataset_definition_patients.py",
                 "variables": [
                   [
                     "has_pf_consultation",
-                    94
-                  ],
-                  [
-                    "impetigo_numerator",
-                    101
-                  ],
-                  [
-                    "insectbite_numerator",
                     97
                   ],
                   [
-                    "otitismedia_numerator",
-                    98
+                    "impetigo_GP_numerator",
+                    120
                   ],
                   [
-                    "shingles_numerator",
+                    "impetigo_numerator",
+                    104
+                  ],
+                  [
+                    "insectbite_GP_numerator",
+                    116
+                  ],
+                  [
+                    "insectbite_numerator",
                     100
                   ],
                   [
-                    "sinusitis_numerator",
-                    96
+                    "otitismedia_GP_numerator",
+                    117
                   ],
                   [
-                    "sorethroat_numerator",
+                    "otitismedia_numerator",
+                    101
+                  ],
+                  [
+                    "shingles_GP_numerator",
+                    119
+                  ],
+                  [
+                    "shingles_numerator",
+                    103
+                  ],
+                  [
+                    "sinusitis_GP_numerator",
+                    115
+                  ],
+                  [
+                    "sinusitis_numerator",
                     99
                   ],
                   [
+                    "sorethroat_GP_numerator",
+                    118
+                  ],
+                  [
+                    "sorethroat_numerator",
+                    102
+                  ],
+                  [
+                    "uti_GP_numerator",
+                    114
+                  ],
+                  [
                     "uti_numerator",
-                    95
+                    98
                   ]
                 ]
               }
@@ -73,43 +289,146 @@
               "2129921000000100"
             ],
             "file": "analysis/codelists.py",
-            "line": "112",
-            "url": "https://github.com/opensafely/ACT-PharmacyFirst-Protocol2-healthcare-usage/blob/c32feecbfdf7c81c21f681d975ac6288955011fe/analysis/codelists.py#L112",
+            "line": "133",
+            "url": "https://github.com/opensafely/ACT-PharmacyFirst-Protocol2-healthcare-usage/blob/7e2be9801ec20b6ffe36319ee4afb09a29469618/analysis/codelists.py#L133",
             "variables": {
               "analysis/dataset_definition_patients.py": {
-                "github_url": "https://github.com/opensafely/ACT-PharmacyFirst-Protocol2-healthcare-usage/blob/c32feecbfdf7c81c21f681d975ac6288955011fe/analysis/dataset_definition_patients.py",
+                "github_url": "https://github.com/opensafely/ACT-PharmacyFirst-Protocol2-healthcare-usage/blob/7e2be9801ec20b6ffe36319ee4afb09a29469618/analysis/dataset_definition_patients.py",
                 "variables": [
                   [
                     "has_pf_consultation",
-                    94
-                  ],
-                  [
-                    "impetigo_numerator",
-                    101
-                  ],
-                  [
-                    "insectbite_numerator",
                     97
                   ],
                   [
-                    "otitismedia_numerator",
-                    98
+                    "impetigo_GP_numerator",
+                    120
                   ],
                   [
-                    "shingles_numerator",
+                    "impetigo_numerator",
+                    104
+                  ],
+                  [
+                    "insectbite_GP_numerator",
+                    116
+                  ],
+                  [
+                    "insectbite_numerator",
                     100
                   ],
                   [
-                    "sinusitis_numerator",
-                    96
+                    "otitismedia_GP_numerator",
+                    117
                   ],
                   [
-                    "sorethroat_numerator",
+                    "otitismedia_numerator",
+                    101
+                  ],
+                  [
+                    "shingles_GP_numerator",
+                    119
+                  ],
+                  [
+                    "shingles_numerator",
+                    103
+                  ],
+                  [
+                    "sinusitis_GP_numerator",
+                    115
+                  ],
+                  [
+                    "sinusitis_numerator",
                     99
                   ],
                   [
+                    "sorethroat_GP_numerator",
+                    118
+                  ],
+                  [
+                    "sorethroat_numerator",
+                    102
+                  ],
+                  [
+                    "uti_GP_numerator",
+                    114
+                  ],
+                  [
                     "uti_numerator",
-                    95
+                    98
+                  ]
+                ]
+              }
+            }
+          },
+          {
+            "codes": [
+              "1577041000000109"
+            ],
+            "file": "analysis/codelists.py",
+            "line": "129",
+            "url": "https://github.com/opensafely/ACT-PharmacyFirst-Protocol2-healthcare-usage/blob/7e2be9801ec20b6ffe36319ee4afb09a29469618/analysis/codelists.py#L129",
+            "variables": {
+              "analysis/dataset_definition_patients.py": {
+                "github_url": "https://github.com/opensafely/ACT-PharmacyFirst-Protocol2-healthcare-usage/blob/7e2be9801ec20b6ffe36319ee4afb09a29469618/analysis/dataset_definition_patients.py",
+                "variables": [
+                  [
+                    "has_pf_consultation",
+                    97
+                  ],
+                  [
+                    "impetigo_GP_numerator",
+                    120
+                  ],
+                  [
+                    "impetigo_numerator",
+                    104
+                  ],
+                  [
+                    "insectbite_GP_numerator",
+                    116
+                  ],
+                  [
+                    "insectbite_numerator",
+                    100
+                  ],
+                  [
+                    "otitismedia_GP_numerator",
+                    117
+                  ],
+                  [
+                    "otitismedia_numerator",
+                    101
+                  ],
+                  [
+                    "shingles_GP_numerator",
+                    119
+                  ],
+                  [
+                    "shingles_numerator",
+                    103
+                  ],
+                  [
+                    "sinusitis_GP_numerator",
+                    115
+                  ],
+                  [
+                    "sinusitis_numerator",
+                    99
+                  ],
+                  [
+                    "sorethroat_GP_numerator",
+                    118
+                  ],
+                  [
+                    "sorethroat_numerator",
+                    102
+                  ],
+                  [
+                    "uti_GP_numerator",
+                    114
+                  ],
+                  [
+                    "uti_numerator",
+                    98
                   ]
                 ]
               }
@@ -120,15 +439,19 @@
               "48277006"
             ],
             "file": "analysis/codelists.py",
-            "line": "131",
-            "url": "https://github.com/opensafely/ACT-PharmacyFirst-Protocol2-healthcare-usage/blob/c32feecbfdf7c81c21f681d975ac6288955011fe/analysis/codelists.py#L131",
+            "line": "149",
+            "url": "https://github.com/opensafely/ACT-PharmacyFirst-Protocol2-healthcare-usage/blob/7e2be9801ec20b6ffe36319ee4afb09a29469618/analysis/codelists.py#L149",
             "variables": {
               "analysis/dataset_definition_patients.py": {
-                "github_url": "https://github.com/opensafely/ACT-PharmacyFirst-Protocol2-healthcare-usage/blob/c32feecbfdf7c81c21f681d975ac6288955011fe/analysis/dataset_definition_patients.py",
+                "github_url": "https://github.com/opensafely/ACT-PharmacyFirst-Protocol2-healthcare-usage/blob/7e2be9801ec20b6ffe36319ee4afb09a29469618/analysis/dataset_definition_patients.py",
                 "variables": [
                   [
+                    "impetigo_GP_numerator",
+                    120
+                  ],
+                  [
                     "impetigo_numerator",
-                    101
+                    104
                   ]
                 ]
               }
@@ -139,15 +462,19 @@
               "262550002"
             ],
             "file": "analysis/codelists.py",
-            "line": "127",
-            "url": "https://github.com/opensafely/ACT-PharmacyFirst-Protocol2-healthcare-usage/blob/c32feecbfdf7c81c21f681d975ac6288955011fe/analysis/codelists.py#L127",
+            "line": "145",
+            "url": "https://github.com/opensafely/ACT-PharmacyFirst-Protocol2-healthcare-usage/blob/7e2be9801ec20b6ffe36319ee4afb09a29469618/analysis/codelists.py#L145",
             "variables": {
               "analysis/dataset_definition_patients.py": {
-                "github_url": "https://github.com/opensafely/ACT-PharmacyFirst-Protocol2-healthcare-usage/blob/c32feecbfdf7c81c21f681d975ac6288955011fe/analysis/dataset_definition_patients.py",
+                "github_url": "https://github.com/opensafely/ACT-PharmacyFirst-Protocol2-healthcare-usage/blob/7e2be9801ec20b6ffe36319ee4afb09a29469618/analysis/dataset_definition_patients.py",
                 "variables": [
                   [
+                    "insectbite_GP_numerator",
+                    116
+                  ],
+                  [
                     "insectbite_numerator",
-                    97
+                    100
                   ]
                 ]
               }
@@ -158,15 +485,19 @@
               "3110003"
             ],
             "file": "analysis/codelists.py",
-            "line": "128",
-            "url": "https://github.com/opensafely/ACT-PharmacyFirst-Protocol2-healthcare-usage/blob/c32feecbfdf7c81c21f681d975ac6288955011fe/analysis/codelists.py#L128",
+            "line": "146",
+            "url": "https://github.com/opensafely/ACT-PharmacyFirst-Protocol2-healthcare-usage/blob/7e2be9801ec20b6ffe36319ee4afb09a29469618/analysis/codelists.py#L146",
             "variables": {
               "analysis/dataset_definition_patients.py": {
-                "github_url": "https://github.com/opensafely/ACT-PharmacyFirst-Protocol2-healthcare-usage/blob/c32feecbfdf7c81c21f681d975ac6288955011fe/analysis/dataset_definition_patients.py",
+                "github_url": "https://github.com/opensafely/ACT-PharmacyFirst-Protocol2-healthcare-usage/blob/7e2be9801ec20b6ffe36319ee4afb09a29469618/analysis/dataset_definition_patients.py",
                 "variables": [
                   [
+                    "otitismedia_GP_numerator",
+                    117
+                  ],
+                  [
                     "otitismedia_numerator",
-                    98
+                    101
                   ]
                 ]
               }
@@ -177,15 +508,19 @@
               "4740000"
             ],
             "file": "analysis/codelists.py",
-            "line": "130",
-            "url": "https://github.com/opensafely/ACT-PharmacyFirst-Protocol2-healthcare-usage/blob/c32feecbfdf7c81c21f681d975ac6288955011fe/analysis/codelists.py#L130",
+            "line": "148",
+            "url": "https://github.com/opensafely/ACT-PharmacyFirst-Protocol2-healthcare-usage/blob/7e2be9801ec20b6ffe36319ee4afb09a29469618/analysis/codelists.py#L148",
             "variables": {
               "analysis/dataset_definition_patients.py": {
-                "github_url": "https://github.com/opensafely/ACT-PharmacyFirst-Protocol2-healthcare-usage/blob/c32feecbfdf7c81c21f681d975ac6288955011fe/analysis/dataset_definition_patients.py",
+                "github_url": "https://github.com/opensafely/ACT-PharmacyFirst-Protocol2-healthcare-usage/blob/7e2be9801ec20b6ffe36319ee4afb09a29469618/analysis/dataset_definition_patients.py",
                 "variables": [
                   [
+                    "shingles_GP_numerator",
+                    119
+                  ],
+                  [
                     "shingles_numerator",
-                    100
+                    103
                   ]
                 ]
               }
@@ -196,15 +531,19 @@
               "15805002"
             ],
             "file": "analysis/codelists.py",
-            "line": "126",
-            "url": "https://github.com/opensafely/ACT-PharmacyFirst-Protocol2-healthcare-usage/blob/c32feecbfdf7c81c21f681d975ac6288955011fe/analysis/codelists.py#L126",
+            "line": "144",
+            "url": "https://github.com/opensafely/ACT-PharmacyFirst-Protocol2-healthcare-usage/blob/7e2be9801ec20b6ffe36319ee4afb09a29469618/analysis/codelists.py#L144",
             "variables": {
               "analysis/dataset_definition_patients.py": {
-                "github_url": "https://github.com/opensafely/ACT-PharmacyFirst-Protocol2-healthcare-usage/blob/c32feecbfdf7c81c21f681d975ac6288955011fe/analysis/dataset_definition_patients.py",
+                "github_url": "https://github.com/opensafely/ACT-PharmacyFirst-Protocol2-healthcare-usage/blob/7e2be9801ec20b6ffe36319ee4afb09a29469618/analysis/dataset_definition_patients.py",
                 "variables": [
                   [
+                    "sinusitis_GP_numerator",
+                    115
+                  ],
+                  [
                     "sinusitis_numerator",
-                    96
+                    99
                   ]
                 ]
               }
@@ -215,15 +554,19 @@
               "363746003"
             ],
             "file": "analysis/codelists.py",
-            "line": "129",
-            "url": "https://github.com/opensafely/ACT-PharmacyFirst-Protocol2-healthcare-usage/blob/c32feecbfdf7c81c21f681d975ac6288955011fe/analysis/codelists.py#L129",
+            "line": "147",
+            "url": "https://github.com/opensafely/ACT-PharmacyFirst-Protocol2-healthcare-usage/blob/7e2be9801ec20b6ffe36319ee4afb09a29469618/analysis/codelists.py#L147",
             "variables": {
               "analysis/dataset_definition_patients.py": {
-                "github_url": "https://github.com/opensafely/ACT-PharmacyFirst-Protocol2-healthcare-usage/blob/c32feecbfdf7c81c21f681d975ac6288955011fe/analysis/dataset_definition_patients.py",
+                "github_url": "https://github.com/opensafely/ACT-PharmacyFirst-Protocol2-healthcare-usage/blob/7e2be9801ec20b6ffe36319ee4afb09a29469618/analysis/dataset_definition_patients.py",
                 "variables": [
                   [
+                    "sorethroat_GP_numerator",
+                    118
+                  ],
+                  [
                     "sorethroat_numerator",
-                    99
+                    102
                   ]
                 ]
               }
@@ -234,15 +577,19 @@
               "1090711000000102"
             ],
             "file": "analysis/codelists.py",
-            "line": "125",
-            "url": "https://github.com/opensafely/ACT-PharmacyFirst-Protocol2-healthcare-usage/blob/c32feecbfdf7c81c21f681d975ac6288955011fe/analysis/codelists.py#L125",
+            "line": "143",
+            "url": "https://github.com/opensafely/ACT-PharmacyFirst-Protocol2-healthcare-usage/blob/7e2be9801ec20b6ffe36319ee4afb09a29469618/analysis/codelists.py#L143",
             "variables": {
               "analysis/dataset_definition_patients.py": {
-                "github_url": "https://github.com/opensafely/ACT-PharmacyFirst-Protocol2-healthcare-usage/blob/c32feecbfdf7c81c21f681d975ac6288955011fe/analysis/dataset_definition_patients.py",
+                "github_url": "https://github.com/opensafely/ACT-PharmacyFirst-Protocol2-healthcare-usage/blob/7e2be9801ec20b6ffe36319ee4afb09a29469618/analysis/dataset_definition_patients.py",
                 "variables": [
                   [
+                    "uti_GP_numerator",
+                    114
+                  ],
+                  [
                     "uti_numerator",
-                    95
+                    98
                   ]
                 ]
               }
@@ -254,53 +601,7 @@
         "codelists": []
       },
       "newer_version": {
-        "codelists": [
-          {
-            "name": "Codes indicating the patient is pregnant",
-            "newer_version": {
-              "label": "20250912",
-              "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/preg_cod/20250912"
-            },
-            "system": "snomedct",
-            "system_release": "unknown",
-            "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/preg_cod/20200812/",
-            "variables": {
-              "analysis/dataset_definition_patients.py": {
-                "github_url": "https://github.com/opensafely/ACT-PharmacyFirst-Protocol2-healthcare-usage/blob/c32feecbfdf7c81c21f681d975ac6288955011fe/analysis/dataset_definition_patients.py",
-                "variables": [
-                  [
-                    "include_patient_impetigo",
-                    233
-                  ],
-                  [
-                    "include_patient_insect_bites",
-                    210
-                  ],
-                  [
-                    "include_patient_overall_eligible",
-                    256
-                  ],
-                  [
-                    "include_patient_shingles",
-                    220
-                  ],
-                  [
-                    "include_patient_sore_throat",
-                    200
-                  ],
-                  [
-                    "include_patient_uuti",
-                    247
-                  ],
-                  [
-                    "pregnant_this_month",
-                    116
-                  ]
-                ]
-              }
-            }
-          }
-        ]
+        "codelists": []
       },
       "no_events": {
         "codelists": []
@@ -308,41 +609,83 @@
       "potentially_missing_codes": {
         "codelists": [
           {
-            "name": "Codes indicating the patient is pregnant",
+            "name": "Bullous impetigo administration codes for Pharmacy First",
             "system": "snomedct",
-            "system_release": "unknown",
-            "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/preg_cod/20200812/",
+            "system_release": "41.2.0 (valid from 2025-11-26)",
+            "url": "https://www.opencodelists.org/codelist/pharmacy-first-project/bullous-impetigo-administration-codes-for-pharmacy-first/0db01129/",
             "variables": {
               "analysis/dataset_definition_patients.py": {
-                "github_url": "https://github.com/opensafely/ACT-PharmacyFirst-Protocol2-healthcare-usage/blob/c32feecbfdf7c81c21f681d975ac6288955011fe/analysis/dataset_definition_patients.py",
+                "github_url": "https://github.com/opensafely/ACT-PharmacyFirst-Protocol2-healthcare-usage/blob/7e2be9801ec20b6ffe36319ee4afb09a29469618/analysis/dataset_definition_patients.py",
                 "variables": [
                   [
-                    "include_patient_impetigo",
-                    233
+                    "bullous_impetigo_this_month",
+                    141
                   ],
                   [
-                    "include_patient_insect_bites",
-                    210
+                    "include_patient_impetigo",
+                    251
                   ],
                   [
                     "include_patient_overall_eligible",
-                    256
+                    274
+                  ]
+                ]
+              }
+            }
+          },
+          {
+            "name": "Impetigo-and-related-conditions-administration-codes-for-pharmacy-first",
+            "system": "snomedct",
+            "system_release": "41.2.0 (valid from 2025-11-26)",
+            "url": "https://www.opencodelists.org/codelist/pharmacy-first-project/impetigo-related-conditions-administration-codes-for-pharmacy-first/1de090ed/",
+            "variables": {
+              "analysis/dataset_definition_patients.py": {
+                "github_url": "https://github.com/opensafely/ACT-PharmacyFirst-Protocol2-healthcare-usage/blob/7e2be9801ec20b6ffe36319ee4afb09a29469618/analysis/dataset_definition_patients.py",
+                "variables": [
+                  [
+                    "include_patient_impetigo",
+                    251
                   ],
                   [
-                    "include_patient_shingles",
-                    220
+                    "include_patient_overall_eligible",
+                    274
                   ],
                   [
-                    "include_patient_sore_throat",
-                    200
+                    "recurrent_impetigo_this_year",
+                    151
+                  ]
+                ]
+              }
+            }
+          },
+          {
+            "name": "Urinary-tract-infection-and-related-conditions-for-Pharamcy-First",
+            "system": "snomedct",
+            "system_release": "41.2.0 (valid from 2025-11-26)",
+            "url": "https://www.opencodelists.org/codelist/pharmacy-first-project/urinary-tract-infection-and-related-conditions/065e84d6/",
+            "variables": {
+              "analysis/dataset_definition_patients.py": {
+                "github_url": "https://github.com/opensafely/ACT-PharmacyFirst-Protocol2-healthcare-usage/blob/7e2be9801ec20b6ffe36319ee4afb09a29469618/analysis/dataset_definition_patients.py",
+                "variables": [
+                  [
+                    "include_patient_overall_eligible",
+                    274
                   ],
                   [
                     "include_patient_uuti",
-                    247
+                    265
                   ],
                   [
-                    "pregnant_this_month",
-                    116
+                    "recurrent_uti",
+                    178
+                  ],
+                  [
+                    "recurrent_uti_12m",
+                    177
+                  ],
+                  [
+                    "recurrent_uti_6m",
+                    176
                   ]
                 ]
               }
@@ -360,6 +703,12 @@
             "system": "dmd",
             "system_release": "2025 10.1.0 (valid from 2025-10-13)",
             "url": "https://www.opencodelists.org/codelist/opensafely/pharmacy-first-acute-otitis-media-treatment-full-dmd-codelist/4758f9d4/"
+          },
+          {
+            "name": "Pharmacy First - Clinical Pathway conditions",
+            "system": "snomedct",
+            "system_release": "38.0.0 (valid from 2024-04-17)",
+            "url": "https://www.opencodelists.org/codelist/opensafely/pharmacy-first-clinical-pathway-conditions/7ec97762/"
           },
           {
             "name": "Pharmacy First - Impetigo treatment full dmd codelist",
@@ -404,16 +753,10 @@
             "url": "https://www.opencodelists.org/codelist/pharmacy-first-project/Sore-throat-and-related-conditions/387d6b40/"
           },
           {
-            "name": "Bullous impetigo administration codes for Pharmacy First",
+            "name": "insect bites-and-related-conditions-administration-codes-for-pharmacy-first",
             "system": "snomedct",
-            "system_release": "41.2.0 (valid from 2025-11-26)",
-            "url": "https://www.opencodelists.org/codelist/pharmacy-first-project/bullous-impetigo-administration-codes-for-pharmacy-first/0db01129/"
-          },
-          {
-            "name": "Impetigo-and-related-conditions-administration-codes-for-pharmacy-first",
-            "system": "snomedct",
-            "system_release": "41.2.0 (valid from 2025-11-26)",
-            "url": "https://www.opencodelists.org/codelist/pharmacy-first-project/impetigo-related-conditions-administration-codes-for-pharmacy-first/1de090ed/"
+            "system_release": "41.2.1 (valid from 2026-01-21)",
+            "url": "https://www.opencodelists.org/codelist/pharmacy-first-project/insect-bites-and-related-conditions-administration-codes-for-pharmacy-first/6d9ae4ef/"
           },
           {
             "name": "Otitis-media-and-related-conditions-for-pharmacy-first",
@@ -422,28 +765,16 @@
             "url": "https://www.opencodelists.org/codelist/pharmacy-first-project/otitis-media-and-related-conditions/63a96aa0/"
           },
           {
+            "name": "<LOOKUP_FAILED>",
+            "system": "<LOOKUP_FAILED>",
+            "system_release": "<LOOKUP_FAILED>",
+            "url": "https://www.opencodelists.org/codelist/pharmacy-first-project/shingles-and-related-conditions-for-pharmacy-first/1672c9a3/"
+          },
+          {
             "name": "Sinusitis-and-related-conditions-administration-codes-for-pharmacy-first",
             "system": "snomedct",
             "system_release": "41.2.0 (valid from 2025-11-26)",
             "url": "https://www.opencodelists.org/codelist/pharmacy-first-project/sinusitis-related-conditions-administration-codes-for-pharmacy-first/04d11db8/"
-          },
-          {
-            "name": "Urinary catheter administration codes for Pharmacy First",
-            "system": "snomedct",
-            "system_release": "41.2.0 (valid from 2025-11-26)",
-            "url": "https://www.opencodelists.org/codelist/pharmacy-first-project/urinary-catheter-administration-codes-for-pharmacy-first/5de5456b/"
-          },
-          {
-            "name": "Urinary-tract-infection-and-related-conditions-for-Pharamcy-First",
-            "system": "snomedct",
-            "system_release": "41.2.0 (valid from 2025-11-26)",
-            "url": "https://www.opencodelists.org/codelist/pharmacy-first-project/urinary-tract-infection-and-related-conditions/065e84d6/"
-          },
-          {
-            "name": "Pharmacy First - Clinical Pathway conditions",
-            "system": "snomedct",
-            "system_release": "38.0.0 (valid from 2024-04-17)",
-            "url": "https://www.opencodelists.org/codelist/user/chriswood/pharmacy-first-clinical-pathway-conditions/7ec97762/"
           }
         ]
       }
@@ -10186,7 +10517,7 @@
             "url": "https://www.opencodelists.org/codelist/opensafely/ethnicity-snomed-0removed/22911876/",
             "variables": {
               "analysis/1-extract/dataset_definition_fixed.py": {
-                "github_url": "https://github.com/opensafely/covid-vaccine-history/blob/b29dc287d679d1c5ebd939488e6293811261c098/analysis/1-extract/dataset_definition_fixed.py",
+                "github_url": "https://github.com/opensafely/covid-vaccine-history/blob/d3237236ec87ff8e03905d8b2f14f9f7c45665c8/analysis/1-extract/dataset_definition_fixed.py",
                 "variables": [
                   [
                     "ethnicity16",
@@ -10211,7 +10542,7 @@
             "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/longres/v2.5/",
             "variables": {
               "analysis/1-extract/dataset_definition_snapshot.py": {
-                "github_url": "https://github.com/opensafely/covid-vaccine-history/blob/b29dc287d679d1c5ebd939488e6293811261c098/analysis/1-extract/dataset_definition_snapshot.py",
+                "github_url": "https://github.com/opensafely/covid-vaccine-history/blob/d3237236ec87ff8e03905d8b2f14f9f7c45665c8/analysis/1-extract/dataset_definition_snapshot.py",
                 "variables": [
                   [
                     "carehome_status",
@@ -10223,7 +10554,7 @@
                 ]
               },
               "analysis/1-extract/dataset_definition_varying.py": {
-                "github_url": "https://github.com/opensafely/covid-vaccine-history/blob/b29dc287d679d1c5ebd939488e6293811261c098/analysis/1-extract/dataset_definition_varying.py",
+                "github_url": "https://github.com/opensafely/covid-vaccine-history/blob/d3237236ec87ff8e03905d8b2f14f9f7c45665c8/analysis/1-extract/dataset_definition_varying.py",
                 "variables": [
                   [
                     "carehome_status",
@@ -10240,7 +10571,7 @@
             "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/cocimprematrisk1_cod/20250912/",
             "variables": {
               "analysis/1-extract/dataset_definition_snapshot.py": {
-                "github_url": "https://github.com/opensafely/covid-vaccine-history/blob/b29dc287d679d1c5ebd939488e6293811261c098/analysis/1-extract/dataset_definition_snapshot.py",
+                "github_url": "https://github.com/opensafely/covid-vaccine-history/blob/d3237236ec87ff8e03905d8b2f14f9f7c45665c8/analysis/1-extract/dataset_definition_snapshot.py",
                 "variables": [
                   [
                     "cochlear_implant",
@@ -10260,7 +10591,7 @@
             "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/cocimpatrisk1_cod/20250912/",
             "variables": {
               "analysis/1-extract/dataset_definition_snapshot.py": {
-                "github_url": "https://github.com/opensafely/covid-vaccine-history/blob/b29dc287d679d1c5ebd939488e6293811261c098/analysis/1-extract/dataset_definition_snapshot.py",
+                "github_url": "https://github.com/opensafely/covid-vaccine-history/blob/d3237236ec87ff8e03905d8b2f14f9f7c45665c8/analysis/1-extract/dataset_definition_snapshot.py",
                 "variables": [
                   [
                     "cochlear_implant",
@@ -10280,7 +10611,7 @@
             "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/csflatrisk1_cod/20250912/",
             "variables": {
               "analysis/1-extract/dataset_definition_snapshot.py": {
-                "github_url": "https://github.com/opensafely/covid-vaccine-history/blob/b29dc287d679d1c5ebd939488e6293811261c098/analysis/1-extract/dataset_definition_snapshot.py",
+                "github_url": "https://github.com/opensafely/covid-vaccine-history/blob/d3237236ec87ff8e03905d8b2f14f9f7c45665c8/analysis/1-extract/dataset_definition_snapshot.py",
                 "variables": [
                   [
                     "csfl",
@@ -10300,7 +10631,7 @@
             "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/ds_cod/20250627/",
             "variables": {
               "analysis/1-extract/dataset_definition_snapshot.py": {
-                "github_url": "https://github.com/opensafely/covid-vaccine-history/blob/b29dc287d679d1c5ebd939488e6293811261c098/analysis/1-extract/dataset_definition_snapshot.py",
+                "github_url": "https://github.com/opensafely/covid-vaccine-history/blob/d3237236ec87ff8e03905d8b2f14f9f7c45665c8/analysis/1-extract/dataset_definition_snapshot.py",
                 "variables": [
                   [
                     "learndis_cat",
@@ -10320,7 +10651,7 @@
             "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/bmi/v2.5/",
             "variables": {
               "analysis/1-extract/dataset_definition_snapshot.py": {
-                "github_url": "https://github.com/opensafely/covid-vaccine-history/blob/b29dc287d679d1c5ebd939488e6293811261c098/analysis/1-extract/dataset_definition_snapshot.py",
+                "github_url": "https://github.com/opensafely/covid-vaccine-history/blob/d3237236ec87ff8e03905d8b2f14f9f7c45665c8/analysis/1-extract/dataset_definition_snapshot.py",
                 "variables": [
                   [
                     "primis_atrisk",
@@ -10352,10 +10683,10 @@
             ],
             "file": "analysis/1-extract/codelists.py",
             "line": "268",
-            "url": "https://github.com/opensafely/covid-vaccine-history/blob/b29dc287d679d1c5ebd939488e6293811261c098/analysis/1-extract/codelists.py#L268",
+            "url": "https://github.com/opensafely/covid-vaccine-history/blob/d3237236ec87ff8e03905d8b2f14f9f7c45665c8/analysis/1-extract/codelists.py#L268",
             "variables": {
               "analysis/1-extract/dataset_definition_fixed.py": {
-                "github_url": "https://github.com/opensafely/covid-vaccine-history/blob/b29dc287d679d1c5ebd939488e6293811261c098/analysis/1-extract/dataset_definition_fixed.py",
+                "github_url": "https://github.com/opensafely/covid-vaccine-history/blob/d3237236ec87ff8e03905d8b2f14f9f7c45665c8/analysis/1-extract/dataset_definition_fixed.py",
                 "variables": [
                   [
                     "covid_death_date",
@@ -10364,7 +10695,7 @@
                 ]
               },
               "analysis/1-extract/dataset_definition_snapshot.py": {
-                "github_url": "https://github.com/opensafely/covid-vaccine-history/blob/b29dc287d679d1c5ebd939488e6293811261c098/analysis/1-extract/dataset_definition_snapshot.py",
+                "github_url": "https://github.com/opensafely/covid-vaccine-history/blob/d3237236ec87ff8e03905d8b2f14f9f7c45665c8/analysis/1-extract/dataset_definition_snapshot.py",
                 "variables": [
                   [
                     "covid_admitted_date",
@@ -10407,10 +10738,10 @@
             ],
             "file": "analysis/1-extract/codelists.py",
             "line": "90",
-            "url": "https://github.com/opensafely/covid-vaccine-history/blob/b29dc287d679d1c5ebd939488e6293811261c098/analysis/1-extract/codelists.py#L90",
+            "url": "https://github.com/opensafely/covid-vaccine-history/blob/d3237236ec87ff8e03905d8b2f14f9f7c45665c8/analysis/1-extract/codelists.py#L90",
             "variables": {
               "analysis/1-extract/dataset_definition_snapshot.py": {
-                "github_url": "https://github.com/opensafely/covid-vaccine-history/blob/b29dc287d679d1c5ebd939488e6293811261c098/analysis/1-extract/dataset_definition_snapshot.py",
+                "github_url": "https://github.com/opensafely/covid-vaccine-history/blob/d3237236ec87ff8e03905d8b2f14f9f7c45665c8/analysis/1-extract/dataset_definition_snapshot.py",
                 "variables": [
                   [
                     "ckd_stage_3to5",
@@ -10452,10 +10783,10 @@
             ],
             "file": "analysis/1-extract/codelists.py",
             "line": "86",
-            "url": "https://github.com/opensafely/covid-vaccine-history/blob/b29dc287d679d1c5ebd939488e6293811261c098/analysis/1-extract/codelists.py#L86",
+            "url": "https://github.com/opensafely/covid-vaccine-history/blob/d3237236ec87ff8e03905d8b2f14f9f7c45665c8/analysis/1-extract/codelists.py#L86",
             "variables": {
               "analysis/1-extract/dataset_definition_snapshot.py": {
-                "github_url": "https://github.com/opensafely/covid-vaccine-history/blob/b29dc287d679d1c5ebd939488e6293811261c098/analysis/1-extract/dataset_definition_snapshot.py",
+                "github_url": "https://github.com/opensafely/covid-vaccine-history/blob/d3237236ec87ff8e03905d8b2f14f9f7c45665c8/analysis/1-extract/dataset_definition_snapshot.py",
                 "variables": [
                   [
                     "ckd_stage_3to5",
@@ -10487,10 +10818,10 @@
             ],
             "file": "analysis/1-extract/codelists.py",
             "line": "88",
-            "url": "https://github.com/opensafely/covid-vaccine-history/blob/b29dc287d679d1c5ebd939488e6293811261c098/analysis/1-extract/codelists.py#L88",
+            "url": "https://github.com/opensafely/covid-vaccine-history/blob/d3237236ec87ff8e03905d8b2f14f9f7c45665c8/analysis/1-extract/codelists.py#L88",
             "variables": {
               "analysis/1-extract/dataset_definition_snapshot.py": {
-                "github_url": "https://github.com/opensafely/covid-vaccine-history/blob/b29dc287d679d1c5ebd939488e6293811261c098/analysis/1-extract/dataset_definition_snapshot.py",
+                "github_url": "https://github.com/opensafely/covid-vaccine-history/blob/d3237236ec87ff8e03905d8b2f14f9f7c45665c8/analysis/1-extract/dataset_definition_snapshot.py",
                 "variables": [
                   [
                     "ckd_stage_3to5",
@@ -10509,10 +10840,10 @@
             ],
             "file": "analysis/1-extract/codelists.py",
             "line": "297",
-            "url": "https://github.com/opensafely/covid-vaccine-history/blob/b29dc287d679d1c5ebd939488e6293811261c098/analysis/1-extract/codelists.py#L297",
+            "url": "https://github.com/opensafely/covid-vaccine-history/blob/d3237236ec87ff8e03905d8b2f14f9f7c45665c8/analysis/1-extract/codelists.py#L297",
             "variables": {
               "analysis/1-extract/dataset_definition_snapshot.py": {
-                "github_url": "https://github.com/opensafely/covid-vaccine-history/blob/b29dc287d679d1c5ebd939488e6293811261c098/analysis/1-extract/dataset_definition_snapshot.py",
+                "github_url": "https://github.com/opensafely/covid-vaccine-history/blob/d3237236ec87ff8e03905d8b2f14f9f7c45665c8/analysis/1-extract/dataset_definition_snapshot.py",
                 "variables": [
                   [
                     "learndis_cat",
@@ -10543,7 +10874,7 @@
             "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/copd_cod/20250627/",
             "variables": {
               "analysis/1-extract/dataset_definition_snapshot.py": {
-                "github_url": "https://github.com/opensafely/covid-vaccine-history/blob/b29dc287d679d1c5ebd939488e6293811261c098/analysis/1-extract/dataset_definition_snapshot.py",
+                "github_url": "https://github.com/opensafely/covid-vaccine-history/blob/d3237236ec87ff8e03905d8b2f14f9f7c45665c8/analysis/1-extract/dataset_definition_snapshot.py",
                 "variables": [
                   [
                     "copd",
@@ -10570,7 +10901,7 @@
             "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/spln_cov/v2.5/",
             "variables": {
               "analysis/1-extract/dataset_definition_snapshot.py": {
-                "github_url": "https://github.com/opensafely/covid-vaccine-history/blob/b29dc287d679d1c5ebd939488e6293811261c098/analysis/1-extract/dataset_definition_snapshot.py",
+                "github_url": "https://github.com/opensafely/covid-vaccine-history/blob/d3237236ec87ff8e03905d8b2f14f9f7c45665c8/analysis/1-extract/dataset_definition_snapshot.py",
                 "variables": [
                   [
                     "asplenia",
@@ -10597,7 +10928,7 @@
             "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/chd_cov/v2.5/",
             "variables": {
               "analysis/1-extract/dataset_definition_snapshot.py": {
-                "github_url": "https://github.com/opensafely/covid-vaccine-history/blob/b29dc287d679d1c5ebd939488e6293811261c098/analysis/1-extract/dataset_definition_snapshot.py",
+                "github_url": "https://github.com/opensafely/covid-vaccine-history/blob/d3237236ec87ff8e03905d8b2f14f9f7c45665c8/analysis/1-extract/dataset_definition_snapshot.py",
                 "variables": [
                   [
                     "chd",
@@ -10624,7 +10955,7 @@
             "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/cirrhosis_cod/20250627/",
             "variables": {
               "analysis/1-extract/dataset_definition_snapshot.py": {
-                "github_url": "https://github.com/opensafely/covid-vaccine-history/blob/b29dc287d679d1c5ebd939488e6293811261c098/analysis/1-extract/dataset_definition_snapshot.py",
+                "github_url": "https://github.com/opensafely/covid-vaccine-history/blob/d3237236ec87ff8e03905d8b2f14f9f7c45665c8/analysis/1-extract/dataset_definition_snapshot.py",
                 "variables": [
                   [
                     "cirrhosis",
@@ -10644,7 +10975,7 @@
             "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/ckd_cov/v2.5/",
             "variables": {
               "analysis/1-extract/dataset_definition_snapshot.py": {
-                "github_url": "https://github.com/opensafely/covid-vaccine-history/blob/b29dc287d679d1c5ebd939488e6293811261c098/analysis/1-extract/dataset_definition_snapshot.py",
+                "github_url": "https://github.com/opensafely/covid-vaccine-history/blob/d3237236ec87ff8e03905d8b2f14f9f7c45665c8/analysis/1-extract/dataset_definition_snapshot.py",
                 "variables": [
                   [
                     "ckd",
@@ -10678,7 +11009,7 @@
             "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/ckd35/v2.5/",
             "variables": {
               "analysis/1-extract/dataset_definition_snapshot.py": {
-                "github_url": "https://github.com/opensafely/covid-vaccine-history/blob/b29dc287d679d1c5ebd939488e6293811261c098/analysis/1-extract/dataset_definition_snapshot.py",
+                "github_url": "https://github.com/opensafely/covid-vaccine-history/blob/d3237236ec87ff8e03905d8b2f14f9f7c45665c8/analysis/1-extract/dataset_definition_snapshot.py",
                 "variables": [
                   [
                     "ckd",
@@ -10712,7 +11043,7 @@
             "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/ckd15/v2.5/",
             "variables": {
               "analysis/1-extract/dataset_definition_snapshot.py": {
-                "github_url": "https://github.com/opensafely/covid-vaccine-history/blob/b29dc287d679d1c5ebd939488e6293811261c098/analysis/1-extract/dataset_definition_snapshot.py",
+                "github_url": "https://github.com/opensafely/covid-vaccine-history/blob/d3237236ec87ff8e03905d8b2f14f9f7c45665c8/analysis/1-extract/dataset_definition_snapshot.py",
                 "variables": [
                   [
                     "ckd",
@@ -10746,7 +11077,7 @@
             "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/cld/v2.5/",
             "variables": {
               "analysis/1-extract/dataset_definition_snapshot.py": {
-                "github_url": "https://github.com/opensafely/covid-vaccine-history/blob/b29dc287d679d1c5ebd939488e6293811261c098/analysis/1-extract/dataset_definition_snapshot.py",
+                "github_url": "https://github.com/opensafely/covid-vaccine-history/blob/d3237236ec87ff8e03905d8b2f14f9f7c45665c8/analysis/1-extract/dataset_definition_snapshot.py",
                 "variables": [
                   [
                     "cld",
@@ -10773,7 +11104,7 @@
             "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/cns_cov/v2.5/",
             "variables": {
               "analysis/1-extract/dataset_definition_snapshot.py": {
-                "github_url": "https://github.com/opensafely/covid-vaccine-history/blob/b29dc287d679d1c5ebd939488e6293811261c098/analysis/1-extract/dataset_definition_snapshot.py",
+                "github_url": "https://github.com/opensafely/covid-vaccine-history/blob/d3237236ec87ff8e03905d8b2f14f9f7c45665c8/analysis/1-extract/dataset_definition_snapshot.py",
                 "variables": [
                   [
                     "cns",
@@ -10800,7 +11131,7 @@
             "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/copd_cod/20250627/",
             "variables": {
               "analysis/1-extract/dataset_definition_snapshot.py": {
-                "github_url": "https://github.com/opensafely/covid-vaccine-history/blob/b29dc287d679d1c5ebd939488e6293811261c098/analysis/1-extract/dataset_definition_snapshot.py",
+                "github_url": "https://github.com/opensafely/covid-vaccine-history/blob/d3237236ec87ff8e03905d8b2f14f9f7c45665c8/analysis/1-extract/dataset_definition_snapshot.py",
                 "variables": [
                   [
                     "copd",
@@ -10820,7 +11151,7 @@
             "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/resp_cov/v2.5/",
             "variables": {
               "analysis/1-extract/dataset_definition_snapshot.py": {
-                "github_url": "https://github.com/opensafely/covid-vaccine-history/blob/b29dc287d679d1c5ebd939488e6293811261c098/analysis/1-extract/dataset_definition_snapshot.py",
+                "github_url": "https://github.com/opensafely/covid-vaccine-history/blob/d3237236ec87ff8e03905d8b2f14f9f7c45665c8/analysis/1-extract/dataset_definition_snapshot.py",
                 "variables": [
                   [
                     "crd",
@@ -10847,7 +11178,7 @@
             "url": "https://www.opencodelists.org/codelist/opensafely/cystic-fibrosis-snomed/1eb02212/",
             "variables": {
               "analysis/1-extract/dataset_definition_snapshot.py": {
-                "github_url": "https://github.com/opensafely/covid-vaccine-history/blob/b29dc287d679d1c5ebd939488e6293811261c098/analysis/1-extract/dataset_definition_snapshot.py",
+                "github_url": "https://github.com/opensafely/covid-vaccine-history/blob/d3237236ec87ff8e03905d8b2f14f9f7c45665c8/analysis/1-extract/dataset_definition_snapshot.py",
                 "variables": [
                   [
                     "cystic_fibrosis",
@@ -10867,7 +11198,7 @@
             "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/addis_cod/v2.5/",
             "variables": {
               "analysis/1-extract/dataset_definition_snapshot.py": {
-                "github_url": "https://github.com/opensafely/covid-vaccine-history/blob/b29dc287d679d1c5ebd939488e6293811261c098/analysis/1-extract/dataset_definition_snapshot.py",
+                "github_url": "https://github.com/opensafely/covid-vaccine-history/blob/d3237236ec87ff8e03905d8b2f14f9f7c45665c8/analysis/1-extract/dataset_definition_snapshot.py",
                 "variables": [
                   [
                     "diabetes",
@@ -10894,7 +11225,7 @@
             "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/gdiab_cod/v2.5/",
             "variables": {
               "analysis/1-extract/dataset_definition_snapshot.py": {
-                "github_url": "https://github.com/opensafely/covid-vaccine-history/blob/b29dc287d679d1c5ebd939488e6293811261c098/analysis/1-extract/dataset_definition_snapshot.py",
+                "github_url": "https://github.com/opensafely/covid-vaccine-history/blob/d3237236ec87ff8e03905d8b2f14f9f7c45665c8/analysis/1-extract/dataset_definition_snapshot.py",
                 "variables": [
                   [
                     "diabetes",
@@ -10921,7 +11252,7 @@
             "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/preg/v2.5/",
             "variables": {
               "analysis/1-extract/dataset_definition_snapshot.py": {
-                "github_url": "https://github.com/opensafely/covid-vaccine-history/blob/b29dc287d679d1c5ebd939488e6293811261c098/analysis/1-extract/dataset_definition_snapshot.py",
+                "github_url": "https://github.com/opensafely/covid-vaccine-history/blob/d3237236ec87ff8e03905d8b2f14f9f7c45665c8/analysis/1-extract/dataset_definition_snapshot.py",
                 "variables": [
                   [
                     "diabetes",
@@ -10948,7 +11279,7 @@
             "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/pregdel/v2.5/",
             "variables": {
               "analysis/1-extract/dataset_definition_snapshot.py": {
-                "github_url": "https://github.com/opensafely/covid-vaccine-history/blob/b29dc287d679d1c5ebd939488e6293811261c098/analysis/1-extract/dataset_definition_snapshot.py",
+                "github_url": "https://github.com/opensafely/covid-vaccine-history/blob/d3237236ec87ff8e03905d8b2f14f9f7c45665c8/analysis/1-extract/dataset_definition_snapshot.py",
                 "variables": [
                   [
                     "diabetes",
@@ -10975,7 +11306,7 @@
             "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/dmres/v2.5/",
             "variables": {
               "analysis/1-extract/dataset_definition_snapshot.py": {
-                "github_url": "https://github.com/opensafely/covid-vaccine-history/blob/b29dc287d679d1c5ebd939488e6293811261c098/analysis/1-extract/dataset_definition_snapshot.py",
+                "github_url": "https://github.com/opensafely/covid-vaccine-history/blob/d3237236ec87ff8e03905d8b2f14f9f7c45665c8/analysis/1-extract/dataset_definition_snapshot.py",
                 "variables": [
                   [
                     "diabetes",
@@ -11002,7 +11333,7 @@
             "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/diab/v2.5/",
             "variables": {
               "analysis/1-extract/dataset_definition_snapshot.py": {
-                "github_url": "https://github.com/opensafely/covid-vaccine-history/blob/b29dc287d679d1c5ebd939488e6293811261c098/analysis/1-extract/dataset_definition_snapshot.py",
+                "github_url": "https://github.com/opensafely/covid-vaccine-history/blob/d3237236ec87ff8e03905d8b2f14f9f7c45665c8/analysis/1-extract/dataset_definition_snapshot.py",
                 "variables": [
                   [
                     "diabetes",
@@ -11029,7 +11360,7 @@
             "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/homeless_cod/v2.5/",
             "variables": {
               "analysis/1-extract/dataset_definition_snapshot.py": {
-                "github_url": "https://github.com/opensafely/covid-vaccine-history/blob/b29dc287d679d1c5ebd939488e6293811261c098/analysis/1-extract/dataset_definition_snapshot.py",
+                "github_url": "https://github.com/opensafely/covid-vaccine-history/blob/d3237236ec87ff8e03905d8b2f14f9f7c45665c8/analysis/1-extract/dataset_definition_snapshot.py",
                 "variables": [
                   [
                     "homeless",
@@ -11049,7 +11380,7 @@
             "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/reside_cod/v2.5/",
             "variables": {
               "analysis/1-extract/dataset_definition_snapshot.py": {
-                "github_url": "https://github.com/opensafely/covid-vaccine-history/blob/b29dc287d679d1c5ebd939488e6293811261c098/analysis/1-extract/dataset_definition_snapshot.py",
+                "github_url": "https://github.com/opensafely/covid-vaccine-history/blob/d3237236ec87ff8e03905d8b2f14f9f7c45665c8/analysis/1-extract/dataset_definition_snapshot.py",
                 "variables": [
                   [
                     "homeless",
@@ -11069,7 +11400,7 @@
             "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/immdx_cov/v2.5/",
             "variables": {
               "analysis/1-extract/dataset_definition_snapshot.py": {
-                "github_url": "https://github.com/opensafely/covid-vaccine-history/blob/b29dc287d679d1c5ebd939488e6293811261c098/analysis/1-extract/dataset_definition_snapshot.py",
+                "github_url": "https://github.com/opensafely/covid-vaccine-history/blob/d3237236ec87ff8e03905d8b2f14f9f7c45665c8/analysis/1-extract/dataset_definition_snapshot.py",
                 "variables": [
                   [
                     "immunosuppressed",
@@ -11096,7 +11427,7 @@
             "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/immrx/v2.5/",
             "variables": {
               "analysis/1-extract/dataset_definition_snapshot.py": {
-                "github_url": "https://github.com/opensafely/covid-vaccine-history/blob/b29dc287d679d1c5ebd939488e6293811261c098/analysis/1-extract/dataset_definition_snapshot.py",
+                "github_url": "https://github.com/opensafely/covid-vaccine-history/blob/d3237236ec87ff8e03905d8b2f14f9f7c45665c8/analysis/1-extract/dataset_definition_snapshot.py",
                 "variables": [
                   [
                     "immunosuppressed",
@@ -11123,7 +11454,7 @@
             "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/immunosuppression-admin-codes/v2.5/",
             "variables": {
               "analysis/1-extract/dataset_definition_snapshot.py": {
-                "github_url": "https://github.com/opensafely/covid-vaccine-history/blob/b29dc287d679d1c5ebd939488e6293811261c098/analysis/1-extract/dataset_definition_snapshot.py",
+                "github_url": "https://github.com/opensafely/covid-vaccine-history/blob/d3237236ec87ff8e03905d8b2f14f9f7c45665c8/analysis/1-extract/dataset_definition_snapshot.py",
                 "variables": [
                   [
                     "immunosuppressed",
@@ -11150,7 +11481,7 @@
             "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/dxt_chemo_cod/v2.5/",
             "variables": {
               "analysis/1-extract/dataset_definition_snapshot.py": {
-                "github_url": "https://github.com/opensafely/covid-vaccine-history/blob/b29dc287d679d1c5ebd939488e6293811261c098/analysis/1-extract/dataset_definition_snapshot.py",
+                "github_url": "https://github.com/opensafely/covid-vaccine-history/blob/d3237236ec87ff8e03905d8b2f14f9f7c45665c8/analysis/1-extract/dataset_definition_snapshot.py",
                 "variables": [
                   [
                     "immunosuppressed",
@@ -11177,7 +11508,7 @@
             "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/learndis/v2.5/",
             "variables": {
               "analysis/1-extract/dataset_definition_snapshot.py": {
-                "github_url": "https://github.com/opensafely/covid-vaccine-history/blob/b29dc287d679d1c5ebd939488e6293811261c098/analysis/1-extract/dataset_definition_snapshot.py",
+                "github_url": "https://github.com/opensafely/covid-vaccine-history/blob/d3237236ec87ff8e03905d8b2f14f9f7c45665c8/analysis/1-extract/dataset_definition_snapshot.py",
                 "variables": [
                   [
                     "learndis",
@@ -11211,7 +11542,7 @@
             "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/sev_obesity/v2.5/",
             "variables": {
               "analysis/1-extract/dataset_definition_snapshot.py": {
-                "github_url": "https://github.com/opensafely/covid-vaccine-history/blob/b29dc287d679d1c5ebd939488e6293811261c098/analysis/1-extract/dataset_definition_snapshot.py",
+                "github_url": "https://github.com/opensafely/covid-vaccine-history/blob/d3237236ec87ff8e03905d8b2f14f9f7c45665c8/analysis/1-extract/dataset_definition_snapshot.py",
                 "variables": [
                   [
                     "primis_atrisk",
@@ -11238,7 +11569,7 @@
             "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/bmi_stage/v2.5/",
             "variables": {
               "analysis/1-extract/dataset_definition_snapshot.py": {
-                "github_url": "https://github.com/opensafely/covid-vaccine-history/blob/b29dc287d679d1c5ebd939488e6293811261c098/analysis/1-extract/dataset_definition_snapshot.py",
+                "github_url": "https://github.com/opensafely/covid-vaccine-history/blob/d3237236ec87ff8e03905d8b2f14f9f7c45665c8/analysis/1-extract/dataset_definition_snapshot.py",
                 "variables": [
                   [
                     "primis_atrisk",
@@ -11265,7 +11596,7 @@
             "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/smhres/v2.5/",
             "variables": {
               "analysis/1-extract/dataset_definition_snapshot.py": {
-                "github_url": "https://github.com/opensafely/covid-vaccine-history/blob/b29dc287d679d1c5ebd939488e6293811261c098/analysis/1-extract/dataset_definition_snapshot.py",
+                "github_url": "https://github.com/opensafely/covid-vaccine-history/blob/d3237236ec87ff8e03905d8b2f14f9f7c45665c8/analysis/1-extract/dataset_definition_snapshot.py",
                 "variables": [
                   [
                     "primis_atrisk",
@@ -11292,7 +11623,7 @@
             "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/sev_mental/v2.5/",
             "variables": {
               "analysis/1-extract/dataset_definition_snapshot.py": {
-                "github_url": "https://github.com/opensafely/covid-vaccine-history/blob/b29dc287d679d1c5ebd939488e6293811261c098/analysis/1-extract/dataset_definition_snapshot.py",
+                "github_url": "https://github.com/opensafely/covid-vaccine-history/blob/d3237236ec87ff8e03905d8b2f14f9f7c45665c8/analysis/1-extract/dataset_definition_snapshot.py",
                 "variables": [
                   [
                     "primis_atrisk",
@@ -11319,7 +11650,7 @@
             "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/astadm/v2.5/",
             "variables": {
               "analysis/1-extract/dataset_definition_snapshot.py": {
-                "github_url": "https://github.com/opensafely/covid-vaccine-history/blob/b29dc287d679d1c5ebd939488e6293811261c098/analysis/1-extract/dataset_definition_snapshot.py",
+                "github_url": "https://github.com/opensafely/covid-vaccine-history/blob/d3237236ec87ff8e03905d8b2f14f9f7c45665c8/analysis/1-extract/dataset_definition_snapshot.py",
                 "variables": [
                   [
                     "primis_atrisk",
@@ -11339,7 +11670,7 @@
             "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/ast/v2.5/",
             "variables": {
               "analysis/1-extract/dataset_definition_snapshot.py": {
-                "github_url": "https://github.com/opensafely/covid-vaccine-history/blob/b29dc287d679d1c5ebd939488e6293811261c098/analysis/1-extract/dataset_definition_snapshot.py",
+                "github_url": "https://github.com/opensafely/covid-vaccine-history/blob/d3237236ec87ff8e03905d8b2f14f9f7c45665c8/analysis/1-extract/dataset_definition_snapshot.py",
                 "variables": [
                   [
                     "primis_atrisk",
@@ -11359,7 +11690,7 @@
             "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/astrxm1/v2.5/",
             "variables": {
               "analysis/1-extract/dataset_definition_snapshot.py": {
-                "github_url": "https://github.com/opensafely/covid-vaccine-history/blob/b29dc287d679d1c5ebd939488e6293811261c098/analysis/1-extract/dataset_definition_snapshot.py",
+                "github_url": "https://github.com/opensafely/covid-vaccine-history/blob/d3237236ec87ff8e03905d8b2f14f9f7c45665c8/analysis/1-extract/dataset_definition_snapshot.py",
                 "variables": [
                   [
                     "primis_atrisk",
@@ -11379,7 +11710,7 @@
             "url": "https://www.opencodelists.org/codelist/primis-covid19-vacc-uptake/astrxm2/v2.5/",
             "variables": {
               "analysis/1-extract/dataset_definition_snapshot.py": {
-                "github_url": "https://github.com/opensafely/covid-vaccine-history/blob/b29dc287d679d1c5ebd939488e6293811261c098/analysis/1-extract/dataset_definition_snapshot.py",
+                "github_url": "https://github.com/opensafely/covid-vaccine-history/blob/d3237236ec87ff8e03905d8b2f14f9f7c45665c8/analysis/1-extract/dataset_definition_snapshot.py",
                 "variables": [
                   [
                     "primis_atrisk",
@@ -11399,7 +11730,7 @@
             "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/dialysis_cod/20250627/",
             "variables": {
               "analysis/1-extract/dataset_definition_snapshot.py": {
-                "github_url": "https://github.com/opensafely/covid-vaccine-history/blob/b29dc287d679d1c5ebd939488e6293811261c098/analysis/1-extract/dataset_definition_snapshot.py",
+                "github_url": "https://github.com/opensafely/covid-vaccine-history/blob/d3237236ec87ff8e03905d8b2f14f9f7c45665c8/analysis/1-extract/dataset_definition_snapshot.py",
                 "variables": [
                   [
                     "rrt_cat",
@@ -11419,7 +11750,7 @@
             "url": "https://www.opencodelists.org/codelist/nhsd-primary-care-domain-refsets/renaltransp_cod/20250627/",
             "variables": {
               "analysis/1-extract/dataset_definition_snapshot.py": {
-                "github_url": "https://github.com/opensafely/covid-vaccine-history/blob/b29dc287d679d1c5ebd939488e6293811261c098/analysis/1-extract/dataset_definition_snapshot.py",
+                "github_url": "https://github.com/opensafely/covid-vaccine-history/blob/d3237236ec87ff8e03905d8b2f14f9f7c45665c8/analysis/1-extract/dataset_definition_snapshot.py",
                 "variables": [
                   [
                     "rrt_cat",
@@ -11439,7 +11770,7 @@
             "url": "https://www.opencodelists.org/codelist/nhsd/sickle-spl-atriskv4-snomed-ct/7083ed37/",
             "variables": {
               "analysis/1-extract/dataset_definition_snapshot.py": {
-                "github_url": "https://github.com/opensafely/covid-vaccine-history/blob/b29dc287d679d1c5ebd939488e6293811261c098/analysis/1-extract/dataset_definition_snapshot.py",
+                "github_url": "https://github.com/opensafely/covid-vaccine-history/blob/d3237236ec87ff8e03905d8b2f14f9f7c45665c8/analysis/1-extract/dataset_definition_snapshot.py",
                 "variables": [
                   [
                     "sickle_cell",
@@ -25165,7 +25496,7 @@
             "url": "https://www.opencodelists.org/codelist/opensafely/ethnicity-snomed-0removed/22911876/",
             "variables": {
               "analysis/dataset_definition_census_cohorts.py": {
-                "github_url": "https://github.com/opensafely/migration-short-data-report/blob/8c027b06cdceb0bbe7d3d37b15f08d6c7e1a3674/analysis/dataset_definition_census_cohorts.py",
+                "github_url": "https://github.com/opensafely/migration-short-data-report/blob/a00933fbddaf36229d6771a02eb29a7a5aa71427/analysis/dataset_definition_census_cohorts.py",
                 "variables": [
                   [
                     "latest_ethnicity_16_level_group",
@@ -25182,19 +25513,11 @@
                   [
                     "latest_ethnicity_code",
                     86
-                  ],
-                  [
-                    "mig_status_3_cat",
-                    108
-                  ],
-                  [
-                    "mig_status_6_cat",
-                    113
                   ]
                 ]
               },
               "analysis/dataset_definition_full_study_cohort.py": {
-                "github_url": "https://github.com/opensafely/migration-short-data-report/blob/8c027b06cdceb0bbe7d3d37b15f08d6c7e1a3674/analysis/dataset_definition_full_study_cohort.py",
+                "github_url": "https://github.com/opensafely/migration-short-data-report/blob/a00933fbddaf36229d6771a02eb29a7a5aa71427/analysis/dataset_definition_full_study_cohort.py",
                 "variables": [
                   [
                     "latest_ethnicity_16_level_group",
@@ -25211,14 +25534,6 @@
                   [
                     "latest_ethnicity_code",
                     87
-                  ],
-                  [
-                    "mig_status_3_cat",
-                    134
-                  ],
-                  [
-                    "mig_status_6_cat",
-                    139
                   ]
                 ]
               }
@@ -25247,7 +25562,7 @@
             "url": "https://www.opencodelists.org/codelist/opensafely/migration-status/4095ab22/",
             "variables": {
               "analysis/dataset_definition_census_cohorts.py": {
-                "github_url": "https://github.com/opensafely/migration-short-data-report/blob/8c027b06cdceb0bbe7d3d37b15f08d6c7e1a3674/analysis/dataset_definition_census_cohorts.py",
+                "github_url": "https://github.com/opensafely/migration-short-data-report/blob/a00933fbddaf36229d6771a02eb29a7a5aa71427/analysis/dataset_definition_census_cohorts.py",
                 "variables": [
                   [
                     "mig_status_2_cat",
@@ -25259,20 +25574,20 @@
                   ],
                   [
                     "mig_status_6_cat",
-                    113
+                    111
                   ]
                 ]
               },
               "analysis/dataset_definition_full_study_cohort.py": {
-                "github_url": "https://github.com/opensafely/migration-short-data-report/blob/8c027b06cdceb0bbe7d3d37b15f08d6c7e1a3674/analysis/dataset_definition_full_study_cohort.py",
+                "github_url": "https://github.com/opensafely/migration-short-data-report/blob/a00933fbddaf36229d6771a02eb29a7a5aa71427/analysis/dataset_definition_full_study_cohort.py",
                 "variables": [
                   [
                     "date_of_entry_and_other_migration_code",
-                    215
+                    213
                   ],
                   [
                     "date_of_first_migration_code",
-                    227
+                    226
                   ],
                   [
                     "mig_status_2_cat",
@@ -25284,23 +25599,31 @@
                   ],
                   [
                     "mig_status_6_cat",
-                    139
+                    137
                   ],
                   [
                     "number_of_migration_codes",
-                    152
+                    149
                   ],
                   [
                     "number_of_migration_codes_at_any_time",
-                    159
+                    156
                   ],
                   [
-                    "time_to_first_migration_code_days",
+                    "time_from_1st_pracreg_first_migration_code_days",
+                    231
+                  ],
+                  [
+                    "time_from_1st_pracreg_first_migration_code_months",
                     232
                   ],
                   [
-                    "time_to_first_migration_code_months",
-                    233
+                    "time_from_birth_first_migration_code_days",
+                    239
+                  ],
+                  [
+                    "time_from_birth_first_migration_code_months",
+                    240
                   ]
                 ]
               }
@@ -25313,7 +25636,7 @@
             "url": "https://www.opencodelists.org/codelist/opensafely/born-in-the-uk/4aa36068/",
             "variables": {
               "analysis/dataset_definition_census_cohorts.py": {
-                "github_url": "https://github.com/opensafely/migration-short-data-report/blob/8c027b06cdceb0bbe7d3d37b15f08d6c7e1a3674/analysis/dataset_definition_census_cohorts.py",
+                "github_url": "https://github.com/opensafely/migration-short-data-report/blob/a00933fbddaf36229d6771a02eb29a7a5aa71427/analysis/dataset_definition_census_cohorts.py",
                 "variables": [
                   [
                     "mig_status_2_cat",
@@ -25325,12 +25648,12 @@
                   ],
                   [
                     "mig_status_6_cat",
-                    113
+                    111
                   ]
                 ]
               },
               "analysis/dataset_definition_full_study_cohort.py": {
-                "github_url": "https://github.com/opensafely/migration-short-data-report/blob/8c027b06cdceb0bbe7d3d37b15f08d6c7e1a3674/analysis/dataset_definition_full_study_cohort.py",
+                "github_url": "https://github.com/opensafely/migration-short-data-report/blob/a00933fbddaf36229d6771a02eb29a7a5aa71427/analysis/dataset_definition_full_study_cohort.py",
                 "variables": [
                   [
                     "mig_status_2_cat",
@@ -25342,7 +25665,7 @@
                   ],
                   [
                     "mig_status_6_cat",
-                    139
+                    137
                   ]
                 ]
               }
@@ -25355,7 +25678,7 @@
             "url": "https://www.opencodelists.org/codelist/opensafely/born-outside-the-uk/1d23465b/",
             "variables": {
               "analysis/dataset_definition_census_cohorts.py": {
-                "github_url": "https://github.com/opensafely/migration-short-data-report/blob/8c027b06cdceb0bbe7d3d37b15f08d6c7e1a3674/analysis/dataset_definition_census_cohorts.py",
+                "github_url": "https://github.com/opensafely/migration-short-data-report/blob/a00933fbddaf36229d6771a02eb29a7a5aa71427/analysis/dataset_definition_census_cohorts.py",
                 "variables": [
                   [
                     "mig_status_2_cat",
@@ -25367,12 +25690,12 @@
                   ],
                   [
                     "mig_status_6_cat",
-                    113
+                    111
                   ]
                 ]
               },
               "analysis/dataset_definition_full_study_cohort.py": {
-                "github_url": "https://github.com/opensafely/migration-short-data-report/blob/8c027b06cdceb0bbe7d3d37b15f08d6c7e1a3674/analysis/dataset_definition_full_study_cohort.py",
+                "github_url": "https://github.com/opensafely/migration-short-data-report/blob/a00933fbddaf36229d6771a02eb29a7a5aa71427/analysis/dataset_definition_full_study_cohort.py",
                 "variables": [
                   [
                     "mig_status_2_cat",
@@ -25384,7 +25707,7 @@
                   ],
                   [
                     "mig_status_6_cat",
-                    139
+                    137
                   ]
                 ]
               }
@@ -25397,7 +25720,7 @@
             "url": "https://www.opencodelists.org/codelist/opensafely/immigration-status-excl-refugee-asylum/1ca8661b/",
             "variables": {
               "analysis/dataset_definition_census_cohorts.py": {
-                "github_url": "https://github.com/opensafely/migration-short-data-report/blob/8c027b06cdceb0bbe7d3d37b15f08d6c7e1a3674/analysis/dataset_definition_census_cohorts.py",
+                "github_url": "https://github.com/opensafely/migration-short-data-report/blob/a00933fbddaf36229d6771a02eb29a7a5aa71427/analysis/dataset_definition_census_cohorts.py",
                 "variables": [
                   [
                     "mig_status_2_cat",
@@ -25409,12 +25732,12 @@
                   ],
                   [
                     "mig_status_6_cat",
-                    113
+                    111
                   ]
                 ]
               },
               "analysis/dataset_definition_full_study_cohort.py": {
-                "github_url": "https://github.com/opensafely/migration-short-data-report/blob/8c027b06cdceb0bbe7d3d37b15f08d6c7e1a3674/analysis/dataset_definition_full_study_cohort.py",
+                "github_url": "https://github.com/opensafely/migration-short-data-report/blob/a00933fbddaf36229d6771a02eb29a7a5aa71427/analysis/dataset_definition_full_study_cohort.py",
                 "variables": [
                   [
                     "mig_status_2_cat",
@@ -25426,7 +25749,7 @@
                   ],
                   [
                     "mig_status_6_cat",
-                    139
+                    137
                   ]
                 ]
               }
@@ -25439,7 +25762,7 @@
             "url": "https://www.opencodelists.org/codelist/opensafely/asylum-or-refugee-status/209cb9e0/",
             "variables": {
               "analysis/dataset_definition_census_cohorts.py": {
-                "github_url": "https://github.com/opensafely/migration-short-data-report/blob/8c027b06cdceb0bbe7d3d37b15f08d6c7e1a3674/analysis/dataset_definition_census_cohorts.py",
+                "github_url": "https://github.com/opensafely/migration-short-data-report/blob/a00933fbddaf36229d6771a02eb29a7a5aa71427/analysis/dataset_definition_census_cohorts.py",
                 "variables": [
                   [
                     "mig_status_2_cat",
@@ -25451,12 +25774,12 @@
                   ],
                   [
                     "mig_status_6_cat",
-                    113
+                    111
                   ]
                 ]
               },
               "analysis/dataset_definition_full_study_cohort.py": {
-                "github_url": "https://github.com/opensafely/migration-short-data-report/blob/8c027b06cdceb0bbe7d3d37b15f08d6c7e1a3674/analysis/dataset_definition_full_study_cohort.py",
+                "github_url": "https://github.com/opensafely/migration-short-data-report/blob/a00933fbddaf36229d6771a02eb29a7a5aa71427/analysis/dataset_definition_full_study_cohort.py",
                 "variables": [
                   [
                     "mig_status_2_cat",
@@ -25468,7 +25791,7 @@
                   ],
                   [
                     "mig_status_6_cat",
-                    139
+                    137
                   ]
                 ]
               }
@@ -25481,7 +25804,7 @@
             "url": "https://www.opencodelists.org/codelist/opensafely/english-not-main-language/5c450c53/",
             "variables": {
               "analysis/dataset_definition_census_cohorts.py": {
-                "github_url": "https://github.com/opensafely/migration-short-data-report/blob/8c027b06cdceb0bbe7d3d37b15f08d6c7e1a3674/analysis/dataset_definition_census_cohorts.py",
+                "github_url": "https://github.com/opensafely/migration-short-data-report/blob/a00933fbddaf36229d6771a02eb29a7a5aa71427/analysis/dataset_definition_census_cohorts.py",
                 "variables": [
                   [
                     "mig_status_2_cat",
@@ -25493,12 +25816,12 @@
                   ],
                   [
                     "mig_status_6_cat",
-                    113
+                    111
                   ]
                 ]
               },
               "analysis/dataset_definition_full_study_cohort.py": {
-                "github_url": "https://github.com/opensafely/migration-short-data-report/blob/8c027b06cdceb0bbe7d3d37b15f08d6c7e1a3674/analysis/dataset_definition_full_study_cohort.py",
+                "github_url": "https://github.com/opensafely/migration-short-data-report/blob/a00933fbddaf36229d6771a02eb29a7a5aa71427/analysis/dataset_definition_full_study_cohort.py",
                 "variables": [
                   [
                     "mig_status_2_cat",
@@ -25510,7 +25833,7 @@
                   ],
                   [
                     "mig_status_6_cat",
-                    139
+                    137
                   ]
                 ]
               }
@@ -25523,7 +25846,7 @@
             "url": "https://www.opencodelists.org/codelist/opensafely/interpreter-required/556e6040/",
             "variables": {
               "analysis/dataset_definition_census_cohorts.py": {
-                "github_url": "https://github.com/opensafely/migration-short-data-report/blob/8c027b06cdceb0bbe7d3d37b15f08d6c7e1a3674/analysis/dataset_definition_census_cohorts.py",
+                "github_url": "https://github.com/opensafely/migration-short-data-report/blob/a00933fbddaf36229d6771a02eb29a7a5aa71427/analysis/dataset_definition_census_cohorts.py",
                 "variables": [
                   [
                     "mig_status_2_cat",
@@ -25535,12 +25858,12 @@
                   ],
                   [
                     "mig_status_6_cat",
-                    113
+                    111
                   ]
                 ]
               },
               "analysis/dataset_definition_full_study_cohort.py": {
-                "github_url": "https://github.com/opensafely/migration-short-data-report/blob/8c027b06cdceb0bbe7d3d37b15f08d6c7e1a3674/analysis/dataset_definition_full_study_cohort.py",
+                "github_url": "https://github.com/opensafely/migration-short-data-report/blob/a00933fbddaf36229d6771a02eb29a7a5aa71427/analysis/dataset_definition_full_study_cohort.py",
                 "variables": [
                   [
                     "mig_status_2_cat",
@@ -25552,7 +25875,49 @@
                   ],
                   [
                     "mig_status_6_cat",
-                    139
+                    137
+                  ]
+                ]
+              }
+            }
+          },
+          {
+            "name": "British ethnicities",
+            "system": "snomedct",
+            "system_release": "41.2.1 (valid from 2026-01-21)",
+            "url": "https://www.opencodelists.org/codelist/opensafely/british-ethnicities/6a897fb0/",
+            "variables": {
+              "analysis/dataset_definition_census_cohorts.py": {
+                "github_url": "https://github.com/opensafely/migration-short-data-report/blob/a00933fbddaf36229d6771a02eb29a7a5aa71427/analysis/dataset_definition_census_cohorts.py",
+                "variables": [
+                  [
+                    "mig_status_2_cat",
+                    106
+                  ],
+                  [
+                    "mig_status_3_cat",
+                    108
+                  ],
+                  [
+                    "mig_status_6_cat",
+                    111
+                  ]
+                ]
+              },
+              "analysis/dataset_definition_full_study_cohort.py": {
+                "github_url": "https://github.com/opensafely/migration-short-data-report/blob/a00933fbddaf36229d6771a02eb29a7a5aa71427/analysis/dataset_definition_full_study_cohort.py",
+                "variables": [
+                  [
+                    "mig_status_2_cat",
+                    132
+                  ],
+                  [
+                    "mig_status_3_cat",
+                    134
+                  ],
+                  [
+                    "mig_status_6_cat",
+                    137
                   ]
                 ]
               }
@@ -46477,7 +46842,7 @@
             "url": "https://www.opencodelists.org/codelist/opensafely/covid-19-identification-prescriptions-dmd/32e73c2e/",
             "variables": {
               "analysis/dataset.py": {
-                "github_url": "https://github.com/opensafely/winter-pressures-phase-II/blob/31417e2b1f745f7d2e34a5371b471e23dcc5771f/analysis/dataset.py",
+                "github_url": "https://github.com/opensafely/winter-pressures-phase-II/blob/4d95049d8d6058f9a79458520393edd8ebf43345/analysis/dataset.py",
                 "variables": [
                   [
                     "covid_sensitive",
@@ -46498,7 +46863,7 @@
             "url": "https://www.opencodelists.org/codelist/opensafely/ethnicity-snomed-0removed/22911876/",
             "variables": {
               "analysis/dataset.py": {
-                "github_url": "https://github.com/opensafely/winter-pressures-phase-II/blob/31417e2b1f745f7d2e34a5371b471e23dcc5771f/analysis/dataset.py",
+                "github_url": "https://github.com/opensafely/winter-pressures-phase-II/blob/4d95049d8d6058f9a79458520393edd8ebf43345/analysis/dataset.py",
                 "variables": [
                   [
                     "ethnicity",
@@ -46515,7 +46880,7 @@
             "url": "https://www.opencodelists.org/codelist/user/emprestige/influenza-identification-prescriptions-maximal-sensitivity-dmd/4bf6af63/",
             "variables": {
               "analysis/dataset.py": {
-                "github_url": "https://github.com/opensafely/winter-pressures-phase-II/blob/31417e2b1f745f7d2e34a5371b471e23dcc5771f/analysis/dataset.py",
+                "github_url": "https://github.com/opensafely/winter-pressures-phase-II/blob/4d95049d8d6058f9a79458520393edd8ebf43345/analysis/dataset.py",
                 "variables": [
                   [
                     "flu_sensitive",
@@ -46556,7 +46921,7 @@
             "url": "https://www.opencodelists.org/codelist/opensafely/covid-19-exclusion-primary-care-maximal-sensitivity/054bfdf8/",
             "variables": {
               "analysis/dataset.py": {
-                "github_url": "https://github.com/opensafely/winter-pressures-phase-II/blob/31417e2b1f745f7d2e34a5371b471e23dcc5771f/analysis/dataset.py",
+                "github_url": "https://github.com/opensafely/winter-pressures-phase-II/blob/4d95049d8d6058f9a79458520393edd8ebf43345/analysis/dataset.py",
                 "variables": [
                   [
                     "covid_sensitive",
@@ -46577,7 +46942,7 @@
             "url": "https://www.opencodelists.org/codelist/opensafely/influenza-exclusion-primary-care-maximal-sensitivity/6989cacc/",
             "variables": {
               "analysis/dataset.py": {
-                "github_url": "https://github.com/opensafely/winter-pressures-phase-II/blob/31417e2b1f745f7d2e34a5371b471e23dcc5771f/analysis/dataset.py",
+                "github_url": "https://github.com/opensafely/winter-pressures-phase-II/blob/4d95049d8d6058f9a79458520393edd8ebf43345/analysis/dataset.py",
                 "variables": [
                   [
                     "flu_sensitive",
@@ -46602,7 +46967,7 @@
             "url": "https://www.opencodelists.org/codelist/user/martinaf/online-consultations-snomed-v01/28bba9bc/",
             "variables": {
               "analysis/dataset.py": {
-                "github_url": "https://github.com/opensafely/winter-pressures-phase-II/blob/31417e2b1f745f7d2e34a5371b471e23dcc5771f/analysis/dataset.py",
+                "github_url": "https://github.com/opensafely/winter-pressures-phase-II/blob/4d95049d8d6058f9a79458520393edd8ebf43345/analysis/dataset.py",
                 "variables": [
                   [
                     "online_consult",
@@ -46619,7 +46984,7 @@
             "url": "https://www.opencodelists.org/codelist/bristol/asthma_exacerbations_snomed/137bfd26/",
             "variables": {
               "analysis/dataset.py": {
-                "github_url": "https://github.com/opensafely/winter-pressures-phase-II/blob/31417e2b1f745f7d2e34a5371b471e23dcc5771f/analysis/dataset.py",
+                "github_url": "https://github.com/opensafely/winter-pressures-phase-II/blob/4d95049d8d6058f9a79458520393edd8ebf43345/analysis/dataset.py",
                 "variables": [
                   [
                     "overall_resp_sensitive",
@@ -46636,7 +47001,7 @@
             "url": "https://www.opencodelists.org/codelist/bristol/copd-exacerbations-snomed/162ebd1c/",
             "variables": {
               "analysis/dataset.py": {
-                "github_url": "https://github.com/opensafely/winter-pressures-phase-II/blob/31417e2b1f745f7d2e34a5371b471e23dcc5771f/analysis/dataset.py",
+                "github_url": "https://github.com/opensafely/winter-pressures-phase-II/blob/4d95049d8d6058f9a79458520393edd8ebf43345/analysis/dataset.py",
                 "variables": [
                   [
                     "overall_resp_sensitive",
@@ -46653,7 +47018,7 @@
             "url": "https://www.opencodelists.org/codelist/opensafely/rsv-identification-prescriptions-maximal-sensitivity-dmd/210e3123/",
             "variables": {
               "analysis/dataset.py": {
-                "github_url": "https://github.com/opensafely/winter-pressures-phase-II/blob/31417e2b1f745f7d2e34a5371b471e23dcc5771f/analysis/dataset.py",
+                "github_url": "https://github.com/opensafely/winter-pressures-phase-II/blob/4d95049d8d6058f9a79458520393edd8ebf43345/analysis/dataset.py",
                 "variables": [
                   [
                     "overall_resp_sensitive",
@@ -46674,7 +47039,7 @@
             "url": "https://www.opencodelists.org/codelist/opensafely/rsv-exclusion-primary-care-maximal-sensitivity/02993e02/",
             "variables": {
               "analysis/dataset.py": {
-                "github_url": "https://github.com/opensafely/winter-pressures-phase-II/blob/31417e2b1f745f7d2e34a5371b471e23dcc5771f/analysis/dataset.py",
+                "github_url": "https://github.com/opensafely/winter-pressures-phase-II/blob/4d95049d8d6058f9a79458520393edd8ebf43345/analysis/dataset.py",
                 "variables": [
                   [
                     "overall_resp_sensitive",

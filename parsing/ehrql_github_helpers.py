@@ -6,6 +6,7 @@ import re
 import subprocess
 import sys
 import time
+from datetime import UTC, datetime, timedelta
 
 import yaml
 from tqdm import tqdm
@@ -33,6 +34,12 @@ RETRYABLE_ERROR_SNIPPETS = (
 _PROJECT_YAML_CACHE: dict[str, list[str]] = {}
 _PROJECT_YAML_CACHE_FILE = pathlib.Path(".project_yaml_cache.json")
 _PROJECT_YAML_CACHE_MODIFIED = False
+
+_REPO_HEADS_CACHE_FILE = pathlib.Path(".repo_heads_cache.json")
+_REPO_HEADS_INCREMENTAL_OVERLAP_HOURS = 24
+_REPO_HEADS_FULL_SYNC_INTERVAL_HOURS = 24
+_REPO_HEADS_FULL_SYNC_PAGE_SIZE = 100
+_REPO_HEADS_INCREMENTAL_PAGE_SIZE = 20
 
 
 class GitHubError(RuntimeError):
@@ -167,6 +174,72 @@ def _save_project_yaml_cache() -> None:
         except OSError:
             # Ignore save errors - cache is just an optimization
             pass
+
+
+def _utc_now() -> datetime:
+    return datetime.now(UTC)
+
+
+def _to_iso8601_utc(dt: datetime) -> str:
+    return dt.astimezone(UTC).isoformat().replace("+00:00", "Z")
+
+
+def _parse_iso8601_utc(value: str | None) -> datetime | None:
+    if not value:
+        return None
+    try:
+        return datetime.fromisoformat(value.replace("Z", "+00:00")).astimezone(UTC)
+    except ValueError:
+        return None
+
+
+def _load_repo_heads_cache() -> dict:
+    if not _REPO_HEADS_CACHE_FILE.exists():
+        return {}
+    try:
+        with open(_REPO_HEADS_CACHE_FILE, encoding="utf-8") as f:
+            data = json.load(f)
+        if not isinstance(data, dict):
+            return {}
+        repos = data.get("repos", {})
+        if not isinstance(repos, dict):
+            repos = {}
+        # Backward compatibility: older cache may store repo -> sha (string)
+        # instead of repo -> {"sha": ..., "pushed_at": ...}.
+        normalized_repos = {}
+        for repo_name, repo_data in repos.items():
+            if isinstance(repo_data, dict):
+                sha = repo_data.get("sha")
+                if sha:
+                    normalized_repos[repo_name] = {
+                        "sha": sha,
+                        "pushed_at": repo_data.get("pushed_at"),
+                    }
+            elif isinstance(repo_data, str) and repo_data:
+                normalized_repos[repo_name] = {"sha": repo_data, "pushed_at": None}
+        data["repos"] = normalized_repos
+        return data
+    except (OSError, json.JSONDecodeError):
+        return {}
+
+
+def _save_repo_heads_cache(cache_data: dict) -> None:
+    try:
+        with open(_REPO_HEADS_CACHE_FILE, "w", encoding="utf-8") as f:
+            json.dump(cache_data, f, indent=2, sort_keys=True)
+            f.write("\n")
+    except OSError:
+        # Ignore save errors - cache is just an optimization
+        pass
+
+
+def _should_force_full_repo_heads_sync(cache_data: dict) -> bool:
+    repos = cache_data.get("repos", {})
+    last_full_sync_at = _parse_iso8601_utc(cache_data.get("last_full_sync_at"))
+    if not repos or not last_full_sync_at:
+        return True
+    max_age = timedelta(hours=_REPO_HEADS_FULL_SYNC_INTERVAL_HOURS)
+    return (_utc_now() - last_full_sync_at) > max_age
 
 
 def run_gh(args: list[str], expect_json: bool = True) -> dict | list | str:
@@ -324,6 +397,7 @@ def parse_jobs_csv(csv_path: pathlib.Path) -> dict[str, list[str]]:
 
 def get_all_repos_with_shas_graphql(
     repo_filter: list[str] | None = None,
+    verbose: bool = False,
 ) -> dict[str, str]:
     """Fetch repos in opensafely org with their HEAD SHAs using GraphQL with pagination.
 
@@ -340,11 +414,8 @@ def get_all_repos_with_shas_graphql(
 
     Returns dict of {repo_name: sha} e.g. {'covid-project': 'abc123...'}
     """
-    repos_with_shas: dict[str, str] = {}
-
     if repo_filter:
         # Fast path: fetch specific repos by name
-        # Build query to fetch each repo individually
         repo_queries = []
         for i, repo_name in enumerate(repo_filter):
             alias = f"repo{i}"
@@ -360,10 +431,10 @@ def get_all_repos_with_shas_graphql(
                 file=sys.stderr,
             )
             data = run_gh(["api", "graphql", "-f", f"query={query}"])
-
             if "errors" in data:
                 raise GitHubError(f"GraphQL error: {data['errors']}")
 
+            repos_with_shas: dict[str, str] = {}
             for i, repo_name in enumerate(repo_filter):
                 alias = f"repo{i}"
                 repo_data = data.get("data", {}).get(alias)
@@ -374,26 +445,30 @@ def get_all_repos_with_shas_graphql(
                 ):
                     oid = repo_data["defaultBranchRef"]["target"]["oid"]
                     repos_with_shas[repo_name.replace("opensafely/", "")] = oid
-                else:
-                    if repo_data is None:
-                        print(
-                            f"  Warning: Repo '{repo_name}' not found in opensafely org",
-                            file=sys.stderr,
-                        )
+                elif repo_data is None:
+                    print(
+                        f"  Warning: Repo '{repo_name}' not found in opensafely org",
+                        file=sys.stderr,
+                    )
 
             print(f"  Got {len(repos_with_shas)} repos", file=sys.stderr)
+            return repos_with_shas
         except Exception as e:
             raise GitHubError(f"Failed to fetch specific repos via GraphQL: {e}") from e
-    else:
-        # Slow path: fetch all repos with pagination
-        after_cursor = None
 
-        query = """
+    cache_data = _load_repo_heads_cache()
+    cache_repos: dict[str, dict] = cache_data.get("repos", {})
+    now = _utc_now()
+    force_full_sync = _should_force_full_repo_heads_sync(cache_data)
+    after_cursor = None
+
+    query = """
 query($org: String!, $first: Int!, $after: String) {
   organization(login: $org) {
-    repositories(first: $first, after: $after, privacy: PUBLIC) {
+    repositories(first: $first, after: $after, privacy: PUBLIC, orderBy: {field: PUSHED_AT, direction: DESC}) {
       nodes {
         name
+        pushedAt
         defaultBranchRef {
           target {
             ... on Commit {
@@ -411,9 +486,17 @@ query($org: String!, $first: Int!, $after: String) {
 }
 """
 
+    if force_full_sync:
+        if verbose:
+            print(
+                "Repo heads cache miss/stale: running full GraphQL sync",
+                file=sys.stderr,
+            )
+
+        page = 0
         while True:
-            cmd = [
-                "gh",
+            page += 1
+            args = [
                 "api",
                 "graphql",
                 "-f",
@@ -421,38 +504,154 @@ query($org: String!, $first: Int!, $after: String) {
                 "-f",
                 "org=opensafely",
                 "-F",
-                "first=100",
+                f"first={_REPO_HEADS_FULL_SYNC_PAGE_SIZE}",
             ]
-
             if after_cursor:
-                cmd.extend(["-f", f"after={after_cursor}"])
+                args.extend(["-f", f"after={after_cursor}"])
 
             try:
-                print("Fetching 100 repos via GraphQL...", file=sys.stderr)
-                data = run_gh(cmd[1:])
                 print(
-                    f"Received data for {len(data.get('data', {}).get('organization', {}).get('repositories', {}).get('nodes', []))} repos",
+                    f"Fetching {_REPO_HEADS_FULL_SYNC_PAGE_SIZE} repos via GraphQL...",
                     file=sys.stderr,
                 )
+                data = run_gh(args)
                 if "errors" in data:
                     raise GitHubError(f"GraphQL error: {data['errors']}")
 
-                repos = data["data"]["organization"]["repositories"]
-                for node in repos["nodes"]:
-                    if node.get("defaultBranchRef") and node["defaultBranchRef"].get(
-                        "target"
-                    ):
-                        oid = node["defaultBranchRef"]["target"]["oid"]
-                        repos_with_shas[node["name"]] = oid
+                repos = (
+                    data.get("data", {}).get("organization", {}).get("repositories", {})
+                )
+                nodes = repos.get("nodes", [])
+                if verbose and page == 1:
+                    sample = [
+                        {
+                            "name": node.get("name"),
+                            "pushedAt": node.get("pushedAt"),
+                            "oid": (node.get("defaultBranchRef") or {})
+                            .get("target", {})
+                            .get("oid"),
+                        }
+                        for node in nodes[:10]
+                    ]
+                    print(
+                        f"Recent GraphQL sample (full sync, first page): {json.dumps(sample, indent=2)}",
+                        file=sys.stderr,
+                    )
 
-                if not repos["pageInfo"]["hasNextPage"]:
+                for node in nodes:
+                    repo_name = node.get("name")
+                    default_branch = node.get("defaultBranchRef") or {}
+                    target = default_branch.get("target") or {}
+                    oid = target.get("oid")
+                    if repo_name and oid:
+                        cache_repos[repo_name] = {
+                            "sha": oid,
+                            "pushed_at": node.get("pushedAt"),
+                        }
+
+                page_info = repos.get("pageInfo", {})
+                if not page_info.get("hasNextPage"):
                     break
-
-                after_cursor = repos["pageInfo"]["endCursor"]
+                after_cursor = page_info.get("endCursor")
             except Exception as e:
                 raise GitHubError(f"Failed to fetch repos via GraphQL: {e}") from e
 
-    return repos_with_shas
+        cache_data["repos"] = cache_repos
+        cache_data["last_checked_at"] = _to_iso8601_utc(now)
+        cache_data["last_full_sync_at"] = _to_iso8601_utc(now)
+        _save_repo_heads_cache(cache_data)
+    else:
+        last_checked_at = _parse_iso8601_utc(cache_data.get("last_checked_at"))
+        if not last_checked_at:
+            last_checked_at = now - timedelta(
+                hours=_REPO_HEADS_INCREMENTAL_OVERLAP_HOURS
+            )
+        cutoff = last_checked_at - timedelta(
+            hours=_REPO_HEADS_INCREMENTAL_OVERLAP_HOURS
+        )
+
+        print(
+            f"Looking for repos updated since cutoff={_to_iso8601_utc(cutoff)} (24h overlap)",
+            file=sys.stderr,
+        )
+
+        page = 0
+        while True:
+            page += 1
+            args = [
+                "api",
+                "graphql",
+                "-f",
+                f"query={query}",
+                "-f",
+                "org=opensafely",
+                "-F",
+                f"first={_REPO_HEADS_INCREMENTAL_PAGE_SIZE}",
+            ]
+            if after_cursor:
+                args.extend(["-f", f"after={after_cursor}"])
+
+            try:
+                print(
+                    f"Fetching {_REPO_HEADS_INCREMENTAL_PAGE_SIZE} repos via GraphQL (incremental)...",
+                    file=sys.stderr,
+                )
+                data = run_gh(args)
+                if "errors" in data:
+                    raise GitHubError(f"GraphQL error: {data['errors']}")
+
+                repos = (
+                    data.get("data", {}).get("organization", {}).get("repositories", {})
+                )
+                nodes = repos.get("nodes", [])
+
+                if not nodes:
+                    break
+
+                oldest_pushed_at_in_page = None
+                for node in nodes:
+                    repo_name = node.get("name")
+                    default_branch = node.get("defaultBranchRef") or {}
+                    target = default_branch.get("target") or {}
+                    oid = target.get("oid")
+                    pushed_at_raw = node.get("pushedAt")
+                    pushed_at = _parse_iso8601_utc(pushed_at_raw)
+                    if pushed_at is not None:
+                        oldest_pushed_at_in_page = pushed_at
+
+                    if repo_name and oid:
+                        cache_repos[repo_name] = {
+                            "sha": oid,
+                            "pushed_at": pushed_at_raw,
+                        }
+
+                page_info = repos.get("pageInfo", {})
+                if not page_info.get("hasNextPage"):
+                    break
+
+                # Results are sorted by pushedAt DESC; once the oldest entry in the page
+                # is at/before cutoff, all subsequent pages will also be at/before cutoff.
+                if oldest_pushed_at_in_page and oldest_pushed_at_in_page <= cutoff:
+                    print(
+                        f"Reached cutoff with oldest_pushed_at_in_page={_to_iso8601_utc(oldest_pushed_at_in_page)}, stopping incremental sync",
+                        file=sys.stderr,
+                    )
+                    break
+                after_cursor = page_info.get("endCursor")
+            except Exception as e:
+                raise GitHubError(
+                    f"Failed to fetch repos via incremental GraphQL sync: {e}"
+                ) from e
+
+        cache_data["repos"] = cache_repos
+        cache_data["last_checked_at"] = _to_iso8601_utc(now)
+        _save_repo_heads_cache(cache_data)
+
+    return {
+        repo_name: repo_data["sha"]
+        for repo_name, repo_data in cache_repos.items()
+        if isinstance(repo_data, dict) and repo_data.get("sha")
+    }
 
 
 def project_yaml_search(
@@ -490,7 +689,9 @@ def project_yaml_search(
 
     # Use GraphQL to get all repos with SHAs in ~4 calls instead of 300+
     # Pass repo_filter if specific repos were requested
-    repos_with_shas = get_all_repos_with_shas_graphql(repo_filter=repos)
+    repos_with_shas = get_all_repos_with_shas_graphql(
+        repo_filter=repos, verbose=verbose
+    )
 
     if verbose:
         print(f"Found {len(repos_with_shas)} repos in opensafely org", file=sys.stderr)
