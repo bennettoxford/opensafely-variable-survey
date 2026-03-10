@@ -233,6 +233,12 @@ def _get_latest_codelist_data():
                                         "system_release": metadata.get(
                                             "coding_system_release", "<LOOKUP_FAILED>"
                                         ),
+                                        "creation_method": metadata.get(
+                                            "creation_method", "<LOOKUP_FAILED>"
+                                        ),
+                                        "owner": metadata.get(
+                                            "owner", "<LOOKUP_FAILED>"
+                                        ),
                                         "variables": variable_object,
                                     }
 
@@ -298,6 +304,7 @@ def _get_rsi_data():
                     "coding_system": coding_system,
                     "coding_system_release": coding_system_release,
                     "creation_method": version.get("creation_method", ""),
+                    "owner": entry.get("owner", ""),
                 }
 
                 # Create entries for both tag and hash based slugs

@@ -48,6 +48,7 @@ def main():
             "newer_version": {"codelists": []},
             "ethnicity_codelist": False,
             "potentially_missing_codes": {"codelists": []},
+            "potentially_missing_codes_csv": {"codelists": []},
         }
 
         bad_codelists = set()
@@ -112,8 +113,19 @@ def main():
             if not codelist["url"].endswith(
                 ".csv"
             ) and codelist_version_not_compatible_with_latest_release(codelist["url"]):
-                repo_output["potentially_missing_codes"]["codelists"].append(codelist)
-                bad_codelists.add(codelist["url"])
+                if codelist["creation_method"] == "Uploaded":
+                    # Only want to flag builder ones. If an uploaded, then we flag as long
+                    # as it's not from an org that we trust
+                    if codelist["owner"] not in ["NHSD Primary Care Domain Refsets"]:
+                        repo_output["potentially_missing_codes_csv"][
+                            "codelists"
+                        ].append(codelist)
+                        bad_codelists.add(codelist["url"])
+                else:
+                    repo_output["potentially_missing_codes"]["codelists"].append(
+                        codelist
+                    )
+                    bad_codelists.add(codelist["url"])
 
         # Add the remaining "good" codelists
         for codelist in codelists.get("codelists", []):
