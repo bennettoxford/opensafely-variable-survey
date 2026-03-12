@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-03-10 14:31:24",
+  "generated_at": "2026-03-12 17:43:54",
   "projects": {
     "opensafely/ACT-PharmacyFirst-Protocol2-healthcare-usage": {
       "7e2be9801ec20b6ffe36319ee4afb09a29469618": "6287dd3696d74183"
@@ -11,7 +11,7 @@
       "f231b4fe63bc06caba1e9888821063fb83ce0920": "3c721f711de67006"
     },
     "opensafely/COMPARES-vaccines-Autumn-2024": {
-      "f231b4fe63bc06caba1e9888821063fb83ce0920": "3c721f711de67006"
+      "9a44b70f7c68bbec13e6da0cfbf74072f77e1f1c": "3c721f711de67006"
     },
     "opensafely/COVID-19_vacci_and_MACE_after_hip_fracture": {
       "bb5e2b673a060c341f31cee75abba4fde0658a41": "dca8512ebb14c355"
@@ -44,7 +44,7 @@
       "d78d87bbba2bd006148aaadd4c1a8e6ba6783103": "f30caea0c4aa327a"
     },
     "opensafely/covid-vaccine-history": {
-      "d3237236ec87ff8e03905d8b2f14f9f7c45665c8": "0a453342ec9f5461"
+      "dc6fa426a061cab0940510bcfd8be6ca7e3d7581": "0a453342ec9f5461"
     },
     "opensafely/curation-variables-library": {
       "fddc6fb3479afa9ebcabf5badb6105d9ba4313bf": "68a5042024fd8223"
@@ -116,7 +116,7 @@
       "da5f60f5e0dd5f3a2d0ae1affd5e3e83a1106e7e": "bee52e6e8d7ec08c"
     },
     "opensafely/migration-short-data-report": {
-      "4e669124dcf246b502022bbcc119127db68a9dc8": "c601b7bd3a68f0d1"
+      "3923cc9929a64d4f5ffab5e9bc1869b6cfddbce9": "f0fc37f77cbd22e6"
     },
     "opensafely/open-pathology": {
       "9c408aa1af2edd033bfadfe3674e5b1224d5c7ef": "c6478fe546b3005c"
@@ -212,7 +212,7 @@
       "c0b16e129b2149551d9fa92248df86699d31ebc9": "8e62c5701a338e13"
     },
     "opensafely/winter-pressures-phase-II": {
-      "4d95049d8d6058f9a79458520393edd8ebf43345": "baf8f3f88aec82c0"
+      "2ff54bee4627fdab7d25d21d3223824627366c12": "baf8f3f88aec82c0"
     }
   },
   "signatures": {
@@ -26251,337 +26251,6 @@
         "tpp_death_during_study": []
       }
     },
-    "c601b7bd3a68f0d1": {
-      "_unused_codelists": [],
-      "analysis/dataset_definition_census_cohorts.py": {
-        "age_band": [],
-        "imd_decile": [],
-        "imd_quintile": [],
-        "latest_ethnicity_16_level_group": [
-          [
-            "/opensafely/ethnicity-snomed-0removed/22911876/",
-            "category_column=Label_16",
-            "column=code"
-          ]
-        ],
-        "latest_ethnicity_6_level_group": [
-          [
-            "/opensafely/ethnicity-snomed-0removed/22911876/",
-            "category_column=Label_6",
-            "column=code"
-          ],
-          [
-            "/opensafely/ethnicity-snomed-0removed/22911876/",
-            "category_column=Label_16",
-            "column=code"
-          ]
-        ],
-        "latest_ethnicity_code": [
-          [
-            "/opensafely/ethnicity-snomed-0removed/22911876/",
-            "category_column=Label_16",
-            "column=code"
-          ]
-        ],
-        "mig_status_2_cat": [
-          [
-            "/opensafely/migration-status/4095ab22/",
-            "column=code"
-          ],
-          [
-            "/opensafely/born-in-the-uk/4aa36068/",
-            "column=code"
-          ],
-          [
-            "/opensafely/born-outside-the-uk/1d23465b/",
-            "column=code"
-          ],
-          [
-            "/opensafely/immigration-status-excl-refugee-asylum/1ca8661b/",
-            "column=code"
-          ],
-          [
-            "/opensafely/asylum-or-refugee-status/209cb9e0/",
-            "column=code"
-          ],
-          [
-            "/opensafely/english-not-main-language/5c450c53/",
-            "column=code"
-          ],
-          [
-            "/opensafely/interpreter-required/556e6040/",
-            "column=code"
-          ],
-          [
-            "/opensafely/british-ethnicities/6a897fb0/",
-            "column=code"
-          ]
-        ],
-        "mig_status_3_cat": [
-          [
-            "/opensafely/migration-status/4095ab22/",
-            "column=code"
-          ],
-          [
-            "/opensafely/born-in-the-uk/4aa36068/",
-            "column=code"
-          ],
-          [
-            "/opensafely/born-outside-the-uk/1d23465b/",
-            "column=code"
-          ],
-          [
-            "/opensafely/immigration-status-excl-refugee-asylum/1ca8661b/",
-            "column=code"
-          ],
-          [
-            "/opensafely/asylum-or-refugee-status/209cb9e0/",
-            "column=code"
-          ],
-          [
-            "/opensafely/english-not-main-language/5c450c53/",
-            "column=code"
-          ],
-          [
-            "/opensafely/interpreter-required/556e6040/",
-            "column=code"
-          ],
-          [
-            "/opensafely/british-ethnicities/6a897fb0/",
-            "column=code"
-          ]
-        ],
-        "mig_status_6_cat": [
-          [
-            "/opensafely/migration-status/4095ab22/",
-            "column=code"
-          ],
-          [
-            "/opensafely/born-in-the-uk/4aa36068/",
-            "column=code"
-          ],
-          [
-            "/opensafely/born-outside-the-uk/1d23465b/",
-            "column=code"
-          ],
-          [
-            "/opensafely/immigration-status-excl-refugee-asylum/1ca8661b/",
-            "column=code"
-          ],
-          [
-            "/opensafely/asylum-or-refugee-status/209cb9e0/",
-            "column=code"
-          ],
-          [
-            "/opensafely/english-not-main-language/5c450c53/",
-            "column=code"
-          ],
-          [
-            "/opensafely/interpreter-required/556e6040/",
-            "column=code"
-          ],
-          [
-            "/opensafely/british-ethnicities/6a897fb0/",
-            "column=code"
-          ]
-        ],
-        "region": [],
-        "sex": []
-      },
-      "analysis/dataset_definition_full_study_cohort.py": {
-        "date_of_birth": [],
-        "date_of_death": [],
-        "date_of_earliest_date_of_uk_entry_code": [],
-        "date_of_entry_and_other_migration_code": [
-          [
-            "/opensafely/migration-status/4095ab22/",
-            "column=code"
-          ]
-        ],
-        "date_of_first_migration_code": [
-          [
-            "/opensafely/migration-status/4095ab22/",
-            "column=code"
-          ]
-        ],
-        "date_of_first_practice_registration": [],
-        "has_date_of_uk_entry": [],
-        "has_date_of_uk_entry_at_any_time": [],
-        "imd_decile": [],
-        "imd_quintile": [],
-        "latest_ethnicity_16_level_group": [
-          [
-            "/opensafely/ethnicity-snomed-0removed/22911876/",
-            "category_column=Label_16",
-            "column=code"
-          ]
-        ],
-        "latest_ethnicity_6_level_group": [
-          [
-            "/opensafely/ethnicity-snomed-0removed/22911876/",
-            "category_column=Label_6",
-            "column=code"
-          ],
-          [
-            "/opensafely/ethnicity-snomed-0removed/22911876/",
-            "category_column=Label_16",
-            "column=code"
-          ]
-        ],
-        "latest_ethnicity_code": [
-          [
-            "/opensafely/ethnicity-snomed-0removed/22911876/",
-            "category_column=Label_16",
-            "column=code"
-          ]
-        ],
-        "mig_status_2_cat": [
-          [
-            "/opensafely/migration-status/4095ab22/",
-            "column=code"
-          ],
-          [
-            "/opensafely/born-in-the-uk/4aa36068/",
-            "column=code"
-          ],
-          [
-            "/opensafely/born-outside-the-uk/1d23465b/",
-            "column=code"
-          ],
-          [
-            "/opensafely/immigration-status-excl-refugee-asylum/1ca8661b/",
-            "column=code"
-          ],
-          [
-            "/opensafely/asylum-or-refugee-status/209cb9e0/",
-            "column=code"
-          ],
-          [
-            "/opensafely/english-not-main-language/5c450c53/",
-            "column=code"
-          ],
-          [
-            "/opensafely/interpreter-required/556e6040/",
-            "column=code"
-          ],
-          [
-            "/opensafely/british-ethnicities/6a897fb0/",
-            "column=code"
-          ]
-        ],
-        "mig_status_3_cat": [
-          [
-            "/opensafely/migration-status/4095ab22/",
-            "column=code"
-          ],
-          [
-            "/opensafely/born-in-the-uk/4aa36068/",
-            "column=code"
-          ],
-          [
-            "/opensafely/born-outside-the-uk/1d23465b/",
-            "column=code"
-          ],
-          [
-            "/opensafely/immigration-status-excl-refugee-asylum/1ca8661b/",
-            "column=code"
-          ],
-          [
-            "/opensafely/asylum-or-refugee-status/209cb9e0/",
-            "column=code"
-          ],
-          [
-            "/opensafely/english-not-main-language/5c450c53/",
-            "column=code"
-          ],
-          [
-            "/opensafely/interpreter-required/556e6040/",
-            "column=code"
-          ],
-          [
-            "/opensafely/british-ethnicities/6a897fb0/",
-            "column=code"
-          ]
-        ],
-        "mig_status_6_cat": [
-          [
-            "/opensafely/migration-status/4095ab22/",
-            "column=code"
-          ],
-          [
-            "/opensafely/born-in-the-uk/4aa36068/",
-            "column=code"
-          ],
-          [
-            "/opensafely/born-outside-the-uk/1d23465b/",
-            "column=code"
-          ],
-          [
-            "/opensafely/immigration-status-excl-refugee-asylum/1ca8661b/",
-            "column=code"
-          ],
-          [
-            "/opensafely/asylum-or-refugee-status/209cb9e0/",
-            "column=code"
-          ],
-          [
-            "/opensafely/english-not-main-language/5c450c53/",
-            "column=code"
-          ],
-          [
-            "/opensafely/interpreter-required/556e6040/",
-            "column=code"
-          ],
-          [
-            "/opensafely/british-ethnicities/6a897fb0/",
-            "column=code"
-          ]
-        ],
-        "number_of_date_of_uk_entry_codes": [],
-        "number_of_date_of_uk_entry_codes_at_any_time": [],
-        "number_of_migration_codes": [
-          [
-            "/opensafely/migration-status/4095ab22/",
-            "column=code"
-          ]
-        ],
-        "number_of_migration_codes_at_any_time": [
-          [
-            "/opensafely/migration-status/4095ab22/",
-            "column=code"
-          ]
-        ],
-        "region": [],
-        "sex": [],
-        "temporality_of_date_of_uk_entry_code": [],
-        "time_from_1st_pracreg_first_migration_code_days": [
-          [
-            "/opensafely/migration-status/4095ab22/",
-            "column=code"
-          ]
-        ],
-        "time_from_1st_pracreg_first_migration_code_months": [
-          [
-            "/opensafely/migration-status/4095ab22/",
-            "column=code"
-          ]
-        ],
-        "time_from_birth_first_migration_code_days": [
-          [
-            "/opensafely/migration-status/4095ab22/",
-            "column=code"
-          ]
-        ],
-        "time_from_birth_first_migration_code_months": [
-          [
-            "/opensafely/migration-status/4095ab22/",
-            "column=code"
-          ]
-        ],
-        "year_of_birth": [],
-        "year_of_birth_band": []
-      }
-    },
     "c6478fe546b3005c": {
       "_unused_codelists": [
         [
@@ -31257,6 +30926,329 @@
             "column=code"
           ]
         ]
+      }
+    },
+    "f0fc37f77cbd22e6": {
+      "_unused_codelists": [],
+      "analysis/dataset_definition_census_cohorts.py": {
+        "age_band": [],
+        "imd_decile": [],
+        "imd_quintile": [],
+        "latest_ethnicity_16_level_group": [
+          [
+            "/opensafely/ethnicity-snomed-0removed/22911876/",
+            "category_column=Label_16",
+            "column=code"
+          ]
+        ],
+        "latest_ethnicity_6_level_group": [
+          [
+            "/opensafely/ethnicity-snomed-0removed/22911876/",
+            "category_column=Label_6",
+            "column=code"
+          ],
+          [
+            "/opensafely/ethnicity-snomed-0removed/22911876/",
+            "category_column=Label_16",
+            "column=code"
+          ]
+        ],
+        "latest_ethnicity_code": [
+          [
+            "/opensafely/ethnicity-snomed-0removed/22911876/",
+            "category_column=Label_16",
+            "column=code"
+          ]
+        ],
+        "mig_status_2_cat": [
+          [
+            "/opensafely/migration-status/4095ab22/",
+            "column=code"
+          ],
+          [
+            "/opensafely/born-in-the-uk/4aa36068/",
+            "column=code"
+          ],
+          [
+            "/opensafely/born-outside-the-uk/1d23465b/",
+            "column=code"
+          ],
+          [
+            "/opensafely/immigration-status-excl-refugee-asylum/1ca8661b/",
+            "column=code"
+          ],
+          [
+            "/opensafely/asylum-or-refugee-status/209cb9e0/",
+            "column=code"
+          ],
+          [
+            "/opensafely/english-not-main-language/5c450c53/",
+            "column=code"
+          ],
+          [
+            "/opensafely/interpreter-required/556e6040/",
+            "column=code"
+          ],
+          [
+            "/opensafely/british-ethnicities/6a897fb0/",
+            "column=code"
+          ]
+        ],
+        "mig_status_3_cat": [
+          [
+            "/opensafely/migration-status/4095ab22/",
+            "column=code"
+          ],
+          [
+            "/opensafely/born-in-the-uk/4aa36068/",
+            "column=code"
+          ],
+          [
+            "/opensafely/born-outside-the-uk/1d23465b/",
+            "column=code"
+          ],
+          [
+            "/opensafely/immigration-status-excl-refugee-asylum/1ca8661b/",
+            "column=code"
+          ],
+          [
+            "/opensafely/asylum-or-refugee-status/209cb9e0/",
+            "column=code"
+          ],
+          [
+            "/opensafely/english-not-main-language/5c450c53/",
+            "column=code"
+          ],
+          [
+            "/opensafely/interpreter-required/556e6040/",
+            "column=code"
+          ],
+          [
+            "/opensafely/british-ethnicities/6a897fb0/",
+            "column=code"
+          ]
+        ],
+        "mig_status_6_cat": [
+          [
+            "/opensafely/migration-status/4095ab22/",
+            "column=code"
+          ],
+          [
+            "/opensafely/born-in-the-uk/4aa36068/",
+            "column=code"
+          ],
+          [
+            "/opensafely/born-outside-the-uk/1d23465b/",
+            "column=code"
+          ],
+          [
+            "/opensafely/immigration-status-excl-refugee-asylum/1ca8661b/",
+            "column=code"
+          ],
+          [
+            "/opensafely/asylum-or-refugee-status/209cb9e0/",
+            "column=code"
+          ],
+          [
+            "/opensafely/english-not-main-language/5c450c53/",
+            "column=code"
+          ],
+          [
+            "/opensafely/interpreter-required/556e6040/",
+            "column=code"
+          ],
+          [
+            "/opensafely/british-ethnicities/6a897fb0/",
+            "column=code"
+          ]
+        ],
+        "region": [],
+        "sex": []
+      },
+      "analysis/dataset_definition_full_study_cohort.py": {
+        "date_of_birth": [],
+        "date_of_death": [],
+        "date_of_earliest_date_of_uk_entry_code": [],
+        "date_of_entry_and_other_migration_code": [
+          [
+            "/opensafely/migration-status/4095ab22/",
+            "column=code"
+          ]
+        ],
+        "date_of_first_migration_code": [
+          [
+            "/opensafely/migration-status/4095ab22/",
+            "column=code"
+          ]
+        ],
+        "date_of_first_practice_registration": [],
+        "has_date_of_uk_entry": [],
+        "imd_decile": [],
+        "imd_quintile": [],
+        "latest_ethnicity_16_level_group": [
+          [
+            "/opensafely/ethnicity-snomed-0removed/22911876/",
+            "category_column=Label_16",
+            "column=code"
+          ]
+        ],
+        "latest_ethnicity_6_level_group": [
+          [
+            "/opensafely/ethnicity-snomed-0removed/22911876/",
+            "category_column=Label_6",
+            "column=code"
+          ],
+          [
+            "/opensafely/ethnicity-snomed-0removed/22911876/",
+            "category_column=Label_16",
+            "column=code"
+          ]
+        ],
+        "latest_ethnicity_code": [
+          [
+            "/opensafely/ethnicity-snomed-0removed/22911876/",
+            "category_column=Label_16",
+            "column=code"
+          ]
+        ],
+        "mig_status_2_cat": [
+          [
+            "/opensafely/migration-status/4095ab22/",
+            "column=code"
+          ],
+          [
+            "/opensafely/born-in-the-uk/4aa36068/",
+            "column=code"
+          ],
+          [
+            "/opensafely/born-outside-the-uk/1d23465b/",
+            "column=code"
+          ],
+          [
+            "/opensafely/immigration-status-excl-refugee-asylum/1ca8661b/",
+            "column=code"
+          ],
+          [
+            "/opensafely/asylum-or-refugee-status/209cb9e0/",
+            "column=code"
+          ],
+          [
+            "/opensafely/english-not-main-language/5c450c53/",
+            "column=code"
+          ],
+          [
+            "/opensafely/interpreter-required/556e6040/",
+            "column=code"
+          ],
+          [
+            "/opensafely/british-ethnicities/6a897fb0/",
+            "column=code"
+          ]
+        ],
+        "mig_status_3_cat": [
+          [
+            "/opensafely/migration-status/4095ab22/",
+            "column=code"
+          ],
+          [
+            "/opensafely/born-in-the-uk/4aa36068/",
+            "column=code"
+          ],
+          [
+            "/opensafely/born-outside-the-uk/1d23465b/",
+            "column=code"
+          ],
+          [
+            "/opensafely/immigration-status-excl-refugee-asylum/1ca8661b/",
+            "column=code"
+          ],
+          [
+            "/opensafely/asylum-or-refugee-status/209cb9e0/",
+            "column=code"
+          ],
+          [
+            "/opensafely/english-not-main-language/5c450c53/",
+            "column=code"
+          ],
+          [
+            "/opensafely/interpreter-required/556e6040/",
+            "column=code"
+          ],
+          [
+            "/opensafely/british-ethnicities/6a897fb0/",
+            "column=code"
+          ]
+        ],
+        "mig_status_6_cat": [
+          [
+            "/opensafely/migration-status/4095ab22/",
+            "column=code"
+          ],
+          [
+            "/opensafely/born-in-the-uk/4aa36068/",
+            "column=code"
+          ],
+          [
+            "/opensafely/born-outside-the-uk/1d23465b/",
+            "column=code"
+          ],
+          [
+            "/opensafely/immigration-status-excl-refugee-asylum/1ca8661b/",
+            "column=code"
+          ],
+          [
+            "/opensafely/asylum-or-refugee-status/209cb9e0/",
+            "column=code"
+          ],
+          [
+            "/opensafely/english-not-main-language/5c450c53/",
+            "column=code"
+          ],
+          [
+            "/opensafely/interpreter-required/556e6040/",
+            "column=code"
+          ],
+          [
+            "/opensafely/british-ethnicities/6a897fb0/",
+            "column=code"
+          ]
+        ],
+        "number_of_date_of_uk_entry_codes": [],
+        "number_of_migration_codes": [
+          [
+            "/opensafely/migration-status/4095ab22/",
+            "column=code"
+          ]
+        ],
+        "region": [],
+        "sex": [],
+        "temporality_of_date_of_uk_entry_code": [],
+        "time_from_1st_pracreg_first_migration_code_days": [
+          [
+            "/opensafely/migration-status/4095ab22/",
+            "column=code"
+          ]
+        ],
+        "time_from_1st_pracreg_first_migration_code_months": [
+          [
+            "/opensafely/migration-status/4095ab22/",
+            "column=code"
+          ]
+        ],
+        "time_from_birth_first_migration_code_days": [
+          [
+            "/opensafely/migration-status/4095ab22/",
+            "column=code"
+          ]
+        ],
+        "time_from_birth_first_migration_code_months": [
+          [
+            "/opensafely/migration-status/4095ab22/",
+            "column=code"
+          ]
+        ],
+        "year_of_birth": [],
+        "year_of_birth_band": []
       }
     },
     "f214e20b1695de73": {

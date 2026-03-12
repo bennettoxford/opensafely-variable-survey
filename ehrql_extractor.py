@@ -913,6 +913,7 @@ def collect(
         repos=repos,
         silent=silent,
         verbose=verbose,
+        force=force,
     )
 
     # Filter out repos/SHAs that are already cached or have no dataset files
@@ -1060,8 +1061,19 @@ def collect(
         # First remove dates from the original node (keeping codes)
         node_without_dates = re.sub(r"datetime.date\([^)]+\)", "<<DATE>>", r.qm_node)
         # Then create a version without codes (for semantic comparison)
+        # Use improved regex that handles nested braces: matches frozenset({...})
+        # where ... can contain non-brace chars or balanced braces.
+        #
+        # IMPORTANT: The pattern r"frozenset\(\{(?:[^{}]|(?:\{[^}]*\}))*\}\)" replaces
+        # the simpler r"frozenset\(\{[^}]+\}\)" which had a bug:
+        # - Old pattern used [^}]+ which stops at the FIRST closing brace
+        # - This failed for nested frozensets: frozenset({frozenset({'a'}), 'b'})
+        #   would leave incomplete: <<FROZEN_SET>>, 'b'})
+        # - New pattern handles balanced braces correctly
         node_without_codes_or_dates = re.sub(
-            r"frozenset\(\{[^}]+\}\)", "<<FROZEN_SET>>", node_without_dates
+            r"frozenset\(\{(?:[^{}]|(?:\{[^}]*\}))*\}\)",
+            "<<FROZEN_SET>>",
+            node_without_dates,
         )
 
         expr_hash = hashlib.sha256(node_without_dates.encode("utf-8")).hexdigest()[:16]

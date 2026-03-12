@@ -37,7 +37,6 @@ _PROJECT_YAML_CACHE_MODIFIED = False
 
 _REPO_HEADS_CACHE_FILE = pathlib.Path(".repo_heads_cache.json")
 _REPO_HEADS_INCREMENTAL_OVERLAP_HOURS = 24
-_REPO_HEADS_FULL_SYNC_INTERVAL_HOURS = 24
 _REPO_HEADS_FULL_SYNC_PAGE_SIZE = 100
 _REPO_HEADS_INCREMENTAL_PAGE_SIZE = 20
 
@@ -233,13 +232,18 @@ def _save_repo_heads_cache(cache_data: dict) -> None:
         pass
 
 
-def _should_force_full_repo_heads_sync(cache_data: dict) -> bool:
+def _get_repo_heads_incremental_base_time(cache_data: dict) -> datetime | None:
     repos = cache_data.get("repos", {})
-    last_full_sync_at = _parse_iso8601_utc(cache_data.get("last_full_sync_at"))
-    if not repos or not last_full_sync_at:
-        return True
-    max_age = timedelta(hours=_REPO_HEADS_FULL_SYNC_INTERVAL_HOURS)
-    return (_utc_now() - last_full_sync_at) > max_age
+    if not isinstance(repos, dict) or not repos:
+        return None
+
+    last_checked_at = _parse_iso8601_utc(cache_data.get("last_checked_at"))
+    if last_checked_at:
+        return last_checked_at
+
+    # Older cache files may not have last_checked_at yet. Reuse the previous
+    # full-sync timestamp as the baseline for the first incremental refresh.
+    return _parse_iso8601_utc(cache_data.get("last_full_sync_at"))
 
 
 def run_gh(args: list[str], expect_json: bool = True) -> dict | list | str:
@@ -398,6 +402,7 @@ def parse_jobs_csv(csv_path: pathlib.Path) -> dict[str, list[str]]:
 def get_all_repos_with_shas_graphql(
     repo_filter: list[str] | None = None,
     verbose: bool = False,
+    force_full_sync: bool = False,
 ) -> dict[str, str]:
     """Fetch repos in opensafely org with their HEAD SHAs using GraphQL with pagination.
 
@@ -411,6 +416,8 @@ def get_all_repos_with_shas_graphql(
         repo_filter: Optional list of repo names to fetch (e.g., ['repo1', 'repo2']).
                     If provided, only these repos are fetched (much faster).
                     If None, all repos in the org are fetched.
+        force_full_sync: If True, ignore incremental repo-head cache state and run
+                    the full org crawl using the larger GraphQL page size.
 
     Returns dict of {repo_name: sha} e.g. {'covid-project': 'abc123...'}
     """
@@ -459,7 +466,7 @@ def get_all_repos_with_shas_graphql(
     cache_data = _load_repo_heads_cache()
     cache_repos: dict[str, dict] = cache_data.get("repos", {})
     now = _utc_now()
-    force_full_sync = _should_force_full_repo_heads_sync(cache_data)
+    incremental_base_time = _get_repo_heads_incremental_base_time(cache_data)
     after_cursor = None
 
     query = """
@@ -486,10 +493,12 @@ query($org: String!, $first: Int!, $after: String) {
 }
 """
 
-    if force_full_sync:
+    if force_full_sync or incremental_base_time is None:
         if verbose:
             print(
-                "Repo heads cache miss/stale: running full GraphQL sync",
+                "Repo heads full sync requested: running full GraphQL sync"
+                if force_full_sync
+                else "Repo heads cache missing/unusable: running initial full GraphQL sync",
                 file=sys.stderr,
             )
 
@@ -561,12 +570,7 @@ query($org: String!, $first: Int!, $after: String) {
         cache_data["last_full_sync_at"] = _to_iso8601_utc(now)
         _save_repo_heads_cache(cache_data)
     else:
-        last_checked_at = _parse_iso8601_utc(cache_data.get("last_checked_at"))
-        if not last_checked_at:
-            last_checked_at = now - timedelta(
-                hours=_REPO_HEADS_INCREMENTAL_OVERLAP_HOURS
-            )
-        cutoff = last_checked_at - timedelta(
+        cutoff = incremental_base_time - timedelta(
             hours=_REPO_HEADS_INCREMENTAL_OVERLAP_HOURS
         )
 
@@ -655,7 +659,9 @@ query($org: String!, $first: Int!, $after: String) {
 
 
 def project_yaml_search(
-    verbose: bool = False, repos: list[str] | None = None
+    verbose: bool = False,
+    repos: list[str] | None = None,
+    force: bool = False,
 ) -> list[dict]:
     """Search for project.yaml files with ehrql content.
 
@@ -669,6 +675,7 @@ def project_yaml_search(
         verbose: Print detailed logging
         repos: Optional list of specific repo names to search (e.g., ['repo1', 'repo2']).
                If None, searches all repos in opensafely org.
+        force: If True, force a full repo-head sync instead of incremental paging.
 
     Returns list of dicts with 'repo_full_name' and 'sha' keys.
     """
@@ -690,7 +697,7 @@ def project_yaml_search(
     # Use GraphQL to get all repos with SHAs in ~4 calls instead of 300+
     # Pass repo_filter if specific repos were requested
     repos_with_shas = get_all_repos_with_shas_graphql(
-        repo_filter=repos, verbose=verbose
+        repo_filter=repos, verbose=verbose, force_full_sync=force
     )
 
     if verbose:
@@ -1170,6 +1177,7 @@ def get_target_repos_and_shas(
     csv_path: pathlib.Path | None = None,
     silent: bool = False,
     verbose: bool = False,
+    force: bool = False,
 ) -> list[tuple[str, str, list[str]]]:
     """Get the list of (repo_full_name, sha, <list_of_files>) tuples to process.
 
@@ -1182,6 +1190,7 @@ def get_target_repos_and_shas(
         csv_path: Optional path to jobs CSV file with repo/SHA pairs
         silent: Suppress output
         verbose: Verbose output
+        force: If True, force a full repo-head sync when discovering latest repo SHAs.
 
     Returns:
         List of (repo_full_name, sha, <list_of_files>) tuples to process
@@ -1218,7 +1227,7 @@ def get_target_repos_and_shas(
         # No CSV - use GitHub API search to get latest commits
         # Pass the repos parameter to only search specific repos if provided
         project_yaml_files = project_yaml_search(
-            verbose=verbose, repos=repos if repos else None
+            verbose=verbose, repos=repos if repos else None, force=force
         )
         ehrql_repos = group_items_by_repo(project_yaml_files)
 
@@ -1246,6 +1255,7 @@ def clone_ehrql_repos(
     silent: bool = False,
     verbose: bool = False,
     csv_path: pathlib.Path | None = None,
+    force: bool = False,
 ):
     """Clone ehrQL repos from GitHub API search, with optional additional SHAs from CSV.
 
@@ -1260,6 +1270,7 @@ def clone_ehrql_repos(
         silent: Suppress output
         verbose: Verbose output
         csv_path: Optional path to jobs CSV file for additional SHAs
+        force: If True, force a full repo-head sync when discovering latest repo SHAs.
 
     Returns:
         List of tuples (repo_full_name, sha, local_path) for each repo/SHA combination
@@ -1267,7 +1278,11 @@ def clone_ehrql_repos(
     # Get target repos and SHAs (from CSV or GitHub API)
     # Get target repos and SHAs (from CSV or GitHub API)
     all_repos_shas = get_target_repos_and_shas(
-        repos=repos, csv_path=csv_path, silent=silent, verbose=verbose
+        repos=repos,
+        csv_path=csv_path,
+        silent=silent,
+        verbose=verbose,
+        force=force,
     )
 
     print(f"{time.strftime('%Y-%m-%d %H:%M:%S')} - Cloning ehrQL repos")
