@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-03-10 14:31:24",
+  "generated_at": "2026-03-12 17:43:54",
   "projects": {
     "opensafely/ACT-PharmacyFirst-Protocol2-healthcare-usage": {
       "7e2be9801ec20b6ffe36319ee4afb09a29469618": {
@@ -2395,7 +2395,7 @@
       }
     },
     "opensafely/COMPARES-vaccines-Autumn-2024": {
-      "f231b4fe63bc06caba1e9888821063fb83ce0920": {
+      "9a44b70f7c68bbec13e6da0cfbf74072f77e1f1c": {
         "_unused_codelists": [
           [
             "/nhsd-primary-care-domain-refsets/palcare_cod/5fce98cf/",
@@ -7023,7 +7023,7 @@
       }
     },
     "opensafely/covid-vaccine-history": {
-      "d3237236ec87ff8e03905d8b2f14f9f7c45665c8": {
+      "dc6fa426a061cab0940510bcfd8be6ca7e3d7581": {
         "_unused_codelists": [
           [
             "/nhsd-primary-care-domain-refsets/carehome_cod/20250627/",
@@ -15937,7 +15937,7 @@
       }
     },
     "opensafely/migration-short-data-report": {
-      "4e669124dcf246b502022bbcc119127db68a9dc8": {
+      "3923cc9929a64d4f5ffab5e9bc1869b6cfddbce9": {
         "_unused_codelists": [],
         "analysis/dataset_definition_census_cohorts.py": {
           "age_band": [],
@@ -16092,7 +16092,6 @@
           ],
           "date_of_first_practice_registration": [],
           "has_date_of_uk_entry": [],
-          "has_date_of_uk_entry_at_any_time": [],
           "imd_decile": [],
           "imd_quintile": [],
           "latest_ethnicity_16_level_group": [
@@ -16224,14 +16223,7 @@
             ]
           ],
           "number_of_date_of_uk_entry_codes": [],
-          "number_of_date_of_uk_entry_codes_at_any_time": [],
           "number_of_migration_codes": [
-            [
-              "/opensafely/migration-status/4095ab22/",
-              "column=code"
-            ]
-          ],
-          "number_of_migration_codes_at_any_time": [
             [
               "/opensafely/migration-status/4095ab22/",
               "column=code"
@@ -32695,7 +32687,7 @@
       }
     },
     "opensafely/winter-pressures-phase-II": {
-      "4d95049d8d6058f9a79458520393edd8ebf43345": {
+      "2ff54bee4627fdab7d25d21d3223824627366c12": {
         "_unused_codelists": [
           [
             "/bristol/antidepressants-snomedct/677f55d2/",

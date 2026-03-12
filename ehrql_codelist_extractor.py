@@ -317,6 +317,7 @@ def collect_codelists(
         csv_path=csv_path,
         silent=silent,
         verbose=verbose,
+        force=force,
     )
 
     # Keep cached output aligned with this run's target repo/SHA set.

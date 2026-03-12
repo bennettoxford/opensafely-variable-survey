@@ -581,6 +581,9 @@
   "opensafely/CIS-pop-validation@e10807150555f2bb22b9bdb76ce116983918ae22": [],
   "opensafely/CIS-pop-validation@ec0d54a3cdfec10c10dc66f442ebfaeff108e0a9": [],
   "opensafely/CIS-pop-validation@f25cd37f85865d16fcd6d3dc3e27dcf3fe09c5d3": [],
+  "opensafely/COMPARES-vaccines-Autumn-2024@9a44b70f7c68bbec13e6da0cfbf74072f77e1f1c": [
+    "analysis/1-extract/dataset_definition.py"
+  ],
   "opensafely/COMPARES-vaccines-Autumn-2024@f231b4fe63bc06caba1e9888821063fb83ce0920": [
     "analysis/1-extract/dataset_definition.py"
   ],
@@ -10186,6 +10189,11 @@
     "analysis/1-extract/dataset_definition_snapshot.py",
     "analysis/1-extract/dataset_definition_varying.py"
   ],
+  "opensafely/covid-vaccine-history@dc6fa426a061cab0940510bcfd8be6ca7e3d7581": [
+    "analysis/1-extract/dataset_definition_fixed.py",
+    "analysis/1-extract/dataset_definition_snapshot.py",
+    "analysis/1-extract/dataset_definition_varying.py"
+  ],
   "opensafely/covid-vaccine-history@eea5df6dd781c6bc9bdd4ed090c312a7792b31b1": [
     "analysis/1-extract/dataset_definition_fixed.py",
     "analysis/1-extract/dataset_definition_snapshot.py",
@@ -17450,6 +17458,16 @@
   "opensafely/metformin_covid@fa14e0785ea92c837f66060c851d840b4d37ff07": [
     "analysis/dataset_definition_dm_algo.py",
     "analysis/dataset_definition_t2dm.py"
+  ],
+  "opensafely/migration-short-data-report@1fbbf20fc209bb887ea8681d2e70618d34c3c3c8": [
+    "analysis/dataset_definition_census_cohorts.py",
+    "analysis/dataset_definition_full_study_cohort.py",
+    "analysis/dataset_definition_migration_code_before_birth_cohort.py"
+  ],
+  "opensafely/migration-short-data-report@3923cc9929a64d4f5ffab5e9bc1869b6cfddbce9": [
+    "analysis/dataset_definition_census_cohorts.py",
+    "analysis/dataset_definition_full_study_cohort.py",
+    "analysis/dataset_definition_migration_code_before_birth_cohort.py"
   ],
   "opensafely/migration-short-data-report@4e669124dcf246b502022bbcc119127db68a9dc8": [
     "analysis/dataset_definition_census_cohorts.py",
@@ -29926,6 +29944,9 @@
   "opensafely/winter-pressures-phase-II@23afa981a30dbe26844fb8208189dd13635e6abf": [],
   "opensafely/winter-pressures-phase-II@26a3cff312bb58a81927e407ab24a61d9fc2eefa": [],
   "opensafely/winter-pressures-phase-II@2a97114200ab29efc6b6c1266e4931b3cff9bcc9": [],
+  "opensafely/winter-pressures-phase-II@2ff54bee4627fdab7d25d21d3223824627366c12": [
+    "analysis/dataset.py"
+  ],
   "opensafely/winter-pressures-phase-II@30022ebeba8f82870deca0e2c15748cea4a02637": [],
   "opensafely/winter-pressures-phase-II@31417e2b1f745f7d2e34a5371b471e23dcc5771f": [
     "analysis/dataset.py"
