@@ -18,6 +18,7 @@ import time
 
 from parsing.ehrql_github_helpers import (
     clone_repos,
+    evict_stale_worktrees,
     get_dataset_files,
     get_target_repos_and_shas,
 )
@@ -386,11 +387,17 @@ def collect_codelists(
             cache_dir,
             silent=silent,
             verbose=verbose,
+            enforce_exclusions=force,
         )
     else:
         if not silent:
             print("No uncached repos to clone", file=sys.stderr)
         local_repos = []
+
+    # Evict stale worktrees for repos whose target SHA set has changed
+    removed = evict_stale_worktrees(target_sha_set_by_repo, cache_dir, verbose=verbose)
+    if removed and not silent:
+        print(f"Evicted {removed} stale worktree(s)", file=sys.stderr)
 
     print(f"{time.strftime('%Y-%m-%d %H:%M:%S')} - Getting dataset files")
     all_dataset_files = get_dataset_files(
