@@ -3,6 +3,7 @@ import csv
 import json
 import pathlib
 import re
+import shutil
 import subprocess
 import sys
 import time
@@ -39,6 +40,21 @@ _REPO_HEADS_CACHE_FILE = pathlib.Path(".repo_heads_cache.json")
 _REPO_HEADS_INCREMENTAL_OVERLAP_HOURS = 24
 _REPO_HEADS_FULL_SYNC_PAGE_SIZE = 100
 _REPO_HEADS_INCREMENTAL_PAGE_SIZE = 20
+
+# Sparse checkout patterns for repo cache worktrees (include-only).
+# Only materialise the files that the two extractors actually need:
+#   project.yaml       — always needed for dataset file discovery
+#   *.py               — code execution (ehrql_extractor) + AST parsing (codelist_extractor)
+#   codelists/         — CSV files (ehrql_extractor via io.open) + codelists.json
+#   local_codelists/   — local codelist CSVs (ehrql_extractor)
+_SPARSE_CHECKOUT_PATTERNS = [
+    "/project.yaml",
+    "*.py",
+    "/codelists/",
+    "/codelists/**",
+    "/local_codelists/",
+    "/local_codelists/**",
+]
 
 
 class GitHubError(RuntimeError):
@@ -115,6 +131,89 @@ def _run_subprocess_with_retry(
 
     # Unreachable due to return/raise above, but keeps type-checkers satisfied.
     raise RuntimeError("Unreachable retry state")
+
+
+def _apply_sparse_checkout(repo_dir: pathlib.Path, verbose: bool = False) -> bool:
+    """Configure sparse checkout on a git working tree (clone or worktree).
+
+    The working tree will only contain files matched by _SPARSE_CHECKOUT_PATTERNS.
+    """
+    # Some cached linked worktrees can carry core.bare=true. Ensure these are
+    # treated as working trees before sparse-checkout is applied.
+    subprocess.run(
+        ["git", "-C", str(repo_dir), "config", "core.bare", "false"],
+        capture_output=True,
+        text=True,
+    )
+
+    result = subprocess.run(
+        ["git", "-C", str(repo_dir), "sparse-checkout", "set", "--no-cone"]
+        + _SPARSE_CHECKOUT_PATTERNS,
+        capture_output=True,
+        text=True,
+    )
+    if result.returncode != 0:
+        if verbose:
+            print(
+                f"..sparse-checkout failed for {repo_dir.name}: {result.stderr.strip()[:200]}",
+                file=sys.stderr,
+            )
+        return False
+
+    # When the repo/worktree was created with --no-checkout, sparse-checkout
+    # updates the rules but does not materialise the selected files. Apply the
+    # sparse index to the working tree without checking out the full repo.
+    result = subprocess.run(
+        ["git", "-C", str(repo_dir), "read-tree", "-mu", "HEAD"],
+        capture_output=True,
+        text=True,
+    )
+    if result.returncode != 0 and verbose:
+        print(
+            f"..read-tree failed for {repo_dir.name}: {result.stderr.strip()[:200]}",
+            file=sys.stderr,
+        )
+    return result.returncode == 0
+
+
+def _remove_worktree(
+    bare_repo_dir: pathlib.Path,
+    worktree_dir: pathlib.Path,
+    verbose: bool = False,
+) -> None:
+    """Remove a worktree directory, falling back to shutil.rmtree."""
+    if not worktree_dir.exists():
+        return
+
+    if bare_repo_dir.exists():
+        proc = subprocess.run(
+            [
+                "git",
+                "--git-dir",
+                str(bare_repo_dir),
+                "worktree",
+                "remove",
+                "--force",
+                str(worktree_dir),
+            ],
+            capture_output=True,
+            text=True,
+        )
+        if proc.returncode == 0:
+            if verbose:
+                print(f"..Removed worktree {worktree_dir.name}", file=sys.stderr)
+            return
+
+    # Fallback: manual removal
+    shutil.rmtree(worktree_dir, ignore_errors=True)
+    if bare_repo_dir.exists():
+        subprocess.run(
+            ["git", "--git-dir", str(bare_repo_dir), "worktree", "prune"],
+            capture_output=True,
+            text=True,
+        )
+    if verbose:
+        print(f"..Removed {worktree_dir.name} (manual)", file=sys.stderr)
 
 
 def _load_project_yaml_cache() -> None:
@@ -760,6 +859,7 @@ def project_yaml_search(
             # Check if we already have project.yaml for this SHA
             project_yaml_path = repo_cache_dir / "project.yaml"
 
+            freshly_cloned = False
             if not project_yaml_path.exists():
                 # Check if the directory exists (might be cloned but no project.yaml)
                 if repo_cache_dir.exists():
@@ -771,26 +871,26 @@ def project_yaml_search(
                         )
                     continue
 
-                # Need to clone
+                # Need to clone — use bare+worktree architecture so the
+                # worktree is directly reusable by clone_repos() later.
                 cloned_count += 1
+                freshly_cloned = True
                 print(f"  Cloning {repo_full_name}@{head_sha[:8]}...", file=sys.stderr)
 
-                # Full shallow clone (with working tree)
-                result = _run_subprocess_with_retry(
-                    [
-                        "git",
-                        "clone",
-                        "--depth",
-                        "1",
-                        f"https://github.com/{repo_full_name}.git",
-                        str(repo_cache_dir),
-                    ],
-                    timeout=30,
+                cloned = _clone_with_worktrees(
+                    repo_full_name,
+                    "opensafely",
+                    repo_name,
+                    [head_sha],
+                    cache_dir,
+                    remote_head_sha=head_sha,
+                    silent=True,
+                    verbose=verbose,
                 )
 
-                if result.returncode != 0:
+                if not cloned:
                     print(
-                        f"  Failed to clone {repo_full_name}: {result.stderr[:100]}",
+                        f"  Failed to clone {repo_full_name}",
                         file=sys.stderr,
                     )
                     continue
@@ -803,9 +903,14 @@ def project_yaml_search(
                             f"  {repo_full_name}: cloned but no project.yaml",
                             file=sys.stderr,
                         )
+                    _remove_worktree(
+                        cache_dir / repo_name, repo_cache_dir, verbose=verbose
+                    )
                     continue
             else:
                 cached_count += 1
+                if force:
+                    _apply_sparse_checkout(repo_cache_dir, verbose=verbose)
 
             # Check for project.yaml with ehrql content
             if project_yaml_path.exists():
@@ -837,6 +942,12 @@ def project_yaml_search(
                             "no_project_yaml": False,
                         }
                         cache_updated = True
+                        if freshly_cloned:
+                            _remove_worktree(
+                                cache_dir / repo_name,
+                                repo_cache_dir,
+                                verbose=verbose,
+                            )
                 except Exception as e:
                     if verbose:
                         print(
@@ -939,6 +1050,7 @@ def clone_repos(
     cache_dir: pathlib.Path,
     silent: bool = False,
     verbose: bool = False,
+    enforce_exclusions: bool = False,
 ) -> tuple[str, str, str]:
     """Clone or update GitHub repos to local base_dir using worktrees.
 
@@ -994,6 +1106,7 @@ def clone_repos(
             remote_head_sha,
             silent,
             verbose,
+            enforce_exclusions=enforce_exclusions,
         )
         local_repos.extend(cloned_repos)
 
@@ -1009,6 +1122,7 @@ def _clone_with_worktrees(
     remote_head_sha: str | None,
     silent: bool,
     verbose: bool,
+    enforce_exclusions: bool = False,
 ) -> list[tuple[str, str, pathlib.Path]]:
     """Clone a repo as bare and create worktrees for each SHA.
 
@@ -1134,13 +1248,16 @@ def _clone_with_worktrees(
                             )
                     continue
 
-            # Create worktree at this SHA
+            # Create worktree at this SHA, without checking out files so that
+            # we can apply sparse checkout first and avoid writing large data
+            # files that are not needed.
             cmd = [
                 "git",
                 "--git-dir",
                 str(bare_repo_dir),
                 "worktree",
                 "add",
+                "--no-checkout",
                 str(worktree_dir),
                 sha,
             ]
@@ -1159,9 +1276,14 @@ def _clone_with_worktrees(
                         file=sys.stderr,
                     )
                 continue
+
+            # Apply sparse checkout; this also populates the working tree.
+            _apply_sparse_checkout(worktree_dir, verbose=verbose)
         else:
             if verbose:
                 print(f"..Using cached worktree at {worktree_dir}", file=sys.stderr)
+            if enforce_exclusions:
+                _apply_sparse_checkout(worktree_dir, verbose=verbose)
 
         local_repos.append((repo_full_name, sha, worktree_dir))
 
@@ -1170,6 +1292,57 @@ def _clone_with_worktrees(
         _save_project_yaml_cache()
 
     return local_repos
+
+
+_HEX_CHARS = frozenset("0123456789abcdef")
+
+
+def _is_hex(s: str) -> bool:
+    return all(c in _HEX_CHARS for c in s)
+
+
+def evict_stale_worktrees(
+    active_shas_by_repo: dict[str, set[str]],
+    cache_dir: pathlib.Path,
+    verbose: bool = False,
+) -> int:
+    """Remove worktrees for SHAs no longer in the active target set.
+
+    For each repo in *active_shas_by_repo*, scans *cache_dir* for
+    ``{repo_name}-{sha_prefix}`` directories and removes any whose SHA prefix
+    is not in the active set.  Returns the number of worktrees removed.
+    """
+    if not cache_dir.is_dir():
+        return 0
+
+    removed = 0
+    for repo_full_name, active_shas in active_shas_by_repo.items():
+        repo_name = (
+            repo_full_name.split("/", 1)[1] if "/" in repo_full_name else repo_full_name
+        )
+        bare_repo_dir = cache_dir / repo_name
+        active_prefixes = {sha[:8] for sha in active_shas}
+        prefix = f"{repo_name}-"
+
+        for d in cache_dir.iterdir():
+            if not d.is_dir() or not d.name.startswith(prefix):
+                continue
+            sha_prefix = d.name[len(prefix) :]
+            # Validate that the suffix is exactly an 8-char hex SHA prefix.
+            # Without this check, a repo named "foo" would incorrectly match
+            # worktrees belonging to "foo-bar" (e.g. "foo-bar-abcd1234").
+            if len(sha_prefix) != 8 or not _is_hex(sha_prefix):
+                continue
+            if sha_prefix not in active_prefixes:
+                if verbose:
+                    print(
+                        f"..Evicting stale worktree {d.name}",
+                        file=sys.stderr,
+                    )
+                _remove_worktree(bare_repo_dir, d, verbose=verbose)
+                removed += 1
+
+    return removed
 
 
 def get_target_repos_and_shas(
@@ -1287,7 +1460,12 @@ def clone_ehrql_repos(
 
     print(f"{time.strftime('%Y-%m-%d %H:%M:%S')} - Cloning ehrQL repos")
     local_ehrql_repos = clone_repos(
-        all_repos_shas, repos, cache_dir, silent=silent, verbose=verbose
+        all_repos_shas,
+        repos,
+        cache_dir,
+        silent=silent,
+        verbose=verbose,
+        enforce_exclusions=force,
     )
     return local_ehrql_repos
 
